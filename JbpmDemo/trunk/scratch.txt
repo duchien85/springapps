@@ -1,0 +1,5 @@
+@ContextConfiguration(locations = { "classpath:applicationContext.xml" })
+public class DemoServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
+
+	@Autowired
+	private DemoService demoService;

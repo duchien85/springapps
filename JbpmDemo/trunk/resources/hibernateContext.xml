@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+		
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<!--
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
+		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" p:maxIdle="10" p:minIdle="1" />
+	-->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+		<property name="username" value="demo" />
+		<property name="password" value="demo" />
+	</bean>
+	
+	 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingResources" ref="jbpmMappings" />
+		<property name="hibernateProperties" ref="hibernateProps" />
+	</bean>
+	
+	<util:map id="hibernateProps">
+		<entry key="hibernate.dialect" value="org.hibernate.dialect.OracleDialect" />
+		<entry key="hibernate.show_sql" value="false" />
+		<entry key="hibernate.format_sql" value="true" />
+		<!-- <entry key="schemaUpdate" value="true" /> -->
+		<!-- <entry key="hibernate.hbm2ddl.auto" value="create" /> -->
+	</util:map>
+	
+	<util:list id="jbpmMappings">
+		<!-- hql queries and type defs -->
+		<value>org/jbpm/db/hibernate.queries.hbm.xml</value>
+
+		<!-- graph.action mapping files -->
+		<value>org/jbpm/graph/action/MailAction.hbm.xml</value>
+
+		<!-- graph.def mapping files -->
+		<value>org/jbpm/graph/def/ProcessDefinition.hbm.xml</value>
+		<value>org/jbpm/graph/def/Node.hbm.xml</value>
+		<value>org/jbpm/graph/def/Transition.hbm.xml
+		</value>
+		<value>org/jbpm/graph/def/Event.hbm.xml
+		</value>
+		<value>org/jbpm/graph/def/Action.hbm.xml
+		</value>
+		<value>org/jbpm/graph/def/SuperState.hbm.xml
+		</value>
+		<value>org/jbpm/graph/def/ExceptionHandler.hbm.xml
+		</value>
+		<value>org/jbpm/instantiation/Delegation.hbm.xml
+		</value>
+		<!-- mapping files require bsh.-->
+		<value>org/jbpm/graph/action/Script.hbm.xml
+		</value>
+
+		<!-- graph.node mapping files -->
+		<value>org/jbpm/graph/node/StartState.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/EndState.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/ProcessState.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/Decision.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/Fork.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/Join.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/MailNode.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/State.hbm.xml
+		</value>
+		<value>org/jbpm/graph/node/TaskNode.hbm.xml
+		</value>
+
+		<!-- context.def mapping files -->
+		<value>org/jbpm/context/def/ContextDefinition.hbm.xml
+		</value>
+		<value>org/jbpm/context/def/VariableAccess.hbm.xml
+		</value>
+
+		<!-- bytes mapping files -->
+		<value>org/jbpm/bytes/ByteArray.hbm.xml
+		</value>
+
+		<!-- module.def mapping files -->
+		<value>org/jbpm/module/def/ModuleDefinition.hbm.xml
+		</value>
+
+		<!-- file.def mapping files -->
+		<value>org/jbpm/file/def/FileDefinition.hbm.xml
+		</value>
+
+		<!-- taskmgmt.def mapping files -->
+		<value>org/jbpm/taskmgmt/def/TaskMgmtDefinition.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/def/Swimlane.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/def/Task.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/def/TaskController.hbm.xml
+		</value>
+
+		<!-- scheduler.def mapping files -->
+		<value>org/jbpm/scheduler/def/CreateTimerAction.hbm.xml
+		</value>
+		<value>org/jbpm/scheduler/def/CancelTimerAction.hbm.xml
+		</value>
+
+		<!-- graph.exe mapping files -->
+		<value>org/jbpm/graph/exe/Comment.hbm.xml
+		</value>
+		<value>org/jbpm/graph/exe/ProcessInstance.hbm.xml
+		</value>
+		<value>org/jbpm/graph/exe/Token.hbm.xml
+		</value>
+		<value>org/jbpm/graph/exe/RuntimeAction.hbm.xml
+		</value>
+
+		<!-- module.exe mapping files -->
+		<value>org/jbpm/module/exe/ModuleInstance.hbm.xml
+		</value>
+
+		<!-- context.exe mapping files -->
+		<value>org/jbpm/context/exe/ContextInstance.hbm.xml
+		</value>
+		<value>org/jbpm/context/exe/TokenVariableMap.hbm.xml
+		</value>
+		<value>org/jbpm/context/exe/VariableInstance.hbm.xml
+		</value>
+		<value>
+			org/jbpm/context/exe/variableinstance/ByteArrayInstance.hbm.xml
+		</value>
+		<value>org/jbpm/context/exe/variableinstance/DateInstance.hbm.xml
+		</value>
+		<value>org/jbpm/context/exe/variableinstance/DoubleInstance.hbm.xml
+		</value>
+		<value>
+			org/jbpm/context/exe/variableinstance/HibernateLongInstance.hbm.xml
+		</value>
+		<value>
+			org/jbpm/context/exe/variableinstance/HibernateStringInstance.hbm.xml
+		</value>
+		<value>org/jbpm/context/exe/variableinstance/LongInstance.hbm.xml
+		</value>
+		<value>org/jbpm/context/exe/variableinstance/NullInstance.hbm.xml
+		</value>
+		<value>org/jbpm/context/exe/variableinstance/StringInstance.hbm.xml
+		</value>
+
+		<!-- job mapping files -->
+		<value>org/jbpm/job/Job.hbm.xml</value>
+		<value>org/jbpm/job/Timer.hbm.xml</value>
+		<value>org/jbpm/job/ExecuteNodeJob.hbm.xml
+		</value>
+		<value>org/jbpm/job/ExecuteActionJob.hbm.xml
+		</value>
+
+		<!-- taskmgmt.exe mapping files -->
+		<value>org/jbpm/taskmgmt/exe/TaskMgmtInstance.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/exe/TaskInstance.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/exe/PooledActor.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/exe/SwimlaneInstance.hbm.xml
+		</value>
+
+		<!-- logging mapping files -->
+		<value>org/jbpm/logging/log/ProcessLog.hbm.xml
+		</value>
+		<value>org/jbpm/logging/log/MessageLog.hbm.xml
+		</value>
+		<value>org/jbpm/logging/log/CompositeLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/ActionLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/NodeLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/ProcessInstanceCreateLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/ProcessInstanceEndLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/ProcessStateLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/SignalLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/TokenCreateLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/TokenEndLog.hbm.xml
+		</value>
+		<value>org/jbpm/graph/log/TransitionLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/VariableLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/VariableCreateLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/VariableDeleteLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/VariableUpdateLog.hbm.xml
+		</value>
+		<value>
+			org/jbpm/context/log/variableinstance/ByteArrayUpdateLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/variableinstance/DateUpdateLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/variableinstance/DoubleUpdateLog.hbm.xml
+		</value>
+		<value>
+			org/jbpm/context/log/variableinstance/HibernateLongUpdateLog.hbm.xml
+		</value>
+		<value>
+			org/jbpm/context/log/variableinstance/HibernateStringUpdateLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/variableinstance/LongUpdateLog.hbm.xml
+		</value>
+		<value>org/jbpm/context/log/variableinstance/StringUpdateLog.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/log/TaskLog.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/log/TaskCreateLog.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/log/TaskAssignLog.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/log/TaskEndLog.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/log/SwimlaneLog.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/log/SwimlaneCreateLog.hbm.xml
+		</value>
+		<value>org/jbpm/taskmgmt/log/SwimlaneAssignLog.hbm.xml
+		</value>
+	</util:list>
+</beans>

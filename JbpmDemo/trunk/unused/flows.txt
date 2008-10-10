@@ -1,0 +1,200 @@
+<process-definition name="TaskTest">
+   <swimlane name="test lane">
+      <assignment pooled-actors="ROLE_USER" />
+   </swimlane>
+   <start-state name="start">
+      <transition to="Task1" />
+   </start-state>
+   <task-node name="Task1">
+      <task name="t1" swimlane="test lane">
+         <controller class="com.arag.workflow.task.TaskController">
+           <flowId>Acknowledge-flow</flowId>
+           <isNotification>true</isNotification>
+           <template>
+<![CDATA[<h1>This is a Test</h1>]]>
+           </template>
+           <displayName>Hello World(${taskInstance.name})(${taskInstance.variables.flowId})</displayName>
+         </controller>
+      </task>
+      <transition to="Task2" />
+   </task-node>
+
+   <task-node name="Task2">
+      <task name="t2" swimlane="test lane">
+	     <controller class="com.arag.workflow.task.TaskController">
+           <flowId>t1-flow</flowId>
+           <isNotification>false</isNotification>
+         </controller>
+	  </task>
+      <transition to="TheEnd" />
+   </task-node>
+   <end-state name="TheEnd" />
+</process-definition>
+
+<process-definition name="Publish New Widget">
+   <swimlane name="Widget Creator">
+      <assignment pooled-actors="ROLE_USER" />
+   </swimlane>
+   <swimlane name="Widget Supervisor">
+      <assignment pooled-actors="ROLE_ADMIN" />
+   </swimlane>
+   <swimlane name="Widget Publisher">
+      <assignment pooled-actors="ROLE_PUBLISH" />
+   </swimlane>
+
+
+   <start-state name="Start">
+      <transition to="Create A Widget" />
+   </start-state>
+
+   <task-node name="Create A Widget">
+      <task name="Create Widget" swimlane="Widget Creator">
+         <controller class="com.arag.workflow.task.TaskController">
+			<flowId>Edit-flow</flowId>
+			<variables>
+			  <element>widget</element>
+			</variables>
+         </controller>
+      </task>
+      <transition to="Needs Approval" />
+   </task-node>
+
+   <decision name="Needs Approval">
+	  <transition to="Fine Tuning" />
+	  <transition to="Approval">
+	     <condition>
+		    #{contextInstance.variables['widget'].resources.size > 3}
+		 </condition>
+	  </transition>
+   </decision>
+
+   <task-node name="Approval">
+      <task name="Approve Widget" swimlane="Widget Supervisor">
+	     <controller class="com.arag.workflow.task.TaskController">
+			<flowId>Generic-flow</flowId>
+			<template>
+<![CDATA[<h3>${widget.name!}</h3>
+<h4>Some Value 1: ${widget.someValue1!}</h4>
+<h4>Some Value 2: ${widget.someValue2!}</h4>
+<h4>Some Value 3: ${widget.someValue3!}</h4>
+<h4>Some Value 4: ${widget.someValue4!}</h4>
+
+Resources
+<table border="1">
+<tr>
+<th>val1</th>
+<th>val2</th>
+<th>val3</th>
+</tr>
+<#list widget.resources as res>
+<tr>
+<td>${res.val1!"&nbsp;"}</td>
+<td>${res.val2!"&nbsp;"}</td>
+<td>${res.val3!"&nbsp;"}</td>
+</tr>
+</#list>
+</table>]]>
+			</template>
+			<variables>
+			  <element>widget</element>
+			</variables>
+         </controller>
+      </task>
+
+	  <transition name="Decline" to="Create A Widget" />
+	  <transition name="Approve" to="Fine Tuning" />
+   </task-node>
+
+   <task-node name="Fine Tuning">
+      <task name="Fine Tune Widget" swimlane="Widget Publisher">
+	     <controller class="com.arag.workflow.task.TaskController">
+			<flowId>Edit-flow</flowId>
+			<variables>
+			  <element>widget</element>
+			</variables>
+         </controller>
+      </task>
+      <transition to="TheEnd" />
+   </task-node>
+
+   <end-state name="TheEnd" />
+</process-definition>
+
+<process-definition name="Edit Widget">
+   <swimlane name="Widget Editor">
+      <assignment pooled-actors="ROLE_USER" />
+   </swimlane>
+
+   <start-state name="start">
+      <transition to="Pick Widget" />
+   </start-state>
+
+   <task-node name="Pick Widget">
+      <task name="PickWidget" swimlane="Widget Editor">
+         <controller class="com.arag.workflow.task.TaskController">
+			<flowId>PickWidget-flow</flowId>
+			<variables>
+			  <element>widget</element>
+			</variables>
+         </controller>
+      </task>
+      <transition to="Edit" />
+   </task-node>
+
+   <task-node name="Edit">
+      <task name="Edit" swimlane="Widget Editor">
+         <controller class="com.arag.workflow.task.TaskController">
+			<flowId>Edit-flow</flowId>
+			<variables>
+			  <element>widget</element>
+			</variables>
+         </controller>
+      </task>
+      <transition to="TheEnd" />
+   </task-node>
+   <end-state name="TheEnd" />
+</process-definition>
+
+
+
+
+<process-definition name="StartTaskTest">
+   <swimlane name="INITIATOR" />
+   <start-state name="start">
+      <task swimlane="INITIATOR" />
+      <transition to="Task1" />
+   </start-state>
+
+   <task-node name="Task1">
+      <task name="t2" swimlane="INITIATOR">
+         <controller class="com.arag.workflow.task.TaskController">
+			<flowId>t1-flow</flowId>
+         </controller>      
+      </task>
+      <transition to="TheEnd" />
+   </task-node>
+   <end-state name="TheEnd" />
+</process-definition>
+
+
+<process-definition name="TimerTest">
+   <swimlane name="test lane">
+      <assignment pooled-actors="ROLE_USER" />
+   </swimlane>
+   <start-state name="start">
+      <transition to="Task2" />
+   </start-state>
+   <task-node name="Task2">
+      <task name="t2" swimlane="test lane" duedate="3 business minutes">
+         <controller class="com.arag.workflow.task.TaskController">
+			<flowId>t1-flow</flowId>
+         </controller>         
+         <timer name="theTimer" duedate='3 business minutes' repeat='1 business minutes'>
+            <action class="com.arag.workflow.example.TimerAction" />
+         </timer>
+      </task>
+      <transition to="TheEnd" />
+   </task-node>
+   <end-state name="TheEnd" />
+</process-definition>
+

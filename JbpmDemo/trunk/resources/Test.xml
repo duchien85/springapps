@@ -1,0 +1,13 @@
+<process-definition name="Test">
+    
+    <start-state name="TheStart">
+        <transition to="State1" />
+    </start-state>
+
+    <state name="State1">
+        <transition to="TheEnd" />
+    </state>
+
+    <end-state name="TheEnd" />
+    
+</process-definition>
