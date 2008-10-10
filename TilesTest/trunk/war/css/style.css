@@ -1,0 +1,43 @@
+body {
+	position: relative;
+}
+
+#bd {
+	text-align: left;
+	background-color: #F2F2F2;
+}
+
+#hd,#bd,#ft {
+	border: 1px solid #808080;
+}
+
+#hd {
+	text-align:center;
+	height: 75px;
+}
+
+#hd h1 {
+	font-size: 120%;
+}
+
+#yui-main .yui-b .yui-g{
+	border-left: 2px solid #426FD9;
+	height: 200px;
+	padding: .25em;
+}
+
+#left_nav {
+	background-color: #EDF5FF;
+	border: 2px solid #7D98B8;
+	padding: 0.1 em;
+}
+
+#ft {
+	height: 30px;
+}
+
+#ft p{
+	font-size: small;
+	text-align: center;
+	padding: .5em 0;
+}
