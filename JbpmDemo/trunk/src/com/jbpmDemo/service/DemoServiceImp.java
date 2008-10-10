@@ -72,17 +72,17 @@ public class DemoServiceImp extends BaseService implements DemoService {
 	@Transactional
 	@Override
 	public ProcessInstance startProcess(String name) {
-		return startProcess(name, null, new HashMap<String, Object>());
+		return startProcess(name, new HashMap<String, Object>());
 	}
 
 	@Transactional
 	@Override
-	public ProcessInstance startProcess(final String name, final String businessKey, final Map<String, Object> vars) {
+	public ProcessInstance startProcess(final String name, final Map<String, Object> vars) {
 		return (ProcessInstance) getJbpmTemplate().execute(new JbpmCallback() {
 			@Override
 			public Object doInJbpm(JbpmContext context) throws JbpmException {
 				ProcessDefinition pd = context.getGraphSession().findLatestProcessDefinition(name);
-				ProcessInstance pi = pd.createProcessInstance(vars, businessKey);
+				ProcessInstance pi = pd.createProcessInstance(vars);
 				context.save(pi);
 
 				if (pd.getTaskMgmtDefinition().getStartTask() == null) {

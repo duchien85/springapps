@@ -20,6 +20,6 @@ public interface DemoService {
 
 	ProcessInstance startProcess(String name);
 
-	ProcessInstance startProcess(String name, String businessKey, Map<String, Object> vars);
+	ProcessInstance startProcess(String name, Map<String, Object> vars);
 
 }
