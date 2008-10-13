@@ -4,34 +4,35 @@ import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.jbpm.JbpmConfiguration;
-import org.jbpm.JbpmContext;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.exe.Token;
+import org.jbpm.taskmgmt.exe.PooledActor;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-
-import com.jbpmDemo.service.DemoService;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
-public class UffProcessTest extends AbstractTransactionalJUnit4SpringContextTests implements InitializingBean {
-
-	@Autowired
-	private DemoService demoService;
+public class UffProcessTest extends AbstractJUnit4SpringContextTests implements InitializingBean {
 
 	@Autowired
 	private JbpmConfiguration jbpmConfig;
 
-	private static ProcessDefinition uffProcessDef;
+	private ProcessDefinition uffProcessDef;
+	private ProcessInstance uffProcess;
+	private Token rootToken;
+	private TaskMgmtInstance taskMgmtInstance;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -39,88 +40,151 @@ public class UffProcessTest extends AbstractTransactionalJUnit4SpringContextTest
 		uffProcessDef = ProcessDefinition.parseXmlInputStream(in);
 	}
 
+	@Before
+	public void before() {
+		uffProcess = uffProcessDef.createProcessInstance();
+		rootToken = uffProcess.getRootToken();
+		taskMgmtInstance = uffProcess.getTaskMgmtInstance();
+
+	}
+
+	@After
+	public void after() {
+		uffProcess = null;
+		rootToken = null;
+		taskMgmtInstance = null;
+	}
+
 	@Test
-	public void createUffProcessDefinition() {
-		demoService.saveProcessDefinition(uffProcessDef);
-		ProcessDefinition uffDefinition = demoService.findProcessDefinition(uffProcessDef.getName());
-		assertNotNull(uffDefinition);
+	public void processCreated() {
+		assertTrue(rootToken.getNode().getName().equals("start"));
 	}
 
 	@Test
 	public void startUffProcess() {
-		demoService.saveProcessDefinition(uffProcessDef);
-		ProcessInstance uffProcess = demoService.startProcess(uffProcessDef.getName());
-		assertEquals(uffProcess.getRootToken().getNode().getName(), "IT Work");
+		uffProcess.signal();
+		assertTrue(rootToken.getNode().getName().equals("IT Work"));
+		Collection tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		assertTrue(taskMgmtInstance.hasBlockingTaskInstances(rootToken));
+		assertEquals(tasks.size(), 1);
+		TaskInstance itTask = (TaskInstance) CollectionUtils.get(tasks, 0);
+		assertNull(itTask.getActorId());
+		Set pooledActors = itTask.getPooledActors();
+		assertEquals(pooledActors.size(), 1);
+		PooledActor pa = (PooledActor) CollectionUtils.get(pooledActors, 0);
+		assertEquals(pa.getActorId(), "ROLE_SG ELIGIBILITY OPERATIONS");
 	}
 
 	@Test
-	public void transitionUffProcess() {
-		demoService.saveProcessDefinition(uffProcessDef);
-		ProcessInstance uffProcess = demoService.startProcess(uffProcessDef.getName());
-		uffProcess.signal("Transfer to ET");
-		assertEquals(uffProcess.getRootToken().getNode().getName(), "ET Work");
+	public void moveFromItToEtAfterTaskComplete() {
+		uffProcess.signal();
+		Collection tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		assertTrue(taskMgmtInstance.hasBlockingTaskInstances(rootToken));
+		assertEquals(tasks.size(), 1);
+		TaskInstance itTask = (TaskInstance) CollectionUtils.get(tasks, 0);
+		assertTrue(itTask.getName().equals("Unprocessed Ftp Files Exist"));
+		itTask.end("Transfer to ET");
+		assertEquals(rootToken.getNode().getName(), "ET Work");
 
-		uffProcess.signal("Transfer to IT");
-		assertEquals(uffProcess.getRootToken().getNode().getName(), "IT Work");
+		tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		assertTrue(taskMgmtInstance.hasBlockingTaskInstances(rootToken));
+		assertEquals(tasks.size(), 1);
+		itTask = (TaskInstance) CollectionUtils.get(tasks, 0);
+		assertTrue(itTask.getName().equals("Unprocessed Ftp Files Exist"));
 
-		uffProcess.signal("Transfer to ET");
-		assertEquals(uffProcess.getRootToken().getNode().getName(), "ET Work");
-
-		demoService.saveProcessInstance(uffProcess);
-
-		ProcessInstance newUffProcess = demoService.findProcessInstances(uffProcessDef.getName()).get(0);
-		assertNotNull(newUffProcess);
-		assertEquals(newUffProcess.getRootToken().getNode().getName(), "ET Work");
-
+		Set pooledActors = itTask.getPooledActors();
+		assertEquals(pooledActors.size(), 1);
+		PooledActor pa = (PooledActor) CollectionUtils.get(pooledActors, 0);
+		assertEquals(pa.getActorId(), "ROLE_SG ELIGIBILITY TEAM");
 	}
 
-	@Test
-	public void completeUffProcess() {
-		demoService.saveProcessDefinition(uffProcessDef);
-		ProcessInstance uffProcess = demoService.startProcess(uffProcessDef.getName());
+	@Test(expected = Exception.class)
+	public void moveFromItToEtBeforeTaskComplete() {
+		uffProcess.signal();
+		uffProcess.signal("Transfer to ET");
+	}
+
+	@Test(expected = Exception.class)
+	public void moveFromItToFinishedBeforeTaskComplete() {
+		uffProcess.signal();
 		uffProcess.signal("Finished");
-		assertEquals(uffProcess.getRootToken().getNode().getName(), "end");
-		assertTrue(uffProcess.hasEnded());
 	}
 
 	@Test
-	public void taskManagement() {
-		demoService.saveProcessDefinition(uffProcessDef);
-		ProcessInstance uffProcess = demoService.startProcess(uffProcessDef.getName());
-		demoService.saveProcessInstance(uffProcess);
-		Token token = uffProcess.getRootToken();
+	public void ItFinish() {
+		uffProcess.signal();
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 0);
+		ti.end("Finished");
+		assertEquals(rootToken.getNode().getName(), "end");
+		assertEquals(taskMgmtInstance.getUnfinishedTasks(rootToken).size(), 0);
+		assertFalse(taskMgmtInstance.hasBlockingTaskInstances(rootToken));
+	}
 
-		TaskMgmtInstance taskMgmtInst = uffProcess.getTaskMgmtInstance();
-		Collection<TaskInstance> taskInstances = taskMgmtInst.getTaskInstances();
-		logger.debug("Tasks after saving of new process instance: ");
-		printTaskInstances(taskInstances);
-		logger.debug("\n\n");
-		assertEquals(1, taskInstances.size());
+	@Test(expected = Exception.class)
+	public void EtFinishBeforeTaskComplete() {
+		uffProcess.signal();
+		Collection tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		TaskInstance itTask = (TaskInstance) CollectionUtils.get(tasks, 0);
+		itTask.end("Transfer to ET");
+		assertEquals(rootToken.getNode().getName(), "ET Work");
+		uffProcess.signal("Finish");
+	}
 
-		JbpmContext jbpmContext = jbpmConfig.createJbpmContext();
-		List<TaskInstance> itTaskList = jbpmContext.getTaskList("IT");
-		logger.debug("Num of IT Task: " + itTaskList.size());
-		assertEquals(itTaskList.size(), 1);
+	@Test
+	public void moveFromEtToCm() {
+		uffProcess.signal();
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 0);
+		ti.end("Transfer to ET");
+		ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 0);
+		ti.end("Transfer to CM");
+		assertEquals(rootToken.getNode().getName(), "CM Work");
 
-		// move to ET
-		uffProcess.signal("Transfer to ET");
-		taskInstances = taskMgmtInst.getTaskInstances();
-		logger.debug("Tasks after moving to ET w/o Saving");
-		printTaskInstances(taskInstances);
-		logger.debug("\n\n");
-		assertEquals(2, taskInstances.size());
-		List<TaskInstance> etTaskList = jbpmConfig.getCurrentJbpmContext().getTaskList("ET");
-		logger.debug("Num of ET Task: " + etTaskList.size());
-		assertEquals(etTaskList.size(), 1);
+		Collection tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		assertTrue(taskMgmtInstance.hasBlockingTaskInstances(rootToken));
+		assertEquals(tasks.size(), 1);
+		ti = (TaskInstance) CollectionUtils.get(tasks, 0);
+		assertTrue(ti.getName().equals("Unprocessed Ftp Files Exist"));
 
-		// move back to IT - should not create new task instances
-		uffProcess.signal("Transfer to IT");
-		taskInstances = taskMgmtInst.getTaskInstances();
-		assertEquals(3, taskInstances.size());
+		Set pooledActors = ti.getPooledActors();
+		assertEquals(pooledActors.size(), 1);
+		PooledActor pa = (PooledActor) CollectionUtils.get(pooledActors, 0);
+		assertEquals(pa.getActorId(), "ROLE_SG CLIENT MGMT");
 
-		itTaskList = jbpmConfig.getCurrentJbpmContext().getTaskList("IT");
-		logger.debug("Num of IT Task: " + itTaskList.size());
-		assertEquals(itTaskList.size(), 1);
+	}
+
+	@Test(expected = Exception.class)
+	public void moveFromItToCM() {
+		uffProcess.signal();
+		Collection tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(tasks, 0);
+		ti.end("Transfer to CM");
+	}
+
+	@Test(expected = Exception.class)
+	public void moveBackToItFromEt() {
+		uffProcess.signal();
+		Collection tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(tasks, 0);
+		ti.end("Transfer to ET");
+
+		tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		ti = (TaskInstance) CollectionUtils.get(tasks, 0);
+		ti.end("Transfer to IT");
+	}
+
+	@Test
+	public void EtFinish() {
+		uffProcess.signal();
+		Collection tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(tasks, 0);
+		ti.end("Transfer to ET");
+
+		tasks = taskMgmtInstance.getUnfinishedTasks(rootToken);
+		ti = (TaskInstance) CollectionUtils.get(tasks, 0);
+		ti.end("Finished");
+		assertEquals(rootToken.getNode().getName(), "end");
+		assertEquals(taskMgmtInstance.getUnfinishedTasks(rootToken).size(), 0);
+		assertFalse(taskMgmtInstance.hasBlockingTaskInstances(rootToken));
 	}
 
 	private void printTaskInstances(Collection<TaskInstance> taskInstances) {
@@ -151,4 +215,5 @@ public class UffProcessTest extends AbstractTransactionalJUnit4SpringContextTest
 			++count;
 		}
 	}
+
 }
