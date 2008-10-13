@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
 import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
@@ -28,20 +28,12 @@ public class JerseyTestController {
 	@Autowired
 	private DemoService demoService;
 
-	@GET
-	@Produces("text/plain")
-	public String startEpiGet(@QueryParam("eventType") Long eventType) throws UnsupportedEncodingException {
-		logger.debug("Got to jerseyTestController @GET");
-		logger.debug("EventType: " + eventType);
-		return "GET Successful";
-	}
-
 	@POST
+	@Consumes("application/x-www-form-urlencoded")
 	@Produces("text/plain")
-	public String startEpiPost(String fileList) throws UnsupportedEncodingException, IOException {
+	public String startEpiPost(@FormParam("fileList") String fileList) throws UnsupportedEncodingException, IOException {
 		logger.debug("Got to jerseyTestController @POST");
-		String filtered = filterFileList(fileList);
-		logger.debug(filtered);
+		logger.debug("fileList: " + fileList);
 		return "POST Successful";
 	}
 
