@@ -1,33 +1,60 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<process-definition xmlns="urn:jbpm.org:jpdl-3.2" name="unprocessed_ftp_files">
+<process-definition name="EPI-UnprocessedFtpFiles">
 
-    <start-state name="start">
-        <transition to="IT Work"/>
-    </start-state>
+	<start-state name="start">
+		<transition to="IT Work" />
+	</start-state>
 
-    <task-node name="IT Work" >
-        <task blocking="true" name="Unprocessed Ftp Files Exist" >
-            <assignment pooled-actors="ROLE_SG ELIGIBILITY OPERATIONS"/>
-        </task>
-        <transition name="Finished" to="end" />
-      	<transition name="Transfer to ET" to="ET Work" />
-        
-    </task-node>
+	<task-node name="IT Work">
+		<task name="Unprocessed Ftp Files Exist">
+			<assignment pooled-actors="ROLE_SG ELIGIBILITY OPERATIONS" />
+			<controller class="com.arag.workflow.process.TaskController">
+				<flowId>epi-flow</flowId>
+				<displayName>${taskInstance.task.name} - ${epi.issueDate?string("MM/dd/yyyy")}</displayName>
+				<transitions>
+					<transition name="Finished" confirm="true" confirmText="Are you sure you are finished with this EPI?" />
+					<transition name="Transfer to ET" displayName="Transfer to Enrollment" />
+					<transition name="Transfer to CM" displayName="Transfer to Client Management" />
+				</transitions>
+			</controller>
+		</task>
+		<transition name="Finished" to="end" />
+		<transition name="Transfer to ET" to="ET Work" />
+		<transition name="Transfer to CM" to="CM Work" />
+	</task-node>
 
-    <task-node name="ET Work">
-        <task blocking="true" name="Unprocessed Ftp Files Exist" >
-        	<assignment pooled-actors="ROLE_SG ELIGIBILITY TEAM" />
-        </task>
-        <transition name="Finished" to="end"/>
-        <transition name="Transfer to CM" to="CM Work"/>
-    </task-node>
-    
-    <task-node name="CM Work" >
-    	<task blocking="true" name="Unprocessed Ftp Files Exist" >
-            <assignment pooled-actors="ROLE_SG CLIENT MGMT"/>
-        </task>
-        <transition name="Transfer to ET" to="ET Work"/>
-    </task-node>
+	<task-node name="ET Work">
+		<task name="Unprocessed Ftp Files Exist">
+			<assignment pooled-actors="ROLE_SG ELIGIBILITY TEAM" />
+			<controller class="com.arag.workflow.process.TaskController">
+				<flowId>epi-flow</flowId>
+				<displayName>${taskInstance.task.name} - ${epi.issueDate?string("MM/dd/yyyy")}</displayName>
+				<transitions>
+					<transition name="Finished" confirm="true" confirmText="Are you sure you are finished with this EPI?" />
+					<transition name="Transfer to IT" displayName="Transfer to IT" />
+					<transition name="Transfer to CM" displayName="Transfer to Client Management" />
+				</transitions>
+			</controller>
+		</task>
+		<transition name="Finished" to="end" />
+		<transition name="Transfer to IT" to="IT Work" />
+		<transition name="Transfer to CM" to="CM Work" />
+	</task-node>
 
-    <end-state name="end"/>
+	<task-node name="CM Work">
+		<task name="Unprocessed Ftp Files Exist">
+			<assignment pooled-actors="ROLE_SG CLIENT MGMT" />
+			<controller class="com.arag.workflow.process.TaskController">
+				<flowId>epi-flow</flowId>
+				<displayName>${taskInstance.task.name} - ${epi.issueDate?string("MM/dd/yyyy")}</displayName>
+				<transitions>
+					<transition name="Transfer to ET" displayName="Transfer to Enrollment" />
+					<transition name="Transfer to IT" displayName="Transfer to IT" />
+				</transitions>
+			</controller>
+		</task>
+		<transition name="Transfer to ET" to="ET Work" />
+		<transition name="Transfer to IT" to="IT Work" />
+	</task-node>
+
+	<end-state name="end" />
 </process-definition>
