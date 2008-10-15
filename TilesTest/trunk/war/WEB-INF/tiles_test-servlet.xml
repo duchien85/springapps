@@ -5,6 +5,8 @@
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
+	<context:component-scan base-package="com.studerb.web"/>
+	
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
 			p:basename="messages"/>
 	
@@ -22,12 +24,19 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+	<!-- 
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="order" value="0"/>
     </bean>
+    -->
+    
+    <!-- 
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+	 -->
+	
         
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
-		    <property name="order" value="1"/>
+		    <property name="order" value="0"/>
 	</bean>
 		
 			
@@ -48,6 +57,7 @@
 	<!-- Controllers -->
 
 	<bean id="welcomeController" class="com.studerb.web.controllers.WelcomeController" p:cacheSeconds="120" /> 
+	<bean id="widgetController" class="com.studerb.web.controllers.widget.ListController" /> 
 
 
 </beans>

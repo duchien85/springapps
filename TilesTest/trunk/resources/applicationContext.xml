@@ -18,8 +18,6 @@
 		
 		<context:property-placeholder location="classpath:tilestest.properties, classpath:hibernate/hibernate.properties"/>
 		
-		
-		
 		<import resource="classpath:db-context.xml"/>
 	
 		<bean id="widgetDao" class="com.studerb.dao.WidgetDao" p:tableName="widget"/>			

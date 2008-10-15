@@ -9,8 +9,8 @@ import org.joda.time.DateTime;
 public class Widget {
 
 	private Long id;
-	private String name;
-	private DateTime time;
+	private String widgetName;
+	private DateTime initialTime;
 	private BigDecimal price;
 	private Boolean cool;
 
@@ -18,11 +18,11 @@ public class Widget {
 
 	public static Widget createRandomWidget() {
 		Widget widget = new Widget();
-		widget.setName(RandomStringUtils.randomAlphabetic(20));
+		widget.setWidgetName(RandomStringUtils.randomAlphabetic(20));
 		String whole = String.valueOf(RandomUtils.nextInt());
 		String fractional = String.valueOf(RandomUtils.nextInt(100));
 		widget.setPrice(new BigDecimal(whole + "." + fractional));
-		widget.setTime(new DateTime());
+		widget.setInitialTime(new DateTime());
 		widget.setCool(RandomUtils.nextBoolean());
 		return widget;
 	}
@@ -39,12 +39,12 @@ public class Widget {
 			return false;
 		}
 		Widget other = (Widget) obj;
-		if (name == null) {
-			if (other.name != null) {
+		if (widgetName == null) {
+			if (other.widgetName != null) {
 				return false;
 			}
 		}
-		else if (!name.equals(other.name)) {
+		else if (!widgetName.equals(other.widgetName)) {
 			return false;
 		}
 		return true;
@@ -54,23 +54,23 @@ public class Widget {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getWidgetName() {
+		return widgetName;
 	}
 
 	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public DateTime getTime() {
-		return time;
+	public DateTime getInitialTime() {
+		return initialTime;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (name == null ? 0 : name.hashCode());
+		result = prime * result + (widgetName == null ? 0 : widgetName.hashCode());
 		return result;
 	}
 
@@ -86,11 +86,11 @@ public class Widget {
 		this.id = id;
 	}
 
-	public void setName(String name) {
+	public void setWidgetName(String name) {
 		if (name.length() > MAX_NAME_LENGTH) {
 			throw new IllegalArgumentException("name: " + name + " longer than max length: " + MAX_NAME_LENGTH);
 		}
-		this.name = name;
+		this.widgetName = name;
 	}
 
 	public void setPrice(BigDecimal price) {
@@ -100,13 +100,13 @@ public class Widget {
 		this.price = price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 	}
 
-	public void setTime(DateTime time) {
-		this.time = time;
+	public void setInitialTime(DateTime time) {
+		this.initialTime = time;
 	}
 
 	@Override
 	public String toString() {
-		return name;
+		return widgetName;
 	}
 
 }

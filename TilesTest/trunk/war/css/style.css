@@ -1,7 +1,15 @@
 body {
 	position: relative;
+	background-color: transparent;
+	background-image: url(../images/kubrickbgcolor.jpg);
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-position: 0 0;
 }
 
+#doc2 {
+		background-color: white;
+}
 #bd {
 	text-align: left;
 	background-color: #F2F2F2;
