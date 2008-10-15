@@ -1,6 +1,7 @@
 package com.studerb.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,12 @@ public class DefaultWidgetService implements WidgetService {
 	public void saveOrUpdate(Widget widget) {
 		logger.debug("Saving/Updating widget: " + widget.toString());
 		widgetDao.saveOrUpdate(widget);
+	}
+
+	@Override
+	public List<Widget> findAll() {
+		List<Widget> widgets = widgetDao.getAll();
+		logger.debug("fetched " + widgets.size() + " widgets");
+		return widgets;
 	}
 }

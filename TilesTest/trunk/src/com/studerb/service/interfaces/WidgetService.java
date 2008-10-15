@@ -1,6 +1,7 @@
 package com.studerb.service.interfaces;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.studerb.model.Widget;
 
@@ -35,5 +36,10 @@ public interface WidgetService {
 	 * @param widget
 	 */
 	void saveOrUpdate(Widget widget);
+
+	/**
+	 * @return list of all widgets
+	 */
+	List<Widget> findAll();
 
 }
