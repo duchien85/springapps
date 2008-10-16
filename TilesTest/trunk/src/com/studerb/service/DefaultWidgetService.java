@@ -24,11 +24,13 @@ public class DefaultWidgetService implements WidgetService {
 	 * @see com.studerb.service.WidgetService#delete(com.studerb.model.Widget)
 	 */
 	@Transactional
+	@Override
 	public void delete(Widget widget) {
 		logger.debug("Deleting widget: " + widget.toString());
 		widgetDao.delete(widget);
 	}
 
+	@Transactional
 	@Override
 	public int deleteAll(Collection<Widget> widget) {
 		return widgetDao.deleteAll();
@@ -40,9 +42,10 @@ public class DefaultWidgetService implements WidgetService {
 	 * @see com.studerb.service.WidgetService#find(java.lang.Long)
 	 */
 	@Transactional(readOnly = true)
-	public Widget find(Long id) {
+	@Override
+	public Widget get(Long id) {
 		logger.debug("Finding widget with id: " + id);
-		return widgetDao.read(id);
+		return widgetDao.get(id);
 	}
 
 	/*
@@ -52,13 +55,15 @@ public class DefaultWidgetService implements WidgetService {
 	 * com.studerb.service.WidgetService#saveOrUpdate(com.studerb.model.Widget)
 	 */
 	@Transactional
+	@Override
 	public void saveOrUpdate(Widget widget) {
 		logger.debug("Saving/Updating widget: " + widget.toString());
 		widgetDao.saveOrUpdate(widget);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
-	public List<Widget> findAll() {
+	public List<Widget> getAll() {
 		List<Widget> widgets = widgetDao.getAll();
 		logger.debug("fetched " + widgets.size() + " widgets");
 		return widgets;

@@ -28,7 +28,7 @@ public interface WidgetService {
 	 * @param id
 	 * @return
 	 */
-	Widget find(Long id);
+	Widget get(Long id);
 
 	/**
 	 * Save or update the widget
@@ -40,6 +40,6 @@ public interface WidgetService {
 	/**
 	 * @return list of all widgets
 	 */
-	List<Widget> findAll();
+	List<Widget> getAll();
 
 }

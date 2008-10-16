@@ -1,15 +1,16 @@
 package com.studerb.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.joda.time.DateTime;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
@@ -18,6 +19,7 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 	protected final Logger logger;
 	protected Class<T> persistentClass;
 	protected String tableName;
+	@Autowired
 	private SimpleJdbcTemplate simpleJdbcTemplate;
 	@Autowired
 	protected SessionFactory sessionFactory;
@@ -28,21 +30,13 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 	}
 
 	@Override
-	public void batchInsert(List<T> entities) {
-		this.logger.debug("Batch persisting " + entities.size() + " entities of type: " + this.persistentClass.getSimpleName());
-		for (T entity : entities) {
-			getCurrentSession().persist(entity);
-		}
-	}
-
-	@Override
 	public void clear() {
 		this.logger.debug("clearing cache");
 		getCurrentSession().clear();
 	}
 
 	@Override
-	public Long create(T entity) {
+	public Long save(T entity) {
 		// set created field
 		this.logger.debug("saving: " + entity);
 		return (Long) getCurrentSession().save(entity);
@@ -56,23 +50,9 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
 	@Override
 	public int deleteAll() {
-		Query q = getCurrentSession().createQuery("delete from " + this.tableName);
-		int count = q.executeUpdate();
+		int count = simpleJdbcTemplate.update("delete from " + this.tableName);
 		this.logger.info("Deleted All {" + count + "} from " + this.tableName);
 		return count;
-	}
-
-	/**
-	 * Delete all entities whose lastUpdated field is before the passed datetime
-	 * parameter
-	 * 
-	 * @param before
-	 *            instance in time entity was lastUpdated
-	 */
-	@Override
-	public int deleteAllBefore(DateTime before) {
-		String sql = "delete from " + this.tableName + " where LAST_UPDATED < ?";
-		return this.simpleJdbcTemplate.update(sql, before);
 	}
 
 	@Override
@@ -91,8 +71,17 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 	@Override
 	public List<T> getAllByOrder(String orderBy, String orderDir) {
 		this.logger.debug("getting all " + this.tableName + " by order: " + orderBy + " / " + orderDir);
-		Query q = getCurrentSession().createQuery("from " + this.persistentClass.getName() + " order by " + orderBy + " " + orderDir);
-		return q.list();
+		Criteria c = getCurrentSession().createCriteria(persistentClass);
+		if (orderDir.equalsIgnoreCase("asc")) {
+			c.addOrder(Order.asc(orderBy));
+		}
+		else if (orderDir.equalsIgnoreCase("desc")) {
+			c.addOrder(Order.desc(orderBy));
+		}
+		else {
+			throw new IllegalArgumentException("Bad sort order: " + orderBy);
+		}
+		return c.list();
 	}
 
 	@Override
@@ -102,32 +91,39 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 	}
 
 	@Override
-	public Session getCurrentSession() {
-		return this.sessionFactory.getCurrentSession();
-	}
-
-	@Override
-	public T read(Long id) {
+	public T get(Long id) {
 		this.logger.debug("reading " + this.tableName + " - " + id);
 		return (T) getCurrentSession().get(this.persistentClass, id);
 	}
 
+	@Override
 	public void saveOrUpdate(T entity) {
 		this.logger.debug("Saving/Updating " + entity);
 		getCurrentSession().saveOrUpdate(entity);
 	}
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
-	}
-
+	@Override
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
 
+	@Override
 	public void update(T entity) {
 		this.logger.debug("updating " + entity);
 		getCurrentSession().update(entity);
 	}
+
+	@Override
+	public void saveOrUpdateAll(Collection<T> entities) {
+		logger.debug("Saving/Updating all " + entities.size() + " " + persistentClass.getSimpleName());
+		Iterator<T> iterator = entities.iterator();
+		while (iterator.hasNext()) {
+			getCurrentSession().saveOrUpdate(iterator.next());
+		}
+	}
+
+	protected Session getCurrentSession() {
+		return this.sessionFactory.getCurrentSession();
+	}
+
 }
