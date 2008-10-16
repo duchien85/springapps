@@ -49,3 +49,9 @@ body {
 	text-align: center;
 	padding: .5em 0;
 }
+
+.error {
+	color: red;
+	border: 1px thin red;
+	padding: 1em;
+}

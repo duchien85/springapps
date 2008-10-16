@@ -10,8 +10,7 @@ public class WidgetController {
 	Logger logger = Logger.getLogger(WidgetController.class);
 
 	@RequestMapping("list.htm")
-	public String setupForm(ModelMap model) {
-		logger.debug("Got input param: ");
+	public String list(ModelMap model) {
 		return "widget/list";
 	}
 

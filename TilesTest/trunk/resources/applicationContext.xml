@@ -21,6 +21,5 @@
 		<import resource="classpath:db-context.xml"/>
 	
 		<bean id="widgetDao" class="com.studerb.dao.WidgetDao" p:tableName="widget"/>			
-		<bean id="widgetService" class="com.studerb.service.DefaultWidgetService" />
 
 </beans>
