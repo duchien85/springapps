@@ -2,4 +2,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<h2>Spring MVC 2.5 Annotated Form Test</h2>
+<h2>Widget List</h2>

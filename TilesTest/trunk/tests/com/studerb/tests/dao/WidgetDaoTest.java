@@ -86,10 +86,10 @@ public class WidgetDaoTest {
 		public Object mapRow(ResultSet rs, int row) throws SQLException {
 			Widget widget = new Widget();
 			widget.setId(rs.getLong("id"));
-			widget.setName(rs.getString("name"));
+			widget.setWidgetName(rs.getString("name"));
 			widget.setCool(rs.getBoolean("cool"));
 			widget.setPrice(new BigDecimal(rs.getDouble("price")));
-			widget.setTime((DateTime) rs.getObject("time"));
+			widget.setInitialTime((DateTime) rs.getObject("time"));
 			return widget;
 		}
 	}

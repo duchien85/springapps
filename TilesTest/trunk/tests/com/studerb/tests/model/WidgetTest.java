@@ -33,7 +33,7 @@ public class WidgetTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNameTooLong() {
-		widget.setName(RandomStringUtils.random(51));
+		widget.setWidgetName(RandomStringUtils.random(51));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

@@ -5,7 +5,10 @@
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	<context:component-scan base-package="com.studerb.web"/>
+		
+	<context:component-scan base-package="com.studerb.web.controllers" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 	
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
 			p:basename="messages"/>
@@ -19,26 +22,21 @@
 		</property>
 	</bean>
 	
+	<!-- Enables convention-based request URL mapping to @Controllers e.g. /hotels/* maps to HotelsController -->
+	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+		<property name="order" value="1"/>
+	</bean>	
 	
-    <context:component-scan base-package="com.studerb.web.controllers" use-default-filters="false">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-
-	<!-- 
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="order" value="0"/>
-    </bean>
-    -->
-    
-    <!-- 
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
-	 -->
+    <!-- Maps all other request URLs to views -->			
+	<bean id="viewMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="defaultHandler">
+			<!-- Selects view names to render based on the request URI: e.g. the "/intro" URL would map to the view named "intro" -->	
+			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+		</property>
+		<property name="order" value="2"/>
+	</bean>
 	
         
-	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
-		    <property name="order" value="0"/>
-	</bean>
-		
 			
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
@@ -53,11 +51,12 @@
         </property>
     </bean>
     
-	
-	<!-- Controllers -->
+    	<!-- Enables annotated POJO @Controllers -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<!-- Enables plain Controllers -->
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 
 	<bean id="welcomeController" class="com.studerb.web.controllers.WelcomeController" p:cacheSeconds="120" /> 
-	<bean id="widgetController" class="com.studerb.web.controllers.widget.ListController" /> 
-
 
 </beans>
