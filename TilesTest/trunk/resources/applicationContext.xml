@@ -11,6 +11,7 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 		<context:annotation-config/>
+		
 
 		<tx:annotation-driven />
 		
@@ -20,6 +21,7 @@
 		
 		<import resource="classpath:db-context.xml"/>
 	
-		<bean id="widgetDao" class="com.studerb.dao.WidgetDao" p:tableName="widget"/>			
+		<bean id="widgetDao" class="com.studerb.dao.WidgetDao" p:tableName="widget"/>
+		<bean id="widgetService" class="com.studerb.service.DefaultWidgetService" />			
 
 </beans>

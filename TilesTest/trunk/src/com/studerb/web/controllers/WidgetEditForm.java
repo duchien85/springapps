@@ -14,7 +14,7 @@ import com.studerb.model.Widget;
 import com.studerb.service.interfaces.WidgetService;
 
 @Controller
-@RequestMapping("/widget/edit")
+@RequestMapping("/widgets/edit")
 @SessionAttributes(types = Widget.class)
 public class WidgetEditForm {
 
