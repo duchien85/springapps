@@ -1,9 +1,6 @@
 package com.studerb.web.controllers;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -23,12 +20,11 @@ public class JerseyWebService {
 		return "some text";
 	}
 
-	@POST
-	@Produces("text/plain")
-	@Consumes("text/plain")
-	public String getFileList(@FormParam("fileName") String fileName, String fileList) {
-		logger.debug("FileName: " + fileName);
-		logger.debug("body: " + fileList);
-		return "0";
-	}
+	/*
+	 * @POST
+	 * 
+	 * @Produces("text/plain") public String doPost(@FormParam("fileName")
+	 * String fileName, String fileList) { logger.debug("FileName: " +
+	 * fileName); logger.debug("body: " + fileList); return "0"; }
+	 */
 }

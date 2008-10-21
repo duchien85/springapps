@@ -12,7 +12,7 @@ import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
 import com.studerb.service.interfaces.WidgetService;
 
-@Service
+@Service("widgetService")
 public class DefaultWidgetService implements WidgetService {
 	Logger logger = Logger.getLogger(DefaultWidgetService.class);
 	@Autowired

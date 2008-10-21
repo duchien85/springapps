@@ -1,4 +1,5 @@
-<h2/>Internal error</h2>
+
+<%@page import="org.apache.commons.lang.exception.ExceptionUtils"%><h2/>Internal error</h2>
 
 
 <% 
@@ -13,7 +14,9 @@ try {
 			Throwable rootCause = sex.getRootCause();
 			if (rootCause == null)
 				rootCause = sex;
-			out.println("** Root cause is: "+ rootCause.getMessage());
+			out.println("<pre>");
+			out.println(ExceptionUtils.getRootCauseMessage(rootCause));
+			out.println("<p>-------------------</p><p></p>");
 			rootCause.printStackTrace(new java.io.PrintWriter(out)); 
 		}
 		else {
@@ -24,6 +27,7 @@ try {
 	else  {
     	out.println("No error information available");
 	} 
+	
 
 	// Display cookies
 	out.println("\nCookies:\n");
@@ -33,7 +37,7 @@ try {
       		out.println(cookies[i].getName() + "=[" + cookies[i].getValue() + "]");
 		}
 	}
-	    
+	out.println("</pre>");
 } catch (Exception ex) { 
 	ex.printStackTrace(new java.io.PrintWriter(out));
 }

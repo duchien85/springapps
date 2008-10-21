@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.studerb.model.Widget;
 
-@Repository
+@Repository("widgetDao")
 public class WidgetDao extends AbstractHibernateDao<Widget> implements DaoInterface<Widget> {
 
 }
