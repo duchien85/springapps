@@ -1,12 +1,11 @@
-
-<%@page import="org.apache.commons.lang.exception.ExceptionUtils"%><h2/>Internal error</h2>
+<h2/>Internal error</h2>
 
 
 <% 
 try {
 	// The Servlet spec guarantees this attribute will be available
 	Throwable exception = (Throwable) request.getAttribute("javax.servlet.error.exception"); 
-
+	out.println("<pre>");
 	if (exception != null) {
 		if (exception instanceof ServletException) {
 			// It's a ServletException: we should extract the root cause
@@ -14,9 +13,7 @@ try {
 			Throwable rootCause = sex.getRootCause();
 			if (rootCause == null)
 				rootCause = sex;
-			out.println("<pre>");
-			out.println(ExceptionUtils.getRootCauseMessage(rootCause));
-			out.println("<p>-------------------</p><p></p>");
+			out.println("** Root cause is: "+ rootCause.getMessage());
 			rootCause.printStackTrace(new java.io.PrintWriter(out)); 
 		}
 		else {
@@ -27,7 +24,6 @@ try {
 	else  {
     	out.println("No error information available");
 	} 
-	
 
 	// Display cookies
 	out.println("\nCookies:\n");
@@ -38,6 +34,7 @@ try {
 		}
 	}
 	out.println("</pre>");
+	    
 } catch (Exception ex) { 
 	ex.printStackTrace(new java.io.PrintWriter(out));
 }

@@ -7,6 +7,10 @@ body {
 	background-position: 0 0;
 }
 
+table {
+	border: none;
+	outline: none;
+}
 #doc2 {
 		background-color: white;
 }
@@ -30,7 +34,7 @@ body {
 
 #yui-main .yui-b .yui-g{
 	border-left: 2px solid #426FD9;
-	height: 200px;
+	/*height: 200px;*/
 	padding: .25em;
 }
 

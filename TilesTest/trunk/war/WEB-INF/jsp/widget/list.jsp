@@ -3,3 +3,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <h2>${message}</h2>
+
+<a href="<c:url value="/widget/add.htm"/>">Add a Widget</a>

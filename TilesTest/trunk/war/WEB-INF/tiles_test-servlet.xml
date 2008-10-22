@@ -5,14 +5,17 @@
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	<!-- Activates annotation-based bean configuration -->
-	<context:annotation-config />
 	
-	<!-- Scans for application @Components to deploy -->
-	<context:component-scan base-package="com.studerb.web" />
+	 <context:component-scan base-package="com.studerb.web.controllers" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
-			p:basename="messages"/>
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basename="messages"/> 
+	
+	<!-- <context:component-scan base-package="com.studerb.web.controllers"/>-->
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"  p:order="0"/>
+		
 	
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
@@ -23,31 +26,37 @@
 		</property>
 	</bean>	
 	
-		<!-- Enables convention-based request URL mapping to @Controllers e.g. /hotels/* maps to HotelsController -->
-
+	
+	<!-- Enables convention-based request URL mapping to @Controllers e.g. /hotels/* maps to HotelsController -->
+	<!-- 
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
 		<property name="order" value="0"/>
+		<property name="basePackage" value="com.studerb.web.controllers"/>
 	</bean>	
-
+ 	 -->
 
 	<!-- Maps all other request URLs to views -->
-
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="com.studerb.web.util.BindingInitializer"/>
+		</property>
+	</bean>
+	
+	
+	<!-- 
 	<bean id="viewMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="defaultHandler">
-			<!-- Selects view names to render based on the request URI: e.g. the "/intro" URL would map to the view named "intro" -->
 			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
 		</property>
-		<property name="order" value="1"/>
+		<property name="order" value="2"/>
 	</bean>
-
-	    	<!-- Enables annotated POJO @Controllers -->
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
-
+  	-->
 			
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
         <property name="definitions">
             <list>
-                <value>/WEB-INF/jsp/layouts/general.xml</value>
+                <value>/WEB-INF/jsp/layouts/default.xml</value>
             </list>
         </property>
     </bean>
