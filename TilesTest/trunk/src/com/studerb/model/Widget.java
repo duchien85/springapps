@@ -78,6 +78,10 @@ public class Widget {
 		return cool;
 	}
 
+	public Boolean getCool() {
+		return isCool();
+	}
+
 	public void setCool(Boolean cool) {
 		this.cool = cool;
 	}
@@ -90,7 +94,7 @@ public class Widget {
 		if (name.length() > MAX_NAME_LENGTH) {
 			throw new IllegalArgumentException("name: " + name + " longer than max length: " + MAX_NAME_LENGTH);
 		}
-		this.widgetName = name;
+		widgetName = name;
 	}
 
 	public void setPrice(BigDecimal price) {
@@ -101,7 +105,7 @@ public class Widget {
 	}
 
 	public void setInitialTime(DateTime time) {
-		this.initialTime = time;
+		initialTime = time;
 	}
 
 	@Override
