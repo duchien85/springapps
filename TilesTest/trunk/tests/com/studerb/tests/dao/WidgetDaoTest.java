@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Assert;
@@ -184,6 +185,16 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 		widget2.setWidgetName(widget1.getWidgetName());
 		widgetDao.save(widget1);
 		widgetDao.save(widget2);
+	}
+
+	@Test
+	public void testIsNameUsed() {
+		Widget widget1 = Widget.createRandomWidget();
+		widgetDao.save(widget1);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertTrue(widgetDao.isNameUsed(widget1.getWidgetName()));
+		assertFalse(widgetDao.isNameUsed(RandomStringUtils.randomAlphabetic(20)));
 	}
 
 	private static final class WidgetRowMapper implements RowMapper {

@@ -91,17 +91,14 @@ public class Widget {
 	}
 
 	public void setWidgetName(String name) {
-		if (name.length() > MAX_NAME_LENGTH) {
-			throw new IllegalArgumentException("name: " + name + " longer than max length: " + MAX_NAME_LENGTH);
-		}
 		widgetName = name;
 	}
 
 	public void setPrice(BigDecimal price) {
-		if (price.doubleValue() < 0) {
-			throw new IllegalArgumentException("Tried setting price negative");
+		if (price != null) {
+			price = price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 		}
-		this.price = price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+		this.price = price;
 	}
 
 	public void setInitialTime(DateTime time) {

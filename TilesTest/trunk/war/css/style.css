@@ -34,8 +34,12 @@ table {
 
 #yui-main .yui-b .yui-g{
 	border-left: 2px solid #426FD9;
-	/*height: 200px;*/
-	padding: .25em;
+	min-height: 200px;
+	padding: 1em;
+}
+
+#yui-main .yui-b .yui-g table{
+	background-color: #EDF5FF;
 }
 
 #left_nav {

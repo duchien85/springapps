@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.studerb.model.Widget;
 
+/**
+ * @author bstuder
+ * 
+ */
 public interface WidgetService {
 
 	/**
@@ -35,11 +39,18 @@ public interface WidgetService {
 	 * 
 	 * @param widget
 	 */
-	void saveOrUpdate(Widget widget);
+	void saveOrUpdate(Widget widget) throws Exception;
 
 	/**
 	 * @return list of all widgets
 	 */
 	List<Widget> getAll();
+
+	/**
+	 * @param widgetName
+	 *            name of widget to test for duplicate
+	 * @return true if some defined widget already has the same name
+	 */
+	Boolean isNameUsed(String widgetName);
 
 }

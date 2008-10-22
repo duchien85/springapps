@@ -15,6 +15,7 @@
 
 	<tx:annotation-driven />
 
+
 	<bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>

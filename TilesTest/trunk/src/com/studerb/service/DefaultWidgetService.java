@@ -15,6 +15,7 @@ import com.studerb.service.interfaces.WidgetService;
 @Service("widgetService")
 public class DefaultWidgetService implements WidgetService {
 	Logger logger = Logger.getLogger(DefaultWidgetService.class);
+
 	@Autowired
 	WidgetDao widgetDao;
 
@@ -56,7 +57,14 @@ public class DefaultWidgetService implements WidgetService {
 	 */
 	@Transactional
 	@Override
-	public void saveOrUpdate(Widget widget) {
+	public void saveOrUpdate(Widget widget) throws Exception {
+		if (widget.getId() == null) { // new widget
+			Boolean nameTaken = widgetDao.isNameUsed(widget.getWidgetName());
+			if (nameTaken) {
+				logger.error("tryign to save duplicate-named widget: " + widget.getWidgetName());
+				throw new Exception("Widget name: " + widget.getWidgetName() + " already used.");
+			}
+		}
 		logger.debug("Saving/Updating widget: " + widget.toString());
 		widgetDao.saveOrUpdate(widget);
 	}
@@ -67,5 +75,13 @@ public class DefaultWidgetService implements WidgetService {
 		List<Widget> widgets = widgetDao.getAll();
 		logger.debug("fetched " + widgets.size() + " widgets");
 		return widgets;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Boolean isNameUsed(String widgetName) {
+		Boolean nameUsed = widgetDao.isNameUsed(widgetName);
+		logger.debug("Widget Name: " + widgetName + " already used: " + nameUsed);
+		return nameUsed;
 	}
 }

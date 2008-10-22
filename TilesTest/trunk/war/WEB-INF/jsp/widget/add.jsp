@@ -24,7 +24,7 @@
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" value="Update Widget"/></td>
+		<td><input type="submit" value="Save Widget"/></td>
 	</tr>
 </table>
 </form:form>
