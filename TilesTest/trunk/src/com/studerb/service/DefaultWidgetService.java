@@ -33,8 +33,21 @@ public class DefaultWidgetService implements WidgetService {
 
 	@Transactional
 	@Override
-	public int deleteAll(Collection<Widget> widget) {
-		return widgetDao.deleteAll();
+	public int deleteAll(Collection<Widget> widgets) {
+		int deleted = 0;
+		for (Widget w : widgets) {
+			widgetDao.delete(w);
+			deleted++;
+		}
+		return deleted;
+	}
+
+	@Transactional
+	@Override
+	public int deleteAllObjects() {
+		int deleted = widgetDao.deleteAll();
+		logger.debug("deleted all: " + deleted + " widgets");
+		return deleted;
 	}
 
 	/*
@@ -57,7 +70,7 @@ public class DefaultWidgetService implements WidgetService {
 	 */
 	@Transactional
 	@Override
-	public void saveOrUpdate(Widget widget) throws Exception {
+	public Long save(Widget widget) throws Exception {
 		if (widget.getId() == null) { // new widget
 			Boolean nameTaken = widgetDao.isNameUsed(widget.getWidgetName());
 			if (nameTaken) {
@@ -65,8 +78,8 @@ public class DefaultWidgetService implements WidgetService {
 				throw new Exception("Widget name: " + widget.getWidgetName() + " already used.");
 			}
 		}
-		logger.debug("Saving/Updating widget: " + widget.toString());
-		widgetDao.saveOrUpdate(widget);
+		logger.debug("Saving widget: " + widget.toString());
+		return widgetDao.save(widget);
 	}
 
 	@Transactional(readOnly = true)
@@ -77,11 +90,11 @@ public class DefaultWidgetService implements WidgetService {
 		return widgets;
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	@Override
-	public Boolean isNameUsed(String widgetName) {
-		Boolean nameUsed = widgetDao.isNameUsed(widgetName);
-		logger.debug("Widget Name: " + widgetName + " already used: " + nameUsed);
-		return nameUsed;
+	public void update(Widget widget) {
+		logger.debug("Updating widget: " + widget.toString());
+		widgetDao.update(widget);
 	}
+
 }

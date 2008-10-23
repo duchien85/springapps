@@ -24,7 +24,7 @@ public class BindingInitializer implements WebBindingInitializer {
 	public void initBinder(WebDataBinder binder, WebRequest request) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false, 10));
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
 	}
 

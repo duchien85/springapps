@@ -5,10 +5,6 @@ import java.util.List;
 
 import com.studerb.model.Widget;
 
-/**
- * @author bstuder
- * 
- */
 public interface WidgetService {
 
 	/**
@@ -24,7 +20,7 @@ public interface WidgetService {
 	 * @param widget
 	 * @return number of widgets deleted
 	 */
-	int deleteAll(Collection<Widget> widget);
+	int deleteAll(Collection<Widget> widgets);
 
 	/**
 	 * fetch the widget
@@ -39,7 +35,7 @@ public interface WidgetService {
 	 * 
 	 * @param widget
 	 */
-	void saveOrUpdate(Widget widget) throws Exception;
+	Long save(Widget widget) throws Exception;
 
 	/**
 	 * @return list of all widgets
@@ -47,10 +43,17 @@ public interface WidgetService {
 	List<Widget> getAll();
 
 	/**
-	 * @param widgetName
-	 *            name of widget to test for duplicate
-	 * @return true if some defined widget already has the same name
+	 * Update a widget
+	 * 
+	 * @param w
 	 */
-	Boolean isNameUsed(String widgetName);
+	void update(Widget w);
+
+	/**
+	 * Delete all widgets from persistence
+	 * 
+	 * @return count of rows deleted
+	 */
+	int deleteAllObjects();
 
 }
