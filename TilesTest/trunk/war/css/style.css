@@ -1,7 +1,8 @@
 body {
 	position: relative;
 	background-color: transparent;
-	background-image: url(../images/kubrickbgcolor.jpg);
+	/*background-image: url(../images/kubrickbgcolor.jpg);*/
+	background-image: url(../images/bodybg.png);
 	background-repeat: repeat;
 	background-attachment: scroll;
 	background-position: 0 0;
@@ -25,7 +26,10 @@ table {
 
 #hd {
 	text-align:center;
-	height: 75px;
+	height: 5em;
+	background-image: url(../images/header_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0;
 }
 
 #hd h1 {
@@ -49,7 +53,10 @@ table {
 }
 
 #ft {
-	height: 30px;
+	height: 3em;
+	background-image: url(../images/header_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0;
 }
 
 #ft p{
