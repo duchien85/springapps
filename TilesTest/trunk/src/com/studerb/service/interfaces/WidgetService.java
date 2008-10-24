@@ -35,7 +35,7 @@ public interface WidgetService {
 	 * 
 	 * @param widget
 	 */
-	Long save(Widget widget) throws Exception;
+	Long save(Widget widget);
 
 	/**
 	 * @return list of all widgets
@@ -55,5 +55,7 @@ public interface WidgetService {
 	 * @return count of rows deleted
 	 */
 	int deleteAllObjects();
+
+	boolean isNameUsed(String name);
 
 }

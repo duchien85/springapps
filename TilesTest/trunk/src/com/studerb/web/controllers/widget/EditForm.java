@@ -15,7 +15,7 @@ import com.studerb.service.interfaces.WidgetService;
 
 @Controller
 @RequestMapping("/widget/edit")
-@SessionAttributes(types = Widget.class)
+@SessionAttributes("widget")
 public class EditForm {
 
 	@Autowired

@@ -106,7 +106,7 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 		widgetDao.clear();
 
 		int deleted = widgetService.deleteAllObjects();
-		assertEquals(deleted, (COUNT * 2) + 1);
+		assertEquals(deleted, COUNT * 2 + 1);
 		widgetDao.flush();
 		widgetDao.clear();
 		assertEquals(0, countRowsInTable("widget"));
@@ -162,6 +162,16 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 		Widget w2 = Widget.createRandomWidget();
 		w2.setWidgetName(w.getWidgetName());
 		widgetService.save(w2);
+	}
+
+	public void testIsNameUsed() throws Exception {
+		Widget w1 = Widget.createRandomWidget();
+		widgetDao.save(w1);
+		widgetDao.flush();
+		widgetDao.clear();
+
+		assertTrue(widgetService.isNameUsed(w1.getWidgetName()));
+		assertFalse(widgetService.isNameUsed("dummy"));
 	}
 
 }

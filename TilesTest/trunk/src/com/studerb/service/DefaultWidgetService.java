@@ -70,14 +70,7 @@ public class DefaultWidgetService implements WidgetService {
 	 */
 	@Transactional
 	@Override
-	public Long save(Widget widget) throws Exception {
-		if (widget.getId() == null) { // new widget
-			Boolean nameTaken = widgetDao.isNameUsed(widget.getWidgetName());
-			if (nameTaken) {
-				logger.error("tryign to save duplicate-named widget: " + widget.getWidgetName());
-				throw new Exception("Widget name: " + widget.getWidgetName() + " already used.");
-			}
-		}
+	public Long save(Widget widget) {
 		logger.debug("Saving widget: " + widget.toString());
 		return widgetDao.save(widget);
 	}
@@ -95,6 +88,13 @@ public class DefaultWidgetService implements WidgetService {
 	public void update(Widget widget) {
 		logger.debug("Updating widget: " + widget.toString());
 		widgetDao.update(widget);
+	}
+
+	@Override
+	public boolean isNameUsed(String name) {
+		boolean used = widgetDao.isNameUsed(name);
+		logger.debug("Widget name: " + name + " already used: " + used);
+		return used;
 	}
 
 }

@@ -7,19 +7,19 @@
 <form:form modelAttribute="widget">
 <table>
 	<tr>
-		<td><form:label path="widgetName" cssErrorClass="error" title="Name">Name</form:label></td>
+		<td><form:label path="widgetName" cssErrorClass="errors" title="Name">Name</form:label></td>
 		<td><form:input path="widgetName"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="price" cssErrorClass="error" title="Price">Price</form:label></td>
+		<td><form:label path="price" cssErrorClass="errors" title="Price">Price</form:label></td>
 		<td><form:input path="price"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="initialTime" cssErrorClass="error" title="Initial Time">Initial Time</form:label></td>
+		<td><form:label path="initialTime" cssErrorClass="errors" title="Initial Time">Initial Time</form:label></td>
 		<td><form:input path="initialTime"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="cool" cssErrorClass="error" title="Is Cool?">Cool</form:label></td>
+		<td><form:label path="cool" cssErrorClass="errors" title="Is Cool?">Cool</form:label></td>
 		<td><form:checkbox path="cool"/></td>
 	</tr>
 	<tr>
