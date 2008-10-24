@@ -40,8 +40,78 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 	@Test
 	public void testDelete() throws Exception {
 		Widget w = Widget.createRandomWidget();
-		widgetService.save(w);
+		widgetDao.save(w);
 		assertTrue(w.getId() != null);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(1, countRowsInTable("widget"));
+		widgetService.delete(w);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(0, countRowsInTable("widget"));
+	}
+
+	@Test
+	public void testDeleteAllById() throws Exception {
+		Widget w = Widget.createRandomWidget();
+		widgetDao.save(w);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(1, countRowsInTable("widget"));
+		widgetService.delete(w.getId());
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(0, countRowsInTable("widget"));
+	}
+
+	@Test
+	public void testDeleteListByIds() {
+		int COUNT = 10;
+		List<Widget> widgets1 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets1.add(w);
+		}
+		List<Widget> widgets2 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets2.add(w);
+		}
+
+		widgetDao.saveOrUpdateAll(widgets1);
+		widgetDao.saveOrUpdateAll(widgets2);
+		widgetDao.flush();
+		widgetDao.clear();
+
+		assertEquals(COUNT * 2, countRowsInTable("widget"));
+
+		List<Long> ids1 = new ArrayList(widgets1.size());
+		for (Widget w : widgets1) {
+			ids1.add(w.getId());
+		}
+
+		List<Long> ids2 = new ArrayList(widgets2.size());
+		for (Widget w : widgets2) {
+			ids2.add(w.getId());
+		}
+		int deleted = widgetService.deleteAll(ids1);
+		assertEquals(deleted, COUNT);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(COUNT, countRowsInTable("widget"));
+
+		List<Long> dummy = new ArrayList<Long>();
+		deleted = widgetService.deleteAll(dummy);
+		assertEquals(deleted, 0);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(COUNT, countRowsInTable("widget"));
+
+		deleted = widgetService.deleteAll(ids2);
+		assertEquals(deleted, 10);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(0, countRowsInTable("widget"));
 	}
 
 	@Test

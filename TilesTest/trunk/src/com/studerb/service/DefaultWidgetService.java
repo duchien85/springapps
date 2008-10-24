@@ -1,5 +1,6 @@
 package com.studerb.service;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -91,10 +92,33 @@ public class DefaultWidgetService implements WidgetService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public boolean isNameUsed(String name) {
 		boolean used = widgetDao.isNameUsed(name);
 		logger.debug("Widget name: " + name + " already used: " + used);
 		return used;
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		logger.debug("deleting widget: " + id);
+		Widget w = widgetDao.get(id);
+		widgetDao.delete(w);
+	}
+
+	@Override
+	@Transactional
+	public int deleteAll(List<Long> widgetIds) {
+		Long[] ids = widgetIds.toArray(new Long[0]);
+		logger.debug("deleting widgets: " + Arrays.toString(ids));
+		int count = 0;
+		for (Long id : widgetIds) {
+			Widget w = widgetDao.get(id);
+			widgetDao.delete(w);
+			count++;
+		}
+		return count;
 	}
 
 }

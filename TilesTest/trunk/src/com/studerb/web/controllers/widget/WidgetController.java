@@ -1,24 +1,35 @@
 package com.studerb.web.controllers.widget;
 
-import org.apache.log4j.Logger;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.studerb.model.Widget;
+import com.studerb.service.interfaces.WidgetService;
 
 @Controller
 @RequestMapping("/widget/*")
 public class WidgetController {
-	Logger logger = Logger.getLogger(WidgetController.class);
+
+	@Autowired
+	WidgetService widgetService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public void list(ModelMap model) {
-		model.addAttribute("message", "Your in List");
+	public void list(Model model) {
+		List<Widget> widgets = widgetService.getAll();
+		model.addAttribute("widgets", widgets);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public void delete(ModelMap model) {
-		model.addAttribute("message", "Your in Delete");
+	public String delete(@RequestParam("widgetId") Long widgetId, Model model) {
+		widgetService.delete(widgetId);
+		model.addAttribute("message", "Deleted widget successfully");
+		return "redirect:/widget/list.htm";
 	}
 
 }

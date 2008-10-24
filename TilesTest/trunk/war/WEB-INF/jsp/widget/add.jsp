@@ -10,24 +10,24 @@
 <form:form modelAttribute="widget" method="post">
 <table>
 	<tr>
-		<td><form:label path="widgetName" cssErrorClass="errors" >Name</form:label></td>
-		<td><form:input path="widgetName"/></td>
+		<td class="form_label"><form:label path="widgetName" cssErrorClass="errors" >Name</form:label></td>
+		<td class="form_input"><form:input path="widgetName"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="price" cssErrorClass="errors">Price</form:label></td>
-		<td><form:input path="price"/></td>
+		<td class="form_label"><form:label path="price" cssErrorClass="errors">Price</form:label></td>
+		<td class="form_input"><form:input path="price"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="initialTime" cssErrorClass="errors" >Initial Time</form:label></td>
-		<td><form:input path="initialTime"/></td>
+		<td class="form_label"><form:label path="initialTime" cssErrorClass="errors" >Initial Time</form:label></td>
+		<td class="form_input"><form:input path="initialTime"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="cool" cssErrorClass="errors" >Is Cool?</form:label></td>
-		<td><form:checkbox path="cool"/></td>
+		<td class="form_label"><form:label path="cool" cssErrorClass="errors" >Is Cool?</form:label></td>
+		<td class="form_imput"><form:checkbox path="cool"/></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" value="Save Widget"/></td>
+		<td><input type="submit" class="form_input" value="Save Widget"/></td>
 	</tr>
 </table>
 </form:form>

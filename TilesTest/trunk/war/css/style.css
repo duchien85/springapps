@@ -65,6 +65,15 @@ table {
 	padding: .5em 0;
 }
 
+table td.form_label {
+	text-align: right;
+	font-weight: bolder;
+}
+
+table td.form_input {
+	text-align: left;
+}
+
 .errors{
 	color: red;
 	border: 1px thin red;

@@ -10,7 +10,9 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basename="messages"/> 
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" >
+		<property name="basename" value="messages/messages"/>
+	</bean> 
 	
 	<!-- <context:component-scan base-package="com.studerb.web.controllers"/>-->
 

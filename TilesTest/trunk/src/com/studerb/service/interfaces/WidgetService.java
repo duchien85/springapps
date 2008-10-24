@@ -12,7 +12,16 @@ public interface WidgetService {
 	 * 
 	 * @param widget
 	 */
+
 	public void delete(Widget widget);
+
+	/**
+	 * delete widget using id
+	 * 
+	 * @param id
+	 */
+
+	public void delete(Long id);
 
 	/**
 	 * delete all the widgets
@@ -21,6 +30,14 @@ public interface WidgetService {
 	 * @return number of widgets deleted
 	 */
 	int deleteAll(Collection<Widget> widgets);
+
+	/**
+	 * Delete collection of widgets using the id
+	 * 
+	 * @param widgetIds
+	 * @return number of widgets deleted
+	 */
+	int deleteAll(List<Long> widgetIds);
 
 	/**
 	 * fetch the widget
