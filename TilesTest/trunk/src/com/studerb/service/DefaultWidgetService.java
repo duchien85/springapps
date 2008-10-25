@@ -103,8 +103,7 @@ public class DefaultWidgetService implements WidgetService {
 	@Transactional
 	public void delete(Long id) {
 		logger.debug("deleting widget: " + id);
-		Widget w = widgetDao.get(id);
-		widgetDao.delete(w);
+		widgetDao.delete(id);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.studerb.dao;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface DaoInterface<T> {
 
 	void delete(T entity);
 
+	void delete(Serializable id);
+
 	int deleteAll();
 
 	void flush();
@@ -29,7 +32,7 @@ public interface DaoInterface<T> {
 
 	int getCount();
 
-	T get(Long id);
+	T get(Serializable id);
 
 	void saveOrUpdate(T entity);
 

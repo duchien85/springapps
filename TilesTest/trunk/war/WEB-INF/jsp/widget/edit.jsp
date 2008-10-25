@@ -1,30 +1,33 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 
 <h2>Editing Widget</h2>
 
-<form:form modelAttribute="widget">
+<tt:errors name="widget" />
+
+<form:form modelAttribute="widget" method="post">
 <table>
 	<tr>
-		<td><form:label path="widgetName" cssErrorClass="errors" title="Name">Name</form:label></td>
-		<td><form:input path="widgetName"/></td>
+		<td class="form_label"><form:label path="widgetName" cssErrorClass="errors" >Name</form:label></td>
+		<td class="form_input"><form:input path="widgetName" disabled="true" /></td>
 	</tr>
 	<tr>
-		<td><form:label path="price" cssErrorClass="errors" title="Price">Price</form:label></td>
-		<td><form:input path="price"/></td>
+		<td class="form_label"><form:label path="price" cssErrorClass="errors">Price</form:label></td>
+		<td class="form_input"><form:input path="price"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="initialTime" cssErrorClass="errors" title="Initial Time">Initial Time</form:label></td>
-		<td><form:input path="initialTime"/></td>
+		<td class="form_label"><form:label path="initialTime" cssErrorClass="errors" >Initial Time</form:label></td>
+		<td class="form_input"><form:input path="initialTime"/></td>
 	</tr>
 	<tr>
-		<td><form:label path="cool" cssErrorClass="errors" title="Is Cool?">Cool</form:label></td>
-		<td><form:checkbox path="cool"/></td>
+		<td class="form_label"><form:label path="cool" cssErrorClass="errors" >Is Cool?</form:label></td>
+		<td class="form_imput"><form:checkbox path="cool"/></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" value="Update Widget"/></td>
+		<td><input type="submit" class="form_input" value="Save Widget"/></td>
 	</tr>
 </table>
 </form:form>

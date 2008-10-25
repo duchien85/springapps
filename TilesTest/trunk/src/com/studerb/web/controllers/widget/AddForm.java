@@ -32,15 +32,11 @@ public class AddForm {
 		if (result.hasErrors()) {
 			return "widget/add";
 		}
-		else {
-			try {
-				widgetService.save(widget);
-			}
-			catch (Exception e) {
-				result.rejectValue("widgetName", "duplicate");
-				return "widget/add";
-			}
+		else if (widgetService.isNameUsed(widget.getWidgetName())) {
+			result.rejectValue("widgetName", "duplicate");
+			return "widget/add";
 		}
+		widgetService.save(widget);
 		status.setComplete();
 		// flash.set(FLASH_STATUS, "successfully added new widget");
 		return "redirect:/widget/list.htm";

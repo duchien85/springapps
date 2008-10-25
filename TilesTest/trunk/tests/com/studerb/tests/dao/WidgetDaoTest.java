@@ -65,6 +65,19 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 	}
 
 	@Test
+	public void testDeleteById() {
+		Widget widget = Widget.createRandomWidget();
+		assertEquals(countRowsInTable("widget"), 0);
+		widgetDao.save(widget);
+		widgetDao.flush();
+		assertTrue(widget.getId() != null);
+		assertEquals(countRowsInTable("widget"), 1);
+		widgetDao.delete(widget.getId());
+		widgetDao.flush();
+		assertEquals(countRowsInTable("widget"), 0);
+	}
+
+	@Test
 	public void testDeleteAll() {
 		final int COUNT = 10;
 		List<Widget> widgets = new ArrayList<Widget>(COUNT);

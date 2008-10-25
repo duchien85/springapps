@@ -1,5 +1,6 @@
 package com.studerb.dao;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.Iterator;
@@ -49,6 +50,13 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 	}
 
 	@Override
+	public void delete(Serializable id) {
+		this.logger.debug("deleting entity: " + id);
+		T entity = (T) getCurrentSession().load(this.persistentClass, id);
+		getCurrentSession().delete(entity);
+	}
+
+	@Override
 	public int deleteAll() {
 		int count = simpleJdbcTemplate.update("delete from " + this.tableName);
 		this.logger.info("Deleted All {" + count + "} from " + this.tableName);
@@ -91,7 +99,7 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 	}
 
 	@Override
-	public T get(Long id) {
+	public T get(Serializable id) {
 		this.logger.debug("reading " + this.tableName + " - " + id);
 		return (T) getCurrentSession().get(this.persistentClass, id);
 	}

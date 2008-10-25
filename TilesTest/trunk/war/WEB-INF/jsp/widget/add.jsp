@@ -11,7 +11,7 @@
 <table>
 	<tr>
 		<td class="form_label"><form:label path="widgetName" cssErrorClass="errors" >Name</form:label></td>
-		<td class="form_input"><form:input path="widgetName"/></td>
+		<td class="form_input"><form:input path="widgetName" /></td>
 	</tr>
 	<tr>
 		<td class="form_label"><form:label path="price" cssErrorClass="errors">Price</form:label></td>

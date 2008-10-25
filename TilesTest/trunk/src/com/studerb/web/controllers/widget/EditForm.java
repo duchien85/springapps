@@ -7,10 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.studerb.model.Widget;
+import com.studerb.model.WidgetValidator;
 import com.studerb.service.interfaces.WidgetService;
 
 @Controller
@@ -22,21 +24,21 @@ public class EditForm {
 	WidgetService widgetService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(Model model) {
-		Widget widget = Widget.createRandomWidget();
+	public String setupForm(@RequestParam("widgetId") Long widgetId, Model model) {
+		Widget widget = widgetService.get(widgetId);
 		model.addAttribute(widget);
 		return "widget/edit";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status) {
-		/*
-		 * new OwnerValidator().validate(owner, result); if (result.hasErrors())
-		 * { return "ownerForm"; } else { this.clinic.storeOwner(owner);
-		 * status.setComplete(); return "redirect:owner.do?ownerId=" +
-		 * owner.getId(); } }
-		 */
+		new WidgetValidator().validate(widget, result);
+		if (result.hasErrors()) {
+			return "widget/edit";
+		}
+		widgetService.update(widget);
 		status.setComplete();
+		// flash.set(FLASH_STATUS, "successfully updated new widget");
 		return "redirect:/widget/list.htm";
 	}
 }
