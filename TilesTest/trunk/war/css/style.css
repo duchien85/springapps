@@ -65,6 +65,10 @@ table {
 	padding: .5em 0;
 }
 
+tr th {
+	border: thin solid black;
+}
+
 table td.form_label {
 	text-align: right;
 	font-weight: bolder;
