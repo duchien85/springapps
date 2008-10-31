@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
 
-  <display-name>Tiles Test</display-name>
-  <description>Spring MVC with JSTL Webapp Base</description>
+	<display-name>Tiles Test</display-name>
+	<description>Spring MVC with JSTL Webapp Base</description>
 
 	<context-param>
 		<param-name>webAppRootKey</param-name>
@@ -19,13 +21,13 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-	
+
 	<!--  20 seconds for log4j refreshes -->
 	<context-param>
 		<param-name>log4jRefreshInterval</param-name>
 		<param-value>20000</param-value>
 	</context-param>
-	
+
 
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
@@ -46,17 +48,17 @@
 		<servlet-name>tiles_test</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
-	
-	  <servlet>
-        <servlet-name>Jersey Spring</servlet-name>
-        <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
-    </servlet>
 
-    <servlet-mapping>
-        <servlet-name>Jersey Spring</servlet-name>
-        <url-pattern>/api/*</url-pattern>
-    </servlet-mapping>
-	
+	<servlet>
+		<servlet-name>Jersey Spring</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Jersey Spring</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+
 
 	<session-config>
 		<session-timeout>10</session-timeout>
@@ -72,11 +74,20 @@
 		<location>/WEB-INF/jsp/uncaughtException.jsp</location>
 	</error-page>
 
-    <resource-ref>
-        <res-ref-name>jdbc/tilestest</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
+	<resource-ref>
+		<res-ref-name>jdbc/tilestest</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+			<trim-directive-whitespaces>true</trim-directive-whitespaces>
+		</jsp-property-group>
+	</jsp-config>
+
 
 </web-app>

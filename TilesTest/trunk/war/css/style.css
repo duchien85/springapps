@@ -49,7 +49,7 @@ table {
 #left_nav {
 	background-color: #EDF5FF;
 	border: 2px solid #7D98B8;
-	padding: 0.1 em;
+	padding: .1em;
 }
 
 #ft {
@@ -76,6 +76,6 @@ table td.form_input {
 
 .errors{
 	color: red;
-	border: 1px thin red;
-	padding: 1em;
 }
+
+*[disabled] { background-color: #ccc; color: gray; }

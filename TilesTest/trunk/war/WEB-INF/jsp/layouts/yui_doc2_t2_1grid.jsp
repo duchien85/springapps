@@ -8,8 +8,17 @@
 	<title><tiles:getAsString name="title" /></title>
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/reset-fonts-grids-min.css'/>"/> 
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/base-min.css'/>"/> 
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>"/> 
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>"/>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/calendar/assets/skins/sam/calendar.css">
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/button/assets/skins/sam/button.css" />
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/container/container_core-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/element/element-beta-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/button/button-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/calendar/calendar-min.js"></script>
+	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"></script>
 </head>
+
 <body>
 
 <div id="doc2" class="yui-t2">
