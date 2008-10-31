@@ -6,6 +6,10 @@
 <html >
 <head>
 	<title><tiles:getAsString name="title" /></title>
+<<<<<<< .mine
+	<tiles:insertAttribute name="css_files" />
+	<tiles:insertAttribute name="js_files" />  
+=======
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/reset-fonts-grids-min.css'/>"/> 
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/base-min.css'/>"/> 
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>"/>
@@ -17,6 +21,7 @@
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/calendar/calendar-min.js"></script>
 	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"></script>
+>>>>>>> .r46
 </head>
 
 <body>
