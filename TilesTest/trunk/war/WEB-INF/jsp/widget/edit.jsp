@@ -8,7 +8,7 @@
 <tt:errors name="widget" />
 
 <form:form modelAttribute="widget" method="post">
-<table>
+<table class="yui-skin-sam">
 	<tr>
 		<td class="form_label"><form:label path="widgetName" cssErrorClass="errors" >Name</form:label></td>
 		<td class="form_input"><form:input path="widgetName" disabled="true" /></td>
@@ -19,7 +19,7 @@
 	</tr>
 	<tr>
 		<td class="form_label"><form:label path="initialTime" cssErrorClass="errors" >Initial Time</form:label></td>
-		<td class="form_input"><form:input path="initialTime"/></td>
+		<td class="form_input"><form:input path="initialTime"/>	<div id="cal1Container"></div> </td>
 	</tr>
 	<tr>
 		<td class="form_label"><form:label path="cool" cssErrorClass="errors" >Is Cool?</form:label></td>
@@ -31,3 +31,8 @@
 	</tr>
 </table>
 </form:form>
+
+<script>
+var cal1 = new YAHOO.widget.Calendar("cal1Container"); 
+cal1.render(); 
+</script>

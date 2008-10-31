@@ -5,7 +5,7 @@
 
 <h2>${message}</h2>
 <div class="form_table">
-<table>
+<table class="yui-skin-sam">
 	<thead>
 		<tr>
 		<th>Widget Name</th>
