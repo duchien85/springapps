@@ -1,0 +1,10 @@
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2" name="Test">
+	<start-state>
+		<transition to='s' />
+	</start-state>
+	<state name='s'>
+		<transition to='end' />
+	</state>
+	<end-state name='end' />
+</process-definition>
+"

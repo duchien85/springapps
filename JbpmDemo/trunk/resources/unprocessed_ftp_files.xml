@@ -1,21 +1,15 @@
-<process-definition name="EPI-UnprocessedFtpFiles">
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2" name="EPI-UnprocessedFtpFiles">
 
-	<start-state name="start">
+	<start-state name="start" >
+	<event type="node-leave">
+		<action class="com.jbpmDemo.actions.StartActionHandler" />
+	</event>
 		<transition to="IT Work" />
 	</start-state>
 
 	<task-node name="IT Work">
 		<task name="Unprocessed Ftp Files Exist">
 			<assignment pooled-actors="ROLE_SG ELIGIBILITY OPERATIONS" />
-			<controller class="com.arag.workflow.process.TaskController">
-				<flowId>epi-flow</flowId>
-				<displayName>${taskInstance.task.name} - ${epi.issueDate?string("MM/dd/yyyy")}</displayName>
-				<transitions>
-					<transition name="Finished" confirm="true" confirmText="Are you sure you are finished with this EPI?" />
-					<transition name="Transfer to ET" displayName="Transfer to Enrollment" />
-					<transition name="Transfer to CM" displayName="Transfer to Client Management" />
-				</transitions>
-			</controller>
 		</task>
 		<transition name="Finished" to="end" />
 		<transition name="Transfer to ET" to="ET Work" />
@@ -25,15 +19,6 @@
 	<task-node name="ET Work">
 		<task name="Unprocessed Ftp Files Exist">
 			<assignment pooled-actors="ROLE_SG ELIGIBILITY TEAM" />
-			<controller class="com.arag.workflow.process.TaskController">
-				<flowId>epi-flow</flowId>
-				<displayName>${taskInstance.task.name} - ${epi.issueDate?string("MM/dd/yyyy")}</displayName>
-				<transitions>
-					<transition name="Finished" confirm="true" confirmText="Are you sure you are finished with this EPI?" />
-					<transition name="Transfer to IT" displayName="Transfer to IT" />
-					<transition name="Transfer to CM" displayName="Transfer to Client Management" />
-				</transitions>
-			</controller>
 		</task>
 		<transition name="Finished" to="end" />
 		<transition name="Transfer to IT" to="IT Work" />
@@ -43,18 +28,20 @@
 	<task-node name="CM Work">
 		<task name="Unprocessed Ftp Files Exist">
 			<assignment pooled-actors="ROLE_SG CLIENT MGMT" />
-			<controller class="com.arag.workflow.process.TaskController">
-				<flowId>epi-flow</flowId>
-				<displayName>${taskInstance.task.name} - ${epi.issueDate?string("MM/dd/yyyy")}</displayName>
-				<transitions>
-					<transition name="Transfer to ET" displayName="Transfer to Enrollment" />
-					<transition name="Transfer to IT" displayName="Transfer to IT" />
-				</transitions>
-			</controller>
 		</task>
 		<transition name="Transfer to ET" to="ET Work" />
 		<transition name="Transfer to IT" to="IT Work" />
 	</task-node>
 
-	<end-state name="end" />
+	<end-state name="end">
+		<event type="node-enter">
+		<action name="myAction" config-type="bean" 
+      class="org.springmodules.workflow.jbpm31.JbpmHandlerProxy">
+    <targetBean>jbpmAction</targetBean>
+    <factoryKey>jbpmConfiguration</factoryKey>
+   </action>
+		
+			<action class="com.jbpmDemo.actions.EndActionHandler" />
+		</event>
+	</end-state>
 </process-definition>
