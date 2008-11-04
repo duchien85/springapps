@@ -1,27 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html >
 <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title><tiles:getAsString name="title" /></title>
-<<<<<<< .mine
-	<tiles:insertAttribute name="css_files" />
-	<tiles:insertAttribute name="js_files" />  
-=======
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/reset-fonts-grids-min.css'/>"/> 
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/base-min.css'/>"/> 
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/yui/reset-fonts-grids-min.css'/>"/> 
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/yui/base-min.css'/>"/>
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>"/>
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/calendar/assets/skins/sam/calendar.css">
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/button/assets/skins/sam/button.css" />
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/container/container_core-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/element/element-beta-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/button/button-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/calendar/calendar-min.js"></script>
+	<tiles:insertAttribute name="css_files" ignore="true"/>
 	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"></script>
->>>>>>> .r46
+	<tiles:insertAttribute name="js_files" ignore="true"/>
+
 </head>
 
 <body>

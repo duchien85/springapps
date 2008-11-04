@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
@@ -40,7 +39,6 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 	}
 
 	@Test
-	@Transactional
 	public void testCreate() {
 		Widget widget = Widget.createRandomWidget();
 		Assert.assertTrue(widget.getId() == null);
@@ -208,6 +206,36 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 		widgetDao.clear();
 		assertTrue(widgetDao.isNameUsed(widget1.getWidgetName()));
 		assertFalse(widgetDao.isNameUsed(RandomStringUtils.randomAlphabetic(20)));
+	}
+
+	@Test
+	public void testSearch() {
+		Widget widget1 = Widget.createRandomWidget();
+		Widget widget2 = Widget.createRandomWidget();
+		widgetDao.save(widget1);
+		widgetDao.save(widget2);
+		widgetDao.flush();
+		widgetDao.clear();
+
+		List<Widget> widgets = widgetDao.search(null);
+		assertEquals(widgets.size(), 2);
+		widgetDao.clear();
+
+		widgets = widgetDao.search("");
+		assertEquals(widgets.size(), 0);
+		widgetDao.clear();
+
+		widgets = widgetDao.search("abcd");
+		widgetDao.clear();
+		assertEquals(widgets.size(), 0);
+
+		widgets = widgetDao.search(widget1.getWidgetName());
+		widgetDao.clear();
+		assertEquals(widgets.size(), 1);
+
+		widgets = widgetDao.search(widget2.getWidgetName());
+		widgetDao.clear();
+		assertEquals(widgets.size(), 1);
 	}
 
 	private static final class WidgetRowMapper implements RowMapper {

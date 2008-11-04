@@ -75,4 +75,6 @@ public interface WidgetService {
 
 	boolean isNameUsed(String name);
 
+	List<Widget> search(String name);
+
 }

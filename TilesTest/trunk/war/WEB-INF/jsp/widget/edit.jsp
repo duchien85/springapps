@@ -19,7 +19,7 @@
 	</tr>
 	<tr>
 		<td class="form_label"><form:label path="initialTime" cssErrorClass="errors" >Initial Time</form:label></td>
-		<td class="form_input"><form:input path="initialTime"/>	<div id="cal1Container"></div> </td>
+		<td class="form_input"><form:input path="initialTime"/>	&nbsp; <span id="calButton"><img src="<c:url value='/images/calbtn.gif'/>" /></span></td>
 	</tr>
 	<tr>
 		<td class="form_label"><form:label path="cool" cssErrorClass="errors" >Is Cool?</form:label></td>
@@ -33,6 +33,15 @@
 </form:form>
 
 <script>
-var cal1 = new YAHOO.widget.Calendar("cal1Container"); 
-cal1.render(); 
+//var cal1 = new YAHOO.widget.Calendar("cal1Container");
+var clickCal = function(e){
+	alert("clicked");
+	calOverlay.render(document.body);
+}
+var calOverlay = new YAHOO.widget.Overlay("calOverlay", {context:["calButton","tl","bl", ["beforeShow", "windowResize"]], 
+	                                                     visible:false, 
+	                                                     width:"200px" });
+ 
+YAHOO.util.Event.addListener("calButton", "click", clickCal);
+//cal1.render(); 
 </script>

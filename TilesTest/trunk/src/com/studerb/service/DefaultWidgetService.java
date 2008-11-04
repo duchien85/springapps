@@ -120,4 +120,11 @@ public class DefaultWidgetService implements WidgetService {
 		return count;
 	}
 
+	@Override
+	public List<Widget> search(String name) {
+		List<Widget> widgets = widgetDao.search(name);
+		logger.debug("found " + widgets.size() + " widgets by name: " + name);
+		return widgets;
+	}
+
 }

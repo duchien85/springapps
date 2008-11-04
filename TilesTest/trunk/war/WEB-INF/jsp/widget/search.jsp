@@ -1,11 +1,28 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
-<h2>${message}</h2>
-<div class="form_table">
+<h2>Search Widgets</h2>
+
+
+<form method="post" action="" >
 <table class="yui-skin-sam">
+	<tr>
+		<td class="form_label"><label for="widgetName">Name</label></td>
+		<td class="form_input"><input type="text" id="widgetName" value="${widgetName}" width="50"/></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" class="form_input" value="Search"/></td>
+	</tr>
+</table>
+</form>
+
+<c:if test="${not empty widgets}">
+	<div class="form_table">
+	<table class="yui-skin-sam">
 	<thead>
 		<tr>
 		<th>Widget Name</th>
@@ -28,11 +45,6 @@
 			</tr>
 	</c:forEach>
 	</tbody>
-</table>
-</div><!-- end .form_table -->
-
-<ul>
-	<li><a href="<c:url value="/widget/add.htm"/>">Add a Widget</a></li>
-	<li><a href="<c:url value="/widget/search.htm"/>">Search Widgets</a></li>
-</ul>
-
+	</table>
+	</div><!-- end .form_table -->
+</c:if>

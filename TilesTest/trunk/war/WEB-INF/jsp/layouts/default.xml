@@ -11,10 +11,10 @@
 
     <definition name="yui_doc2_t2_1grid" template="/WEB-INF/jsp/layouts/yui_doc2_t2_1grid.jsp">
         <put-attribute name="title" value="Default Title" type="string" />
-        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/default_css.jsp"/>
-        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/default_js.jsp"/>
         <!-- <put-attribute name="selectedMenu" value="home" type="string" /> -->
         <put-attribute name="header" value="/WEB-INF/jsp/layouts/tiles/header.jsp" />
+        <put-attribute name="css_files" value=""/>
+        <put-attribute name="js_files" value=""/>
         <!-- <put-attribute name="menu" value="/WEB-INF/jsp/layouts/tiles/menu.jsp" /> -->
         <put-attribute name="sidebar_left" value="/WEB-INF/jsp/layouts/tiles/sidebar_left.jsp" />
         <put-attribute name="content" value="/WEB-INF/jsp/layouts/tiles/default.jsp" />
@@ -40,6 +40,14 @@
         <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
         <put-attribute name="content" value="/WEB-INF/jsp/widget/edit.jsp"/>
     </definition>
+
+    <definition name="widget/search" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Search Widget" type="string" />
+        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
+        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/jsp/widget/search.jsp"/>
+    </definition>
+    
     
     <definition name="widget/add" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Add a new Widget" type="string" />
