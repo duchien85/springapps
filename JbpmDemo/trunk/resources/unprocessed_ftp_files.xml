@@ -35,10 +35,9 @@
 
 	<end-state name="end">
 		<event type="node-enter">
-		<action name="myAction" config-type="bean" 
-      class="org.springmodules.workflow.jbpm31.JbpmHandlerProxy">
-    <targetBean>jbpmAction</targetBean>
-    <factoryKey>jbpmConfiguration</factoryKey>
+		<action name="myAction" config-type="bean"  class="org.springmodules.workflow.jbpm31.JbpmHandlerProxy">
+    		<targetBean>jbpmAction</targetBean>
+    		<factoryKey>jbpmConfiguration</factoryKey>
    </action>
 		
 			<action class="com.jbpmDemo.actions.EndActionHandler" />
