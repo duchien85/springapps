@@ -54,6 +54,8 @@ public interface WidgetService {
 	 */
 	Long save(Widget widget);
 
+	void saveOrUpdateAll(Collection<Widget> widgets);
+
 	/**
 	 * @return list of all widgets
 	 */

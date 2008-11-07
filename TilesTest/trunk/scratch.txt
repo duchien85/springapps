@@ -16,5 +16,10 @@ initTimeCal.render();
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/calendar/calendar-min.js"></script>
 	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"/>
 	
+	calendar = new YAHOO.widget.Calendar("cal", {
+        iframe:false,          // Turn iframe off, since container has iframe support.
+        hide_blank_weeks:true  // Enable, to demonstrate how we handle changing height, using changeContent
+    });
 	
 		  
+    

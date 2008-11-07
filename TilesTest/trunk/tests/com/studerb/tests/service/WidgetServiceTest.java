@@ -244,4 +244,38 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 		assertFalse(widgetService.isNameUsed("dummy"));
 	}
 
+	@Test
+	public void testSaveOrUpdateAll() {
+		int COUNT = 10;
+		List<Widget> widgets1 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets1.add(w);
+		}
+		List<Widget> widgets2 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets2.add(w);
+		}
+
+		widgetDao.saveOrUpdateAll(widgets1);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(COUNT, countRowsInTable("widget"));
+
+		widgetDao.saveOrUpdateAll(widgets2);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(COUNT * 2, countRowsInTable("widget"));
+
+		for (Widget w : widgets2) {
+			w.setCool(!w.isCool());
+		}
+
+		widgetDao.saveOrUpdateAll(widgets2);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(COUNT * 2, countRowsInTable("widget"));
+	}
+
 }

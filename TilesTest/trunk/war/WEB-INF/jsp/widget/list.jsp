@@ -4,6 +4,12 @@
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
 <h2>${message}</h2>
+
+<ul>
+	<li><a href="<c:url value="/widget/add.htm"/>">Add a Widget</a></li>
+	<li><a href="<c:url value="/widget/search.htm"/>">Search Widgets</a></li>
+</ul>
+
 <div class="form_table">
 <table class="yui-skin-sam">
 	<thead>
@@ -31,8 +37,4 @@
 </table>
 </div><!-- end .form_table -->
 
-<ul>
-	<li><a href="<c:url value="/widget/add.htm"/>">Add a Widget</a></li>
-	<li><a href="<c:url value="/widget/search.htm"/>">Search Widgets</a></li>
-</ul>
 

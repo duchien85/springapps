@@ -38,6 +38,7 @@
         <put-attribute name="title" value="Edit Widget" type="string" />
         <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
         <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
+        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/>
         <put-attribute name="content" value="/WEB-INF/jsp/widget/edit.jsp"/>
     </definition>
 
@@ -45,6 +46,7 @@
         <put-attribute name="title" value="Search Widget" type="string" />
         <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
         <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
+        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/>
         <put-attribute name="content" value="/WEB-INF/jsp/widget/search.jsp"/>
     </definition>
     

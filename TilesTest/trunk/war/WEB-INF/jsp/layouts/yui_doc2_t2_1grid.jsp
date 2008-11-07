@@ -4,14 +4,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html >
 <head>
-  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title><tiles:getAsString name="title" /></title>
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/yui/reset-fonts-grids-min.css'/>"/> 
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/yui/base-min.css'/>"/>
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>"/>
+	<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/reset-fonts-grids/reset-fonts-grids.css'/>"> 
+	<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/base/base-min.css'/>"> 
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>">
 	<tiles:insertAttribute name="css_files" ignore="true"/>
 	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"></script>
 	<tiles:insertAttribute name="js_files" ignore="true"/>
+	<tiles:insertAttribute name="style" ignore="true"/>
 
 </head>
 
