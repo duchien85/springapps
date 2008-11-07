@@ -8,7 +8,7 @@
 	</start-state>
 
 	<task-node name="IT Work">
-		<task name="Unprocessed Ftp Files Exist">
+		<task name="Unprocessed Ftp Files Exist" duedate="5 business days">
 			<assignment pooled-actors="ROLE_SG ELIGIBILITY OPERATIONS" />
 		</task>
 		<transition name="Finished" to="end" />
@@ -17,7 +17,7 @@
 	</task-node>
 
 	<task-node name="ET Work">
-		<task name="Unprocessed Ftp Files Exist">
+		<task name="Unprocessed Ftp Files Exist" duedate="2 business days">
 			<assignment pooled-actors="ROLE_SG ELIGIBILITY TEAM" />
 		</task>
 		<transition name="Finished" to="end" />
@@ -35,11 +35,6 @@
 
 	<end-state name="end">
 		<event type="node-enter">
-		<action name="myAction" config-type="bean"  class="org.springmodules.workflow.jbpm31.JbpmHandlerProxy">
-    		<targetBean>jbpmAction</targetBean>
-    		<factoryKey>jbpmConfiguration</factoryKey>
-   </action>
-		
 			<action class="com.jbpmDemo.actions.EndActionHandler" />
 		</event>
 	</end-state>

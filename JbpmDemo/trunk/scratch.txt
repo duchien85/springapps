@@ -3,3 +3,12 @@ public class DemoServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
 	@Autowired
 	private DemoService demoService;
+
+	
+		uffProcess.signal();
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 0);
+		Date dueDate = ti.getDueDate();
+		Date currentDate = new Date();
+		logger.debug("current Date: " + DateFormatUtils.format(currentDate, "dd/MM/yyyy"));
+		logger.debug("Duedate: " + DateFormatUtils.format(dueDate, "dd/MM/yyyy"));
+		assertTrue(DateUtils.addDays(currentDate, 5).equals(dueDate));

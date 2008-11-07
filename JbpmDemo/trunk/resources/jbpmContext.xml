@@ -45,7 +45,6 @@
 	
 	<bean id="demoService" class="com.jbpmDemo.service.DemoServiceImp" parent="baseService"/>
 	
-	
 	<!-- 
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>

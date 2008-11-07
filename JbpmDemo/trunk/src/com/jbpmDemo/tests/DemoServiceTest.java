@@ -60,12 +60,12 @@ public class DemoServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 		demoService.saveProcessDefinition(testProcess);
 		ProcessInstance pi = demoService.startProcess(testProcess.getName());
 		Token token = pi.getRootToken();
-		assertEquals("State1", token.getNode().getName());
+		assertEquals("s", token.getNode().getName());
 
 		// signal to end
 		// assert state TheEnd
 		pi.signal();
-		assertEquals("TheEnd", token.getNode().getName());
+		assertEquals("end", token.getNode().getName());
 		// assert endstate
 		assertTrue(pi.hasEnded());
 	}

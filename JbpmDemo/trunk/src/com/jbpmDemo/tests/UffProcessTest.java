@@ -4,11 +4,14 @@ import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.jbpm.JbpmConfiguration;
+import org.jbpm.calendar.BusinessCalendar;
+import org.jbpm.calendar.Duration;
 import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.graph.exe.ProcessInstance;
 import org.jbpm.graph.exe.Token;
@@ -178,6 +181,58 @@ public class UffProcessTest extends AbstractJUnit4SpringContextTests implements 
 		assertEquals(taskMgmtInstance.getUnfinishedTasks(rootToken).size(), 0);
 	}
 
+	@Test
+	public void testITDueDate() {
+		// IT has 5 business day due date
+		uffProcess.signal();
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 0);
+		Date dueDate = ti.getDueDate();
+		Date currentDate = new Date();
+		// logger.debug("current Date: " + DateFormatUtils.format(currentDate,
+		// "dd/MM/yyyy"));
+		// logger.debug("Duedate: " + DateFormatUtils.format(dueDate,
+		// "dd/MM/yyyy"));
+		Duration duration = new Duration("+ 5 business days");
+		BusinessCalendar bCal = new BusinessCalendar();
+		Date calculatedDueDate = bCal.add(currentDate, duration);
+		// logger.debug("Calculated Duedate: " +
+		// DateFormatUtils.format(calculatedDueDate, "dd/MM/yyyy"));
+		assertEquals(calculatedDueDate, dueDate);
+	}
+
+	@Test
+	public void testETDueDate() {
+		// ET has 2 business day due date
+		uffProcess.signal();
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 0);
+		ti.end("Transfer to ET");
+		ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 0);
+		assertEquals(1, taskMgmtInstance.getUnfinishedTasks(rootToken).size());
+		Date dueDate = ti.getDueDate();
+		Date currentDate = new Date();
+		logger.debug("current Date: " + DateFormatUtils.format(currentDate, "dd/MM/yyyy"));
+		logger.debug("Duedate: " + DateFormatUtils.format(dueDate, "dd/MM/yyyy"));
+		Duration duration = new Duration("+ 2 business days");
+		BusinessCalendar bCal = new BusinessCalendar();
+		Date calculatedDueDate = bCal.add(currentDate, duration);
+		logger.debug("Calculated Duedate: " + DateFormatUtils.format(calculatedDueDate, "dd/MM/yyyy"));
+		assertEquals(calculatedDueDate, dueDate);
+	}
+
+	@Test
+	public void testCMDueDate() {
+		// ET has 2 business day due date
+		uffProcess.signal();
+		uffProcess.signal("Transfer to CM");
+		logger.debug("current node name: " + rootToken.getNode().getName());
+		assertTrue(rootToken.getNode().getName().equals("CM Work"));
+		printTaskInstances(taskMgmtInstance.getUnfinishedTasks(rootToken));
+		TaskInstance ti = (TaskInstance) CollectionUtils.get(taskMgmtInstance.getUnfinishedTasks(rootToken), 1);
+		Date dueDate = ti.getDueDate();
+		logger.debug("*******testCM*****: dueDate: " + dueDate);
+		assertNull(dueDate);
+	}
+
 	private void printTaskInstances(Collection<TaskInstance> taskInstances) {
 		int count = 0;
 		for (TaskInstance taskInstance : taskInstances) {
@@ -206,5 +261,4 @@ public class UffProcessTest extends AbstractJUnit4SpringContextTests implements 
 			++count;
 		}
 	}
-
 }
