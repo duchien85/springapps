@@ -1,11 +1,14 @@
-body {
-	position: relative;
+html{
 	background-color: transparent;
 	/*background-image: url(../images/kubrickbgcolor.jpg);*/
 	background-image: url(../images/bodybg.png);
 	background-repeat: repeat;
-	background-attachment: scroll;
+	background-attachment: fixed;
 	background-position: 0 0;
+}
+
+body {
+	
 }
 
 table {
@@ -67,6 +70,10 @@ table {
 
 tr th {
 	border: thin solid black;
+}
+
+td {
+	/*border: none;*/
 }
 
 table td.form_label {

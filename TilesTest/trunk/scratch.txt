@@ -1,25 +1,91 @@
-<script>
-var setInitTime = function(){
+
+<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/reset-fonts-grids/reset-fonts-grids.css'/>"> 		  
+
 	
+
+body {
+	/*background-color: transparent;*/
+	background-color: blue;
+	/*background-image: url(../images/kubrickbgcolor.jpg);*/
+	/*background-image: url(../images/bodybg.png);*/
+	background-repeat: repeat;
+	/*background-attachment: scroll;*/
+	background-position: 0 0;
+	min-height: 100%;
 }
-var initTimeCal = new YAHOO.widget.Calendar("initTimeCal", "cal1Container", { "close": true, "navigator": true});
-initTimeCal.selectEvent.subscribe();
-initTimeCal.render();
-//$('widgetName').activate();
-</script>
 
+table {
+	border: none;
+	outline: none;
+}
+#doc2 {
+		background-color: white;
+}
+#bd {
+	text-align: left;
+	background-color: #F2F2F2;
+}
 
+#hd,#bd,#ft {
+	border: 1px solid #808080;
+}
 
+#hd {
+	text-align:center;
+	height: 5em;
+	background-image: url(../images/header_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+}
 
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/calendar/assets/skins/sam/calendar.css">
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/calendar/calendar-min.js"></script>
-	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"/>
-	
-	calendar = new YAHOO.widget.Calendar("cal", {
-        iframe:false,          // Turn iframe off, since container has iframe support.
-        hide_blank_weeks:true  // Enable, to demonstrate how we handle changing height, using changeContent
-    });
-	
-		  
-    
+#hd h1 {
+	font-size: 120%;
+}
+
+#yui-main .yui-b .yui-g{
+	border-left: 2px solid #426FD9;
+	min-height: 200px;
+	padding: 1em;
+}
+
+#yui-main .yui-b .yui-g table{
+	background-color: #EDF5FF;
+}
+
+#left_nav {
+	background-color: #EDF5FF;
+	border: 2px solid #7D98B8;
+	padding: .1em;
+}
+
+#ft {
+	height: 3em;
+	background-image: url(../images/header_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+}
+
+#ft p{
+	font-size: small;
+	text-align: center;
+	padding: .5em 0;
+}
+
+tr th {
+	border: thin solid black;
+}
+
+table td.form_label {
+	text-align: right;
+	font-weight: bolder;
+}
+
+table td.form_input {
+	text-align: left;
+}
+
+.errors{
+	color: red;
+}
+
+*[disabled] { background-color: #ccc; color: gray; }

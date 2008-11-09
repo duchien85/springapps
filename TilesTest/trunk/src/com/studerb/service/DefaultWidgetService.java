@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
 import com.studerb.service.interfaces.WidgetService;
+import com.studerb.web.util.WidgetSearchModel;
 
 @Service("widgetService")
 public class DefaultWidgetService implements WidgetService {
@@ -122,9 +123,9 @@ public class DefaultWidgetService implements WidgetService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Widget> search(String name) {
-		List<Widget> widgets = widgetDao.search(name);
-		logger.debug("found " + widgets.size() + " widgets by name: " + name);
+	public List<Widget> search(WidgetSearchModel widgetSearchModel) {
+		List<Widget> widgets = widgetDao.search(widgetSearchModel);
+		logger.debug("found " + widgets.size() + " widgets");
 		return widgets;
 	}
 

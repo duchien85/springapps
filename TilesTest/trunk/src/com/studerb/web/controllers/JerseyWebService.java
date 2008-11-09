@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.sun.jersey.spi.resource.Singleton;
 
-@Path("/helloworld")
+@Path("/helloworld.htm")
 @Singleton
 public class JerseyWebService {
 	private static final Logger logger = Logger.getLogger(JerseyWebService.class);

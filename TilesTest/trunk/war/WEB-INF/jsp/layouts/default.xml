@@ -13,8 +13,6 @@
         <put-attribute name="title" value="Default Title" type="string" />
         <!-- <put-attribute name="selectedMenu" value="home" type="string" /> -->
         <put-attribute name="header" value="/WEB-INF/jsp/layouts/tiles/header.jsp" />
-        <put-attribute name="css_files" value=""/>
-        <put-attribute name="js_files" value=""/>
         <!-- <put-attribute name="menu" value="/WEB-INF/jsp/layouts/tiles/menu.jsp" /> -->
         <put-attribute name="sidebar_left" value="/WEB-INF/jsp/layouts/tiles/sidebar_left.jsp" />
         <put-attribute name="content" value="/WEB-INF/jsp/layouts/tiles/default.jsp" />
@@ -31,7 +29,6 @@
         <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
         <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
         <put-attribute name="content" value="/WEB-INF/jsp/widget/list.jsp"/>
-        
     </definition>
     
     <definition name="widget/edit" extends="yui_doc2_t2_1grid">
@@ -44,9 +41,9 @@
 
     <definition name="widget/search" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Search Widget" type="string" />
-        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
-        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
-        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/>
+        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_autocomplete_cal_css.jsp"/>
+        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_autocomplete_cal_js.jsp"/>
+        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/> 
         <put-attribute name="content" value="/WEB-INF/jsp/widget/search.jsp"/>
     </definition>
     
@@ -55,6 +52,7 @@
         <put-attribute name="title" value="Add a new Widget" type="string" />
         <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
         <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
+        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/>
         <put-attribute name="content" value="/WEB-INF/jsp/widget/add.jsp"/>
     </definition>
     

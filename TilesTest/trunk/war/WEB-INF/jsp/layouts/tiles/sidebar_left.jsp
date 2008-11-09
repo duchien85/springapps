@@ -5,6 +5,7 @@
 	<ul>
 		<li><a href="<c:url value="/welcome.htm"/>">Home</a></li>
 		<li><a href="<c:url value="/widget/list.htm"/>">Widgets</a></li>
+		<li><a href="<c:url value="/api/helloworld.htm"/>">HelloWorld WS</a></li>
 	</ul>
 
 </div> <!-- end #left_nav -->	

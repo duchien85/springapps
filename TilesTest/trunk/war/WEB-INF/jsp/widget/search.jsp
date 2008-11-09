@@ -6,23 +6,102 @@
 
 <h2>Search Widgets</h2>
 
+<tt:errors name="widgetSearchModel" />
 
-<form method="post" action="" >
-<table class="yui-skin-sam">
+<form:form method="post" action="" modelAttribute="widgetSearchModel">
+<table>
 	<tr>
-		<td class="form_label"><label for="widgetName">Name</label></td>
-		<td class="form_input"><input type="text" id="widgetName" value="${widgetName}" width="50"/></td>
+		<td class="form_label"><form:label path="name" cssErrorClass="errors">Name</form:label></td>
+		
+		<td class="form_input">
+			<div id="myAutoComplete"> 
+				<form:input path="name" size="50"/>
+				<div id="myContainer"></div>
+			</div>  
+		</td>
+		<td>&nbsp;</td>
 	</tr>
 	<tr>
-		<td></td>
+		<td class="form_label"><form:label path="cool" cssErrorClass="errors">Cool</form:label></td>
+		<td class="form_input">
+			<form:select path="cool">
+				<form:option value="" label="Both"/>
+				<form:option value="true" label="True"/>
+				<form:option value="false" label="False"/>
+			</form:select>
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="form_label">Initial Time Between</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td colspan="2">
+		<table>
+			<tr>		
+				<td class="form_label"><form:label path="beginInitialTime" cssErrorClass="errors">Beginning</form:label></td>
+				<td class="form_input"><form:input path="beginInitialTime" />&nbsp;
+					<button type="button" id="showBegin" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
+						 <div id="containerBegin">
+      						<div class="hd">Calendar</div>
+      						<div class="bd">
+			         			<div id="calBegin"></div>
+      						</div>
+   						</div> <!-- end #container -->
+				</td>				
+			</tr>
+			<tr>
+				<td class="form_label"><form:label path="endInitialTime" cssErrorClass="errors">Ending</form:label></td>
+				<td class="form_input"><form:input path="endInitialTime" />&nbsp;
+					<button type="button" id="showEnd" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
+			 		<div id="containerEnd">
+      					<div class="hd">Calendar</div>
+      					<div class="bd">
+			         		<div id="calEnd"></div>
+      					</div>
+   					</div> <!-- end #container -->
+				</td>				
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="form_label">Price Between</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td colspan="2">
+		<table>
+			<tr>
+				<td class="form_label"><form:label path="beginPrice" cssErrorClass="errors">Beginning</form:label></td>
+				<td class="form_input"><form:input path="beginPrice" /></td>				
+			</tr>
+			<tr>
+				<td class="form_label"><form:label path="endPrice" cssErrorClass="errors">Ending</form:label></td>
+				<td class="form_input"><form:input path="endPrice" /></td>				
+			</tr>
+		</table>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
 		<td><input type="submit" class="form_input" value="Search"/></td>
 	</tr>
 </table>
-</form>
+</form:form>
+
+<button type="button" id="callWS" title=""><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
 
 <c:if test="${not empty widgets}">
 	<div class="form_table">
-	<table class="yui-skin-sam">
+	<table>
 	<thead>
 		<tr>
 		<th>Widget Name</th>
@@ -48,3 +127,141 @@
 	</table>
 	</div><!-- end .form_table -->
 </c:if>
+<script type="text/javascript">
+	//var myAutoComp = new YAHOO.widget.AutoComplete("myInput","myContainer", myDataSource);
+	var contextName = '<c:out value="${pageContext.request.contextPath}"/>';
+	var url = contextName + '/api/helloworld.htm';
+	
+	var successHandler = function(r){
+		alert('success: ' + r.responseText);
+	}
+
+	var failureHandler = function(r){
+		alert('failure: ' + r.statusText);
+	}
+	
+	var callback = {
+		success: successHandler,
+		failure: failureHandler
+	};
+
+	YAHOO.util.Event.on("callWS", "click", function() {
+		console.log("calling transaction to /api/helloworld");
+		var transaction = YAHOO.util.Connect.asyncRequest("GET", url, callback, null); 
+	});
+	
+
+	
+</script>
+
+<script>
+YAHOO.util.Event.onDOMReady(function(){
+
+    var dialogBegin;
+    var dialogEnd;
+	var calendarBegin;
+	var calendarEnd;
+
+    calendarBegin = new YAHOO.widget.Calendar("calBegin", {iframe:true, hide_blank_weeks:true });
+	calendarEnd = new YAHOO.widget.Calendar("calEnd", {iframe:true, hide_blank_weeks:true });
+
+    function okHandlerBegin() {
+    	console.log("OKHandlerBegin:");
+    	console.log("selectedDates: " + calendarBegin.getSelectedDates());
+        if (calendarBegin.getSelectedDates().length > 0) {
+        	var selDateB = calendarBegin.getSelectedDates()[0];
+            // Pretty Date Output, using Calendar's Locale values: Friday, 8 February 2008
+            //var wStr = cale	ndar.cfg.getProperty("WEEKDAYS_LONG")[selDate.getDay()];
+            var dStrB = selDateB.getDate();
+            if(dStrB < 10) { dStrB = "0" + dStrB;}
+            var mStrB = selDateB.getMonth() + 1;
+            if(mStrB < 10) { mStrB = "0" + mStrB;}
+            var yStrB = selDateB.getFullYear();
+            YAHOO.util.Dom.get("beginInitialTime").value = yStrB + "-" + mStrB + "-" + dStrB;
+        } else {
+            YAHOO.util.Dom.get("beginInitialTime").value = "";
+        }
+        this.hide();
+    }
+
+	function okHandlerEnd() {
+		console.log("OKHandlerEnd:");
+		console.log("selectedDates: " + calendarEnd.getSelectedDates());
+        if (calendarEnd.getSelectedDates().length > 0) {
+
+        	var selDate = calendarEnd.getSelectedDates()[0];
+
+            // Pretty Date Output, using Calendar's Locale values: Friday, 8 February 2008
+            //var wStr = cale	ndar.cfg.getProperty("WEEKDAYS_LONG")[selDate.getDay()];
+            var dStr = selDate.getDate();
+            if(dStr < 10) { dStr = "0" + dStr;}
+            var mStr = selDate.getMonth() + 1;
+            if(mStr < 10) { mStr = "0" + mStr;}
+            yStr = selDate.getFullYear();
+
+            YAHOO.util.Dom.get("endInitialTime").value = yStr + "-" + mStr + "-" + dStr;
+        } else {
+            YAHOO.util.Dom.get("endInitialTime").value = "";
+        }
+        this.hide();
+    }
+
+    function cancelHandler() {
+        this.hide();
+    }
+
+    dialogBegin = new YAHOO.widget.Dialog("containerBegin", {
+        context:["showBegin", "tl", "bl"],
+        buttons:[ {text:"Select", isDefault:true, handler: okHandlerBegin}, 
+                  {text:"Cancel", handler: cancelHandler}],
+        width:"16em",  // Sam Skin dialog needs to have a width defined (7*2em + 2*1em = 16em).
+        draggable:false,
+        close:true
+    });
+
+	dialogEnd = new YAHOO.widget.Dialog("containerEnd", {
+        context:["showEnd", "tl", "bl"],
+        buttons:[ {text:"Select", isDefault:true, handler: okHandlerEnd}, 
+                  {text:"Cancel", handler: cancelHandler}],
+        width:"16em",  // Sam Skin dialog needs to have a width defined (7*2em + 2*1em = 16em).
+        draggable:false,
+        close:true
+    });
+
+    calendarBegin.render();
+	calendarEnd.render();
+    dialogBegin.render();
+	dialogEnd.render();
+	 // Using dialog.hide() instead of visible:false is a workaround for an IE6/7 container known issue with border-collapse:collapse.
+    dialogBegin.hide();
+	dialogEnd.hide();
+
+    calendarBegin.renderEvent.subscribe(function() {
+        // Tell Dialog it's contents have changed, Currently used by container for IE6/Safari2 to sync underlay size
+        dialogBegin.fireEvent("changeContent");
+    });
+
+	calendarEnd.renderEvent.subscribe(function() {
+        // Tell Dialog it's contents have changed, Currently used by container for IE6/Safari2 to sync underlay size
+        dialogEnd.fireEvent("changeContent");
+    });
+
+    YAHOO.util.Event.on("showBegin", "click", function() {
+		dialogBegin.show();
+		if (YAHOO.env.ua.opera && document.documentElement) {
+			// Opera needs to force a repaint
+			document.documentElement.className += "";
+		} 
+	});
+	
+	YAHOO.util.Event.on("showEnd", "click", function() {
+		dialogEnd.show();
+		if (YAHOO.env.ua.opera && document.documentElement) {
+			// Opera needs to force a repaint
+			document.documentElement.className += "";
+		} 
+	});
+
+});
+
+</script>

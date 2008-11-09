@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.studerb.model.Widget;
+import com.studerb.web.util.WidgetSearchModel;
 
 public interface WidgetService {
 
@@ -77,6 +78,6 @@ public interface WidgetService {
 
 	boolean isNameUsed(String name);
 
-	List<Widget> search(String name);
+	List<Widget> search(WidgetSearchModel widgetSearchModel);
 
 }

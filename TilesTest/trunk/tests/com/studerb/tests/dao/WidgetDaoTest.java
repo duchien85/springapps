@@ -208,36 +208,6 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 		assertFalse(widgetDao.isNameUsed(RandomStringUtils.randomAlphabetic(20)));
 	}
 
-	@Test
-	public void testSearch() {
-		Widget widget1 = Widget.createRandomWidget();
-		Widget widget2 = Widget.createRandomWidget();
-		widgetDao.save(widget1);
-		widgetDao.save(widget2);
-		widgetDao.flush();
-		widgetDao.clear();
-
-		List<Widget> widgets = widgetDao.search(null);
-		assertEquals(widgets.size(), 2);
-		widgetDao.clear();
-
-		widgets = widgetDao.search("");
-		assertEquals(widgets.size(), 0);
-		widgetDao.clear();
-
-		widgets = widgetDao.search("abcd");
-		widgetDao.clear();
-		assertEquals(widgets.size(), 0);
-
-		widgets = widgetDao.search(widget1.getWidgetName());
-		widgetDao.clear();
-		assertEquals(widgets.size(), 1);
-
-		widgets = widgetDao.search(widget2.getWidgetName());
-		widgetDao.clear();
-		assertEquals(widgets.size(), 1);
-	}
-
 	private static final class WidgetRowMapper implements RowMapper {
 		@Override
 		public Object mapRow(ResultSet rs, int row) throws SQLException {
