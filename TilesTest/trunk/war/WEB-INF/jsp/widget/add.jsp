@@ -40,8 +40,6 @@
 </table>
 </form:form>
 
-<div class="yui-skin-sam" id="cal1Container" style="display: none;"></div> 
-
 <script type="text/javascript">
 
 YAHOO.util.Event.onDOMReady(function(){
