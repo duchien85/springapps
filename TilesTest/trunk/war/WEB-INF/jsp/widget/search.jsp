@@ -44,7 +44,7 @@
 			<tr>		
 				<td class="form_label"><form:label path="beginInitialTime" cssErrorClass="errors">Beginning</form:label></td>
 				<td class="form_input"><form:input path="beginInitialTime" />&nbsp;
-					<button type="button" id="showBegin" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
+					<button type="button" id="showBegin" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
 						 <div id="containerBegin">
       						<div class="hd">Calendar</div>
       						<div class="bd">
@@ -56,7 +56,7 @@
 			<tr>
 				<td class="form_label"><form:label path="endInitialTime" cssErrorClass="errors">Ending</form:label></td>
 				<td class="form_input"><form:input path="endInitialTime" />&nbsp;
-					<button type="button" id="showEnd" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
+					<button type="button" id="showEnd" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
 			 		<div id="containerEnd">
       					<div class="hd">Calendar</div>
       					<div class="bd">
