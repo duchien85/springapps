@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
 import com.studerb.service.interfaces.WidgetService;
+import com.studerb.web.util.DataPage;
+import com.studerb.web.util.DataPageInfo;
 import com.studerb.web.util.WidgetSearchModel;
 
 @Service("widgetService")
@@ -36,17 +38,20 @@ public class DefaultWidgetService implements WidgetService {
 	@Transactional
 	@Override
 	public int deleteAll(Collection<Widget> widgets) {
+		logger.debug("Deleting all " + widgets.size() + " widgets from collection");
 		int deleted = 0;
 		for (Widget w : widgets) {
 			widgetDao.delete(w);
 			deleted++;
 		}
+		logger.debug("Successfully deleted: " + deleted + " widgets");
 		return deleted;
 	}
 
 	@Transactional
 	@Override
 	public int deleteAllObjects() {
+		logger.debug("Deleting all widgets from persistence");
 		int deleted = widgetDao.deleteAll();
 		logger.debug("deleted all: " + deleted + " widgets");
 		return deleted;
@@ -134,6 +139,20 @@ public class DefaultWidgetService implements WidgetService {
 	public void saveOrUpdateAll(Collection<Widget> widgets) {
 		logger.debug("Saving/updating " + widgets.size() + " widgets");
 		widgetDao.saveOrUpdateAll(widgets);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public DataPage<Widget> getDatePage(DataPageInfo info) {
+		logger.debug("getting data page of widgets -> dpInfo: " + info.toString());
+		return widgetDao.getPage(info);
+	}
+
+	@Override
+	public DataPage<Widget> searchDataPage(WidgetSearchModel widgetSM, DataPageInfo dpi) {
+		DataPage<Widget> dataPage = widgetDao.searchDataPage(widgetSM, dpi);
+		logger.debug("found " + dataPage.getData().size() + " widgets");
+		return null;
 	}
 
 }

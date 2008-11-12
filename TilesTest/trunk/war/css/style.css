@@ -89,4 +89,71 @@ table td.form_input {
 	color: red;
 }
 
-*[disabled] { background-color: #ccc; color: gray; }
+table.dataTable {
+	border: 10px solid #666666;
+}
+
+.dataTable thead tr {
+    background-color: #006599;
+    color: #FFFFFF;
+}
+
+.dataTable thead tr a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.dataTable thead tr a.selected {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.dataTable thead tr a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.dataTable tbody tr.even {
+    background-color: #EDF5FF;
+}
+
+.dataTable tbody tr.odd{
+    background-color: #FFFFFF;
+}
+
+.dataTable tfoot tr td {
+    text-align: center;
+}
+
+.navButton {
+    background-image: url(../images/butstrip.gif);
+    border: 1px solid #CC6600;
+    color: #800082;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 1em;
+    padding: 1px;
+}
+
+#flashMessage {
+	background-color: #F1F4F6;
+	margin: 20px 0 20px 20px;
+	border: 1px solid #006599;
+	padding: 5px 10px;
+	color: #006599;
+	width: 400px;
+	text-align: center;
+}
+
+#flashError {
+    background-color: #fcc;
+    margin: 20px 0 20px 20px;
+    border: 1px solid red; 
+    padding : 5px 10px;
+    color: red;
+	width: 400px;
+	text-align: center;
+}
+
+*[disabled] { background-color: #ddd; color: gray; }

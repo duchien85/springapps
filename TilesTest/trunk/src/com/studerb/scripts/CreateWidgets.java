@@ -19,6 +19,7 @@ public class CreateWidgets {
 
 	public static void main(String[] args) {
 		initAppContext();
+		widgetService.deleteAllObjects();
 		createWidgets();
 	}
 

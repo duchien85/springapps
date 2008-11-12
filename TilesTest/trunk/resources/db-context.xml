@@ -29,10 +29,12 @@
 		<property name="password" value="{jdbc.password}" />
 		</bean>
 	-->
+	
 	<!--  Spring simple DataSource -->
-	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}"
+	<!-- 
+	 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" p:driverClassName="${jdbc.driver}" p:url="${jdbc.url}"
 		p:username="${jdbc.username}" p:password="${jdbc.password}" />
-	-->
+ 	-->
 		
 		<!-- Hibernate SessionFactory -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">

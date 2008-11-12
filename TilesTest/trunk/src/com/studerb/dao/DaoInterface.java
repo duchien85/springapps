@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import com.studerb.web.util.DataPage;
+import com.studerb.web.util.DataPageInfo;
+
 /**
  * @param <T>
  *            class type of object Crud and bulk operations
@@ -28,6 +31,8 @@ public interface DaoInterface<T> {
 
 	List<T> getAll();
 
+	DataPage<T> getPage(DataPageInfo info);
+
 	List<T> getAllByOrder(String orderBy, String orderDir);
 
 	int getCount();
@@ -36,7 +41,7 @@ public interface DaoInterface<T> {
 
 	void saveOrUpdate(T entity);
 
-	void setTableName(String tableName);
-
 	void update(T entity);
+
+	String getTableName();
 }

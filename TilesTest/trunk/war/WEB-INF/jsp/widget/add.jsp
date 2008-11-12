@@ -20,7 +20,7 @@
 	<tr class="datefield">
 		<td class="form_label"><form:label path="initialTime" cssErrorClass="errors" >Initial Time</form:label></td>
 		<td class="form_input"><form:input path="initialTime"/>	&nbsp; 
-			<button type="button" id="show" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
+			<button type="button" id="showButton" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
 			 <div id="container">
       			<div class="hd">Calendar</div>
       			<div class="bd">
@@ -44,8 +44,9 @@
 
 YAHOO.util.Event.onDOMReady(function(){
 
-    var dialog, calendar;
+	var dialog, calendar, calButton;
 
+	calButton = new YAHOO.widget.Button("showButton");
     calendar = new YAHOO.widget.Calendar("cal", {iframe:true, hide_blank_weeks:true });
 
     function okHandler() {
@@ -73,7 +74,7 @@ YAHOO.util.Event.onDOMReady(function(){
     }
 
     dialog = new YAHOO.widget.Dialog("container", {
-        context:["show", "tl", "bl"],
+        context:["showButton", "tl", "bl"],
         buttons:[ {text:"Select", isDefault:true, handler: okHandler}, 
                   {text:"Cancel", handler: cancelHandler}],
         width:"16em",  // Sam Skin dialog needs to have a width defined (7*2em + 2*1em = 16em).
@@ -91,14 +92,14 @@ YAHOO.util.Event.onDOMReady(function(){
         dialog.fireEvent("changeContent");
     });
 
-    YAHOO.util.Event.on("show", "click", function() {
+    calButton.on("click", function() {
 		dialog.show();
 		if (YAHOO.env.ua.opera && document.documentElement) {
 			// Opera needs to force a repaint
 			document.documentElement.className += "";
 		} 
 	});
-
+    
 });
 
 </script>

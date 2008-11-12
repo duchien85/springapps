@@ -12,8 +12,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+
+import com.studerb.web.util.DataPage;
+import com.studerb.web.util.DataPageInfo;
 
 public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
@@ -58,8 +63,9 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
 	@Override
 	public int deleteAll() {
-		int count = simpleJdbcTemplate.update("delete from " + this.tableName);
-		this.logger.info("Deleted All {" + count + "} from " + this.tableName);
+		this.logger.debug("Deleting all from table: " + getTableName());
+		int count = simpleJdbcTemplate.update("delete from " + getTableName());
+		this.logger.info("Deleted All {" + count + "} from " + getTableName());
 		return count;
 	}
 
@@ -71,14 +77,14 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
 	@Override
 	public List<T> getAll() {
-		this.logger.debug("getting all " + this.tableName);
+		this.logger.debug("getting all " + getTableName());
 		Query q = getCurrentSession().createQuery("from " + this.persistentClass.getName());
 		return q.list();
 	}
 
 	@Override
 	public List<T> getAllByOrder(String orderBy, String orderDir) {
-		this.logger.debug("getting all " + this.tableName + " by order: " + orderBy + " / " + orderDir);
+		this.logger.debug("getting all " + getTableName() + " by order: " + orderBy + " / " + orderDir);
 		Criteria c = getCurrentSession().createCriteria(persistentClass);
 		if (orderDir.equalsIgnoreCase("asc")) {
 			c.addOrder(Order.asc(orderBy));
@@ -94,13 +100,13 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
 	@Override
 	public int getCount() {
-		this.logger.debug("getting count of " + this.tableName);
-		return this.simpleJdbcTemplate.queryForInt("Select count(*) from " + this.tableName);
+		this.logger.debug("getting count of " + getTableName());
+		return this.simpleJdbcTemplate.queryForInt("Select count(*) from " + getTableName());
 	}
 
 	@Override
 	public T get(Serializable id) {
-		this.logger.debug("reading " + this.tableName + " - " + id);
+		this.logger.debug("reading " + getTableName() + " - " + id);
 		return (T) getCurrentSession().get(this.persistentClass, id);
 	}
 
@@ -108,11 +114,6 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 	public void saveOrUpdate(T entity) {
 		this.logger.debug("Saving/Updating " + entity);
 		getCurrentSession().saveOrUpdate(entity);
-	}
-
-	@Override
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
 	}
 
 	@Override
@@ -130,8 +131,36 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 		}
 	}
 
+	@Override
+	public DataPage<T> getPage(DataPageInfo info) {
+		Criteria criteria = getCurrentSession().createCriteria(persistentClass);
+		criteria.setMaxResults(info.getPageSize());
+		criteria.setFirstResult(info.getCurrentRecord());
+
+		if (info.isSortDesc()) {
+			criteria.addOrder(Property.forName(info.getSort()).desc());
+		}
+		else {
+			criteria.addOrder(Property.forName(info.getSort()).asc());
+		}
+
+		List<T> data = criteria.list();
+		// don't show a datapage with no records
+		if (data.isEmpty() && info.getCurrentPage() != 1) {
+			info.prev();
+			return getPage(info);
+		}
+
+		// get the row counts
+		Criteria sizeCriteria = getCurrentSession().createCriteria(persistentClass);
+		sizeCriteria.setProjection(Projections.rowCount());
+		Integer total = (Integer) sizeCriteria.uniqueResult();
+		return new DataPage<T>(data, total, info);
+	}
+
 	protected Session getCurrentSession() {
 		return this.sessionFactory.getCurrentSession();
 	}
 
+	public abstract String getTableName();
 }

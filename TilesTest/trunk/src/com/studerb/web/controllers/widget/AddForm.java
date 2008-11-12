@@ -2,6 +2,7 @@ package com.studerb.web.controllers.widget;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class AddForm {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status) {
+	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status, Model model) {
 		new WidgetValidator().validate(widget, result);
 		if (result.hasErrors()) {
 			return "widget/add";
@@ -38,7 +39,7 @@ public class AddForm {
 		}
 		widgetService.save(widget);
 		status.setComplete();
-		// flash.set(FLASH_STATUS, "successfully added new widget");
+		model.addAttribute("flashScope.message", "Successfully updated the widget");
 		return "redirect:/widget/list.htm";
 	}
 }

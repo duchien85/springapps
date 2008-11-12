@@ -3,6 +3,7 @@ package com.studerb.model;
 import java.math.BigDecimal;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.math.RandomUtils;
 import org.joda.time.DateTime;
 
@@ -107,7 +108,7 @@ public class Widget {
 
 	@Override
 	public String toString() {
-		return widgetName;
+		return new ReflectionToStringBuilder(this).toString();
 	}
 
 }

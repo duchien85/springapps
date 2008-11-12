@@ -31,14 +31,14 @@ public class EditForm {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status) {
+	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status, Model model) {
 		new WidgetValidator().validate(widget, result);
 		if (result.hasErrors()) {
 			return "widget/edit";
 		}
 		widgetService.update(widget);
 		status.setComplete();
-		// flash.set(FLASH_STATUS, "successfully updated new widget");
+		model.addAttribute("flashScope.message", "Successfully updated the widget");
 		return "redirect:/widget/list.htm";
 	}
 }

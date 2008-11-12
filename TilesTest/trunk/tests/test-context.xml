@@ -8,6 +8,11 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<context:component-scan base-package="com.studerb" annotation-config="true">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
 	<context:property-placeholder location="classpath:test.properties" />
 	<context:annotation-config />
 	<tx:annotation-driven />
@@ -46,9 +51,7 @@
 	</bean>
 	
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" p:sessionFactory-ref="sessionFactory" />
-	<bean id="widgetDao" class="com.studerb.dao.HibWidgetDao" p:tableName="widget" />			
-	<bean id="widgetService" class="com.studerb.service.DefaultWidgetService" />
-
+	
 	<bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>

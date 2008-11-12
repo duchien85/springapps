@@ -2,8 +2,10 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+		            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	
 	 <context:component-scan base-package="com.studerb.web.controllers" use-default-filters="false">
@@ -16,7 +18,14 @@
 	
 	<!-- <context:component-scan base-package="com.studerb.web.controllers"/>-->
 
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"  p:order="0"/>
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">  
+		<property name="order" value="0" />
+		<property name="interceptors">
+			<list>
+				<ref bean="flashScopeInterceptor"/>
+			</list>
+		</property>
+	</bean>
 		
 	
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
@@ -67,5 +76,17 @@
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
     </bean>
 
-	<!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /> -->    
+	<!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /> -->
+	
+	<!-- Pagination for widget list -->
+	<bean id="widgetListInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="widgetListInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="list"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="widgetName" />
+    </bean>
+    
+    <bean id="flashScopeInterceptor" class="com.studerb.web.util.FlashScopeInterceptor" />
+        
 </beans>
