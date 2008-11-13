@@ -155,6 +155,7 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 		Criteria sizeCriteria = getCurrentSession().createCriteria(persistentClass);
 		sizeCriteria.setProjection(Projections.rowCount());
 		Integer total = (Integer) sizeCriteria.uniqueResult();
+		logger.debug("Obtained dataPage: " + info.toString());
 		return new DataPage<T>(data, total, info);
 	}
 

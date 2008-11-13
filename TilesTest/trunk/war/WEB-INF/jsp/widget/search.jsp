@@ -8,7 +8,7 @@
 
 <tt:errors name="widgetSearchModel" />
 
-<form:form method="post" action="" modelAttribute="widgetSearchModel">
+<form:form method="post" action="" modelAttribute="widgetSearchModel" id="searchForm">
 <table>
 	<tr>
 		<td class="form_label"><form:label path="name" cssErrorClass="errors">Name</form:label></td>
@@ -44,7 +44,7 @@
 			<tr>		
 				<td class="form_label"><form:label path="beginInitialTime" cssErrorClass="errors">Beginning</form:label></td>
 				<td class="form_input"><form:input path="beginInitialTime" />&nbsp;
-					<button type="button" id="showBegin" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
+					<button type="button" id="calButtonBegin" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
 						 <div id="containerBegin">
       						<div class="hd">Calendar</div>
       						<div class="bd">
@@ -56,7 +56,7 @@
 			<tr>
 				<td class="form_label"><form:label path="endInitialTime" cssErrorClass="errors">Ending</form:label></td>
 				<td class="form_input"><form:input path="endInitialTime" />&nbsp;
-					<button type="button" id="showEnd" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
+					<button type="button" id="calButtonEnd" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
 			 		<div id="containerEnd">
       					<div class="hd">Calendar</div>
       					<div class="bd">
@@ -92,7 +92,7 @@
 	<tr>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-		<td><input type="submit" class="form_input" value="Search"/></td>
+		<td><button id="buttonSubmit" name="buttonSubmit" type="submit">Search</button></td>
 	</tr>
 </table>
 </form:form>
@@ -157,17 +157,18 @@
 <script>
 YAHOO.util.Event.onDOMReady(function(){
 
-    var dialogBegin;
-    var dialogEnd;
-	var calendarBegin;
-	var calendarEnd;
+    var dialogBegin, dialogEnd;
+	var calendarBegin, calendarEnd;
+	var calButtonBegin, calButtonEnd;
+
+
+	calButtonBegin = new YAHOO.widget.Button("calButtonBegin");
+	calButtonEnd = new YAHOO.widget.Button("calButtonEnd");
 
     calendarBegin = new YAHOO.widget.Calendar("calBegin", {iframe:true, hide_blank_weeks:true });
 	calendarEnd = new YAHOO.widget.Calendar("calEnd", {iframe:true, hide_blank_weeks:true });
 
     function okHandlerBegin() {
-    	console.log("OKHandlerBegin:");
-    	console.log("selectedDates: " + calendarBegin.getSelectedDates());
         if (calendarBegin.getSelectedDates().length > 0) {
         	var selDateB = calendarBegin.getSelectedDates()[0];
             // Pretty Date Output, using Calendar's Locale values: Friday, 8 February 2008
@@ -185,10 +186,7 @@ YAHOO.util.Event.onDOMReady(function(){
     }
 
 	function okHandlerEnd() {
-		console.log("OKHandlerEnd:");
-		console.log("selectedDates: " + calendarEnd.getSelectedDates());
         if (calendarEnd.getSelectedDates().length > 0) {
-
         	var selDate = calendarEnd.getSelectedDates()[0];
 
             // Pretty Date Output, using Calendar's Locale values: Friday, 8 February 2008
@@ -211,7 +209,7 @@ YAHOO.util.Event.onDOMReady(function(){
     }
 
     dialogBegin = new YAHOO.widget.Dialog("containerBegin", {
-        context:["showBegin", "tl", "bl"],
+        context:["calButtonBegin", "tl", "bl"],
         buttons:[ {text:"Select", isDefault:true, handler: okHandlerBegin}, 
                   {text:"Cancel", handler: cancelHandler}],
         width:"16em",  // Sam Skin dialog needs to have a width defined (7*2em + 2*1em = 16em).
@@ -220,7 +218,7 @@ YAHOO.util.Event.onDOMReady(function(){
     });
 
 	dialogEnd = new YAHOO.widget.Dialog("containerEnd", {
-        context:["showEnd", "tl", "bl"],
+        context:["calButtonEnd", "tl", "bl"],
         buttons:[ {text:"Select", isDefault:true, handler: okHandlerEnd}, 
                   {text:"Cancel", handler: cancelHandler}],
         width:"16em",  // Sam Skin dialog needs to have a width defined (7*2em + 2*1em = 16em).
@@ -246,7 +244,7 @@ YAHOO.util.Event.onDOMReady(function(){
         dialogEnd.fireEvent("changeContent");
     });
 
-    YAHOO.util.Event.on("showBegin", "click", function() {
+    YAHOO.util.Event.on("calButtonBegin", "click", function() {
 		dialogBegin.show();
 		if (YAHOO.env.ua.opera && document.documentElement) {
 			// Opera needs to force a repaint
@@ -254,7 +252,7 @@ YAHOO.util.Event.onDOMReady(function(){
 		} 
 	});
 	
-	YAHOO.util.Event.on("showEnd", "click", function() {
+	YAHOO.util.Event.on("calButtonEnd", "click", function() {
 		dialogEnd.show();
 		if (YAHOO.env.ua.opera && document.documentElement) {
 			// Opera needs to force a repaint

@@ -47,7 +47,7 @@ YAHOO.util.Event.onDOMReady(function(){
 	
     var dialog, calendar, calButton;
 
-	calButton = new YAHOO.widget.Button("showButton");
+    calButton = new YAHOO.widget.Button("showButton");
     calendar = new YAHOO.widget.Calendar("cal", {iframe:true, hide_blank_weeks:true });
 
     function okHandler() {
