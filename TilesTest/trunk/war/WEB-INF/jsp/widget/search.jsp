@@ -15,12 +15,13 @@
 		<td colspan="2" class="form_input">
 			<div id="myAutoComplete"> 
 				<form:input path="name" size="40" maxlength="50"/>
+				<br/><br/>
 				<div id="myContainer"></div>
-			</div>  
+			</div>
 		</td>
 	</tr>
 	<tr>
-		<td class="form_label"><form:label path="cool" cssErrorClass="errors">Cool</form:label></td>
+ 		<td class="form_label"><form:label path="cool" cssErrorClass="errors">Cool</form:label></td>
 		<td colspan="2"  class="form_input">
 			<form:select path="cool">
 				<form:option value="" label="Both"/>
@@ -29,6 +30,27 @@
 			</form:select>
 		</td>
 	</tr>
+	<tr>
+		<td class="form_label">Price Between</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td colspan="2">
+		<table>
+			<tr>
+				<td class="form_label"><form:label path="beginPrice" cssErrorClass="errors">Beginning</form:label></td>
+				<td class="form_input"><form:input path="beginPrice" /></td>				
+			</tr>
+			<tr>
+				<td class="form_label"><form:label path="endPrice" cssErrorClass="errors">Ending</form:label></td>
+				<td class="form_input"><form:input path="endPrice" /></td>				
+			</tr>
+		</table>
+		</td>
+	</tr>
+
 	<tr>
 		<td class="form_label">Initial Time Between</td>
 		<td>&nbsp;</td>
@@ -65,27 +87,7 @@
 		</table>
 		</td>
 	</tr>
-	<tr>
-		<td class="form_label">Price Between</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td colspan="2">
-		<table>
-			<tr>
-				<td class="form_label"><form:label path="beginPrice" cssErrorClass="errors">Beginning</form:label></td>
-				<td class="form_input"><form:input path="beginPrice" /></td>				
-			</tr>
-			<tr>
-				<td class="form_label"><form:label path="endPrice" cssErrorClass="errors">Ending</form:label></td>
-				<td class="form_input"><form:input path="endPrice" /></td>				
-			</tr>
-		</table>
-		</td>
-	</tr>
-	
+		
 	<tr class="formButtons">
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
@@ -95,10 +97,11 @@
         			<a href="<c:url value='/widget/list.htm'/>">Cancel</a>
     			</span>
 			</span>
-			<button id="submitButton" type="submit">Search</button>
+			<button type="submit" id="submitButton" name="submitButton" />Search</button>
 		</td>
 	</tr>
 </table>
+
 </form:form>
 
 <button type="button" id="callWS" title=""><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
@@ -134,30 +137,28 @@
 
 
 <script type="text/javascript">
-	//var myAutoComp = new YAHOO.widget.AutoComplete("myInput","myContainer", myDataSource);
+
+var autoCompletefunc = function(){
+
 	var contextName = '<c:out value="${pageContext.request.contextPath}"/>';
-	var url = contextName + '/api/helloworld.htm';
+	var url = contextName + '/api/getWidgetNames.htm';
 	
-	var successHandler = function(r){
-		alert('success: ' + r.responseText);
-	}
+	var oDS = new YAHOO.util.XHRDataSource(url);
+	oDS.responseType = YAHOO.util.XHRDataSource.TYPE_TEXT; 
 
-	var failureHandler = function(r){
-		alert('failure: ' + r.statusText);
-	}
-	
-	var callback = {
-		success: successHandler,
-		failure: failureHandler
+	oDS.responseSchema = {
+		recordDelim: "\n",
+		fieldDelim: "\n"
 	};
+	// Enable caching
+	oDS.maxCacheEntries = 5;
 
-	YAHOO.util.Event.on("callWS", "click", function() {
-		console.log("calling transaction to /api/helloworld");
-		var transaction = YAHOO.util.Connect.asyncRequest("GET", url, callback, null); 
-	});
-	
-
-	
+	// Instantiate the AutoComplete
+	var ac = new YAHOO.widget.AutoComplete("name","myContainer", oDS);
+	ac.minQueryLength = 3;
+	ac.useShadow = true;
+	return {oDS: oDS, ac: ac};
+}();
 </script>
 
 <script>
@@ -250,14 +251,14 @@ YAHOO.util.Event.onDOMReady(function(){
 		} 
 	});
 	
-	calButtonEnd("click", function() {
+	calButtonEnd.on("click", function() {
 		dialogEnd.show();
 		if (YAHOO.env.ua.opera && document.documentElement) {
 			// Opera needs to force a repaint
 			document.documentElement.className += "";
 		} 
 	});
-
+	
 });
 
 </script>

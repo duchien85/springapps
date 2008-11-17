@@ -13,4 +13,5 @@ public interface WidgetDao extends DaoInterface<Widget> {
 	public List<Widget> search(WidgetSearchModel widgetSearchModel);
 
 	public DataPage<Widget> searchDataPage(WidgetSearchModel widgetSM, DataPageInfo dpi);
+
 }

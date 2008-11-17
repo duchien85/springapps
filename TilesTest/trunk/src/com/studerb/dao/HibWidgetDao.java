@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -93,7 +94,7 @@ public class HibWidgetDao extends AbstractHibernateDao<Widget> implements Widget
 		Criteria criteria = getCurrentSession().createCriteria(Widget.class);
 
 		if (StringUtils.hasText(wsm.getName())) {
-			criteria.add(Restrictions.eq("widgetName", wsm.getName()));
+			criteria.add(Restrictions.ilike("widgetName", wsm.getName(), MatchMode.ANYWHERE));
 		}
 		// isCool
 		if (wsm.isCool() != null) {

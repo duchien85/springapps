@@ -66,6 +66,50 @@ public class WidgetDaoSearchTest extends AbstractTransactionalJUnit4SpringContex
 	}
 
 	@Test
+	public void testSearchNameAnywhereICase() {
+		Widget widget1 = Widget.createRandomWidget();
+		widget1.setWidgetName("aaabbbccc");
+		Widget widget2 = Widget.createRandomWidget();
+		widget2.setWidgetName("bbb");
+		Widget widget3 = Widget.createRandomWidget();
+		widget3.setWidgetName("AAABBBCCCD");
+		Widget widget4 = Widget.createRandomWidget();
+		widget4.setWidgetName("CD");
+
+		widgetDao.save(widget1);
+		widgetDao.save(widget2);
+		widgetDao.save(widget3);
+		widgetDao.save(widget4);
+		widgetDao.flush();
+		widgetDao.clear();
+
+		wsm.setName("bbb");
+		List<Widget> widgets = widgetDao.search(wsm);
+		assertEquals(widgets.size(), 3);
+		widgetDao.clear();
+
+		wsm.setName("aaa");
+		widgets = widgetDao.search(wsm);
+		widgetDao.clear();
+		assertEquals(widgets.size(), 2);
+
+		wsm.setName("Z");
+		widgets = widgetDao.search(wsm);
+		widgetDao.clear();
+		assertEquals(widgets.size(), 0);
+
+		wsm.setName("C");
+		widgets = widgetDao.search(wsm);
+		widgetDao.clear();
+		assertEquals(widgets.size(), 3);
+
+		wsm.setName("");
+		widgets = widgetDao.search(wsm);
+		widgetDao.clear();
+		assertEquals(widgets.size(), 4);
+	}
+
+	@Test
 	public void testSearchByCool() {
 		Widget widget1 = Widget.createRandomWidget();
 		widget1.setCool(Boolean.TRUE);
