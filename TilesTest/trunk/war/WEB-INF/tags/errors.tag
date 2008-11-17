@@ -4,10 +4,11 @@
 <%@ attribute name="name" type="java.lang.String" required="true" %>
 
 <spring:hasBindErrors name="${name}">
-    <ul><span class="errors">
+	<div class="clean-error">
+	<ul>
         <c:forEach items="${errors.allErrors}" var="error">
             <li><spring:message message="${error}"/></li>
         </c:forEach>
-        </span>
     </ul>
+	</div>
 </spring:hasBindErrors>

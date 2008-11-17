@@ -26,39 +26,27 @@
     
     <definition name="widget/list" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Widget" type="string" />
-        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
-        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
         <put-attribute name="content" value="/WEB-INF/jsp/widget/list.jsp"/>
     </definition>
     
     <definition name="widget/edit" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Edit Widget" type="string" />
-        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
-        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
-        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/>
+		<put-attribute name="extra_head" value="/WEB-INF/jsp/layouts/tiles/yui_calendar.jsp"/>        
         <put-attribute name="content" value="/WEB-INF/jsp/widget/edit.jsp"/>
     </definition>
 
     <definition name="widget/search" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Search Widget" type="string" />
-        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_autocomplete_cal_css.jsp"/>
-        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_autocomplete_cal_js.jsp"/>
-        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/> 
+        <put-attribute name="extra_head" value="/WEB-INF/jsp/layouts/tiles/yui_autocomplete_cal.jsp"/>        
         <put-attribute name="content" value="/WEB-INF/jsp/widget/search.jsp"/>
     </definition>
     
     
     <definition name="widget/add" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Add a new Widget" type="string" />
-        <put-attribute name="css_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_css.jsp"/>
-        <put-attribute name="js_files" value="/WEB-INF/jsp/layouts/tiles/yui_calendar_js.jsp"/>
-        <put-attribute name="style" value="/WEB-INF/jsp/layouts/tiles/calendar_style.jsp"/>
+        <put-attribute name="extra_head" value="/WEB-INF/jsp/layouts/tiles/yui_calendar.jsp"/>        
         <put-attribute name="content" value="/WEB-INF/jsp/widget/add.jsp"/>
     </definition>
     
-    <definition name="widget/delete" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Delete Widget" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/widget/delete.jsp"/>
-    </definition>
     
 </tiles-definitions>

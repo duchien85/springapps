@@ -20,7 +20,7 @@ public class Widget {
 	public static Widget createRandomWidget() {
 		Widget widget = new Widget();
 		widget.setWidgetName(RandomStringUtils.randomAlphabetic(20));
-		String whole = String.valueOf(RandomUtils.nextInt());
+		String whole = String.valueOf(RandomUtils.nextInt(10000));
 		String fractional = String.valueOf(RandomUtils.nextInt(100));
 		widget.setPrice(new BigDecimal(whole + "." + fractional));
 		widget.setInitialTime(new DateTime());

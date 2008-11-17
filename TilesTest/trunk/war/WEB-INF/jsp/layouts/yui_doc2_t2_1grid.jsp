@@ -8,10 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/reset-fonts-grids/reset-fonts-grids.css'/>">  
 	<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/base/base-min.css'/>">  
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>">
-	<tiles:insertAttribute name="css_files" ignore="true"/>
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/css_box/message_box.css'/>">  
 	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"></script>
-	<tiles:insertAttribute name="js_files" ignore="true"/>
-	<tiles:insertAttribute name="style" ignore="true"/>
+	<tiles:insertAttribute name="extra_head" ignore="true"/>
 </head>
 
 <body class="yui-skin-sam">

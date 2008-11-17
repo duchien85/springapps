@@ -8,7 +8,7 @@
 <tt:errors name="widget" />
 
 <form:form modelAttribute="widget" method="post">
-<table class="yui-skin-sam">
+<table class="formTable">
 	<tr>
 		<td class="form_label"><form:label path="widgetName" cssErrorClass="errors" >Name</form:label></td>
 		<td class="form_input"><form:input path="widgetName" /></td>
@@ -33,9 +33,16 @@
 		<td class="form_label"><form:label path="cool" cssErrorClass="errors" >Is Cool?</form:label></td>
 		<td class="form_imput"><form:checkbox path="cool"/></td>
 	</tr>
-	<tr>
+	<tr class="formButtons">
 		<td></td>
-		<td><input type="submit" class="form_input" value="Save Widget"/></td>
+		<td>
+			<span id="cancelButton" class="yui-button yui-link-button">
+    			<span class="first-child">
+        			<a href="<c:url value='/widget/list.htm'/>">Cancel</a>
+    			</span>
+			</span>
+			<button id="submitButton" type="submit" >Add Widget</button>
+		</td>
 	</tr>
 </table>
 </form:form>
@@ -46,14 +53,21 @@ YAHOO.util.Event.onDOMReady(function(){
 
 	var dialog, calendar, calButton;
 
-	calButton = new YAHOO.widget.Button("showButton");
+	var submitButton, cancelButton;
+	
+    
+    submitButton = new YAHOO.widget.Button("submitButton");
+    submitButton.set("type", "submit");
+	submitButton.set("title", "Save new Widget");
+	
+    cancelButton = new YAHOO.widget.Button("cancelButton");
+
+    calButton = new YAHOO.widget.Button("showButton");
     calendar = new YAHOO.widget.Calendar("cal", {iframe:true, hide_blank_weeks:true });
 
     function okHandler() {
         if (calendar.getSelectedDates().length > 0) {
-
             var selDate = calendar.getSelectedDates()[0];
-
             // Pretty Date Output, using Calendar's Locale values: Friday, 8 February 2008
             //var wStr = cale	ndar.cfg.getProperty("WEEKDAYS_LONG")[selDate.getDay()];
             var dStr = selDate.getDate();
@@ -74,7 +88,7 @@ YAHOO.util.Event.onDOMReady(function(){
     }
 
     dialog = new YAHOO.widget.Dialog("container", {
-        context:["showButton", "tl", "bl"],
+        context:["showButton", "tl", "bl", ["beforeShow", "windowResize"]],
         buttons:[ {text:"Select", isDefault:true, handler: okHandler}, 
                   {text:"Cancel", handler: cancelHandler}],
         width:"16em",  // Sam Skin dialog needs to have a width defined (7*2em + 2*1em = 16em).

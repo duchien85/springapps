@@ -12,7 +12,7 @@ import com.studerb.model.Widget;
 import com.studerb.service.interfaces.WidgetService;
 
 public class CreateWidgets {
-	private static final int COUNT = 100;
+	private static final int COUNT = 500;
 	private final static Logger logger = Logger.getLogger(CreateWidgets.class);
 	static ApplicationContext appContext;
 	static WidgetService widgetService;

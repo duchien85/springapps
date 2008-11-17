@@ -40,102 +40,129 @@ table {
 }
 
 #yui-main .yui-b .yui-g{
+
 	border-left: 2px solid #426FD9;
 	min-height: 200px;
-	padding: 1em;
+	padding: 1em 3em;
 }
 
-#yui-main .yui-b .yui-g table{
-	background-color: #EDF5FF;
+#pageTitle h2 {
+text-indent: 15px;
+padding-top: 4px;
+padding-right: 0pt;
+padding-bottom: 2px;
+padding-left: 0pt;
+background-color: transparent;
+background-image: url(http://us.i1.yimg.com/us.yimg.com/i/ydn/title_h_bg.gif);
+background-repeat: no-repeat;
+background-attachment: scroll;
+background-position: 0pt 0pt;
+margin-top: 0pt;
+margin-bottom: 0pt;
+margin-left: 0pt;
+color: #000000;
+font-size: 120%;
+font-weight: bold;
+position: relative;
+left: -1px;
+top: -1px;
+margin-right: -2px;
 }
 
+/*
+#pageTitle h2 {
+	background-image: url(../images/y_blue_fade.gif);
+	background-repeat: no-repeat;
+	background-position: 0pt 0pt;
+	background-color: transparent;
+}
+
+*/
 #left_nav {
 	background-color: #EDF5FF;
 	border: 2px solid #7D98B8;
 	padding: .1em;
 }
 
-#ft {
-	height: 3em;
-	background-image: url(../images/header_bg.gif);
-	background-repeat: repeat-x;
-	background-position: 0 0;
+
+table.formTable {
+	border: 1px solid #666666;
 }
 
-#ft p{
-	font-size: small;
-	text-align: center;
-	padding: .5em 0;
+table.formTable tr.formButtons {
+	text-align: right;
 }
 
-tr th {
-	border: thin solid black;
+table.formTable td, table.formTable th {
+	/*padding: 1em;*/
+	border-style: none;
 }
-
-td {
-	/*border: none;*/
-}
-
-table td.form_label {
+table.formTable td.form_label {
 	text-align: right;
 	font-weight: bolder;
 }
 
-table td.form_input {
+table.formTable td.form_input {
 	text-align: left;
 }
 
-.errors{
-	color: red;
-}
 
 table.dataTable {
-	border: 10px solid #666666;
+	width: 100%;
+	border: 1px solid #666666;
+	text-align: center;
 }
 
-.dataTable thead tr {
+table.dataTable thead tr {
     background-color: #006599;
     color: #FFFFFF;
+    text-align: left:
 }
 
-.dataTable thead tr a {
+table.dataTable thead th {
+    text-align: left:
+}
+
+table.dataTable thead tr a {
     color: #FFFFFF;
     text-decoration: none;
 }
 
-.dataTable thead tr a.selected {
+table.dataTable thead tr a.selected {
     color: #FFFFFF;
     text-decoration: underline;
 }
 
-.dataTable thead tr a:hover {
+table.dataTable thead tr a:hover {
     color: #FFFFFF;
     text-decoration: underline;
 }
 
-.dataTable tbody tr.even {
+table.dataTable tbody td{
+    text-align: left:
+}
+
+table.dataTable tbody tr.even {
     background-color: #EDF5FF;
 }
 
-.dataTable tbody tr.odd{
+table.dataTable tbody tr.odd{
     background-color: #FFFFFF;
 }
 
-.dataTable tfoot tr td {
+table.dataTable tfoot tr td {
     text-align: center;
 }
 
-.navButton {
-    background-image: url(../images/butstrip.gif);
-    border: 1px solid #CC6600;
-    color: #800082;
-    font-weight: bold;
-    text-decoration: none;
-    font-family: arial, helvetica, sans-serif;
-    font-size: 1em;
-    padding: 1px;
+table.dataTable tfoot tr  {
+	background-color: #006598;
+	text-align: center;
+	color: white;
 }
 
+.navButton img{
+	vertical-align: bottom; 
+}
 #flashMessage {
 	background-color: #F1F4F6;
 	margin: 20px 0 20px 20px;
@@ -144,16 +171,31 @@ table.dataTable {
 	color: #006599;
 	width: 400px;
 	text-align: center;
+	font-weight: bold;
 }
 
 #flashError {
-    background-color: #fcc;
+    background-color: #ffffcc;
     margin: 20px 0 20px 20px;
-    border: 1px solid red; 
+    border: 1px solid #990000; 
     padding : 5px 10px;
     color: red;
 	width: 400px;
 	text-align: center;
+	font-weight: bold;
 }
 
 *[disabled] { background-color: #ddd; color: gray; }
+
+
+#ft {
+	background-image: url(../images/header_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+}
+
+#ft div#ft_copyright p{
+	padding: 2em;
+	text-align: center;
+	font-size: small;
+}

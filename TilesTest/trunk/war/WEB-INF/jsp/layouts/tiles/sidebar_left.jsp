@@ -5,6 +5,11 @@
 	<ul>
 		<li><a href="<c:url value="/welcome.htm"/>">Home</a></li>
 		<li><a href="<c:url value="/widget/list.htm"/>">Widgets</a></li>
+		<ul>
+			<li><a href="<c:url value="/widget/add.htm"/>">Add a Widget</a></li>
+			<li><a href="<c:url value="/widget/search.htm"/>">Search Widgets</a></li>
+		</ul>
+
 		<li><a href="<c:url value="/api/helloworld.htm"/>">HelloWorld WS</a></li>
 	</ul>
 
