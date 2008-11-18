@@ -48,5 +48,10 @@
         <put-attribute name="content" value="/WEB-INF/jsp/widget/add.jsp"/>
     </definition>
     
+    <definition name="dataAccessFailure" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Data Access Failure" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/dataAccessFailure.jsp"/>
+    </definition>
+    
     
 </tiles-definitions>

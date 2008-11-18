@@ -13,7 +13,7 @@
 </c:if>
 
 <c:if test="${not empty flashScope.error}">
-	<div id="clean-error">${flashScope.error}</div>
+	<div class="clean-error">${flashScope.error}</div>
 </c:if>
 
 <div id="pageTitle">
@@ -48,5 +48,3 @@
 	</tbody>
 </table>
 </div><!-- end .form_table -->
-
-

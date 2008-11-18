@@ -78,7 +78,7 @@ public class HibWidgetDao extends AbstractHibernateDao<Widget> implements Widget
 
 		List<Widget> data = criteria.list();
 		// don't show a datapage with no records
-		if (data.isEmpty() && dpi.getCurrentPage() != 1) {
+		if (data.isEmpty() && dpi.getCurrentPage() > 1) {
 			dpi.prev();
 			return getPage(dpi);
 		}

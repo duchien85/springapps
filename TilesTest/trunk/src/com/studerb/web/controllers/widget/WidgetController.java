@@ -14,7 +14,7 @@ import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
 
 @Controller
-@RequestMapping("/widget/*")
+@RequestMapping("/widget/*.htm")
 public class WidgetController {
 
 	@Autowired

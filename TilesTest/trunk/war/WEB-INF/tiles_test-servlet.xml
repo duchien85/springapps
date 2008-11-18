@@ -87,6 +87,14 @@
         <property name="sort" value="widgetName" />
     </bean>
     
+    <bean id="widgetSearchInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="widgetSearchInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="search"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="widgetName" />
+    </bean>
+    
     <bean id="flashScopeInterceptor" class="com.studerb.web.util.FlashScopeInterceptor" />
         
 </beans>

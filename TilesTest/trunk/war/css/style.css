@@ -87,6 +87,7 @@ margin-right: -2px;
 
 table.formTable {
 	border: 1px solid #666666;
+	background-color: #EDF5FF;
 }
 
 table.formTable tr.formButtons {
@@ -95,10 +96,15 @@ table.formTable tr.formButtons {
 
 table.formTable td, table.formTable th {
 	/*padding: 1em;*/
-	border-style: none;
+	border-style: solid;
 }
 table.formTable td.form_label {
 	text-align: right;
+	font-weight: bolder;
+}
+
+table.formTable td.form_label_left {
+	text-align: left;
 	font-weight: bolder;
 }
 
@@ -147,7 +153,7 @@ table.dataTable tbody tr.even {
 }
 
 table.dataTable tbody tr.odd{
-    background-color: #FFFFFF;
+    background-color: white;
 }
 
 table.dataTable tfoot tr td {

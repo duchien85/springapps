@@ -149,10 +149,11 @@ public class DefaultWidgetService implements WidgetService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public DataPage<Widget> searchDataPage(WidgetSearchModel widgetSM, DataPageInfo dpi) {
 		DataPage<Widget> dataPage = widgetDao.searchDataPage(widgetSM, dpi);
 		logger.debug("found " + dataPage.getData().size() + " widgets");
-		return null;
+		return dataPage;
 	}
 
 }

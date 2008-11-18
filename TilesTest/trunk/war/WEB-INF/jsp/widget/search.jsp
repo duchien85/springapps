@@ -4,64 +4,50 @@
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
-<h2>Search Widgets</h2>
+<c:url value="/widget/search/changePage.htm" var="changePage" scope="page" />
+<c:url value="/widget/search/sort.htm" var="changeSort" scope="page" />
+
+<h1>Search Widgets</h1>
+
+<c:if test="${not empty flashScope.message}">
+	<div class="clean-ok">${flashScope.message}</div>
+</c:if>
+
+<c:if test="${not empty flashScope.error}">
+	<div id="clean-error">${flashScope.error}</div>
+</c:if>
+
+<c:if test="${!empty searchResultsMessage}">
+	<div class="clean-error">${searchResultsMessage}</div>
+</c:if>
 
 <tt:errors name="widgetSearchModel" />
-
-<form:form method="post" action="" modelAttribute="widgetSearchModel" id="searchForm">
+<form:form method="post" action="doSearch.htm" modelAttribute="widgetSearchModel" id="searchForm">
 <table class="formTable">
 	<tr>
-		<td class="form_label"><form:label path="name" cssErrorClass="errors">Name</form:label></td>
-		<td colspan="2" class="form_input">
+		<td class="form_label_left">
+			<form:label path="name" cssErrorClass="errors">Name</form:label>&nbsp;
+			<span style="display: none" id= "waitImageSpan"><img src="<c:url value='/images/wait.gif'/>" id="waitImage" alt="Calendar" /></span>
+		</td>
+	<tr>
+	<tr>
+		<td class="form_input">
 			<div id="myAutoComplete"> 
-				<form:input path="name" size="40" maxlength="50"/>
+				<form:input path="name" size="20"/>
+
 				<br/><br/>
 				<div id="myContainer"></div>
 			</div>
 		</td>
 	</tr>
 	<tr>
- 		<td class="form_label"><form:label path="cool" cssErrorClass="errors">Cool</form:label></td>
-		<td colspan="2"  class="form_input">
-			<form:select path="cool">
-				<form:option value="" label="Both"/>
-				<form:option value="true" label="True"/>
-				<form:option value="false" label="False"/>
-			</form:select>
-		</td>
+		<td class="form_label_left">Initial Time Between</td>
 	</tr>
-	<tr>
-		<td class="form_label">Price Between</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td colspan="2">
-		<table>
-			<tr>
-				<td class="form_label"><form:label path="beginPrice" cssErrorClass="errors">Beginning</form:label></td>
-				<td class="form_input"><form:input path="beginPrice" /></td>				
-			</tr>
-			<tr>
-				<td class="form_label"><form:label path="endPrice" cssErrorClass="errors">Ending</form:label></td>
-				<td class="form_input"><form:input path="endPrice" /></td>				
-			</tr>
-		</table>
-		</td>
-	</tr>
-
-	<tr>
-		<td class="form_label">Initial Time Between</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td colspan="2">
-		<table>
+	<tr> 		
+		<td>
+		<table class="formTable">
 			<tr>		
-				<td class="form_label"><form:label path="beginInitialTime" cssErrorClass="errors">Beginning</form:label></td>
+				<td class="form_label_left"><form:label path="beginInitialTime" cssErrorClass="errors">Beginning</form:label></td>
 				<td class="form_input"><form:input path="beginInitialTime" />&nbsp;
 					<button type="button" id="calButtonBegin" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
 						 <div id="containerBegin">
@@ -73,7 +59,7 @@
 				</td>				
 			</tr>
 			<tr>
-				<td class="form_label"><form:label path="endInitialTime" cssErrorClass="errors">Ending</form:label></td>
+				<td class="form_label_left"><form:label path="endInitialTime" cssErrorClass="errors">Ending</form:label></td>
 				<td class="form_input"><form:input path="endInitialTime" />&nbsp;
 					<button type="button" id="calButtonEnd" title="Show Calendar"><img src="<c:url value='/images/calbtn.gif'/>" alt="Calendar" /></button>
 			 		<div id="containerEnd">
@@ -87,10 +73,36 @@
 		</table>
 		</td>
 	</tr>
-		
+	<tr>
+		<td class="form_label_left">Price Between</td>
+	</tr>
+	<tr>
+		<td>
+		<table class="formTable">
+			<tr>
+				<td class="form_label_left"><form:label path="beginPrice" cssErrorClass="errors">Beginning</form:label></td>
+				<td class="form_input"><form:input path="beginPrice" /></td>				
+			</tr>
+			<tr>
+				<td class="form_label_left"><form:label path="endPrice" cssErrorClass="errors">Ending</form:label></td>
+				<td class="form_input"><form:input path="endPrice" /></td>				
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="form_label_left"><form:label path="cool" cssErrorClass="errors">Cool</form:label></td>		
+	</tr>
+	<tr>
+		<td class="form_input">
+			<form:select path="cool">
+				<form:option value="" label=""/>
+				<form:option value="true" label="True"/>
+				<form:option value="false" label="False"/>
+			</form:select>
+		</td>
+	</tr>
 	<tr class="formButtons">
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
 		<td>
 			<span id="cancelButton" class="yui-button yui-link-button">
     			<span class="first-child">
@@ -106,35 +118,37 @@
 
 <button type="button" id="callWS" title=""><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
 
-<c:if test="${not empty widgets}">
-	<div class="form_table">
-	<table>
-	<thead>
-		<tr>
-		<th>Widget Name</th>
-		<th>Price</th>
-		<th>Initial Time</th>
-		<th>Cool?</th>
-		<th>Edit</th>
-		<th>Delete</th>
+
+<c:if test="${!empty widgets.data}">
+<div>
+<table class="dataTable">
+ 	<thead>
+    	<tr>
+        	<tt:sortHeader column="widgetName" baseUrl="${changeSort}" dataPage="${widgets}">Widget Name</tt:sortHeader>
+            <tt:sortHeader column="price" baseUrl="${changeSort}" dataPage="${widgets}">Price</tt:sortHeader>
+            <tt:sortHeader column="initialTime" baseUrl="${changeSort}" dataPage="${widgets}">Initial Time</tt:sortHeader>
+            <tt:sortHeader column="cool" baseUrl="${changeSort}" dataPage="${widgets}">Cool?</tt:sortHeader>
+            <th>Edit</th>
+			<th>Delete</th>
 		</tr>
-	<thead>
+	</thead>
+    <tt:TableFooter colspan="6" dataPage="${widgets}" baseUrl="${changePage}"/>
 	<tbody>
-	<c:forEach items="${widgets}" var="w" varStatus="st">
+	<c:forEach items="${widgets.data}" var="w" varStatus="st">
             <tr class="${st.index % 2 == 0 ? 'odd' : 'even'}">
                 <td>${w.widgetName}</td>
                 <td>$${w.price}</td>
                 <td><joda:format value="${w.initialTime}" style="M-"/></td>
                 <td>${w.cool}</td>
-				<td><a href="<c:url value="/widget/edit.htm"/>?widgetId=${w.id}">Edit</a></td>
-				<td><a href="<c:url value="/widget/delete.htm"/>?widgetId=${w.id}">Delete</a></td>
+				<td><a href="<c:url value="/widget/search/edit.htm"/>?widgetId=${w.id}"><img src="<c:url value="/images/Sweetie/png-24/16-tag-pencil.png" />"/></a></td>
+				<td><a href="<c:url value="/widget/search/delete.htm"/>?widgetId=${w.id}"><img src="<c:url value="/images/Sweetie/png-24/16-em-cross.png" />"/></a></td>
 			</tr>
 	</c:forEach>
 	</tbody>
-	</table>
-	</div><!-- end .form_table -->
-</c:if>
+</table>
+</div><!-- end .form_table -->
 
+</c:if>
 
 <script type="text/javascript">
 
@@ -157,6 +171,12 @@ var autoCompletefunc = function(){
 	var ac = new YAHOO.widget.AutoComplete("name","myContainer", oDS);
 	ac.minQueryLength = 3;
 	ac.useShadow = true;
+	ac.maxResultsDisplayed = 10;
+
+	ac.dataErrorEvent.subscribe(function(){$('waitImageSpan').hide();});
+	ac.dataRequestEvent.subscribe(function(){$('waitImageSpan').show();});
+	ac.dataReturnEvent.subscribe(function(){$('waitImageSpan').hide();});
+	
 	return {oDS: oDS, ac: ac};
 }();
 </script>
