@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.paradigm.model">
+	<class name="Book">
+
+		<id name="id" type="long" length="19">
+			<generator class="native" />
+		</id>
+		
+		<property name="bookName" type="string" length="50" unique="true" update="false" not-null="true"/>
+		<property name="initialTime" type="org.joda.time.contrib.hibernate.PersistentDateTime" not-null="true"/>
+		<property name="price" type="big_decimal" not-null="true"/>
+		<property name="cool" type="boolean" not-null="true" />
+
+	</class>
+</hibernate-mapping>

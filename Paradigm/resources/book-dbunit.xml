@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <book id="1" name="book1" time="2005-01-01" price="25.52" cool="1" /> 
+    <book id="2" name="book2" time="2008-06-28" price="17.52" cool="0" /> 
+    <book id="3" name="book3" time="2007-12-12" price="0.52" cool="1" /> 
+    <book id="4" name="book4" time="2003-03-01" price="12343.52" cool="0" /> 
+    <book id="5" name="book5" time="2003-05-01" price="87.59" cool="1" /> 
+    <book id="6" name="book6" time="2001-11-24" price="42323.99" cool="0" /> 
+</dataset>
