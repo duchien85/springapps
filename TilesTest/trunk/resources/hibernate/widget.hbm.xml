@@ -6,14 +6,18 @@
 <hibernate-mapping package="com.studerb.model">
 	<class name="Widget">
 
-		<id name="id" type="long" length="19">
-			<generator class="native" />
+		<id name="id" type="long" length="19" column="widget_id">
+			<generator class="identity" />
 		</id>
 		
-		<property name="widgetName" type="string" length="50" unique="true" update="false" not-null="true"/>
-		<property name="initialTime" type="org.joda.time.contrib.hibernate.PersistentDateTime" not-null="true"/>
-		<property name="price" type="big_decimal" not-null="true"/>
-		<property name="cool" type="boolean" not-null="true" />
+		<property column="widget_name" name="widgetName" type="string" length="50" unique="true" update="false" not-null="true"/>
+		<property column="initial_time" name="initialTime" type="org.joda.time.contrib.hibernate.PersistentDateTime" not-null="true"/>
+		<property column="price" name="price" type="big_decimal" not-null="true"/>
+		<property column="price" name="cool" type="boolean" not-null="true" />
+		 <property name="lastUpdate" type="timestamp" update="false" insert="false">
+            <column name="last_update" length="19" not-null="true" />
+        </property>
+		
 
 	</class>
 </hibernate-mapping>

@@ -1,6 +1,7 @@
 package com.studerb.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -14,6 +15,7 @@ public class Widget {
 	private DateTime initialTime;
 	private BigDecimal price;
 	private Boolean cool;
+	private Date lastUpdate;
 
 	public final static int MAX_NAME_LENGTH = 50;
 
@@ -104,6 +106,14 @@ public class Widget {
 
 	public void setInitialTime(DateTime time) {
 		initialTime = time;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 	@Override
