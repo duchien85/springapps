@@ -22,6 +22,7 @@
 </c:if>
 
 <tt:errors name="widgetSearchModel" />
+
 <form:form method="post" action="doSearch.htm" modelAttribute="widgetSearchModel" id="searchForm">
 <table class="formTable">
 	<tr>
@@ -96,9 +97,9 @@
 	<tr>
 		<td class="form_input">
 			<form:select path="cool">
-				<form:option value="" label=""/>
-				<form:option value="true" label="True"/>
-				<form:option value="false" label="False"/>
+				<form:option value="" label="" />
+				<form:option value="true" label="True" />
+				<form:option value="false" label="False" />
 			</form:select>
 		</td>
 	</tr>
@@ -113,10 +114,8 @@
 		</td>
 	</tr>
 </table>
-
-</form:form>
-
 <button type="button" id="callWS" title=""><img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
+</form:form>
 
 
 <c:if test="${!empty widgets.data}">
@@ -147,7 +146,6 @@
 	</tbody>
 </table>
 </div><!-- end .form_table -->
-
 </c:if>
 
 <script type="text/javascript">
