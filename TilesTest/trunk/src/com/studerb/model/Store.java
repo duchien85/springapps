@@ -2,7 +2,6 @@ package com.studerb.model;
 
 // Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,38 +10,13 @@ import java.util.Set;
  */
 public class Store implements java.io.Serializable {
 
-	private Byte storeId;
 	private Staff staff;
 	private Address address;
-	private Date lastUpdate;
 	private Set<Inventory> inventories = new HashSet<Inventory>(0);
 	private Set<Customer> customers = new HashSet<Customer>(0);
 	private Set<Staff> staffs = new HashSet<Staff>(0);
 
 	public Store() {}
-
-	public Store(Staff staff, Address address, Date lastUpdate) {
-		this.staff = staff;
-		this.address = address;
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Store(Staff staff, Address address, Date lastUpdate, Set<Inventory> inventories, Set<Customer> customers, Set<Staff> staffs) {
-		this.staff = staff;
-		this.address = address;
-		this.lastUpdate = lastUpdate;
-		this.inventories = inventories;
-		this.customers = customers;
-		this.staffs = staffs;
-	}
-
-	public Byte getStoreId() {
-		return this.storeId;
-	}
-
-	public void setStoreId(Byte storeId) {
-		this.storeId = storeId;
-	}
 
 	public Staff getStaff() {
 		return this.staff;
@@ -58,14 +32,6 @@ public class Store implements java.io.Serializable {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	public Date getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public Set<Inventory> getInventories() {

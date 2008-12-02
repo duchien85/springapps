@@ -1,27 +1,28 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
+	<!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
 <hibernate-mapping>
-    <class name="com.studerb.model.Inventory" table="inventory" catalog="sakila">
-        <id name="inventoryId" type="java.lang.Integer">
-            <column name="inventory_id" />
-            <generator class="identity" />
-        </id>
-        <many-to-one name="store" class="com.studerb.model.Store" fetch="select">
-            <column name="store_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="film" class="com.studerb.model.Film" fetch="select">
-            <column name="film_id" not-null="true" />
-        </many-to-one>
-        <property name="lastUpdate" type="timestamp" update="false" insert="false">
-            <column name="last_update" length="19" not-null="true"/>
-        </property>
-        <set name="rentals" inverse="true">
-            <key>
-                <column name="inventory_id" not-null="true" />
-            </key>
-            <one-to-many class="com.studerb.model.Rental" />
-        </set>
-    </class>
+	<class name="com.studerb.model.Inventory" table="inventory" catalog="sakila">
+		<id name="id" type="long" length="19" column="inventory_id">
+			<generator class="identity" />
+		</id>
+
+
+		<many-to-one name="store" class="com.studerb.model.Store" fetch="select">
+			<column name="store_id" not-null="true" />
+		</many-to-one>
+		<many-to-one name="film" class="com.studerb.model.Film" fetch="select">
+			<column name="film_id" not-null="true" />
+		</many-to-one>
+		<property name="lastUpdate" type="timestamp" update="false" insert="false">
+			<column name="last_update" length="19" not-null="true" />
+		</property>
+		<set name="rentals" inverse="true">
+			<key>
+				<column name="inventory_id" not-null="true" />
+			</key>
+			<one-to-many class="com.studerb.model.Rental" />
+		</set>
+	</class>
 </hibernate-mapping>

@@ -4,10 +4,11 @@
 <!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
 <hibernate-mapping>
     <class name="com.studerb.model.FilmText" table="film_text" catalog="sakila">
-        <id name="filmId" type="short">
-            <column name="film_id" />
-            <generator class="assigned" />
-        </id>
+    <id name="id" type="long" length="19" column="film_id">
+		<generator class="assigned" />
+	</id>
+    
+        
         <property name="title" type="string">
             <column name="title" not-null="true" />
         </property>

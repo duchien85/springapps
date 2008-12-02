@@ -2,7 +2,6 @@ package com.studerb.model;
 
 // Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,33 +10,11 @@ import java.util.Set;
  */
 public class Language implements java.io.Serializable {
 
-	private Byte languageId;
 	private String name;
-	private Date lastUpdate;
 	private Set<Film> filmsForOriginalLanguageId = new HashSet<Film>(0);
 	private Set<Film> filmsForLanguageId = new HashSet<Film>(0);
 
 	public Language() {}
-
-	public Language(String name, Date lastUpdate) {
-		this.name = name;
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Language(String name, Date lastUpdate, Set<Film> filmsForOriginalLanguageId, Set<Film> filmsForLanguageId) {
-		this.name = name;
-		this.lastUpdate = lastUpdate;
-		this.filmsForOriginalLanguageId = filmsForOriginalLanguageId;
-		this.filmsForLanguageId = filmsForLanguageId;
-	}
-
-	public Byte getLanguageId() {
-		return this.languageId;
-	}
-
-	public void setLanguageId(Byte languageId) {
-		this.languageId = languageId;
-	}
 
 	public String getName() {
 		return this.name;
@@ -45,14 +22,6 @@ public class Language implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Date getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public Set<Film> getFilmsForOriginalLanguageId() {

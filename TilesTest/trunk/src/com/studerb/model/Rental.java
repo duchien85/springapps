@@ -17,28 +17,9 @@ public class Rental implements java.io.Serializable {
 	private Inventory inventory;
 	private Date rentalDate;
 	private Date returnDate;
-	private Date lastUpdate;
 	private Set<Payment> payments = new HashSet<Payment>(0);
 
 	public Rental() {}
-
-	public Rental(Staff staff, Customer customer, Inventory inventory, Date rentalDate, Date lastUpdate) {
-		this.staff = staff;
-		this.customer = customer;
-		this.inventory = inventory;
-		this.rentalDate = rentalDate;
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Rental(Staff staff, Customer customer, Inventory inventory, Date rentalDate, Date returnDate, Date lastUpdate, Set<Payment> payments) {
-		this.staff = staff;
-		this.customer = customer;
-		this.inventory = inventory;
-		this.rentalDate = rentalDate;
-		this.returnDate = returnDate;
-		this.lastUpdate = lastUpdate;
-		this.payments = payments;
-	}
 
 	public Integer getRentalId() {
 		return this.rentalId;
@@ -86,14 +67,6 @@ public class Rental implements java.io.Serializable {
 
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
-	}
-
-	public Date getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public Set<Payment> getPayments() {

@@ -10,40 +10,13 @@ import java.util.Date;
  */
 public class Payment implements java.io.Serializable {
 
-	private Short paymentId;
 	private Staff staff;
 	private Customer customer;
 	private Rental rental;
 	private BigDecimal amount;
 	private Date paymentDate;
-	private Date lastUpdate;
 
 	public Payment() {}
-
-	public Payment(Staff staff, Customer customer, BigDecimal amount, Date paymentDate, Date lastUpdate) {
-		this.staff = staff;
-		this.customer = customer;
-		this.amount = amount;
-		this.paymentDate = paymentDate;
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Payment(Staff staff, Customer customer, Rental rental, BigDecimal amount, Date paymentDate, Date lastUpdate) {
-		this.staff = staff;
-		this.customer = customer;
-		this.rental = rental;
-		this.amount = amount;
-		this.paymentDate = paymentDate;
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Short getPaymentId() {
-		return this.paymentId;
-	}
-
-	public void setPaymentId(Short paymentId) {
-		this.paymentId = paymentId;
-	}
 
 	public Staff getStaff() {
 		return this.staff;
@@ -84,13 +57,4 @@ public class Payment implements java.io.Serializable {
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-
-	public Date getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
 }

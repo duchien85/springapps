@@ -2,7 +2,6 @@ package com.studerb.model;
 
 // Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,25 +16,15 @@ public class Actor implements java.io.Serializable {
 	private static final int MAX_FIRST_NAME = 45;
 	private static final int MAX_LAST_NAME = 45;
 
-	private Short actorId;
 	private String firstName;
 	private String lastName;
-	private Date lastUpdate;
-	private Set<FilmActor> filmActors = new HashSet<FilmActor>(0);
+	private Set<Film> films = new HashSet<Film>();
 
 	public Actor() {}
 
-	public Actor(String firstName, String lastName, Date lastUpdate) {
+	public Actor(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Actor(String firstName, String lastName, Date lastUpdate, Set<FilmActor> filmActors) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.lastUpdate = lastUpdate;
-		this.filmActors = filmActors;
 	}
 
 	public static Actor createRandom() {
@@ -43,14 +32,6 @@ public class Actor implements java.io.Serializable {
 		actor.firstName = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(MAX_FIRST_NAME));
 		actor.lastName = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(MAX_LAST_NAME));
 		return actor;
-	}
-
-	public Short getActorId() {
-		return this.actorId;
-	}
-
-	public void setActorId(Short actorId) {
-		this.actorId = actorId;
 	}
 
 	public String getFirstName() {
@@ -69,20 +50,12 @@ public class Actor implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	public Date getLastUpdate() {
-		return this.lastUpdate;
+	public Set<Film> getFilms() {
+		return this.films;
 	}
 
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Set<FilmActor> getFilmActors() {
-		return this.filmActors;
-	}
-
-	public void setFilmActors(Set<FilmActor> filmActors) {
-		this.filmActors = filmActors;
+	public void setFilms(Set<Film> films) {
+		this.films = films;
 	}
 
 }

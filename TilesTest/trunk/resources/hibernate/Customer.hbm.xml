@@ -4,10 +4,11 @@
 <!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
 <hibernate-mapping>
     <class name="com.studerb.model.Customer" table="customer" catalog="sakila">
-        <id name="customerId" type="java.lang.Short">
-            <column name="customer_id" />
-            <generator class="identity" />
-        </id>
+    <id name="id" type="long" length="19" column="customer_id">
+	<generator class="identity" />
+</id>
+    
+    
         <many-to-one name="address" class="com.studerb.model.Address" fetch="select">
             <column name="address_id" not-null="true" />
         </many-to-one>
@@ -29,7 +30,7 @@
         <property name="createDate" type="timestamp">
             <column name="create_date" length="19" not-null="true" />
         </property>
-        <property name="lastUpdate" type="timestamp" update="false" insert="false">
+<property name="lastUpdate" type="timestamp" update="false" insert="false">
             <column name="last_update" length="19" not-null="true"/>
         </property>
         <set name="rentals" inverse="true">
