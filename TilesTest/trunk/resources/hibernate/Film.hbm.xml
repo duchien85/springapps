@@ -4,7 +4,7 @@
 <!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
 <hibernate-mapping>
     <class name="com.studerb.model.Film" table="film" catalog="sakila">
-        <id name="filmId" type="java.lang.Short">
+        <id name="id" type="java.lang.Short">
             <column name="film_id" />
             <generator class="identity" />
         </id>
@@ -41,20 +41,20 @@
         <property name="specialFeatures" type="string">
             <column name="special_features" length="54" />
         </property>
-        <property name="lastUpdate" type="timestamp" update="false" insert="false">
+<property name="lastUpdate" type="timestamp" update="false" insert="false">
             <column name="last_update" length="19" not-null="true"/>
         </property>
-        <set name="filmActors" inverse="true">
+        <set name="actors" inverse="true">
             <key>
                 <column name="film_id" not-null="true" />
             </key>
-            <one-to-many class="com.studerb.model.FilmActor" />
+            <one-to-many class="com.studerb.model.Actor" />
         </set>
-        <set name="filmCategories" inverse="true">
+        <set name="categories" inverse="true">
             <key>
                 <column name="film_id" not-null="true" />
             </key>
-            <one-to-many class="com.studerb.model.FilmCategory" />
+            <one-to-many class="com.studerb.model.Category" />
         </set>
         <set name="inventories" inverse="true">
             <key>

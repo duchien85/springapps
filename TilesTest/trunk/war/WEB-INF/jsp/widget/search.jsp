@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
-<%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
 <c:url value="/widget/search/changePage.htm" var="changePage" scope="page" />
 <c:url value="/widget/search/sort.htm" var="changeSort" scope="page" />

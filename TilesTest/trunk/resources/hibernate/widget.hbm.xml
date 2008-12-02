@@ -14,9 +14,7 @@
 		<property column="initial_time" name="initialTime" type="org.joda.time.contrib.hibernate.PersistentDateTime" not-null="true"/>
 		<property column="price" name="price" type="big_decimal" not-null="true"/>
 		<property column="price" name="cool" type="boolean" not-null="true" />
-		 <property name="lastUpdate" type="timestamp" update="false" insert="false">
-            <column name="last_update" length="19" not-null="true" />
-        </property>
+  	    <property name="lastUpdate" type="org.joda.time.contrib.hibernate.PersistentDateTime" update="false" insert="false" not-null="true" column="last_update"/>
 		
 
 	</class>

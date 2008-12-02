@@ -11,10 +11,8 @@ import java.util.Set;
  */
 public class Inventory implements java.io.Serializable {
 
-	private Integer inventoryId;
 	private Store store;
 	private Film film;
-	private Date lastUpdate;
 	private Set<Rental> rentals = new HashSet<Rental>(0);
 
 	public Inventory() {}
@@ -22,22 +20,6 @@ public class Inventory implements java.io.Serializable {
 	public Inventory(Store store, Film film, Date lastUpdate) {
 		this.store = store;
 		this.film = film;
-		this.lastUpdate = lastUpdate;
-	}
-
-	public Inventory(Store store, Film film, Date lastUpdate, Set<Rental> rentals) {
-		this.store = store;
-		this.film = film;
-		this.lastUpdate = lastUpdate;
-		this.rentals = rentals;
-	}
-
-	public Integer getInventoryId() {
-		return this.inventoryId;
-	}
-
-	public void setInventoryId(Integer inventoryId) {
-		this.inventoryId = inventoryId;
 	}
 
 	public Store getStore() {
@@ -54,14 +36,6 @@ public class Inventory implements java.io.Serializable {
 
 	public void setFilm(Film film) {
 		this.film = film;
-	}
-
-	public Date getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public Set<Rental> getRentals() {

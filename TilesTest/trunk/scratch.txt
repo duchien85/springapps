@@ -1,3 +1,4 @@
+<property name="lastUpdate" type="org.joda.time.contrib.hibernate.PersistentDateTime" update="false" insert="false" not-null="true" column="last_update"/>
 
 <link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/reset-fonts-grids/reset-fonts-grids.css'/>"> 		  
 

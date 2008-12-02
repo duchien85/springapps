@@ -1,21 +1,18 @@
 package com.studerb.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.math.RandomUtils;
 import org.joda.time.DateTime;
 
-public class Widget {
+public class Widget extends BaseEntity {
 
-	private Long id;
 	private String widgetName;
 	private DateTime initialTime;
 	private BigDecimal price;
 	private Boolean cool;
-	private Date lastUpdate;
 
 	public final static int MAX_NAME_LENGTH = 50;
 
@@ -53,10 +50,6 @@ public class Widget {
 		return true;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
 	public String getWidgetName() {
 		return widgetName;
 	}
@@ -89,10 +82,6 @@ public class Widget {
 		this.cool = cool;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public void setWidgetName(String name) {
 		widgetName = name;
 	}
@@ -106,14 +95,6 @@ public class Widget {
 
 	public void setInitialTime(DateTime time) {
 		initialTime = time;
-	}
-
-	public Date getLastUpdate() {
-		return lastUpdate;
-	}
-
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	@Override
