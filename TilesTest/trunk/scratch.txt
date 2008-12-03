@@ -1,92 +1,12 @@
-<property name="lastUpdate" type="org.joda.time.contrib.hibernate.PersistentDateTime" update="false" insert="false" not-null="true" column="last_update"/>
+<property name="releaseYear" type="org.joda.time.contrib.hibernate.PersistentDateTime" />
 
-<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/reset-fonts-grids/reset-fonts-grids.css'/>"> 		  
-
-	
-
-body {
-	/*background-color: transparent;*/
-	background-color: blue;
-	/*background-image: url(../images/kubrickbgcolor.jpg);*/
-	/*background-image: url(../images/bodybg.png);*/
-	background-repeat: repeat;
-	/*background-attachment: scroll;*/
-	background-position: 0 0;
-	min-height: 100%;
-}
-
-table {
-	border: none;
-	outline: none;
-}
-#doc2 {
-		background-color: white;
-}
-#bd {
-	text-align: left;
-	background-color: #F2F2F2;
-}
-
-#hd,#bd,#ft {
-	border: 1px solid #808080;
-}
-
-#hd {
-	text-align:center;
-	height: 5em;
-	background-image: url(../images/header_bg.gif);
-	background-repeat: repeat-x;
-	background-position: 0 0;
-}
-
-#hd h1 {
-	font-size: 120%;
-}
-
-#yui-main .yui-b .yui-g{
-	border-left: 2px solid #426FD9;
-	min-height: 200px;
-	padding: 1em;
-}
-
-#yui-main .yui-b .yui-g table{
-	background-color: #EDF5FF;
-}
-
-#left_nav {
-	background-color: #EDF5FF;
-	border: 2px solid #7D98B8;
-	padding: .1em;
-}
-
-#ft {
-	height: 3em;
-	background-image: url(../images/header_bg.gif);
-	background-repeat: repeat-x;
-	background-position: 0 0;
-}
-
-#ft p{
-	font-size: small;
-	text-align: center;
-	padding: .5em 0;
-}
-
-tr th {
-	border: thin solid black;
-}
-
-table td.form_label {
-	text-align: right;
-	font-weight: bolder;
-}
-
-table td.form_input {
-	text-align: left;
-}
-
-.errors{
-	color: red;
-}
-
-*[disabled] { background-color: #ccc; color: gray; }
+CREATE TABLE widget (
+  widget_id INT UNSIGNED NOT NULL auto_increment,
+  widget_name varchar(50) NOT NULL,
+  initial_time datetime NOT NULL,
+  price decimal(19,2) NOT NULL,
+  cool bit(1) NOT NULL,
+  last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY  (widget_id),
+  UNIQUE KEY widgetName (widget_name)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

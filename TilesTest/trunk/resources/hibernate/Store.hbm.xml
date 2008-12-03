@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
+<!-- Generated Dec 3, 2008 12:21:24 PM by Hibernate Tools 3.2.2.GA -->
 <hibernate-mapping>
     <class name="com.studerb.model.Store" table="store" catalog="sakila">
-    	<id name="id" type="long" length="19" column="store_id">
-			<generator class="identity" />
-		</id>
-        
+        <id name="id" type="java.lang.Byte">
+            <column name="store_id" />
+            <generator class="identity" />
+        </id>
         <many-to-one name="staff" class="com.studerb.model.Staff" fetch="select">
             <column name="manager_staff_id" not-null="true" unique="true" />
         </many-to-one>
         <many-to-one name="address" class="com.studerb.model.Address" fetch="select">
             <column name="address_id" not-null="true" />
         </many-to-one>
-<property name="lastUpdate" type="timestamp" update="false" insert="false">
+        <property name="lastUpdate" type="timestamp" insert="false" update="false">
             <column name="last_update" length="19" not-null="true" />
         </property>
         <set name="inventories" inverse="true">

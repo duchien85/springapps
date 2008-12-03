@@ -25,9 +25,8 @@ USE sakila;
 -- Table structure for table `actor`
 --
 
-
 CREATE TABLE widget (
-  widget_id SMALLINT NOT NULL auto_increment,
+  widget_id INT UNSIGNED NOT NULL auto_increment,
   widget_name varchar(50) NOT NULL,
   initial_time datetime NOT NULL,
   price decimal(19,2) NOT NULL,
@@ -36,7 +35,6 @@ CREATE TABLE widget (
   PRIMARY KEY  (widget_id),
   UNIQUE KEY widgetName (widget_name)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE actor (
   actor_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
