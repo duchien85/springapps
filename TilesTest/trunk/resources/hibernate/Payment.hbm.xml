@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
+<!-- Generated Dec 3, 2008 12:21:24 PM by Hibernate Tools 3.2.2.GA -->
 <hibernate-mapping>
     <class name="com.studerb.model.Payment" table="payment" catalog="sakila">
-    
-    <id name="id" type="long" length="19" column="payment_id">
-		<generator class="identity" />
-	</id>
-    
+        <id name="id" type="java.lang.Integer">
+            <column name="payment_id" />
+            <generator class="identity" />
+        </id>
         <many-to-one name="staff" class="com.studerb.model.Staff" fetch="select">
             <column name="staff_id" not-null="true" />
         </many-to-one>
@@ -21,11 +20,11 @@
         <property name="amount" type="big_decimal">
             <column name="amount" precision="5" not-null="true" />
         </property>
-        <property name="paymentDate" type="timestamp">
+        <property name="paymentDate" type="org.joda.time.contrib.hibernate.PersistentDateTime" insert="false" update="false">
             <column name="payment_date" length="19" not-null="true" />
         </property>
-<property name="lastUpdate" type="timestamp" update="false" insert="false">
-            <column name="last_update" length="19" not-null="true"/>
+        <property name="lastUpdate" type="timestamp" insert="false" update="false">
+            <column name="last_update" length="19" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 
 public class Widget extends BaseEntity {
 
+	private static final long serialVersionUID = 1L;
 	private String widgetName;
 	private DateTime initialTime;
 	private BigDecimal price;
@@ -50,16 +51,20 @@ public class Widget extends BaseEntity {
 		return true;
 	}
 
-	public String getWidgetName() {
-		return widgetName;
+	public Boolean getCool() {
+		return isCool();
+	}
+
+	public DateTime getInitialTime() {
+		return initialTime;
 	}
 
 	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public DateTime getInitialTime() {
-		return initialTime;
+	public String getWidgetName() {
+		return widgetName;
 	}
 
 	@Override
@@ -74,16 +79,12 @@ public class Widget extends BaseEntity {
 		return cool;
 	}
 
-	public Boolean getCool() {
-		return isCool();
-	}
-
 	public void setCool(Boolean cool) {
 		this.cool = cool;
 	}
 
-	public void setWidgetName(String name) {
-		widgetName = name;
+	public void setInitialTime(DateTime time) {
+		initialTime = time;
 	}
 
 	public void setPrice(BigDecimal price) {
@@ -93,8 +94,8 @@ public class Widget extends BaseEntity {
 		this.price = price;
 	}
 
-	public void setInitialTime(DateTime time) {
-		initialTime = time;
+	public void setWidgetName(String name) {
+		widgetName = name;
 	}
 
 	@Override

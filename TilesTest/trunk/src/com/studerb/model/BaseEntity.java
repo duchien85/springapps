@@ -1,9 +1,8 @@
 package com.studerb.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
-
-import org.joda.time.DateTime;
 
 /**
  * @author Travis Klotz
@@ -14,8 +13,15 @@ public class BaseEntity implements Serializable {
 
 	private Long id;
 	private String guid = UUID.randomUUID().toString();
-	protected int version;
-	protected DateTime lastUpdate;
+	protected Date lastUpdate;
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
 
 	public Long getId() {
 		return id;

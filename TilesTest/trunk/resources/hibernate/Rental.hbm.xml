@@ -1,36 +1,36 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-	<!-- Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA -->
+<!-- Generated Dec 3, 2008 12:21:24 PM by Hibernate Tools 3.2.2.GA -->
 <hibernate-mapping>
-	<class name="com.studerb.model.Rental" table="rental" catalog="sakila">
-		<id name="id" type="long" length="19" column="rental_id">
-			<generator class="identity" />
-		</id>
-
-		<many-to-one name="staff" class="com.studerb.model.Staff" fetch="select">
-			<column name="staff_id" not-null="true" />
-		</many-to-one>
-		<many-to-one name="customer" class="com.studerb.model.Customer" fetch="select">
-			<column name="customer_id" not-null="true" />
-		</many-to-one>
-		<many-to-one name="inventory" class="com.studerb.model.Inventory" fetch="select">
-			<column name="inventory_id" not-null="true" />
-		</many-to-one>
-		<property name="rentalDate" type="timestamp">
-			<column name="rental_date" length="19" not-null="true" />
-		</property>
-		<property name="returnDate" type="timestamp">
-			<column name="return_date" length="19" />
-		</property>
-		<property name="lastUpdate" type="timestamp" update="false" insert="false">
-			<column name="last_update" length="19" not-null="true" />
-		</property>
-		<set name="payments" inverse="true">
-			<key>
-				<column name="rental_id" />
-			</key>
-			<one-to-many class="com.studerb.model.Payment" />
-		</set>
-	</class>
+    <class name="com.studerb.model.Rental" table="rental" catalog="sakila">
+        <id name="id" type="java.lang.Integer">
+            <column name="rental_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="staff" class="com.studerb.model.Staff" fetch="select">
+            <column name="staff_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="customer" class="com.studerb.model.Customer" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="inventory" class="com.studerb.model.Inventory" fetch="select">
+            <column name="inventory_id" not-null="true" />
+        </many-to-one>
+        <property name="rentalDate" type="org.joda.time.contrib.hibernate.PersistentDateTime">
+            <column name="rental_date" length="19" not-null="true" />
+        </property>
+        <property name="returnDate" type="org.joda.time.contrib.hibernate.PersistentDateTime">
+            <column name="return_date" length="19" />
+        </property>
+        <property name="lastUpdate" type="timestamp" insert="false" update="false">
+            <column name="last_update" length="19" not-null="true" />
+        </property>
+        <set name="payments" inverse="true">
+            <key>
+                <column name="rental_id" />
+            </key>
+            <one-to-many class="com.studerb.model.Payment" />
+        </set>
+    </class>
 </hibernate-mapping>
