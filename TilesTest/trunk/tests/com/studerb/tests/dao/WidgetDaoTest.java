@@ -28,34 +28,37 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 
 	@Before
 	public void setUp() throws Exception {
-		deleteFromTables("widget");
+		deleteFromTables(widgetDao.getTableName());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		deleteFromTables("widget");
+		deleteFromTables(widgetDao.getTableName());
 	}
 
 	@Test
 	public void testCreate() {
 		Widget widget = Widget.createRandomWidget();
 		Assert.assertTrue(widget.getId() == null);
-		assertEquals(countRowsInTable("widget"), 0);
-		widgetDao.save(widget);
-		widgetDao.flush();
-		assertTrue(widget.getId() != null);
-		assertEquals(countRowsInTable("widget"), 1);
-	}
-
-	@Test
-	public void testLastUpdate() {
-		Widget widget = Widget.createRandomWidget();
-		assertNull(widget.getLastUpdate());
+		assertEquals(countRowsInTable(widgetDao.getTableName()), 0);
 		widgetDao.save(widget);
 		widgetDao.flush();
 		widgetDao.clear();
-		widget = widgetDao.get(widget.getId());
-		assertNotNull(widget.getLastUpdate());
+
+		logger.debug("got id: " + widget.getId());
+		int count = widgetDao.getAll().size();
+		logger.debug("Got size of: " + count);
+
+		List<Widget> widgets = widgetDao.getAll();
+		for (Widget w : widgets) {
+			logger.debug(w);
+		}
+
+		logger.debug("Getting Count via dao: " + widgetDao.getCount());
+		assertTrue(widget.getId() != null);
+
+		int rows = countRowsInTable(widgetDao.getTableName());
+		assertEquals(rows, 1);
 	}
 
 	@Test
@@ -67,19 +70,6 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 		assertTrue(widget.getId() != null);
 		assertEquals(countRowsInTable("widget"), 1);
 		widgetDao.delete(widget);
-		widgetDao.flush();
-		assertEquals(countRowsInTable("widget"), 0);
-	}
-
-	@Test
-	public void testDeleteById() {
-		Widget widget = Widget.createRandomWidget();
-		assertEquals(countRowsInTable("widget"), 0);
-		widgetDao.save(widget);
-		widgetDao.flush();
-		assertTrue(widget.getId() != null);
-		assertEquals(countRowsInTable("widget"), 1);
-		widgetDao.delete(widget.getId());
 		widgetDao.flush();
 		assertEquals(countRowsInTable("widget"), 0);
 	}
@@ -100,6 +90,30 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 		widgetDao.deleteAll();
 		widgetDao.flush();
 		assertEquals(countRowsInTable("widget"), 0);
+	}
+
+	@Test
+	public void testDeleteById() {
+		Widget widget = Widget.createRandomWidget();
+		assertEquals(countRowsInTable("widget"), 0);
+		widgetDao.save(widget);
+		widgetDao.flush();
+		assertTrue(widget.getId() != null);
+		assertEquals(countRowsInTable("widget"), 1);
+		widgetDao.delete(widget.getId());
+		widgetDao.flush();
+		assertEquals(countRowsInTable("widget"), 0);
+	}
+
+	@Test
+	public void testGet() {
+		Widget w = Widget.createRandomWidget();
+		Long id = widgetDao.save(w);
+		widgetDao.flush();
+		widgetDao.clear();
+		Widget fetched = widgetDao.get(id);
+		assertEquals(fetched, w);
+		assertTrue(fetched != w);
 	}
 
 	@Test
@@ -168,56 +182,6 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 	}
 
 	@Test
-	public void testGet() {
-		Widget w = Widget.createRandomWidget();
-		Long id = widgetDao.save(w);
-		widgetDao.flush();
-		widgetDao.clear();
-		Widget fetched = widgetDao.get(id);
-		assertEquals(fetched, w);
-		assertTrue(fetched != w);
-	}
-
-	@Test
-	public void testSaveOrUpdate() {
-		Widget w = Widget.createRandomWidget();
-		assertNull(w.getId());
-		widgetDao.saveOrUpdate(w);
-		widgetDao.flush();
-		widgetDao.clear();
-		Long id = w.getId();
-		assertNotNull(id);
-
-		BigDecimal newPrice = new BigDecimal("25.50");
-		w.setPrice(newPrice);
-		widgetDao.saveOrUpdate(w);
-		widgetDao.flush();
-		widgetDao.clear();
-
-		Widget fetched = widgetDao.get(id);
-		assertTrue(fetched.getPrice().equals(newPrice));
-	}
-
-	@Test(expected = Exception.class)
-	public void testNonUniqueName() {
-		Widget widget1 = Widget.createRandomWidget();
-		Widget widget2 = Widget.createRandomWidget();
-		widget2.setWidgetName(widget1.getWidgetName());
-		widgetDao.save(widget1);
-		widgetDao.save(widget2);
-	}
-
-	@Test
-	public void testIsNameUsed() {
-		Widget widget1 = Widget.createRandomWidget();
-		widgetDao.save(widget1);
-		widgetDao.flush();
-		widgetDao.clear();
-		assertTrue(widgetDao.isNameUsed(widget1.getWidgetName()));
-		assertFalse(widgetDao.isNameUsed(RandomStringUtils.randomAlphabetic(20)));
-	}
-
-	@Test
 	public void testGetDatePage() {
 		int COUNT = 52;
 		List<Widget> widgets = new ArrayList<Widget>(COUNT);
@@ -265,5 +229,55 @@ public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests
 		widgetDp = widgetDao.getPage(info);
 		assertEquals(widgetDp.getData().size(), 2);
 
+	}
+
+	@Test
+	public void testIsNameUsed() {
+		Widget widget1 = Widget.createRandomWidget();
+		widgetDao.save(widget1);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertTrue(widgetDao.isNameUsed(widget1.getWidgetName()));
+		assertFalse(widgetDao.isNameUsed(RandomStringUtils.randomAlphabetic(20)));
+	}
+
+	@Test
+	public void testLastUpdate() {
+		Widget widget = Widget.createRandomWidget();
+		assertNull(widget.getLastUpdate());
+		widgetDao.save(widget);
+		widgetDao.flush();
+		widgetDao.clear();
+		widget = widgetDao.get(widget.getId());
+		assertNotNull(widget.getLastUpdate());
+	}
+
+	@Test(expected = Exception.class)
+	public void testNonUniqueName() {
+		Widget widget1 = Widget.createRandomWidget();
+		Widget widget2 = Widget.createRandomWidget();
+		widget2.setWidgetName(widget1.getWidgetName());
+		widgetDao.save(widget1);
+		widgetDao.save(widget2);
+	}
+
+	@Test
+	public void testSaveOrUpdate() {
+		Widget w = Widget.createRandomWidget();
+		assertNull(w.getId());
+		widgetDao.saveOrUpdate(w);
+		widgetDao.flush();
+		widgetDao.clear();
+		Long id = w.getId();
+		assertNotNull(id);
+
+		BigDecimal newPrice = new BigDecimal("25.50");
+		w.setPrice(newPrice);
+		widgetDao.saveOrUpdate(w);
+		widgetDao.flush();
+		widgetDao.clear();
+
+		Widget fetched = widgetDao.get(id);
+		assertTrue(fetched.getPrice().equals(newPrice));
 	}
 }

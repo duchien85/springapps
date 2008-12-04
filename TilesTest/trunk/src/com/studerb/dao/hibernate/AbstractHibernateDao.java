@@ -1,4 +1,4 @@
-package com.studerb.dao;
+package com.studerb.dao.hibernate;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -17,6 +17,7 @@ import org.hibernate.criterion.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
+import com.studerb.dao.DaoInterface;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
 

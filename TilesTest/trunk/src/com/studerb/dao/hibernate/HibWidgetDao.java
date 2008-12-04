@@ -1,4 +1,4 @@
-package com.studerb.dao;
+package com.studerb.dao.hibernate;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
