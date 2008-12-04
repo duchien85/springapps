@@ -19,7 +19,7 @@
 	
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/tilestest" resource-ref="true" />
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/sakila" resource-ref="true" />
 	
 	<context:property-placeholder location="classpath:tilestest.properties, classpath:hibernate/hibernate.properties" />
 	

@@ -1,7 +1,8 @@
-package com.studerb.dao;
+package com.studerb.dao.hibernate;
 
 import org.springframework.stereotype.Repository;
 
+import com.studerb.dao.FilmDao;
 import com.studerb.model.Film;
 
 @Repository("filmDao")

@@ -28,7 +28,6 @@
 		<param-value>20000</param-value>
 	</context-param>
 
-
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
@@ -75,7 +74,7 @@
 	</error-page>
 
 	<resource-ref>
-		<res-ref-name>jdbc/tilestest</res-ref-name>
+		<res-ref-name>jdbc/sakila</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 		<res-sharing-scope>Shareable</res-sharing-scope>

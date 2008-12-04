@@ -2,7 +2,6 @@ package com.studerb.model;
 
 // Generated Nov 26, 2008 10:41:24 AM by Hibernate Tools 3.2.2.GA
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,13 +20,12 @@ public class Category extends BaseEntity {
 		this.name = name;
 	}
 
-	public Category(String name, Date lastUpdate, Set<Film> films) {
-		this.name = name;
-		this.films = films;
-	}
-
 	public Set<Film> getFilmCategories() {
 		return this.films;
+	}
+
+	public Set<Film> getFilms() {
+		return films;
 	}
 
 	public String getName() {
@@ -35,6 +33,10 @@ public class Category extends BaseEntity {
 	}
 
 	public void setFilmCategories(Set<Film> films) {
+		this.films = films;
+	}
+
+	public void setFilms(Set<Film> films) {
 		this.films = films;
 	}
 

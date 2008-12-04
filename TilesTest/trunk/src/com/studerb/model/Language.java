@@ -18,6 +18,14 @@ public class Language extends BaseEntity {
 
 	public Language() {}
 
+	public Language(String name) {
+		this.name = name;
+	}
+
+	public Set<Film> getDubbedFilms() {
+		return dubbedFilms;
+	}
+
 	public Set<Film> getFilmsForLanguageId() {
 		return this.dubbedFilms;
 	}
@@ -30,6 +38,14 @@ public class Language extends BaseEntity {
 		return this.name;
 	}
 
+	public Set<Film> getOriginalFilms() {
+		return originalFilms;
+	}
+
+	public void setDubbedFilms(Set<Film> dubbedFilms) {
+		this.dubbedFilms = dubbedFilms;
+	}
+
 	public void setFilmsForLanguageId(Set<Film> filmsForLanguageId) {
 		this.dubbedFilms = filmsForLanguageId;
 	}
@@ -40,6 +56,10 @@ public class Language extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setOriginalFilms(Set<Film> originalFilms) {
+		this.originalFilms = originalFilms;
 	}
 
 }
