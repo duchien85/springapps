@@ -27,10 +27,10 @@
                     Page ${dataPage.info.currentPage} of ${dataPage.info.maxPage}
                     <c:if test="${dataPage.info.next}">
                         <a class="navButton" href="${baseUrl}?viewName=${dataPage.info.viewName}&changeEvent=NEXT">
-							<img src="<c:url value="/images/Sweetie/png-24/24-arrow-next.png" />"/>
+							<img src="<c:url value="/images/Sweetie/png-8/24-arrow-next.png" />"/>
 						</a>
                         <a class="navButton" href="${baseUrl}?viewName=${dataPage.info.viewName}&changeEvent=LAST">
-							<img src="<c:url value="/images/Sweetie/png-24/24-arrow-last.png" />"/>
+							<img src="<c:url value="/images/Sweetie/png-8/24-arrow-last.png" />"/>
 						</a>
                     </c:if>
                 </c:when>

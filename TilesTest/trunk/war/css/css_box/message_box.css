@@ -18,6 +18,9 @@
 	text-align: center;
 }
 
+div.clean-ok{
+	min-height: 2em;
+}
 .clean-ok {
 	margin: 20px;
 	border: solid 1px #349534;
@@ -28,6 +31,9 @@
 	text-align: center;
 }
 
+div.clean-error {
+	min-height: 2em;
+}
 .clean-error {
 	margin: 1em 10em 1em 0em;
 	border: solid 1px #CC0000;

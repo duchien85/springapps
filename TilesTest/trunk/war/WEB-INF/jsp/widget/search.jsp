@@ -17,7 +17,7 @@
 	<div id="clean-error">${flashScope.error}</div>
 </c:if>
 
-<c:if test="${!empty searchResultsMessage}">
+<c:if test="${empty flashScope.error and empty flashScope.message and not empty searchResultsMessage}">
 	<div class="clean-error">${searchResultsMessage}</div>
 </c:if>
 
