@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+<%@ taglib prefix="str" uri="http://jakarta.apache.org/taglibs/string-1.1" %>
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 
 <c:url value="/actor/changePage.htm" var="changePage" scope="page" />
@@ -33,8 +34,8 @@
 	<tbody>
 	<c:forEach items="${actors.data}" var="a" varStatus="st">
             <tr class="${st.index % 2 == 0 ? 'odd' : 'even'}">
-                <td>${a.firstName}</td>
-                <td>${a.lastName}</td>
+                <td><str:lowerCase>${a.firstName}</str:lowerCase></td>
+                <td><str:lowerCase>${a.lastName}</str:lowerCase></td>
 				<td><a href="<c:url value="/actor/edit.htm"/>?actorId=${a.id}"><img src="<c:url value="/images/Sweetie/png-24/16-tag-pencil.png" />"/></a></td>
 				<td><a href="<c:url value="/actor/delete.htm"/>?actorId=${a.id}"><img src="<c:url value="/images/Sweetie/png-24/16-em-cross.png" />"/></a></td>
 			</tr>
