@@ -95,6 +95,25 @@
         <property name="sort" value="widgetName" />
     </bean>
     
+    <!-- Pagination for widget list -->
+	<bean id="actorListInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="actorListInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="list"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="lastName" />
+    </bean>
+    
+    <bean id="actorSearchInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="actorSearchInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="search"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="lastName" />
+    </bean>
+    
+    
+    
     <bean id="flashScopeInterceptor" class="com.studerb.web.util.FlashScopeInterceptor" />
         
 </beans>

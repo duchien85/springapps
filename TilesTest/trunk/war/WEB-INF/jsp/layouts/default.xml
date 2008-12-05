@@ -18,6 +18,14 @@
         <put-attribute name="content" value="/WEB-INF/jsp/layouts/tiles/default.jsp" />
         <put-attribute name="footer" value="/WEB-INF/jsp/layouts/tiles/footer.jsp" />
     </definition>
+    
+    <definition name="yui_doc2_t7_1grid" template="/WEB-INF/jsp/layouts/yui_doc2_t7_1grid.jsp">
+        <put-attribute name="title" value="Default Title" type="string" />
+        <!-- <put-attribute name="selectedMenu" value="home" type="string" /> -->
+        <put-attribute name="header" value="/WEB-INF/jsp/layouts/tiles/header.jsp" />
+        <!-- <put-attribute name="menu" value="/WEB-INF/jsp/layouts/tiles/menu.jsp" /> -->
+        <put-attribute name="footer" value="/WEB-INF/jsp/layouts/tiles/footer.jsp" />
+    </definition>
 
     <definition name="welcome" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Welcome" type="string" />
@@ -54,8 +62,13 @@
         <put-attribute name="content" value="/WEB-INF/jsp/film/list.jsp"/>
     </definition>
     
+        <!--  Actor -->
+    <definition name="actor/list" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Sakila Actors" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/actor/list.jsp"/>
+    </definition>
     
-    <definition name="dataAccessFailure" extends="yui_doc2_t2_1grid">
+    <definition name="dataAccessFailure" extends="yui_doc2_t7_1grid">
         <put-attribute name="title" value="Data Access Failure" type="string" />
         <put-attribute name="content" value="/WEB-INF/jsp/dataAccessFailure.jsp"/>
     </definition>

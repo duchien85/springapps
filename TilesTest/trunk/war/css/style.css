@@ -40,10 +40,10 @@ table {
 }
 
 #yui-main .yui-b .yui-g{
-
 	border-left: 2px solid #426FD9;
 	min-height: 200px;
 	padding: 1em 3em;
+	margin: .25em;
 }
 
 #pageTitle h2 {
@@ -188,6 +188,11 @@ table.dataTable tfoot tr  {
     color: red;
 	width: 400px;
 	text-align: center;
+	font-weight: bold;
+}
+
+.errors {
+	color: red;
 	font-weight: bold;
 }
 

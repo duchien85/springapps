@@ -160,6 +160,12 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 		return new DataPage<T>(data, total, info);
 	}
 
+	@Override
+	public T load(Serializable id) {
+		logger.debug("Loading " + persistentClass.getSimpleName() + " with id: " + id);
+		return (T) getCurrentSession().load(this.persistentClass, id);
+	}
+
 	protected Session getCurrentSession() {
 		return this.sessionFactory.getCurrentSession();
 	}

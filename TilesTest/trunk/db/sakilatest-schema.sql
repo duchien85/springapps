@@ -1,4 +1,4 @@
--- Sakilatest Sample Database Schema
+﻿-- Sakilatest Sample Database Schema
 -- Version 0.8
 
 -- Copyright (c) 2006, MySQL AB
@@ -650,5 +650,4 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 

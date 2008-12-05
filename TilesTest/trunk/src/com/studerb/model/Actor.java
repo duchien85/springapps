@@ -17,18 +17,9 @@ public class Actor extends BaseEntity {
 	private static final int MAX_FIRST_NAME = 45;
 	private static final int MAX_LAST_NAME = 45;
 
-	public static Actor createRandom() {
-		Actor actor = new Actor();
-		actor.firstName = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(MAX_FIRST_NAME));
-		actor.lastName = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(MAX_LAST_NAME));
-		return actor;
-	}
-
 	private String firstName;
 	private String lastName;
 	private Set<Film> films = new HashSet<Film>();
-
-	private FilmText filmText;
 
 	public Actor() {}
 
@@ -37,28 +28,27 @@ public class Actor extends BaseEntity {
 		this.lastName = lastName;
 	}
 
-	public Set<Film> getFilms() {
-		return this.films;
+	public static Actor createRandom() {
+		Actor actor = new Actor();
+		actor.firstName = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(MAX_FIRST_NAME));
+		actor.lastName = RandomStringUtils.randomAlphabetic(RandomUtils.nextInt(MAX_LAST_NAME));
+		return actor;
 	}
 
-	public FilmText getFilmText() {
-		return filmText;
+	public Set<Film> getFilms() {
+		return films;
 	}
 
 	public String getFirstName() {
-		return this.firstName;
+		return firstName;
 	}
 
 	public String getLastName() {
-		return this.lastName;
+		return lastName;
 	}
 
 	public void setFilms(Set<Film> films) {
 		this.films = films;
-	}
-
-	public void setFilmText(FilmText filmText) {
-		this.filmText = filmText;
 	}
 
 	public void setFirstName(String firstName) {
