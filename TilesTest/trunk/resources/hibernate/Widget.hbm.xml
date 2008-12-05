@@ -15,7 +15,7 @@
             <column name="initial_time" length="19" not-null="true" />
         </property>
         <property name="price" type="big_decimal">
-            <column name="price" not-null="true" />
+            <column name="price" not-null="true" scale="2" />
         </property>
         <property name="cool" type="boolean">
             <column name="cool" not-null="true" />

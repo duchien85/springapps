@@ -22,11 +22,6 @@ public class AddForm {
 	@Autowired
 	WidgetService widgetService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Widget setupForm() {
-		return new Widget();
-	}
-
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status, Model model) {
 		new WidgetValidator().validate(widget, result);
@@ -39,7 +34,12 @@ public class AddForm {
 		}
 		widgetService.save(widget);
 		status.setComplete();
-		model.addAttribute("flashScope.message", "Successfully updated the widget");
+		model.addAttribute("flashScope.message", "Successfully added widget: " + widget.getWidgetName());
 		return "redirect:/widget/list.htm";
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public Widget setupForm() {
+		return new Widget();
 	}
 }

@@ -44,4 +44,6 @@ public interface DaoInterface<T> {
 	void update(T entity);
 
 	String getTableName();
+
+	T load(Serializable id);
 }

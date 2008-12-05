@@ -10,18 +10,22 @@
         </id>
         
         <property name="title" type="string">
-            <column name="title" not-null="true" />
+            <column name="title" not-null="true" length="255"/>
         </property>
+        
         <property name="description" type="string">
             <column name="description" length="65535" />
         </property>
-        <property name="releaseYear" type="org.joda.time.contrib.hibernate.PersistentDateTime" />
+        
+        <property name="releaseYear" type="java.lang.Integer" >
+        	<column name="release_year" />
+        </property>
 
-        <property name="rentalDuration" type="byte">
+        <property name="rentalDuration" type="java.lang.Integer">
             <column name="rental_duration" not-null="true" />
         </property>
         <property name="rentalRate" type="big_decimal">
-            <column name="rental_rate" precision="4" not-null="true" />
+            <column name="rental_rate" precision="4" not-null="true" scale="2"/>
         </property>
         <property name="length" type="java.lang.Integer">
             <column name="length" />
