@@ -6,4 +6,5 @@
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="str" uri="http://jakarta.apache.org/taglibs/string-1.1" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 

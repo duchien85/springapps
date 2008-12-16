@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 
+
 <h2>Add Widget</h2>
 
 <tt:errors name="widget" />
