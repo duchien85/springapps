@@ -1,4 +1,4 @@
-package com.studerb.web.controllers;
+package com.studerb.web;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;

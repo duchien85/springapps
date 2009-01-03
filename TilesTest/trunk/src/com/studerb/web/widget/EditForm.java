@@ -1,4 +1,4 @@
-package com.studerb.web.controllers.widget;
+package com.studerb.web.widget;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -15,31 +16,29 @@ import com.studerb.model.WidgetValidator;
 import com.studerb.service.interfaces.WidgetService;
 
 @Controller
-@RequestMapping("/widget/add")
+@RequestMapping("/widget/edit")
 @SessionAttributes("widget")
-public class AddForm {
+public class EditForm {
 
 	@Autowired
 	WidgetService widgetService;
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String setupForm(@RequestParam("widgetId") Long widgetId, Model model) {
+		Widget widget = widgetService.get(widgetId);
+		model.addAttribute(widget);
+		return "widget/edit";
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status, Model model) {
 		new WidgetValidator().validate(widget, result);
 		if (result.hasErrors()) {
-			return "widget/add";
+			return "widget/edit";
 		}
-		else if (widgetService.isNameUsed(widget.getWidgetName())) {
-			result.rejectValue("widgetName", "duplicate");
-			return "widget/add";
-		}
-		widgetService.save(widget);
+		widgetService.update(widget);
 		status.setComplete();
-		model.addAttribute("flashScope.message", "Successfully added widget: " + widget.getWidgetName());
+		model.addAttribute("flashScope.message", "Successfully updated the widget");
 		return "redirect:/widget/list.htm";
-	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	public Widget setupForm() {
-		return new Widget();
 	}
 }

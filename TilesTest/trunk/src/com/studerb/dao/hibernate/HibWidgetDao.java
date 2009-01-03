@@ -26,6 +26,11 @@ public class HibWidgetDao extends AbstractHibernateDao<Widget> implements Widget
 
 	private static final String TABLE_NAME = "widget";
 
+	@Override
+	public String getTableName() {
+		return TABLE_NAME;
+	}
+
 	/**
 	 * @param widgetName
 	 *            name of widget to test for duplicate
@@ -42,25 +47,6 @@ public class HibWidgetDao extends AbstractHibernateDao<Widget> implements Widget
 		logger.debug("Searching for widget with widgetSearchModel: " + wsm.toString());
 		Criteria criteria = createSearchModelCriteria(wsm);
 		return criteria.list();
-	}
-
-	@Override
-	public String getTableName() {
-		return TABLE_NAME;
-	}
-
-	@SuppressWarnings("unused")
-	private static final class WidgetRowMapper implements RowMapper {
-		@Override
-		public Object mapRow(ResultSet rs, int row) throws SQLException {
-			Widget widget = new Widget();
-			widget.setId(rs.getLong("id"));
-			widget.setWidgetName(rs.getString("name"));
-			widget.setCool(rs.getBoolean("cool"));
-			widget.setPrice(new BigDecimal(rs.getDouble("price")));
-			widget.setInitialTime((DateTime) rs.getObject("time"));
-			return widget;
-		}
 	}
 
 	@Override
@@ -121,5 +107,19 @@ public class HibWidgetDao extends AbstractHibernateDao<Widget> implements Widget
 			criteria.add(Restrictions.lt("initialTime", wsm.getEndInitialTime()));
 		}
 		return criteria;
+	}
+
+	@SuppressWarnings("unused")
+	private static final class WidgetRowMapper implements RowMapper {
+		@Override
+		public Object mapRow(ResultSet rs, int row) throws SQLException {
+			Widget widget = new Widget();
+			widget.setId(rs.getLong("id"));
+			widget.setWidgetName(rs.getString("name"));
+			widget.setCool(rs.getBoolean("cool"));
+			widget.setPrice(new BigDecimal(rs.getDouble("price")));
+			widget.setInitialTime((DateTime) rs.getObject("time"));
+			return widget;
+		}
 	}
 }

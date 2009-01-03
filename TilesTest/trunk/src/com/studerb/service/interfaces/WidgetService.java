@@ -11,20 +11,20 @@ import com.studerb.web.widget.WidgetSearchModel;
 public interface WidgetService {
 
 	/**
-	 * delete the widget
-	 * 
-	 * @param widget
-	 */
-
-	public void delete(Widget widget);
-
-	/**
 	 * delete widget using id
 	 * 
 	 * @param id
 	 */
 
 	public void delete(Long id);
+
+	/**
+	 * delete the widget
+	 * 
+	 * @param widget
+	 */
+
+	public void delete(Widget widget);
 
 	/**
 	 * delete all the widgets
@@ -43,12 +43,28 @@ public interface WidgetService {
 	int deleteAll(List<Long> widgetIds);
 
 	/**
+	 * Delete all widgets from persistence
+	 * 
+	 * @return count of rows deleted
+	 */
+	int deleteAllObjects();
+
+	/**
 	 * fetch the widget
 	 * 
 	 * @param id
 	 * @return
 	 */
 	Widget get(Long id);
+
+	/**
+	 * @return list of all widgets
+	 */
+	List<Widget> getAll();
+
+	DataPage<Widget> getDatePage(DataPageInfo info);
+
+	boolean isNameUsed(String name);
 
 	/**
 	 * Save or update the widget
@@ -59,12 +75,9 @@ public interface WidgetService {
 
 	void saveOrUpdateAll(Collection<Widget> widgets);
 
-	/**
-	 * @return list of all widgets
-	 */
-	List<Widget> getAll();
+	List<Widget> search(WidgetSearchModel widgetSearchModel);
 
-	DataPage<Widget> getDatePage(DataPageInfo info);
+	DataPage<Widget> searchDataPage(WidgetSearchModel widgetSM, DataPageInfo dpi);
 
 	/**
 	 * Update a widget
@@ -72,18 +85,5 @@ public interface WidgetService {
 	 * @param w
 	 */
 	void update(Widget w);
-
-	/**
-	 * Delete all widgets from persistence
-	 * 
-	 * @return count of rows deleted
-	 */
-	int deleteAllObjects();
-
-	boolean isNameUsed(String name);
-
-	List<Widget> search(WidgetSearchModel widgetSearchModel);
-
-	DataPage<Widget> searchDataPage(WidgetSearchModel widgetSM, DataPageInfo dpi);
 
 }

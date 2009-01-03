@@ -1,4 +1,4 @@
-package com.studerb.web.controllers.widget;
+package com.studerb.web.widget;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

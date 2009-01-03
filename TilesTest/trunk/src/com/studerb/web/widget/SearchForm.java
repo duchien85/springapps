@@ -1,4 +1,4 @@
-package com.studerb.web.controllers.widget;
+package com.studerb.web.widget;
 
 import java.text.SimpleDateFormat;
 
@@ -25,8 +25,6 @@ import com.studerb.service.interfaces.WidgetService;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
 import com.studerb.web.util.DateTimeEditor;
-import com.studerb.web.util.WidgetSearchModel;
-import com.studerb.web.util.WidgetSearchModelValidator;
 
 @Controller
 @RequestMapping("/widget/search/*.htm")
