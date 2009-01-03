@@ -25,6 +25,11 @@
 	
 	<import resource="classpath:db-context.xml" />
 	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
+    	 <property name="host" value="localhost"/> 
+    	 <property name="port" value="25" /> 
+    </bean>
+	
 	<!-- 
 	<bean id="widgetDao" class="com.studerb.dao.HibWidgetDao" />
 	<bean id="widgetService" class="com.studerb.service.DefaultWidgetService" />
