@@ -6,7 +6,7 @@ import java.util.List;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
-import com.studerb.web.util.WidgetSearchModel;
+import com.studerb.web.widget.WidgetSearchModel;
 
 public interface WidgetService {
 
