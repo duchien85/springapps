@@ -27,6 +27,33 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 	@Autowired
 	WidgetDao widgetDao;
 
+	@Test
+	public void deleteAllRows() {
+		int COUNT = 10;
+		List<Widget> widgets1 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets1.add(w);
+		}
+		List<Widget> widgets2 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets2.add(w);
+		}
+
+		widgetDao.saveOrUpdateAll(widgets1);
+		widgetDao.saveOrUpdateAll(widgets2);
+		widgetDao.save(Widget.createRandomWidget());
+		widgetDao.flush();
+		widgetDao.clear();
+
+		int deleted = widgetService.deleteAllObjects();
+		assertEquals(deleted, COUNT * 2 + 1);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(0, countRowsInTable("widget"));
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		deleteFromTables("widget");
@@ -62,6 +89,60 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 		widgetDao.flush();
 		widgetDao.clear();
 		assertEquals(0, countRowsInTable("widget"));
+	}
+
+	@Test
+	public void testDeleteAllByList() {
+		int COUNT = 10;
+		List<Widget> widgets1 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets1.add(w);
+		}
+		List<Widget> widgets2 = new ArrayList<Widget>(COUNT);
+		for (int i = 0; i < COUNT; ++i) {
+			Widget w = Widget.createRandomWidget();
+			widgets2.add(w);
+		}
+
+		widgetDao.saveOrUpdateAll(widgets1);
+		widgetDao.saveOrUpdateAll(widgets2);
+		widgetDao.flush();
+		widgetDao.clear();
+
+		assertEquals(COUNT * 2, countRowsInTable("widget"));
+
+		int deleted = widgetService.deleteAll(widgets1);
+		assertEquals(deleted, COUNT);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(COUNT, countRowsInTable("widget"));
+
+		List<Widget> dummy = new ArrayList<Widget>();
+		deleted = widgetService.deleteAll(dummy);
+		assertEquals(deleted, 0);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(COUNT, countRowsInTable("widget"));
+
+		deleted = widgetService.deleteAll(widgets2);
+		assertEquals(deleted, 10);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(0, countRowsInTable("widget"));
+	}
+
+	@Test
+	public void testDeleteAndList() {
+		Widget w = Widget.createRandomWidget();
+		widgetDao.save(w);
+		widgetDao.flush();
+		widgetDao.clear();
+		assertEquals(countRowsInTable(widgetDao.getTableName()), 1);
+
+		widgetService.delete(w.getId());
+		List<Widget> allWidgets = widgetDao.getAll();
+		assertEquals(allWidgets.size(), 0);
 	}
 
 	@Test
@@ -114,72 +195,16 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 		assertEquals(0, countRowsInTable("widget"));
 	}
 
-	@Test
-	public void testDeleteAllByList() {
-		int COUNT = 10;
-		List<Widget> widgets1 = new ArrayList<Widget>(COUNT);
-		for (int i = 0; i < COUNT; ++i) {
-			Widget w = Widget.createRandomWidget();
-			widgets1.add(w);
-		}
-		List<Widget> widgets2 = new ArrayList<Widget>(COUNT);
-		for (int i = 0; i < COUNT; ++i) {
-			Widget w = Widget.createRandomWidget();
-			widgets2.add(w);
-		}
-
-		widgetDao.saveOrUpdateAll(widgets1);
-		widgetDao.saveOrUpdateAll(widgets2);
+	@Test(expected = Exception.class)
+	public void testDuplicateName() throws Exception {
+		Widget w = Widget.createRandomWidget();
+		widgetDao.save(w);
 		widgetDao.flush();
 		widgetDao.clear();
 
-		assertEquals(COUNT * 2, countRowsInTable("widget"));
-
-		int deleted = widgetService.deleteAll(widgets1);
-		assertEquals(deleted, COUNT);
-		widgetDao.flush();
-		widgetDao.clear();
-		assertEquals(COUNT, countRowsInTable("widget"));
-
-		List<Widget> dummy = new ArrayList<Widget>();
-		deleted = widgetService.deleteAll(dummy);
-		assertEquals(deleted, 0);
-		widgetDao.flush();
-		widgetDao.clear();
-		assertEquals(COUNT, countRowsInTable("widget"));
-
-		deleted = widgetService.deleteAll(widgets2);
-		assertEquals(deleted, 10);
-		widgetDao.flush();
-		widgetDao.clear();
-		assertEquals(0, countRowsInTable("widget"));
-	}
-
-	@Test
-	public void deleteAllRows() {
-		int COUNT = 10;
-		List<Widget> widgets1 = new ArrayList<Widget>(COUNT);
-		for (int i = 0; i < COUNT; ++i) {
-			Widget w = Widget.createRandomWidget();
-			widgets1.add(w);
-		}
-		List<Widget> widgets2 = new ArrayList<Widget>(COUNT);
-		for (int i = 0; i < COUNT; ++i) {
-			Widget w = Widget.createRandomWidget();
-			widgets2.add(w);
-		}
-
-		widgetDao.saveOrUpdateAll(widgets1);
-		widgetDao.saveOrUpdateAll(widgets2);
-		widgetDao.save(Widget.createRandomWidget());
-		widgetDao.flush();
-		widgetDao.clear();
-
-		int deleted = widgetService.deleteAllObjects();
-		assertEquals(deleted, COUNT * 2 + 1);
-		widgetDao.flush();
-		widgetDao.clear();
-		assertEquals(0, countRowsInTable("widget"));
+		Widget w2 = Widget.createRandomWidget();
+		w2.setWidgetName(w.getWidgetName());
+		widgetService.save(w2);
 	}
 
 	@Test
@@ -205,33 +230,6 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 		widgetDao.clear();
 		List<Widget> fetched = widgetService.getAll();
 		assertEquals(fetched.size(), COUNT);
-	}
-
-	@Test
-	public void testUpdate() {
-		Widget w = Widget.createRandomWidget();
-		widgetDao.save(w);
-		widgetDao.flush();
-		widgetDao.clear();
-		Boolean opposite = w.isCool() ? false : true;
-		w.setCool(opposite);
-		widgetService.update(w);
-		widgetDao.flush();
-		widgetDao.clear();
-		Widget fetched = widgetDao.get(w.getId());
-		assertEquals(fetched.isCool(), opposite);
-	}
-
-	@Test(expected = Exception.class)
-	public void testDuplicateName() throws Exception {
-		Widget w = Widget.createRandomWidget();
-		widgetDao.save(w);
-		widgetDao.flush();
-		widgetDao.clear();
-
-		Widget w2 = Widget.createRandomWidget();
-		w2.setWidgetName(w.getWidgetName());
-		widgetService.save(w2);
 	}
 
 	public void testIsNameUsed() throws Exception {
@@ -278,4 +276,18 @@ public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextT
 		assertEquals(COUNT * 2, countRowsInTable("widget"));
 	}
 
+	@Test
+	public void testUpdate() {
+		Widget w = Widget.createRandomWidget();
+		widgetDao.save(w);
+		widgetDao.flush();
+		widgetDao.clear();
+		Boolean opposite = w.isCool() ? false : true;
+		w.setCool(opposite);
+		widgetService.update(w);
+		widgetDao.flush();
+		widgetDao.clear();
+		Widget fetched = widgetDao.get(w.getId());
+		assertEquals(fetched.isCool(), opposite);
+	}
 }

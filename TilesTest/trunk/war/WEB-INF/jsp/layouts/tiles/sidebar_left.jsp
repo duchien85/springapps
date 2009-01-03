@@ -13,7 +13,7 @@
 
 		<li><a href="<c:url value="/api/helloworld.htm"/>">HelloWorld WS</a></li>
 		<li><a href="<c:url value="/actor/list.htm"/>">Actors (Jmesa)</a></li>
-		
+		<li><a href="<c:url value="/contact/index.htm" />">Contact Us</a></li>
 	</ul>
 
 </div> <!-- end #left_nav -->	
