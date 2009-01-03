@@ -1,4 +1,4 @@
-package com.studerb.web.controllers;
+package com.studerb.web;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.studerb.model.Widget;
 import com.studerb.service.interfaces.WidgetService;
-import com.studerb.web.util.WidgetSearchModel;
+import com.studerb.web.widget.WidgetSearchModel;
 import com.sun.jersey.spi.resource.Singleton;
 
 @Service

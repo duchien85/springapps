@@ -1,4 +1,4 @@
-package com.studerb.web.controllers.actor;
+package com.studerb.web.actor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,4 +1,4 @@
-package com.studerb.web.util;
+package com.studerb.web.widget;
 
 import org.joda.time.DateTime;
 import org.springframework.validation.Errors;

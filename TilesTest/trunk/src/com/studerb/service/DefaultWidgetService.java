@@ -23,6 +23,13 @@ public class DefaultWidgetService implements WidgetService {
 	@Autowired
 	WidgetDao widgetDao;
 
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		logger.debug("deleting widget: " + id);
+		widgetDao.delete(id);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -48,6 +55,20 @@ public class DefaultWidgetService implements WidgetService {
 		return deleted;
 	}
 
+	@Override
+	@Transactional
+	public int deleteAll(List<Long> widgetIds) {
+		Long[] ids = widgetIds.toArray(new Long[0]);
+		logger.debug("deleting widgets: " + Arrays.toString(ids));
+		int count = 0;
+		for (Long id : widgetIds) {
+			Widget w = widgetDao.get(id);
+			widgetDao.delete(w);
+			count++;
+		}
+		return count;
+	}
+
 	@Transactional
 	@Override
 	public int deleteAllObjects() {
@@ -69,6 +90,29 @@ public class DefaultWidgetService implements WidgetService {
 		return widgetDao.get(id);
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public List<Widget> getAll() {
+		List<Widget> widgets = widgetDao.getAll();
+		logger.debug("fetched " + widgets.size() + " widgets");
+		return widgets;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public DataPage<Widget> getDatePage(DataPageInfo info) {
+		logger.debug("getting data page of widgets -> dpInfo: " + info.toString());
+		return widgetDao.getPage(info);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public boolean isNameUsed(String name) {
+		boolean used = widgetDao.isNameUsed(name);
+		logger.debug("Widget name: " + name + " already used: " + used);
+		return used;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -82,48 +126,11 @@ public class DefaultWidgetService implements WidgetService {
 		return widgetDao.save(widget);
 	}
 
-	@Transactional(readOnly = true)
-	@Override
-	public List<Widget> getAll() {
-		List<Widget> widgets = widgetDao.getAll();
-		logger.debug("fetched " + widgets.size() + " widgets");
-		return widgets;
-	}
-
-	@Transactional
-	@Override
-	public void update(Widget widget) {
-		logger.debug("Updating widget: " + widget.toString());
-		widgetDao.update(widget);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public boolean isNameUsed(String name) {
-		boolean used = widgetDao.isNameUsed(name);
-		logger.debug("Widget name: " + name + " already used: " + used);
-		return used;
-	}
-
 	@Override
 	@Transactional
-	public void delete(Long id) {
-		logger.debug("deleting widget: " + id);
-		widgetDao.delete(id);
-	}
-
-	@Override
-	@Transactional
-	public int deleteAll(List<Long> widgetIds) {
-		Long[] ids = widgetIds.toArray(new Long[0]);
-		logger.debug("deleting widgets: " + Arrays.toString(ids));
-		int count = 0;
-		for (Long id : widgetIds) {
-			Widget w = widgetDao.get(id);
-			widgetDao.delete(w);
-			count++;
-		}
-		return count;
+	public void saveOrUpdateAll(Collection<Widget> widgets) {
+		logger.debug("Saving/updating " + widgets.size() + " widgets");
+		widgetDao.saveOrUpdateAll(widgets);
 	}
 
 	@Override
@@ -135,25 +142,18 @@ public class DefaultWidgetService implements WidgetService {
 	}
 
 	@Override
-	@Transactional
-	public void saveOrUpdateAll(Collection<Widget> widgets) {
-		logger.debug("Saving/updating " + widgets.size() + " widgets");
-		widgetDao.saveOrUpdateAll(widgets);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public DataPage<Widget> getDatePage(DataPageInfo info) {
-		logger.debug("getting data page of widgets -> dpInfo: " + info.toString());
-		return widgetDao.getPage(info);
-	}
-
-	@Override
 	@Transactional(readOnly = true)
 	public DataPage<Widget> searchDataPage(WidgetSearchModel widgetSM, DataPageInfo dpi) {
 		DataPage<Widget> dataPage = widgetDao.searchDataPage(widgetSM, dpi);
 		logger.debug("found " + dataPage.getData().size() + " widgets");
 		return dataPage;
+	}
+
+	@Transactional
+	@Override
+	public void update(Widget widget) {
+		logger.debug("Updating widget: " + widget.toString());
+		widgetDao.update(widget);
 	}
 
 }
