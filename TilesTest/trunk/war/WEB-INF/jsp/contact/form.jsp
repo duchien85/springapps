@@ -5,11 +5,8 @@
 
 <h1>Contact Us</h1>
 <hr/>
+
 <tt:errors name="contactModel" />
-
-<style>
-</style>
-
 
 <c:if test="${not empty contactMessage}">
 	<div id="contactMessage" class="errors">
@@ -18,16 +15,14 @@
 </c:if>
 
 <form:form id="contact" modelAttribute="contactModel" method="post" enctype="multipart/form-data">
+	<form:hidden path="maxUploads" />
 <table>
 	<tr>
 		<td align="right" valign="top">
 			<form:label path="recipientEmail" cssErrorClass="errors">*To:</form:label>
 		</td>
 		<td align="left">
-			<form:select path="recipientEmail">
-				<form:option value=""></form:option>
-				<form:options items="${recipientOptions}"/>
-			</form:select>
+			<form:input path="recipientEmail" />
 		</td>
 	</tr>
 	<tr>
@@ -48,23 +43,13 @@
 	</tr>
 	<tr>
 		<td>
-			<form:label path="attachment0" cssErrorClass="errors">Attachment_0</form:label>
-		<td>	
-			<input type="file" id="attatchment0" name="attachment0" value="${attachment0.originalFileName}" />
+			<form:label path="attachments" cssErrorClass="errors">Attachments</form:label>
+			<input type="button" id="addAttachmentButton" onclick="addAttachment()" value="Add an attachment" />
 		</td>
-	</tr>
-	<tr>
-		<td>
-			<form:label path="attachment1" cssErrorClass="errors">Attachment_1</form:label>
-		<td>	
-			<input type="file" id="attatchment1" name="attachment1" value="${attachment1.originalFileName}" />
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<form:label path="attachment2" cssErrorClass="errors">Attachment_2</form:label>
-		<td>	
-			<input type="file" id="attatchment2" name="attachment2" />
+		<td id="attachmentColumn">	
+			<c:forEach items="${attachments}" varStatus="stat" var="current">
+				<input type="file" id="attachments[${stat.index}]" name="attachments[$stat.index}]" /><br/>
+			</c:forEach>
 		</td>
 	</tr>
 	<tr>
@@ -75,8 +60,28 @@
 	</tr>
 	
 </table>
+
+
 </form:form>
 
-
 <script>
+
+var maxUploads = $F('maxUploads');
+
+function createNewAttachment(index){
+	var newId = 'attachments[' + index + ']';
+	var el = new Element('input' ,{'type':'file', 'id':newId, 'name':newId});
+	$('attachmentColumn').insert(el).insert('<br/>');
+	el.focus();
+}
+
+function addAttachment(){
+	var fileInputs = $$('input[type="file"]');
+	if (fileInputs.size() >= maxUploads){
+		alert("There is a maximum of " + maxUploads  + " attachments.");
+		return false;
+	}
+	createNewAttachment(fileInputs.size());
+}
+
 </script>

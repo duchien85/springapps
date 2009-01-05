@@ -47,12 +47,28 @@ public class ContactServiceTest extends AbstractTransactionalJUnit4SpringContext
 		}
 	}
 
-	// @Test
+	@Test
+	public void testSendEmailOneExcelAttachment() {
+		try {
+			Resource r = applicationContext.getResource("classpath:testAttachments/testExcel.xls");
+			MockMultipartFile textMultipartFile = new MockMultipartFile("testExcel.xls", "C:/Documents and Settings/studerb/Desktop/testExcel.xls", "application/vnd.ms-excel",
+					r.getInputStream());
+			model.getAttachments().add(textMultipartFile);
+			contactService.sendContactEmail(model);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			fail("Email failed: " + ExceptionUtils.getRootCauseMessage(e));
+		}
+	}
+
+	@Test
 	public void testSendEmailOneTextAttachment() {
 		try {
-			Resource r = applicationContext.getResource("classpath:testAttach.txt");
-			MockMultipartFile textMultipartFile = new MockMultipartFile("testAttach.txt", r.getInputStream());
-			model.setAttachment0(textMultipartFile);
+			Resource r = applicationContext.getResource("classpath:testAttachments/testAttachment.txt");
+			MockMultipartFile excelMultipartFile = new MockMultipartFile("testAttachment.txt", "C:/Documents and Settings/studerb/Desktop/testAttachment.txt", "text/plain", r
+					.getInputStream());
+			model.getAttachments().add(excelMultipartFile);
 			contactService.sendContactEmail(model);
 		}
 		catch (Exception e) {
