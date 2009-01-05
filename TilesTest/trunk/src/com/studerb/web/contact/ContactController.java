@@ -1,7 +1,5 @@
 package com.studerb.web.contact;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -41,30 +39,23 @@ public class ContactController {
 		return "contact/form";
 	}
 
-	@ModelAttribute("recipientOptions")
-	public Map<String, String> getContactOptions() {
-		Map<String, String> emails = contactService.getRecipientEmails();
-		return emails;
-	}
-
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		// trim whitespace from strings and set '' attributes to null
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 
 	@RequestMapping(value = "index.htm", method = RequestMethod.POST)
-	public String postSearchModel(HttpServletRequest request, @ModelAttribute ContactModel command, BindingResult result, ModelMap model) {
-		logger.debug("contact POST: " + command);
+	public String postContactModel(HttpServletRequest request, @ModelAttribute ContactModel contactModel, BindingResult result, ModelMap model) {
+		logger.debug("contact POST: " + contactModel);
 		// processAttachments(request, command);
 
-		new ContactValidator().validate(command, result);
+		new ContactValidator().validate(contactModel, result);
 		if (result.hasErrors()) {
 			logger.debug("Binding/Validation Errors - returning contact form page");
 			return "contact/form";
 		}
 		try {
-			contactService.sendContactEmail(command);
+			contactService.sendContactEmail(contactModel);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -72,7 +63,9 @@ public class ContactController {
 			return "contact/form";
 		}
 		// this.info.setCurrentRecord(0);
+
 		model.clear();
+		model.addAttribute("flashScope.contactModel", contactModel);
 		return "redirect:/contact/confirmation.htm";
 	}
 

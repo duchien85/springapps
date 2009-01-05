@@ -1,34 +1,38 @@
 package com.studerb.web.contact;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ContactModel {
 	public static final int MESSAGE_MAX_LENGTH = 10000;
+
 	public static final int ATTACHMENT_MAX_LENGTH = 10000;
+
 	public static final int NUM_OF_ATTACHMENTS = 3;
 
-	private MultipartFile attachment0;
-	private MultipartFile attachment1;
-	private MultipartFile attachment2;
-
+	public List<MultipartFile> attachments = new ArrayList<MultipartFile>();
+	/*
+	 * List<MultipartFile> attachments = LazyList.decorate(new
+	 * ArrayList<MultipartFile>(), new Factory() {
+	 * 
+	 * @Override public Object create() { return new Object(); } });
+	 */
 	private String subject;
 	private String recipientEmail;
-	private String senderEmail;
-
+	private String senderEmail = "studerb@fastmail.fm";
 	private String message;
+	private final int maxUploads = NUM_OF_ATTACHMENTS;
 
-	public MultipartFile getAttachment0() {
-		return attachment0;
+	public List<MultipartFile> getAttachments() {
+		return attachments;
 	}
 
-	public MultipartFile getAttachment1() {
-		return attachment1;
-	}
-
-	public MultipartFile getAttachment2() {
-		return attachment2;
+	public int getMaxUploads() {
+		return maxUploads;
 	}
 
 	public String getMessage() {
@@ -47,16 +51,8 @@ public class ContactModel {
 		return subject;
 	}
 
-	public void setAttachment0(MultipartFile attachment0) {
-		this.attachment0 = attachment0;
-	}
-
-	public void setAttachment1(MultipartFile attachment1) {
-		this.attachment1 = attachment1;
-	}
-
-	public void setAttachment2(MultipartFile attachment2) {
-		this.attachment2 = attachment2;
+	public void setAttachments(List<MultipartFile> attachments) {
+		this.attachments = attachments;
 	}
 
 	public void setMessage(String message) {
@@ -83,30 +79,26 @@ public class ContactModel {
 		out.append("message: " + message + SystemUtils.LINE_SEPARATOR);
 		out.append("Subject: " + subject + SystemUtils.LINE_SEPARATOR);
 		out.append("senderEmail: " + senderEmail + SystemUtils.LINE_SEPARATOR);
+
+		int count = 0;
 		try {
+			for (MultipartFile f : attachments) {
 
-			if (attachment0 == null) {
-				out.append("attachment0: " + attachment0 + SystemUtils.LINE_SEPARATOR);
-			}
-			else {
-				out.append("attachment0 (name / size / text: " + attachment0.getOriginalFilename() + " / " + attachment0.getSize() + " / " + new String(attachment0.getBytes())
-						+ SystemUtils.LINE_SEPARATOR);
-			}
-
-			if (attachment1 == null) {
-				out.append("attachment1: " + attachment1 + SystemUtils.LINE_SEPARATOR);
-			}
-			else {
-				out.append("attachment1 (name / size / text: " + attachment1.getOriginalFilename() + " / " + attachment1.getSize() + " / " + new String(attachment1.getBytes())
-						+ SystemUtils.LINE_SEPARATOR);
-			}
-
-			if (attachment2 == null) {
-				out.append("attachment2: " + attachment0 + SystemUtils.LINE_SEPARATOR);
-			}
-			else {
-				out.append("attachment2 (name / size / text: " + attachment2.getOriginalFilename() + " / " + attachment2.getSize() + " / " + new String(attachment2.getBytes())
-						+ SystemUtils.LINE_SEPARATOR);
+				if (f == null) {
+					out.append("attachment" + count + ": " + SystemUtils.LINE_SEPARATOR);
+				}
+				else {
+					out.append("file:" + SystemUtils.LINE_SEPARATOR);
+					out.append("\toriginal Name: " + f.getOriginalFilename() + SystemUtils.LINE_SEPARATOR);
+					out.append("\tname: " + f.getName() + SystemUtils.LINE_SEPARATOR);
+					out.append("\tSize: " + f.getSize() + SystemUtils.LINE_SEPARATOR);
+					out.append("\tContent type: " + f.getContentType() + SystemUtils.LINE_SEPARATOR);
+					/*
+					 * out.append("\tContent: " + f.getBytes() +
+					 * SystemUtils.LINE_SEPARATOR);
+					 */
+					out.append(SystemUtils.LINE_SEPARATOR);
+				}
 			}
 		}
 		catch (Exception e) {

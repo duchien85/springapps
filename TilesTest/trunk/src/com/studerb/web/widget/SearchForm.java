@@ -39,12 +39,10 @@ public class SearchForm {
 	@Qualifier("widgetSearchInfo")
 	private DataPageInfo datePageInfo;
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder, WebRequest request) {
-		String format = "yyyy-MM-dd";
-		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(DateTime.class, new DateTimeEditor(format, true));
+	@RequestMapping(value = "changePage", method = RequestMethod.GET)
+	public String changePage(@RequestParam String viewName, @RequestParam String changeEvent) {
+		datePageInfo.changePage(changeEvent);
+		return "redirect:/widget/search/list.htm";
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -54,19 +52,19 @@ public class SearchForm {
 		return "widget/search";
 	}
 
-	@RequestMapping(value = "doSearch", method = RequestMethod.POST)
-	public String postSearchModel(@ModelAttribute("widgetSearchModel") WidgetSearchModel widgetSearchModel, BindingResult result, Model model) {
-		new WidgetSearchModelValidator().validate(widgetSearchModel, result);
-		if (result.hasErrors()) {
-			logger.debug("Binding/Validation Errors - returning search page");
-			return "widget/search";
-		}
-		// add one day to endTime
-		if (widgetSearchModel.getEndInitialTime() != null) {
-			widgetSearchModel.setEndInitialTime(widgetSearchModel.getEndInitialTime().plusDays(1));
-		}
-		this.datePageInfo.setCurrentRecord(0);
+	@RequestMapping(value = "delete", method = RequestMethod.GET)
+	public String delete(@RequestParam("widgetId") Long widgetId, Model model) {
+		widgetService.delete(widgetId);
+		model.addAttribute("flashScope.message", "Deleted widget successfully");
 		return "redirect:/widget/search/list.htm";
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder, WebRequest request) {
+		String format = "yyyy-MM-dd";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(DateTime.class, new DateTimeEditor(format, true));
 	}
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
@@ -77,7 +75,7 @@ public class SearchForm {
 		}
 		logger.debug("WidgetSearchModel (from session): " + widgetSearchModel.toString());
 
-		DataPage<Widget> widgetDP = widgetService.searchDataPage(widgetSearchModel, this.datePageInfo);
+		DataPage<Widget> widgetDP = widgetService.searchDataPage(widgetSearchModel, datePageInfo);
 		if (widgetDP.getData().isEmpty()) {
 			model.addAttribute("searchResultsMessage", "No results were found matching your criteria");
 		}
@@ -91,22 +89,24 @@ public class SearchForm {
 		return "widget/search";
 	}
 
-	@RequestMapping(value = "delete", method = RequestMethod.GET)
-	public String delete(@RequestParam("widgetId") Long widgetId, Model model) {
-		widgetService.delete(widgetId);
-		model.addAttribute("flashScope.message", "Deleted widget successfully");
-		return "redirect:/widget/search/list.htm";
-	}
-
-	@RequestMapping(value = "changePage", method = RequestMethod.GET)
-	public String changePage(@RequestParam String viewName, @RequestParam String changeEvent) {
-		this.datePageInfo.changePage(changeEvent);
+	@RequestMapping(value = "doSearch", method = RequestMethod.POST)
+	public String postSearchModel(HttpSession session, @ModelAttribute("widgetSearchModel") WidgetSearchModel widgetSearchModel, BindingResult result, Model model) {
+		new WidgetSearchModelValidator().validate(widgetSearchModel, result);
+		if (result.hasErrors()) {
+			logger.debug("Binding/Validation Errors - returning search page");
+			return "widget/search";
+		}
+		// add one day to endTime
+		if (widgetSearchModel.getEndInitialTime() != null) {
+			widgetSearchModel.setEndInitialTime(widgetSearchModel.getEndInitialTime().plusDays(1));
+		}
+		datePageInfo.setCurrentRecord(0);
 		return "redirect:/widget/search/list.htm";
 	}
 
 	@RequestMapping(value = "sort", method = RequestMethod.GET)
 	public String sort(@RequestParam String viewName, @RequestParam String column) {
-		this.datePageInfo.changeSort(column);
+		datePageInfo.changeSort(column);
 		return "redirect:/widget/search/list.htm";
 	}
 }
