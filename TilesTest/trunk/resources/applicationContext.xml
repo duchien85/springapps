@@ -24,6 +24,7 @@
 	<context:property-placeholder location="classpath:tilestest.properties, classpath:hibernate/hibernate.properties" />
 	
 	<import resource="classpath:db-context.xml" />
+	<import resource="classpath:webUtilContext.xml" />
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
     	 <property name="host" value="${mail.host}"/> 

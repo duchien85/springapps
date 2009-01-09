@@ -83,5 +83,16 @@
         <put-attribute name="content" value="/WEB-INF/jsp/dataAccessFailure.jsp"/>
     </definition>
     
+        <!--  Test -->
+	<definition name="test/index" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Test" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/test/index.jsp" />
+    </definition>
+    
+    <definition name="test/confirmation" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Test Confirmation" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/test/confirmation.jsp" />
+    </definition>
+        
     
 </tiles-definitions>

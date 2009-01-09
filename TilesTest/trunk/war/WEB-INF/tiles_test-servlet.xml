@@ -8,7 +8,7 @@
 					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	
-	 <context:component-scan base-package="com.studerb.web" use-default-filters="false">
+	<context:component-scan base-package="com.studerb.web" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
@@ -16,18 +16,7 @@
 		<property name="basename" value="messages/messages"/>
 	</bean> 
 	
-	<!-- <context:component-scan base-package="com.studerb.web.controllers"/>-->
 
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">  
-		<property name="order" value="0" />
-		<property name="interceptors">
-			<list>
-				<ref bean="flashScopeInterceptor"/>
-			</list>
-		</property>
-	</bean>
-		
-	
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
@@ -36,7 +25,16 @@
 			</props>
 		</property>
 	</bean>	
-	
+
+		<!--  MAPPERS -->
+	<bean id="annotationMappings" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">  
+		<property name="order" value="0" />
+		<property name="interceptors">
+			<list>
+				<ref bean="flashScopeInterceptor"/>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- Enables convention-based request URL mapping to @Controllers e.g. /hotels/* maps to HotelsController -->
 	<!-- 
@@ -47,76 +45,59 @@
  	 -->
 
 	<!-- Maps all other request URLs to views -->
+	<bean id="viewMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="defaultHandler">
+			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+		</property>
+		<property name="order" value="1"/>
+		<property name="interceptors">
+			<list>
+				<ref bean="flashScopeInterceptor"/>
+			</list>
+		</property>
+	</bean>
 	
+		<!--  HANDLERS -->
+		
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="webBindingInitializer">
 			<bean class="com.studerb.web.util.BindingInitializer"/>
 		</property>
 	</bean>
 	
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 	
-	<!-- 
-	<bean id="viewMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-		<property name="defaultHandler">
-			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
-		</property>
-		<property name="order" value="2"/>
-	</bean>
-  	-->
-			
-	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+				
+	
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+        <property name="order" value="0" />
+    </bean>
+    
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
         <property name="definitions">
             <list>
                 <value>/WEB-INF/jsp/layouts/default.xml</value>
             </list>
         </property>
     </bean>
-    
-	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
-    </bean>
 
+	<!-- 
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    	<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value="jsp" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="order" value="1" />
+	</bean>
+ 	-->    
+	
 	<bean id="multipartResolver"
     	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     	<property name="maxUploadSize" value="100000"/>
 	</bean>
 	
 	
-	<!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /> -->
 	
-	<!-- Pagination for widget list -->
-	<bean id="widgetListInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
-        <qualifier value="widgetListInfo" />
-        <aop:scoped-proxy/>
-        <property name="viewName" value="list"/>
-        <property name="pageSize" value="15" />
-        <property name="sort" value="widgetName" />
-    </bean>
-    
-    <bean id="widgetSearchInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
-        <qualifier value="widgetSearchInfo" />
-        <aop:scoped-proxy/>
-        <property name="viewName" value="search"/>
-        <property name="pageSize" value="15" />
-        <property name="sort" value="widgetName" />
-    </bean>
-    
-    <!-- Pagination for widget list -->
-	<bean id="actorListInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
-        <qualifier value="actorListInfo" />
-        <aop:scoped-proxy/>
-        <property name="viewName" value="list"/>
-        <property name="pageSize" value="15" />
-        <property name="sort" value="lastName" />
-    </bean>
-    
-    <bean id="actorSearchInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
-        <qualifier value="actorSearchInfo" />
-        <aop:scoped-proxy/>
-        <property name="viewName" value="search"/>
-        <property name="pageSize" value="15" />
-        <property name="sort" value="lastName" />
-    </bean>
         
     <bean id="flashScopeInterceptor" class="com.studerb.web.util.FlashScopeInterceptor" />
         

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	
+	<!-- Pagination for widget list -->
+	<bean id="widgetListInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="widgetListInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="list"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="widgetName" />
+    </bean>
+    
+    <bean id="widgetSearchInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="widgetSearchInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="search"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="widgetName" />
+    </bean>
+    
+    <!-- Pagination for widget list -->
+	<bean id="actorListInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="actorListInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="list"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="lastName" />
+    </bean>
+    
+    <bean id="actorSearchInfo" class="com.studerb.web.util.DataPageInfo" scope="session">
+        <qualifier value="actorSearchInfo" />
+        <aop:scoped-proxy/>
+        <property name="viewName" value="search"/>
+        <property name="pageSize" value="15" />
+        <property name="sort" value="lastName" />
+    </bean>
+        
+
+        
+</beans>
