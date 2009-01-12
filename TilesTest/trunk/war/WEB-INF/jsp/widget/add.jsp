@@ -5,11 +5,15 @@
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
+<style>
+#calDiv {position: relative; }
+#container { display:none; position:absolute; left:10px; top:10px; z-index:2; min-width: 12em;} 
+</style>
 
 <h2>Add Widget</h2>
 
 <tt:errors name="widget" />
+
 
 <form:form modelAttribute="widget" method="post">
 	<table class="formTable">
@@ -26,17 +30,16 @@
 		<tr class="datefield">
 			<td class="form_label"><form:label path="initialTime"
 				cssErrorClass="errors">Initial Time</form:label></td>
-			<td class="form_input"><form:input path="initialTime" /> &nbsp;
-			<button type="button" id="showButton" title="Show Calendar"><img
-				src="<c:url value='/images/calbtn.gif'/>" width="18" height="18"
-				alt="Calendar" /></button>
-			<div id="container">
-			<div class="hd">Calendar</div>
-			<div class="bd">
-			<div id="cal"></div>
-			</div>
-			</div>
-			<!-- end #container --></td>
+			<td class="form_input">
+				<form:input path="initialTime" />
+			</td>
+			<td>
+				<div id="calDiv">
+					<button type="button" id="showButton" title="Show Calendar">
+					<img src="<c:url value='/images/calbtn.gif'/>" width="18" height="18" alt="Calendar" /></button>
+					<div id="container"/>
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<td class="form_label"><form:label path="cool"
@@ -56,25 +59,22 @@
 
 <script type="text/javascript">
 	( function() {
-		var Event = YAHOO.util.Event, Dom = YAHOO.util.Dom;
+		var Event = YAHOO.util.Event, 
+		Dom = YAHOO.util.Dom;
 
 		Event.onDOMReady( function() {
 
-			var dialog, calendar, calButton;
+			var calendar, calButton, submitButton;
+			
+			calButton = new YAHOO.widget.Button("showButton", {});
+			submitBotton = new YAHOO.widget.Button("submitButton", {});
 
-			var submitButton, cancelButton;
-
-			submitButton = new YAHOO.widget.Button("submitButton");
-			submitButton.set("type", "submit");
-			submitButton.set("title", "Save new Widget");
-
-			cancelButton = new YAHOO.widget.Button("cancelButton");
-
-			calButton = new YAHOO.widget.Button("showButton");
-			calendar = new YAHOO.widget.Calendar("cal", {
-				iframe :true,
-				hide_blank_weeks :true
+			calendar = new YAHOO.widget.Calendar("calendar", "container", {
+				hide_blank_weeks :true,
+				title: "Initial Time",
+				close: true
 			});
+
 
 			function okHandler() {
 				if (calendar.getSelectedDates().length > 0) {
@@ -91,40 +91,27 @@
 				}
 				var yStr = selDate.getFullYear();
 
-				YAHOO.util.Dom.get("initialTime").value = yStr + "-" + mStr
+				Dom.get("initialTime").value = yStr + "-" + mStr
 						+ "-" + dStr;
 			} else {
-				YAHOO.util.Dom.get("initialTime").value = "";
+				Dom.get("initialTime").value = "";
 			}
-			this.hide();
+			calendar.hide();
 		}
 
 		function cancelHandler() {
-			this.hide();
+			calendar.hide();
 		}
 
-		dialog = new YAHOO.widget.Dialog("container", {
-			context : [ "showButton", "tl", "bl",
-					[ "beforeShow", "windowResize" ] ],
-			//buttons:[ {text:"Select", isDefault:true, handler: okHandler}, 
-			//{text:"Cancel", handler: cancelHandler}],
-			width :"16em", // Sam Skin dialog needs to have a width defined (7*2em + 2*1em = 16em).
-			draggable :false,
-			close :true
-		});
 
+		calendar.selectEvent.subscribe(okHandler);
+		
 		calendar.render();
-		dialog.render();
-		// Using dialog.hide() instead of visible:false is a workaround for an IE6/7 container known issue with border-collapse:collapse.
-		dialog.hide();
+		calendar.hide();
 
-		calendar.renderEvent.subscribe( function() {
-			// Tell Dialog it's contents have changed, Currently used by container for IE6/Safari2 to sync underlay size
-				dialog.fireEvent("changeContent");
-			});
 
 		calButton.on("click", function() {
-			dialog.show();
+			calendar.show();
 			if (YAHOO.env.ua.opera && document.documentElement) {
 				// Opera needs to force a repaint
 				document.documentElement.className += "";
