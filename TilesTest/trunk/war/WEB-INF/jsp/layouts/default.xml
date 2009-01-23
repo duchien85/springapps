@@ -89,10 +89,26 @@
         <put-attribute name="content" value="/WEB-INF/jsp/test/index.jsp" />
     </definition>
     
-    <definition name="test/confirmation" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Test Confirmation" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/test/confirmation.jsp" />
+    <!-- Login -->
+    <definition name="login/abcd/a" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Login a" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/a.jsp" />
     </definition>
-        
     
+    <definition name="login/abcd/b" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Login b" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/b.jsp" />
+    </definition>
+    
+    <definition name="login/abcd/c" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Login c" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/c.jsp" />
+    </definition>
+    
+    <definition name="login/abcd/d" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Login d" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/d.jsp" />
+    </definition>
+    
+        
 </tiles-definitions>

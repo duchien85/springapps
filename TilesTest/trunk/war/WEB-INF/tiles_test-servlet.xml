@@ -36,6 +36,13 @@
 		</property>
 	</bean>
 	
+	<!-- Maps request paths to flows in the flowRegistry; e.g. a path of /hotels/booking looks for a flow with id "hotels/booking" -->
+	
+	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+		<property name="order" value="1" />
+		<property name="flowRegistry" ref="flowRegistry" />
+	</bean>
+	
 	<!-- Enables convention-based request URL mapping to @Controllers e.g. /hotels/* maps to HotelsController -->
 	<!-- 
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
@@ -46,10 +53,10 @@
 
 	<!-- Maps all other request URLs to views -->
 	<bean id="viewMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="2" />
 		<property name="defaultHandler">
 			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
 		</property>
-		<property name="order" value="1"/>
 		<property name="interceptors">
 			<list>
 				<ref bean="flashScopeInterceptor"/>
@@ -67,7 +74,11 @@
 	
 	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 	
-				
+	<!-- Dispatches requests mapped to flows to FlowHandler implementations -->
+	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter" >
+		<property name="flowExecutor" ref="flowExecutor"/>
+	</bean>
+	
 	
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
@@ -95,10 +106,9 @@
     	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     	<property name="maxUploadSize" value="100000"/>
 	</bean>
-	
-	
-	
-        
+	    
     <bean id="flashScopeInterceptor" class="com.studerb.web.util.FlashScopeInterceptor" />
+    
+	<import resource="webFlowConfig.xml"/>    
         
 </beans>
