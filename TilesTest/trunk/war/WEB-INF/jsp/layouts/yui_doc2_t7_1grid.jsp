@@ -7,6 +7,7 @@
 	<title><tiles:getAsString name="title" /></title>
 	<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/reset-fonts-grids/reset-fonts-grids.css'/>">  
 	<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/base/base-min.css'/>">  
+	<link rel="stylesheet" type="text/css" href="<c:url value='/yui_2.6.0/build/base/base-min.css'/>">  
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/css_box/message_box.css'/>">  
 	<script type="text/javascript" src="<c:url value='/js/prototype-1.6.0.3.js'/>"></script>

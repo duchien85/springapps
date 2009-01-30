@@ -1,4 +1,4 @@
-package com.studerb.web.actor;
+package com.studerb.actor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.studerb.model.Actor;
-import com.studerb.service.ActorService;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
 

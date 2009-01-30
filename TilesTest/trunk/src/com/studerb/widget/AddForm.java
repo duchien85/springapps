@@ -1,5 +1,6 @@
-package com.studerb.web.widget;
+package com.studerb.widget;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,18 +13,19 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.studerb.model.Widget;
 import com.studerb.model.WidgetValidator;
-import com.studerb.service.interfaces.WidgetService;
 
 @Controller
 @RequestMapping("/widget/add")
 @SessionAttributes("widget")
 public class AddForm {
+	Logger logger = Logger.getLogger(AddForm.class);
 
 	@Autowired
 	WidgetService widgetService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Widget widget, BindingResult result, SessionStatus status, Model model) {
+		logger.debug("Proccessing add Widget submit");
 		new WidgetValidator().validate(widget, result);
 		if (result.hasErrors()) {
 			return "widget/add";
@@ -40,6 +42,7 @@ public class AddForm {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Widget setupForm() {
+		logger.debug("Proccessing add Widget GET");
 		return new Widget();
 	}
 }

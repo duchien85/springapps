@@ -1,4 +1,4 @@
-package com.studerb.service;
+package com.studerb.actor;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.studerb.dao.ActorDao;
 import com.studerb.model.Actor;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;

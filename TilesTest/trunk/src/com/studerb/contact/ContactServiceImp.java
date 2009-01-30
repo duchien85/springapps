@@ -1,4 +1,4 @@
-package com.studerb.service;
+package com.studerb.contact;
 
 import javax.mail.internet.MimeMessage;
 import javax.mail.util.ByteArrayDataSource;
@@ -10,8 +10,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.studerb.service.interfaces.ContactService;
-import com.studerb.web.contact.ContactModel;
 
 @Service("contactusService")
 public class ContactServiceImp implements ContactService {

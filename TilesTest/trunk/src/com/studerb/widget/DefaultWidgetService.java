@@ -1,4 +1,4 @@
-package com.studerb.service;
+package com.studerb.widget;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
-import com.studerb.service.interfaces.WidgetService;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
-import com.studerb.web.widget.WidgetSearchModel;
 
 @Service("widgetService")
 public class DefaultWidgetService implements WidgetService {

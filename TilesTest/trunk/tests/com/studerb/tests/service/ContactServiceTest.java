@@ -12,8 +12,8 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.studerb.service.interfaces.ContactService;
-import com.studerb.web.contact.ContactModel;
+import com.studerb.contact.ContactModel;
+import com.studerb.contact.ContactService;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 public class ContactServiceTest extends AbstractTransactionalJUnit4SpringContextTests {

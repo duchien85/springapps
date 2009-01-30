@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
-import com.studerb.service.interfaces.WidgetService;
+import com.studerb.widget.WidgetDao;
+import com.studerb.widget.WidgetService;
 
 @ContextConfiguration(locations = { "classpath:/test-context.xml" })
 public class WidgetServiceTest extends AbstractTransactionalJUnit4SpringContextTests {

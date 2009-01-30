@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
+import com.studerb.actor.ActorService;
 import com.studerb.model.Actor;
-import com.studerb.service.ActorService;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 public class ActorServiceTest extends AbstractTransactionalJUnit4SpringContextTests {

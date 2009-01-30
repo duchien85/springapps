@@ -1,4 +1,4 @@
-package com.studerb.web.widget;
+package com.studerb.widget;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.studerb.model.Widget;
 import com.studerb.model.WidgetValidator;
-import com.studerb.service.interfaces.WidgetService;
 
 @Controller
 @RequestMapping("/widget/edit")

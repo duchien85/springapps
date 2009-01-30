@@ -16,7 +16,7 @@ import org.springframework.test.annotation.NotTransactional;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.studerb.dao.ActorDao;
+import com.studerb.actor.ActorDao;
 import com.studerb.model.Actor;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })

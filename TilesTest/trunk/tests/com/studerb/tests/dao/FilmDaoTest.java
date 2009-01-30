@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.studerb.dao.FilmDao;
+import com.studerb.film.FilmDao;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 public class FilmDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
