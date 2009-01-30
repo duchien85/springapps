@@ -1,8 +1,8 @@
-package com.studerb.dao.hibernate;
+package com.studerb.actor;
 
 import org.springframework.stereotype.Repository;
 
-import com.studerb.dao.ActorDao;
+import com.studerb.dao.hibernate.AbstractHibernateDao;
 import com.studerb.model.Actor;
 
 @Repository("actorDao")

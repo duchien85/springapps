@@ -1,4 +1,4 @@
-package com.studerb.web;
+package com.studerb.webservice;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.studerb.model.Widget;
-import com.studerb.service.interfaces.WidgetService;
-import com.studerb.web.widget.WidgetSearchModel;
+import com.studerb.widget.WidgetSearchModel;
+import com.studerb.widget.WidgetService;
 import com.sun.jersey.spi.resource.Singleton;
 
 @Service

@@ -1,4 +1,4 @@
-package com.studerb.web.widget;
+package com.studerb.widget;
 
 import java.text.SimpleDateFormat;
 
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.studerb.model.Widget;
-import com.studerb.service.interfaces.WidgetService;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
 import com.studerb.web.util.DateTimeEditor;

@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.Assert;
 
 import com.studerb.model.Widget;
-import com.studerb.service.interfaces.WidgetService;
+import com.studerb.widget.WidgetService;
 
 public class CreateWidgets {
 	private static final int COUNT = 500;

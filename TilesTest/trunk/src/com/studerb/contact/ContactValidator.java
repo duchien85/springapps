@@ -1,8 +1,9 @@
-package com.studerb.web.contact;
+package com.studerb.contact;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
 
 public class ContactValidator implements Validator {
 

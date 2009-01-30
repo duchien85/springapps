@@ -15,10 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.studerb.dao.WidgetDao;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
+import com.studerb.widget.WidgetDao;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 public class WidgetDaoTest extends AbstractTransactionalJUnit4SpringContextTests {

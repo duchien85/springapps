@@ -1,4 +1,4 @@
-package com.studerb.dao.hibernate;
+package com.studerb.widget;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -15,11 +15,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import com.studerb.dao.WidgetDao;
+import com.studerb.dao.hibernate.AbstractHibernateDao;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
-import com.studerb.web.widget.WidgetSearchModel;
 
 @Repository("widgetDao")
 public class HibWidgetDao extends AbstractHibernateDao<Widget> implements WidgetDao {

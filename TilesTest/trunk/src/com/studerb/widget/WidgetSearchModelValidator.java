@@ -1,8 +1,9 @@
-package com.studerb.web.widget;
+package com.studerb.widget;
 
 import org.joda.time.DateTime;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
 
 public class WidgetSearchModelValidator implements Validator {
 

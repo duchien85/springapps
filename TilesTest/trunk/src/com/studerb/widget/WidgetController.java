@@ -1,4 +1,4 @@
-package com.studerb.web.widget;
+package com.studerb.widget;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.studerb.model.Widget;
-import com.studerb.service.interfaces.WidgetService;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
 

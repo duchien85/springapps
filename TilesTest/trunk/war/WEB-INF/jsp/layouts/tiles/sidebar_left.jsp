@@ -25,7 +25,14 @@
 		<div class="nav_section">
 		<h2>Actors</h2>
 		<ul>	
-			<li><a href="<c:url value="/actor/list.htm"/>">Actors (Jmesa)</a></li>
+			<li><a href="<c:url value="/actor/list.htm"/>">All Actors</a></li>
+		</ul>
+		</div>
+		
+		<div class="nav_section">
+		<h2>Films</h2>
+		<ul>	
+			<li><a href="<c:url value="/film/list.htm"/>">All Films (JMesa)</a></li>
 		</ul>
 		</div>
 

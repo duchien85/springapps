@@ -1,4 +1,4 @@
-package com.studerb.service.interfaces;
+package com.studerb.widget;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
-import com.studerb.web.widget.WidgetSearchModel;
 
 public interface WidgetService {
 
