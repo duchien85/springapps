@@ -13,7 +13,6 @@
 	<webflow:flow-executor id="flowExecutor">
 		<!-- 
 		<webflow:flow-execution-listeners>
-			<webflow:listener ref="jpaFlowExecutionListener" />
 			<webflow:listener ref="securityFlowExecutionListener" />
 		</webflow:flow-execution-listeners>
 		 -->
@@ -29,8 +28,8 @@
 	<webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" development="true" />
 	
 	<!-- Configures Web Flow to use Tiles to create views for rendering; Tiles allows for applying consistent layouts to your views -->
-	<bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator"> 
-		<property name="viewResolvers" ref="tilesViewResolver"/> 
+	<bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator" > 
+		<property name="viewResolvers" ref="tilesViewResolver"/>
 	</bean>
 	
 	

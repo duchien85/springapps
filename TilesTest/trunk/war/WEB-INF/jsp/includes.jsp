@@ -7,5 +7,6 @@
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="str" uri="http://jakarta.apache.org/taglibs/string-1.1" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="req" uri="http://jakarta.apache.org/taglibs/request-1.0" %>
 
  
