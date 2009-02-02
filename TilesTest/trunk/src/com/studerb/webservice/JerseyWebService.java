@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.studerb.model.Widget;
-import com.studerb.widget.WidgetSearchModel;
 import com.studerb.widget.WidgetService;
+import com.studerb.widget.web.WidgetSearchModel;
 import com.sun.jersey.spi.resource.Singleton;
 
 @Service

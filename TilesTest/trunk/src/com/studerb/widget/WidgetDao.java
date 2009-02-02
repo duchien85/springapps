@@ -6,6 +6,7 @@ import com.studerb.dao.DaoInterface;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
+import com.studerb.widget.web.WidgetSearchModel;
 
 public interface WidgetDao extends DaoInterface<Widget> {
 	public Boolean isNameUsed(String name);

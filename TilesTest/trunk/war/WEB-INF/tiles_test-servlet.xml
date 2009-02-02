@@ -12,10 +12,6 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" >
-		<property name="basename" value="messages/messages"/>
-	</bean> 
-	
 
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
@@ -89,6 +85,11 @@
         <property name="definitions">
             <list>
                 <value>/WEB-INF/jsp/layouts/default.xml</value>
+                <value>/WEB-INF/jsp/layouts/contact-defs.xml</value>
+                <value>/WEB-INF/jsp/layouts/actor-defs.xml</value>
+                <value>/WEB-INF/jsp/layouts/widget-defs.xml</value>
+                <value>/WEB-INF/jsp/layouts/film-defs.xml</value>
+                <value>/WEB-INF/jsp/layouts/login-defs.xml</value>
             </list>
         </property>
     </bean>
@@ -109,6 +110,6 @@
 	    
     <bean id="flashScopeInterceptor" class="com.studerb.web.util.FlashScopeInterceptor" />
     
-	<import resource="webFlowConfig.xml"/>    
+	<import resource="webflow-context.xml"/>    
         
 </beans>

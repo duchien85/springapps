@@ -1,4 +1,4 @@
-package com.studerb.contact;
+package com.studerb.contact.web;
 
 import java.util.ArrayList;
 import java.util.List;

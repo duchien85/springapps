@@ -35,5 +35,12 @@
 			<li><a href="<c:url value="/film/list.htm"/>">All Films (JMesa)</a></li>
 		</ul>
 		</div>
+		
+		<div class="nav_section">
+		<h2>Login</h2>
+		<ul>
+			<li><a href="<c:url value="/login/forgotpassword.htm"/>">Forgot Password?</a></li>
+		</ul>
+		</div>
 
 </div> <!-- end #left_nav -->	

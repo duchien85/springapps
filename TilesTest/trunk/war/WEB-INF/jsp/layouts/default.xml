@@ -31,54 +31,7 @@
         <put-attribute name="title" value="Welcome" type="string" />
         <put-attribute name="content" value="/WEB-INF/jsp/welcome.jsp" />
     </definition>
-    
-    <definition name="contact/form" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Contact Us" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/contact/form.jsp" />
-    </definition>
-    
-    <definition name="contact/confirmation" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Contact Us - Confirmation" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/contact/confirmation.jsp" />
-    </definition>
-    
-    <!--  Widget -->
-    <definition name="widget/list" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Widget" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/widget/list.jsp"/>
-    </definition>
-    
-    <definition name="widget/edit" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Edit Widget" type="string" />
-		<put-attribute name="extra_head" value="/WEB-INF/jsp/layouts/tiles/yui_calendar.jsp"/>        
-        <put-attribute name="content" value="/WEB-INF/jsp/widget/edit.jsp"/>
-    </definition>
-
-    <definition name="widget/search" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Search Widget" type="string" />
-        <put-attribute name="extra_head" value="/WEB-INF/jsp/layouts/tiles/yui_autocomplete_cal.jsp"/>        
-        <put-attribute name="content" value="/WEB-INF/jsp/widget/search.jsp"/>
-    </definition>
-    
-    <definition name="widget/add" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Add a new Widget" type="string" />
-        <put-attribute name="extra_head" value="/WEB-INF/jsp/layouts/tiles/yui_calendar.jsp"/>        
-        <put-attribute name="content" value="/WEB-INF/jsp/widget/add.jsp"/>
-    </definition>
-    
-    <!--  Film -->
-    <definition name="film/list" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Films" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/film/list.jsp"/>
-        <put-attribute name="extra_head" value="/WEB-INF/jsp/layouts/tiles/yui_calendar.jsp"/>        
-    </definition>
-    
-        <!--  Actor -->
-    <definition name="actor/list" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Sakila Actors" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/actor/list.jsp"/>
-    </definition>
-    
+        
     <definition name="dataAccessFailure" extends="yui_doc2_t7_1grid">
         <put-attribute name="title" value="Data Access Failure" type="string" />
         <put-attribute name="content" value="/WEB-INF/jsp/dataAccessFailure.jsp"/>
@@ -88,27 +41,6 @@
 	<definition name="test/index" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Test" type="string" />
         <put-attribute name="content" value="/WEB-INF/jsp/test/index.jsp" />
-    </definition>
-    
-    <!-- Login -->
-    <definition name="login/abcd/a" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Login a" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/a.jsp" />
-    </definition>
-    
-    <definition name="login/abcd/b" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Login b" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/b.jsp" />
-    </definition>
-    
-    <definition name="login/abcd/c" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Login c" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/c.jsp" />
-    </definition>
-    
-    <definition name="login/abcd/d" extends="yui_doc2_t2_1grid">
-        <put-attribute name="title" value="Login d" type="string" />
-        <put-attribute name="content" value="/WEB-INF/jsp/login/abcd/d.jsp" />
     </definition>
     
         

@@ -210,3 +210,18 @@ table.dataTable tfoot tr  {
 	text-align: center;
 	font-size: small;
 }
+
+div#pageDebug {
+	overflow: scroll;
+	max-height: 400px;
+	max-width: 750px;
+}
+div#pageDebug table{
+}
+
+div#pageDebug table td.name{
+	text-align: left;
+}
+div#pageDebug table td.value{
+	text-align: left;
+}

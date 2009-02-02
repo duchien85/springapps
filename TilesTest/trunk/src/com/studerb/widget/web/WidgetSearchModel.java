@@ -1,4 +1,4 @@
-package com.studerb.widget;
+package com.studerb.widget.web;
 
 import java.math.BigDecimal;
 

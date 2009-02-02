@@ -304,9 +304,23 @@ CREATE TABLE staff (
   PRIMARY KEY  (staff_id),
   KEY idx_fk_store_id (store_id),
   KEY idx_fk_address_id (address_id),
+  UNIQUE KEY uniq_staff_username (username),
   CONSTRAINT fk_staff_store FOREIGN KEY (store_id) REFERENCES store (store_id) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT fk_staff_address FOREIGN KEY (address_id) REFERENCES address (address_id) ON DELETE RESTRICT ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Triggers for Staff --
+
+-- DELIMITER ;;
+
+-- CREATE TRIGGER 'ins_staff' BEFORE INSERT,UPDATE ON staff FOR EACH ROW
+--  BEGIN
+--	set New.password = SHA1(NEW.password);
+--  END;;
+
+
+-- DELIMITER ;
 
 --
 -- Table structure for table `store`
@@ -340,7 +354,7 @@ FROM customer AS cu JOIN address AS a ON cu.address_id = a.address_id JOIN city 
 --
 
 CREATE VIEW film_list 
-AS 
+AS
 SELECT film.film_id AS FID, film.title AS title, film.description AS description, category.name AS category, film.rental_rate AS price,
 	film.length AS length, film.rating AS rating, GROUP_CONCAT(CONCAT(actor.first_name, _utf8' ', actor.last_name) SEPARATOR ', ') AS actors 
 FROM category LEFT JOIN film_category ON category.category_id = film_category.category_id LEFT JOIN film ON film_category.film_id = film.film_id
@@ -490,7 +504,7 @@ proc: BEGIN
     */
     CREATE TEMPORARY TABLE tmpCustomer (customer_id SMALLINT UNSIGNED NOT NULL PRIMARY KEY);
 
-    /* 
+    /*
         Find all customers meeting the 
         monthly purchase requirements
     */
@@ -650,4 +664,3 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
