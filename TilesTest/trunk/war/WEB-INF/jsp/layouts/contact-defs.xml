@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+ 	<definition name="contact/form" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Contact Us" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/contact/form.jsp" />
+    </definition>
+    
+    <definition name="contact/confirmation" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Contact Us - Confirmation" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/contact/confirmation.jsp" />
+    </definition>
+    
+    
+</tiles-definitions>

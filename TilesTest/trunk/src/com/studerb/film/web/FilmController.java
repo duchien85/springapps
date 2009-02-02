@@ -1,4 +1,4 @@
-package com.studerb.film;
+package com.studerb.film.web;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.studerb.film.FilmService;
 import com.studerb.model.Film;
 
 @Controller

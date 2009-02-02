@@ -9,18 +9,20 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-	
-	
 	<context:component-scan base-package="com.studerb" annotation-config="true">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
-	<tx:annotation-driven />
+	<tx:annotation-driven proxy-target-class="true"/>
 	
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 	
 	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/sakila" resource-ref="true" />
-	
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" >
+		<property name="basename" value="messages/messages"/>
+	</bean> 
+		
 	<context:property-placeholder location="classpath:tilestest.properties, classpath:hibernate/hibernate.properties" />
 	
 	<import resource="classpath:db-context.xml" />

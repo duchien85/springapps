@@ -3,3 +3,4 @@
 <h1>D</h1>
 <h2>Id: ${flowExecutionUrl}</h2>
 
+<tt:pageDebug debugPage="false" debugRequest="true"/>

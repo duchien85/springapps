@@ -1,4 +1,4 @@
-package com.studerb.widget;
+package com.studerb.widget.imp;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -19,6 +19,8 @@ import com.studerb.dao.hibernate.AbstractHibernateDao;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
+import com.studerb.widget.WidgetDao;
+import com.studerb.widget.web.WidgetSearchModel;
 
 @Repository("widgetDao")
 public class HibWidgetDao extends AbstractHibernateDao<Widget> implements WidgetDao {

@@ -25,7 +25,7 @@ public class Staff extends BaseEntity {
 	private String lastName;
 	private byte[] picture;
 	private String email;
-	private boolean active;
+	private boolean active = true;
 	private String username;
 	private String password;
 	private Set<Rental> rentals = new HashSet<Rental>(0);
@@ -35,51 +35,51 @@ public class Staff extends BaseEntity {
 	public Staff() {}
 
 	public Address getAddress() {
-		return this.address;
+		return address;
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public String getFirstName() {
-		return this.firstName;
+		return firstName;
 	}
 
 	public String getLastName() {
-		return this.lastName;
+		return lastName;
 	}
 
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public Set<Payment> getPayments() {
-		return this.payments;
+		return payments;
 	}
 
 	public byte[] getPicture() {
-		return this.picture;
+		return picture;
 	}
 
 	public Set<Rental> getRentals() {
-		return this.rentals;
+		return rentals;
 	}
 
 	public Store getStore() {
-		return this.store;
+		return store;
 	}
 
 	public Set<Store> getStores() {
-		return this.stores;
+		return stores;
 	}
 
 	public String getUsername() {
-		return this.username;
+		return username.toUpperCase();
 	}
 
 	public boolean isActive() {
-		return this.active;
+		return active;
 	}
 
 	public void setActive(boolean active) {
@@ -128,7 +128,7 @@ public class Staff extends BaseEntity {
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.username = username.toUpperCase();
 	}
 
 }

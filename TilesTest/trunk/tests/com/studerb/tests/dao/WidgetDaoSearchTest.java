@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 import com.studerb.model.Widget;
 import com.studerb.widget.WidgetDao;
-import com.studerb.widget.WidgetSearchModel;
+import com.studerb.widget.web.WidgetSearchModel;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 public class WidgetDaoSearchTest extends AbstractTransactionalJUnit4SpringContextTests {

@@ -1,5 +1,7 @@
 package com.studerb.contact;
 
+import com.studerb.contact.web.ContactModel;
+
 
 public interface ContactService {
 

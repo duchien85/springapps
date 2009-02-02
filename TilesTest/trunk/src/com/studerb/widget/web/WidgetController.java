@@ -1,4 +1,4 @@
-package com.studerb.widget;
+package com.studerb.widget.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.studerb.model.Widget;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
+import com.studerb.widget.WidgetService;
 
 @Controller
 @RequestMapping("/widget/*.htm")
