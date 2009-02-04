@@ -14,7 +14,7 @@ public class LoginService {
 	protected StaffDao staffDao;
 
 	@Transactional(readOnly = true)
-	public Staff findByUsername(String username) {
+	public Staff findStaffByUsername(String username) {
 		return staffDao.findByUsername(username);
 	}
 
@@ -30,6 +30,11 @@ public class LoginService {
 		Staff staff = staffDao.findByUsername(username);
 		staff.setPassword(newPassword);
 		staffDao.update(staff);
+	}
+
+	@Transactional(readOnly = true)
+	public Staff findStaffById(Long id) {
+		return staffDao.get(id);
 	}
 
 }

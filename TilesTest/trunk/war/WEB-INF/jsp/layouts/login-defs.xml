@@ -36,6 +36,11 @@
         <put-attribute name="content" value="/WEB-INF/jsp/login/enterUsername.jsp"/>
     </definition>
     
+    <definition name="login/enterStaffId" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Enter Staff ID" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/login/enterStaffId.jsp"/>
+    </definition>
+    
 	<definition name="login/securityQuestion" extends="yui_doc2_t2_1grid">
         <put-attribute name="title" value="Security Question" type="string" />
         <put-attribute name="content" value="/WEB-INF/jsp/login/securityQuestion.jsp"/>

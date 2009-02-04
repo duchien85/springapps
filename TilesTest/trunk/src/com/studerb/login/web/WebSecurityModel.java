@@ -7,6 +7,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class WebSecurityModel implements Serializable {
 	private static final int MAX_ANSWERS = 3;
 
+	private Long staffId;
 	private String username;
 	private String questionText;
 	private String correctAnswer;
@@ -85,4 +86,13 @@ public class WebSecurityModel implements Serializable {
 	public void incrementAnswer() {
 		answerCount++;
 	}
+
+	public Long getStaffId() {
+		return staffId;
+	}
+
+	public void setStaffId(Long staffId) {
+		this.staffId = staffId;
+	}
+
 }
