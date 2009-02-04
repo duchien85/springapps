@@ -32,7 +32,7 @@ public class WebSecurityModelValidator {
 			return false;
 		}
 
-		Staff staff = loginService.findByUsername(username);
+		Staff staff = loginService.findStaffByUsername(username);
 		if (staff == null) {
 			msgContext.addMessage(new MessageBuilder().error().source("username").code("username.invalid").build());
 			return false;
@@ -42,6 +42,28 @@ public class WebSecurityModelValidator {
 			throw new InactiveStaffException("Staff memeber: " + username + " inactive");
 		}
 
+		return true;
+	}
+
+	public boolean validateEnterStaffId(WebSecurityModel model, ValidationContext context) {
+		String username = model.getUsername();
+		MessageContext msgContext = context.getMessageContext();
+
+		if (msgContext.hasErrorMessages()) {
+			return false;
+		}
+
+		Staff staff = loginService.findStaffById(model.getStaffId());
+		if (staff == null) {
+			msgContext.addMessage(new MessageBuilder().error().source("staffId").code("staffId.invalid").build());
+			return false;
+		}
+
+		if (!staff.isActive()) {
+			throw new InactiveStaffException("Staff memeber: " + username + " inactive");
+		}
+
+		model.setUsername(staff.getUsername());
 		return true;
 	}
 

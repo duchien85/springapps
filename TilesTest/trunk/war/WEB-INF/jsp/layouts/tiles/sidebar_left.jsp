@@ -40,6 +40,7 @@
 		<h2>Login</h2>
 		<ul>
 			<li><a href="<c:url value="/login/forgotpassword.htm"/>">Forgot Password?</a></li>
+			<li><a href="<c:url value="/login/forgotusername.htm"/>">Forgot Username?</a></li>
 		</ul>
 		</div>
 

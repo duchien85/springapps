@@ -19,11 +19,8 @@
     </rule>
     
     <rule>
-        <note>
-			Stupid Webflow things the default flow name lacks htm suffix on redirects...
-        </note>
-        <from>/login/abcd</from>
-        <to type="redirect">%{context-path}/login/abcd.htm</to>
+        <from>/login/forgotusername</from>
+        <to type="redirect">%{context-path}/login/forgotusername.htm</to>
     </rule>
 
 
