@@ -27,6 +27,7 @@
 	<webflow:flow-registry id="flowRegistry" flow-builder-services="flowBuilderServices" >
 		<webflow:flow-location path="/WEB-INF/flows/login/forgotusername-flow.xml" id="login/forgotusername" />
 		<webflow:flow-location path="/WEB-INF/flows/login/forgotpassword-flow.xml" id="login/forgotpassword" />
+		<webflow:flow-location path="/WEB-INF/flows/actor/edit/actor_edit-flow.xml" id="actor/edit" />
 	</webflow:flow-registry>
 	 
 		

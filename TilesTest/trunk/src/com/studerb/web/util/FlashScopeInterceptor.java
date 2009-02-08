@@ -36,15 +36,15 @@ public class FlashScopeInterceptor implements HandlerInterceptor {
 	 */
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		if (request.getSession(false) != null) {
-			request.getSession().removeAttribute(this.sessionAttributeName);
+			request.getSession().removeAttribute(sessionAttributeName);
 		}
-		Object requestAttribute = request.getAttribute(this.attributeName);
+		Object requestAttribute = request.getAttribute(attributeName);
 		if (requestAttribute instanceof MultiScopeModelMap) {
 			MultiScopeModelMap attributes = (MultiScopeModelMap) requestAttribute;
 			if (!attributes.isEmpty()) {
 				attributes.next();
 				if (!attributes.isEmpty()) {
-					request.getSession(true).setAttribute(this.sessionAttributeName, attributes);
+					request.getSession(true).setAttribute(sessionAttributeName, attributes);
 				}
 			}
 		}
@@ -58,7 +58,7 @@ public class FlashScopeInterceptor implements HandlerInterceptor {
 			Map<String, Object> modelFlashScopeMap = null;
 			for (Iterator<Entry<String, Object>> iterator = ((Map<String, Object>) modelAndView.getModel()).entrySet().iterator(); iterator.hasNext();) {
 				Entry<String, Object> entry = iterator.next();
-				if (this.attributeName.equals(entry.getKey()) && entry.getValue() instanceof Map) {
+				if (attributeName.equals(entry.getKey()) && entry.getValue() instanceof Map) {
 					if (modelFlashScopeMap == null) {
 						modelFlashScopeMap = (Map) entry.getValue();
 					}
@@ -67,8 +67,8 @@ public class FlashScopeInterceptor implements HandlerInterceptor {
 					}
 					iterator.remove();
 				}
-				else if (entry.getKey().startsWith(this.attributeName + ".")) {
-					String key = entry.getKey().substring(this.attributeName.length() + 1);
+				else if (entry.getKey().startsWith(attributeName + ".")) {
+					String key = entry.getKey().substring(attributeName.length() + 1);
 					if (modelFlashScopeMap == null) {
 						modelFlashScopeMap = new HashMap<String, Object>();
 					}
@@ -78,14 +78,14 @@ public class FlashScopeInterceptor implements HandlerInterceptor {
 			}
 			if (modelFlashScopeMap != null) {
 				MultiScopeModelMap flashScopeMap;
-				if (request.getAttribute(this.attributeName) instanceof MultiScopeModelMap) {
-					flashScopeMap = (MultiScopeModelMap) request.getAttribute(this.attributeName);
+				if (request.getAttribute(attributeName) instanceof MultiScopeModelMap) {
+					flashScopeMap = (MultiScopeModelMap) request.getAttribute(attributeName);
 				}
 				else {
-					flashScopeMap = new MultiScopeModelMap(this.retentionCount);
+					flashScopeMap = new MultiScopeModelMap(retentionCount);
 				}
 				flashScopeMap.putAll(modelFlashScopeMap);
-				request.setAttribute(this.attributeName, flashScopeMap);
+				request.setAttribute(attributeName, flashScopeMap);
 			}
 		}
 	}
@@ -97,14 +97,14 @@ public class FlashScopeInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			Object sessionAttribute = session.getAttribute(this.sessionAttributeName);
+			Object sessionAttribute = session.getAttribute(sessionAttributeName);
 			if (sessionAttribute instanceof MultiScopeModelMap) {
 				MultiScopeModelMap flashScope = (MultiScopeModelMap) sessionAttribute;
 				if (flashScope.isEmpty()) {
-					session.removeAttribute(this.sessionAttributeName);
+					session.removeAttribute(sessionAttributeName);
 				}
 				else {
-					request.setAttribute(this.attributeName, flashScope);
+					request.setAttribute(attributeName, flashScope);
 				}
 			}
 		}
