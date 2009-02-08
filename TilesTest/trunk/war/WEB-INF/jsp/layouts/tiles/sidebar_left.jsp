@@ -7,7 +7,6 @@
 		<ul>
 			<li><a href="<c:url value="/welcome.htm"/>">Home</a></li>
 			<li><a href="<c:url value="/api/helloworld.htm"/>">HelloWorld WS</a></li>
-			<li><a href="<c:url value="/login/abcd.htm"/>">ABCD FLow</a></li>
 			<li><a href="<c:url value="/contact/index.htm" />">Contact Us</a></li>
 			
 		</ul>

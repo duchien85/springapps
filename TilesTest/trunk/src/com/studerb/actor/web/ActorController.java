@@ -1,4 +1,4 @@
-package com.studerb.actor;
+package com.studerb.actor.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.studerb.actor.imp.DefaultActorService;
 import com.studerb.model.Actor;
 import com.studerb.web.util.DataPage;
 import com.studerb.web.util.DataPageInfo;
@@ -17,7 +18,7 @@ import com.studerb.web.util.DataPageInfo;
 public class ActorController {
 
 	@Autowired
-	private ActorService actorService;
+	private DefaultActorService actorService;
 
 	@Autowired
 	@Qualifier("actorListInfo")

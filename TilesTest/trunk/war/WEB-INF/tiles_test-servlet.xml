@@ -24,7 +24,7 @@
 
 		<!--  MAPPERS -->
 	<bean id="annotationMappings" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">  
-		<property name="order" value="0" />
+		<property name="order" value="1" />
 		<property name="interceptors">
 			<list>
 				<ref bean="flashScopeInterceptor"/>
@@ -35,7 +35,7 @@
 	<!-- Maps request paths to flows in the flowRegistry; e.g. a path of /hotels/booking looks for a flow with id "hotels/booking" -->
 	
 	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-		<property name="order" value="1" />
+		<property name="order" value="0" />
 		<property name="flowRegistry" ref="flowRegistry" />
 	</bean>
 	

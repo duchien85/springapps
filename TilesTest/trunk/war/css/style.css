@@ -225,3 +225,7 @@ div#pageDebug table td.name{
 div#pageDebug table td.value{
 	text-align: left;
 }
+
+.displayNone {
+	display: none;
+}
