@@ -1,7 +1,0 @@
-<Context path="sakila" reloadable="true" docBase="D:\workspace\TilesTest\war" workDir="D:\workspace\TilesTest\work">
-    <Resource name="jdbc/sakila" auth="Container" type="javax.sql.DataSource" 
-  			username="sakila" password="sakila"
-  			driverClassName="com.mysql.jdbc.Driver"
-  			url="jdbc:mysql://localhost:3306/sakila"
-  			maxActive="50" minActive="1"/>
-</Context>
