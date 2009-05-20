@@ -1,0 +1,35 @@
+<project name="arag-include-tomcat">
+	<dirname property="arag-include-tomcat.dir" file="${ant.file.arag-include-tomcat}" />
+	
+	<property name="tomcat.home" value="${arag-include.dir}/apache-tomcat-5.5.17" />
+	
+	
+	<target name="compile-jsp" depends="init">
+		<taskdef classname="org.apache.jasper.JspC" name="jasper2" > 
+		  <classpath> 
+			<pathelement location="${java.home}/../lib/tools.jar"/> 
+			<fileset dir="${tomcat.home}/bin"> 
+			  <include name="*.jar"/> 
+			</fileset> 
+			<fileset dir="${tomcat.home}/server/lib"> 
+			  <include name="*.jar"/> 
+			</fileset> 
+			<fileset dir="${tomcat.home}/common/lib"> 
+			  <include name="*.jar"/> 
+			</fileset> 
+		  </classpath> 
+		  <classpath refid="junit.classpath" />
+		</taskdef>
+		
+		<jasper2 validatexml="false" uriroot="${web.dir}" webxmlfragment="${build.outdir}/generated_web.xml" outputdir="${compile.outdir}" 
+				 verbose="10" caching="false"  compilersourcevm="1.5" compilertargetvm="1.5" addwebxmlmappings="false" trimspaces="true" compile="true"/>
+				 
+		<loadfile property="generated-mappings" srcfile="${build.outdir}/generated_web.xml" />
+		<copy file="${web.dir}/WEB-INF/web.xml" tofile="${build.outdir}/web.xml" />
+		<replaceregexp file="${build.outdir}/web.xml" match="&lt;!-- precompiled jsp fragment --&gt;" replace="${generated-mappings}" />
+	</target>
+	
+	<target name="do-not-compile-jsp" depends="init">
+		<copy file="${web.dir}/WEB-INF/web.xml" tofile="${build.outdir}/web.xml" />
+	</target>
+</project>

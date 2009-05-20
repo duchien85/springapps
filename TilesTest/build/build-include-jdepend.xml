@@ -1,0 +1,25 @@
+<project name="arag-include-jdepend">
+	<dirname property="arag-include-jdepend.dir" file="${ant.file.arag-include-jdepend}" />
+	
+	
+	<!-- jdepend properties -->
+	<property name="jdepend.home" value="${arag-include.dir}/jdepend-2.9" />
+    
+    <property name="jdepend.report.html" value="${dist.outdir}" />
+	
+	<target name="jdepend" depends="compile">
+		<mkdir dir="${jdepend.report.html}" />
+		<mkdir dir="${build.outdir}" />
+        
+		<jdepend format="xml" outputfile="${build.outdir}/jdepend-report.xml">
+			<exclude name="java.*" />
+			<exclude name="javax.*" />
+			<exclude name="org.*" />
+			<exclude name="net.*" />
+			<exclude name="com.Ostermiller.*" />
+			<classespath location="${compile.outdir}" />
+		</jdepend>
+		
+		<xslt in="${build.outdir}/jdepend-report.xml" style="${ant.home}/etc/jdepend.xsl" out="${jdepend.report.html}/jdepend.html" />
+	</target>
+</project>

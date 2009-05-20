@@ -1,0 +1,46 @@
+<project name="arag-include-compile">
+
+    <property name="compile.outdir" value="${build.outdir}/classes" />
+    <property name="lib.dir" value="lib" />
+    <property name="ivy-build.dir" value="${ivy-lib.dir}/build" />
+    <property name="ivy-provided.dir" value="${ivy-lib.dir}/provided" />
+	
+	<property name="compile.target" value="1.6" />
+	<property name="compile.source" value="1.6" />
+    
+
+	<path id="compile.path" location="${compile.outdir}" />
+
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+		<fileset dir="${ivy-build.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<fileset dir="${ivy-provided.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="compile" depends="init">
+		<mkdir dir="${compile.outdir}" />
+        <mkdir dir="${lib.dir}" />
+        <mkdir dir="${ivy-build.dir}" />
+        <mkdir dir="${ivy-provided.dir}" />
+		
+		<javac debug="true" destdir="${compile.outdir}" srcdir="${src.dir}" target="${compile.target}" source="${compile.source}">
+			<classpath refid="build.classpath" />
+		</javac>
+		
+		<copy todir="${compile.outdir}">
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.java" />
+				<exclude name="version.properties" />
+			</fileset>
+			<fileset dir="${resources.dir}" />
+		</copy>
+		<echo file="${compile.outdir}/version.properties" message="version=Version ${buildVersion}"/>
+	</target>
+    
+</project>

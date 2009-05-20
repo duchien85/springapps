@@ -1,0 +1,36 @@
+<project name="arag-include-pmd">
+	<dirname property="arag-include-pmd.dir" file="${ant.file.arag-include-pmd}" />
+	
+	<!-- pmd properties -->
+	<property name="pmd.home" value="${arag-include.dir}/pmd-4.2.3" />
+	<property name="pmd.rules" value="${pmd.home}/arag-default.xml" />
+    
+    <property name="pmd.report.html" value="${dist.outdir}" />
+	
+	<property name="pmd.failBuild" value="true" />
+    
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" />
+	
+	<target name="pmd" depends="init">
+		<mkdir dir="${build.outdir}" />
+		<mkdir dir="${pmd.report.html}" />
+        
+		<pmd targetjdk="1.5" rulesetfiles="${pmd.rules}" failurespropertyname="pmd.fail" minimumpriority="3">
+			<fileset dir="${src.dir}" includes="**/*.java" excludes="**/Mock*.java" />
+			<formatter type="xml" toFile="${build.outdir}/pmd_report.xml" toConsole="false"/>
+		</pmd>
+        
+		<xslt in="${build.outdir}/pmd_report.xml" style="${pmd.home}/etc/xslt/wz-pmd-report.xslt" out="${pmd.report.html}/pmd.html" />
+	
+		<!--
+		<fail message="PMD Violations Exist">
+			<condition>
+				<and>
+					<isset property="pmd.fail" />
+					<equals arg1="${pmd.failBuild}" arg2="true" casesensitive="false" trim="true" />
+				</and>
+			</condition>
+		</fail>
+		-->
+	</target>
+</project>

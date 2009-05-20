@@ -1,0 +1,32 @@
+<project name="arag-include-dist-web">
+	<dirname property="arag-include-dist-web.dir" file="${ant.file.arag-include-dist-web}" />
+    
+	<property name="properties.dir" value="properties" />
+
+	<target name="dist-war" depends="compile">
+		<mkdir dir="${dist.outdir}" />
+		<mkdir dir="${ivy-build.dir}" />
+        <mkdir dir="${lib.dir}" />
+		
+		<war destfile="${dist.outdir}/${artifactName}-${buildVersion}.war" basedir="${web.dir}" webxml="${build.outdir}/web.xml" duplicate="preserve">
+			<classes dir="${properties.dir}" />
+			<classes dir="${compile.outdir}" />
+			<lib dir="${ivy-build.dir}" />
+            <lib dir="${lib.dir}" />
+			<exclude name="WEB-INF/classes/**/*.*" />
+            <exclude name="WEB-INF/lib/**/*.*" />
+			<exclude name="WEB-INF/web.xml" />
+			<exclude name="META-INF/context.xml" />
+			
+			<manifest>				
+				<attribute name="Specification-Title" value="${specName}"/>
+				<attribute name="Specification-Version" value="${specVersion}"/>
+				<attribute name="Specification-Vendor" value="${specVendor}"/>
+				
+				<attribute name="Implementation-Title" value="${specName}"/>
+				<attribute name="Implementation-Version" value="${buildVersion}"/>
+				<attribute name="Implementation-Vendor" value="ARAG Group"/>
+			</manifest>
+		</war>
+	</target>
+</project>

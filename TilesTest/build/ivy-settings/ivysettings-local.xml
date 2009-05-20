@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+	<property name="ivy.local.default.root"             value="${ivy.default.ivy.user.dir}/local" override="false"/>
+	<property name="ivy.local.default.ivy.pattern"      value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+	<property name="ivy.local.default.artifact.pattern" value="[organisation]/[module]/[revision]/[type]s/[artifact].[ext]" override="false"/>
+	<resolvers>
+		<chain name="local-repos">
+			<!--<ibiblio name="local-maven-repo" m2compatible="true" root="file://${user.home}/.m2/repository/" />-->
+			<!--<filesystem name="local">
+				<ivy pattern="${ivy.local.default.root}/${ivy.local.default.ivy.pattern}" />
+				<artifact pattern="${ivy.local.default.root}/${ivy.local.default.artifact.pattern}" />
+			</filesystem>
+			-->
+			<filesystem name="repos">
+				<ivy pattern="${build.dir}/repos/${ivy.local.default.ivy.pattern}" />
+				<artifact pattern="${build.dir}/repos/${ivy.local.default.artifact.pattern}" />
+			</filesystem>
+		</chain>
+	</resolvers>
+</ivysettings>

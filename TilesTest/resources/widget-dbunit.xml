@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <widget id="1" name="widget1" time="2005-01-01" price="25.52" cool="1" /> 
+    <widget id="2" name="widget2" time="2008-06-28" price="17.52" cool="0" /> 
+    <widget id="3" name="widget3" time="2007-12-12" price="0.52" cool="1" /> 
+    <widget id="4" name="widget4" time="2003-03-01" price="12343.52" cool="0" /> 
+    <widget id="5" name="widget5" time="2003-05-01" price="87.59" cool="1" /> 
+    <widget id="6" name="widget6" time="2001-11-24" price="42323.99" cool="0" /> 
+</dataset>

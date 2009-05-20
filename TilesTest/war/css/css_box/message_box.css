@@ -1,0 +1,211 @@
+/* --------------------------------- */
+	/*MESSAGE BOX CLEAN	serie	  		 */
+.clean-gray {
+	margin: 20px 0 20px 20px;
+	border: solid 1px #DEDEDE;
+	background: #EFEFEF;
+	color: #222222;
+	padding: 4px;
+	text-align: center;
+}
+
+.clean-yellow {
+	margin: 20px 0 20px 20px;
+	border: solid 1px #DEDEDE;
+	background: #FFFFCC;
+	color: #222222;
+	padding: 4px;
+	text-align: center;
+}
+
+div.clean-ok{
+	min-height: 2em;
+}
+.clean-ok {
+	margin: 20px;
+	border: solid 1px #349534;
+	background: #C9FFCA;
+	color: #008000;
+	font-weight: bold;
+	padding: 4px;
+	text-align: center;
+}
+
+div.clean-error {
+	min-height: 2em;
+}
+.clean-error {
+	margin: 1em 10em 1em 0em;
+	border: solid 1px #CC0000;
+	background: #F7CBCA;
+	color: #CC0000;
+	font-weight: bold;
+	padding: 0;
+	text-align: center;
+}
+
+.clean-error ul {
+	text-align: left;
+	padding: 0;
+}
+
+/* --------------------------------- */ /*MESSAGE BOX Iconized	  		 */
+.icon-gray {
+	margin: 20px 0 20px 20px;
+	border: solid 1px #DEDEDE;
+	background: #EFEFEF;
+	color: #222222;
+	padding: 4px;
+	text-align: center;
+}
+
+.icon-yellow {
+	margin: 20px 0 20px 20px;
+	border: solid 1px #DEDEDE;
+	background: #FFFFCC url(img/icon-yellow.png) 8px 6px no-repeat;
+	color: #222222;
+	padding: 4px;
+	text-align: center;
+}
+
+.icon-ok {
+	margin: 20px 0 20px 20px;
+	border: solid 1px #90ac13;
+	background: #eef4d3 url(img/icon-green.png) 8px 6px no-repeat;
+	color: #6b800d;
+	font-weight: bold;
+	padding: 4px;
+	text-align: center;
+}
+
+.icon-error {
+	margin: 20px 0 20px 20px;
+	border: solid 1px #CC0000;
+	background: #F7CBCA url(img/icon-red.png) 8px 6px no-repeat;
+	color: #CC0000;
+	font-weight: bold;
+	padding: 4px;
+	text-align: center;
+}
+
+/* --------------------------------- */
+	/*MESSAGE BOX SOLID	serie	  		 */
+.solid-gray {
+	margin: 20px 0 20px 20px;
+	background: #444444;
+	color: #FFFFFF;
+	padding: 4px;
+	text-align: center;
+}
+
+.solid-yellow {
+	margin: 20px 0 20px 20px;
+	background: #FFFFCC;
+	color: #222222;
+	padding: 4px;
+	text-align: center;
+}
+
+.solid-ok {
+	margin: 20px 0 20px 20px;
+	background: #008000;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 4px;
+	text-align: center;
+}
+
+.solid-error {
+	margin: 20px 0 20px 20px;
+	background: #CC0000;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 4px;
+	text-align: center;
+}
+
+/* --------------------------------- */ /* ROUNDED ALTERNATE	  		 	*/
+	/* ---------------------------------------------------------------------- */
+.round-a-gray {
+	background: #444444 url(img/round_gray-left.png) left top no-repeat;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.round-a-gray div {
+	margin: 20px 0 20px 20px;
+	background: url(img/round_gray-right.png) right bottom no-repeat;
+	padding: 4px;
+}
+
+/* ---------------------------------------------------------------------- */
+.round-a-ok {
+	background: #008000 url(img/round_green-left.png) left top no-repeat;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.round-a-ok div {
+	margin: 20px 0 20px 20px;
+	background: url(img/round_green-right.png) right bottom no-repeat;
+	padding: 4px;
+}
+
+/* ---------------------------------------------------------------------- */
+.round-a-error {
+	background: #CC0000 url(img/round_red-left.png) left top no-repeat;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.round-a-error div {
+	margin: 20px 0 20px 20px;
+	background: url(img/round_red-right.png) right bottom no-repeat;
+	padding: 4px;
+}
+
+/* --------------------------------- */ /* TOOLTIPS				  		 	*/
+	/* ---------------------------------------------------------------------- */
+.tooltips-gray {
+	background: #444444;
+	color: #FFFFFF;
+	text-align: center;
+	padding-top: 4px;
+}
+
+.tooltips-gray div {
+	margin: 20px 0 20px 20px;
+	background: url(img/tips_gray.png) left bottom no-repeat;
+	padding-top: 4px;
+	height: 18px;
+}
+
+/* ---------------------------------------------------------------------- */
+	.tooltips-ok {
+		background: #008000;
+	color: #FFFFFF;
+	text-align: center;
+	padding-top: 4px;
+}
+
+.tooltips-ok div {
+	margin: 20px 0 20px 20px;
+	background: url(img/tips_green.png) left bottom no-repeat;
+	padding-top: 4px;
+	height: 18px;
+}
+
+/* ---------------------------------------------------------------------- */
+.tooltips-error {
+	background: #CC0000;
+	color: #FFFFFF;
+	text-align: center;
+	padding-top: 4px;
+}
+
+.tooltips-error div {
+	margin: 20px 0 20px 20px;
+	background: url(img/tips_red.png) left bottom no-repeat;
+	margin-top: 4px;
+	height: 18px;
+}

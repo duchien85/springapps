@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+	<info organisation="org.jmesa"
+	       module="jmesa"
+	       revision="2.4.1"
+	/>
+</ivy-module>

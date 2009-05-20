@@ -1,0 +1,29 @@
+<project name="arag-include-javadoc">
+	<dirname property="arag-include-javadoc.dir" file="${ant.file.arag-include-javadoc}" />
+	
+	<property name="javadoc.outdir" value="${dist.outdir}/javadoc" />
+    <property name="javadoc.doctitle" value="${specVendor} - ${specName}"/>
+	<property name="html.doctitle" value="&lt;![CDATA[&lt;h1&gt;${javadoc.doctitle}&lt;/h1&gt;]]>"/>
+
+	<target name="javadoc" depends="init">
+		<mkdir dir="${javadoc.outdir}" />
+		<javadoc destdir="${javadoc.outdir}"
+				 defaultexcludes="yes"
+				 author="true"
+				 version="true"
+				 private="true"
+			     windowtitle="${javadoc.doctitle}"
+				 useexternalfile="yes"
+			>
+			<fileset dir="${src.dir}" includes="**/*.java" />
+			<link href="http://static.springframework.org/spring/docs/2.0.x/api/" />
+			<link href="http://www.hibernate.org/hib_docs/v3/api/" />
+			<link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
+			<link href="http://java.sun.com/j2ee/1.4/docs/api/" />
+			<classpath refid="build.classpath" />
+		    <bottom><![CDATA[<i>Copyright &#169; 2008 Arag. All Rights Reserved.</i>]]></bottom>
+			<doctitle>${html.doctitle}</doctitle>
+		</javadoc>
+	</target>
+    
+</project>
