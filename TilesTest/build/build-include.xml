@@ -1,0 +1,42 @@
+<project name="arag-include">
+	<!-- base properties -->
+	<property name="buildVersion" value="99.99-SNAPSHOT" />
+	<property name="artifactName" value="DefaultArtifact" />
+	
+	<property name="specName" value="DefaultSpecName" />
+	<property name="specVendor" value="Studerb" />
+	<property name="specVersion" value="DefaultSpecVersion" />
+	
+	<property name="build.outdir" value="build" />
+	<property name="dist.outdir" value="dist" />
+	
+	
+	<property name="build.env" value="prod" />
+	<property name="documents.env" value="${build.env}" />
+	
+	<property name="resources.dir" value="resources" />
+	<property name="src.dir" value="src" />
+	<property name="test.dir" value="test" />
+	<property name="web.dir" value="war" />
+
+	<target name="clean">
+		<delete dir="${build.outdir}" />
+		<delete dir="${dist.outdir}" />
+	</target>
+		
+	<target name="init">
+		<tstamp />
+	</target>
+
+    <!--<import file="build-include-pmd.xml"/>-->
+    <!--<import file="build-include-jdepend.xml"/>-->
+    <!--<import file="build-include-hibernateTools.xml"/> -->
+    <import file="build-include-ivy.xml"/>
+    <import file="build-include-javadoc.xml"/>
+    <import file="build-include-junit.xml"/>
+    <import file="build-include-compile.xml"/>
+    <import file="build-include-dist-web.xml"/>
+	<!--<import file="build-include-tomcat.xml"/>-->
+    <!--<import file="build-include-documents.xml"/>-->
+    
+</project>

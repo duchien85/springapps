@@ -1,0 +1,8 @@
+<Context path="sakila" reloadable="true" docBase="D:\workspace\TilesTest\war" workDir="D:\workspace\TilesTest\work">
+	<Logger className="org.apache.catalina.logger.SystemOutLogger" verbosity="4" timestamp="true"/>
+    <Resource name="jdbc/sakila" auth="Container" type="javax.sql.DataSource" 
+  			username="root" password=""
+  			driverClassName="com.mysql.jdbc.Driver"
+  			url="jdbc:mysql://localhost:3306/sakila"
+  			maxActive="50" minActive="1"/>
+</Context>

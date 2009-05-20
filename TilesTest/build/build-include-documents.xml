@@ -1,0 +1,71 @@
+<project name="arag-include-document">
+	<dirname property="arag-include-document.dir" file="${ant.file.arag-include-document}" />
+
+	<property name="documents.env" value="prod" />
+	<property name="documents.appName" value="documents" />
+	<property name="documents.src.list" value="**" />
+	
+	<property environment="envr"/>
+	
+	<property name="documents.home" value="${envr.DOCUMENT_HOME}" />
+	<property name="documents.temp" value="/arag/temp/docs/${documents.appName}" />
+	<property name="documents.src" value="//aragvwcm01/content/${documents.env}/common/documents" />
+
+	
+	<property name="documents.temp.zip.dir" value="${documents.temp}/zip" />
+	<property name="documents.temp.src.dir" value="${documents.temp}/src" />
+	
+	<target name="copy-documents-init" description="Cleans temp document folder.">
+		<echoproperties>
+			<propertyset>
+				<propertyref prefix="documents." />
+			</propertyset>
+		</echoproperties>
+
+		<delete dir="${documents.temp}" />
+		<mkdir dir="${documents.temp.src.dir}" />
+		<mkdir dir="${documents.temp.zip.dir}" />
+		<mkdir dir="${documents.home}" />
+	</target>
+	
+	<target name="copy-documents-local-src" description="Copies published documents to temp folder." unless="documents.src.archivelist" depends="copy-documents-init">
+		<copy todir="${documents.temp.src.dir}">
+			<fileset dir="${documents.src}" includes="${documents.src.list}">
+				<exclude name="*" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="copy-documents-local-zip" description="Copies zip file containing published content and extracts it to temp folder." if="documents.src.archivelist" depends="copy-documents-init">
+		<copy todir="${documents.temp.zip.dir}">
+			<fileset dir="${documents.src}" includes="${documents.src.archivelist}" />
+		</copy>
+
+		<unzip dest="${documents.temp.src.dir}">
+		    <fileset dir="${documents.temp.zip.dir}">
+		        <include name="**/*.zip"/>
+		    </fileset>
+		</unzip>
+		
+		<touch>
+			<fileset dir="${documents.temp.src.dir}" includes="**" />
+		</touch>
+	</target>
+	
+	<target name="copy-documents-local" description="Gets local copy of published documents." depends="copy-documents-local-src, copy-documents-local-zip" />		
+	
+	<target name="copy-documents" description="Copies current published documents locally for use." depends="copy-documents-local">
+		<!-- clean out 'common' documents in the assets folder -->
+		<delete>
+			<fileset dir="${documents.home}" includes="${documents.src.list}" />
+		</delete>
+
+		<copy todir="${documents.home}">
+			<fileset dir="${documents.temp.src.dir}" includes="**" />
+		</copy>
+	</target>
+	
+	
+	
+</project>
+	

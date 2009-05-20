@@ -1,0 +1,138 @@
+<project name="arag-include-junit">
+	<dirname property="arag-include-junit.dir" file="${ant.file.arag-include-junit}" />
+	
+    <property name="ivy-test.dir" value="${ivy-lib.dir}/test" />
+    
+    <!-- emma properties -->
+	<property name="emma.home" value="${arag-include.dir}/emma-2.0.5312" />
+	<property name="emma.lib" value="${emma.home}/lib" />
+	<taskdef resource="emma_ant.properties" />
+	<property name="emma.outdir" value="${build.outdir}/emma" />
+    
+    <property name="test.outdir" value="${build.outdir}/test" />
+	<property name="inst.outdir" value="${build.outdir}/inst" />
+	
+	<property name="junit.report.xml" value="${build.outdir}/junit" />
+	<property name="junit.report.html" value="${dist.outdir}/junit" />
+    <property name="emma.report.html" value="${dist.outdir}/emma" />
+    
+	<path id="inst.compile.path" location="${inst.outdir}" />
+	
+	<property name="test.target" value="1.5" />
+	<property name="test.source" value="1.5" />
+	
+	<property name="junit.failBuild" value="true" />
+	<property name="junit.loadTimeWeavingVersion" value="" />
+    
+    <path id="test.classpath">
+		<path refid="inst.compile.path" />
+    	<path refid="build.classpath"/>
+		<fileset dir="${emma.lib}" includes="**/*.jar" />
+		<fileset dir="${ivy-test.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+    
+    <path id="junit.classpath">
+		<path refid="test.classpath" />
+		<path location="${test.outdir}" />
+	</path>
+
+	<target name="compile-test" depends="init,compile">
+		<mkdir dir="${test.outdir}" />
+		<mkdir dir="${emma.outdir}" />
+
+		<available file="${basedir}/emma-filters.txt" property="emma.filters.present" />
+		<condition property="emma.filter.file" value="${basedir}/emma-filters.txt" else="${emma.home}/default-filters.txt">
+			<equals arg1="${emma.filters.present}" arg2="true" casesensitive="false" trim="true" />
+		</condition>
+		
+		<emma>
+			<instr instrpathref="compile.path"  destdir="${inst.outdir}" metadatafile="${emma.outdir}/metadata.emma" merge="true">
+				<!--<filter file="${emma.filter.file}" />-->
+			</instr>
+		</emma>
+		
+		<copy todir="${inst.outdir}">
+			<fileset dir="${compile.outdir}">
+				<exclude name="**.*.class" />
+			</fileset>
+		</copy>
+		
+		<javac debug="true" destdir="${test.outdir}" srcdir="${test.dir}" target="${test.target}" source="${test.source}">
+			<classpath refid="test.classpath" />
+		</javac>
+
+		<copy todir="${test.outdir}">
+			<fileset dir="${test.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<macrodef name="junit-emma">
+		<element name="test-set" optional="false" implicit="true" />
+		<sequential>
+			<mkdir dir="${junit.report.xml}" />
+	        <delete file="${emma.outdir}/coverage.emma" />
+	        
+			<condition property="junit.javaagent" value="-javaagent:${arag-include.dir}\load-time-weaving\2.5\spring-agent.jar" else="">
+				<equals arg1="${junit.loadTimeWeavingVersion}" arg2="2.5" casesensitive="true" trim="true" />
+			</condition>			
+			
+			<junit fork="true" forkmode="once" printsummary="yes" haltonerror="false" haltonfailure="false" failureproperty="junit.fail">
+				<jvmarg value="${junit.javaagent}" />
+				<jvmarg value="-Xmx256m" />
+				<jvmarg value="-Demma.coverage.out.file=${emma.outdir}/coverage.emma" />
+				<jvmarg value="-Demma.coverage.out.merge=true" />
+				<jvmarg value="-Dhibernate.cache.use_query_cache=false" />
+				<jvmarg value="-Dhibernate.cache.use_second_level_cache=false" />
+				<formatter type="xml" />
+				<batchtest todir="${junit.report.xml}">
+					<test-set/>
+				</batchtest>
+				<classpath refid="junit.classpath" />
+			</junit>
+			
+			<mkdir dir="${junit.report.html}" />
+			<junitreport todir="${junit.report.xml}">
+				<fileset dir="${junit.report.xml}" includes="TEST-*.xml" />
+				<report format="frames" todir="${junit.report.html}" />
+			</junitreport>
+			
+			<emma>
+				<report sourcepath="${src.dir}">
+					<fileset dir="${emma.outdir}" includes="**/*.emma" />
+					<html outfile="${emma.report.html}/index.html" encoding="UTF-8" />
+				</report>
+			</emma>
+			
+			<fail message="Junit tests failed">
+				<condition>
+					<and>
+						<isset property="junit.fail" />
+						<equals arg1="${junit.failBuild}" arg2="true" casesensitive="false" trim="true" />
+					</and>
+				</condition>
+			</fail>
+		</sequential>
+	</macrodef>
+	
+	<target name="test" depends="compile-test">
+		<junit-emma>
+			<fileset dir="${test.dir}" includes="**/*Test.java" excludes="**/integration/**" />
+		</junit-emma>
+	</target>	    
+	
+	<target name="test-integration" depends="compile-test">
+		<junit-emma>
+			<fileset dir="${test.dir}" includes="**/integration/**/*Test.java" excludes="**/Abstract*"/>
+		</junit-emma>
+	</target>
+	
+	<target name="test-all" depends="compile-test">
+		<junit-emma>
+			<fileset dir="${test.dir}" includes="**/*Test.java" excludes="**/Abstract*"/>
+		</junit-emma>
+	</target>
+</project>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+	<settings defaultResolver="default"/>
+	<include url="ivysettings-local.xml"/>
+	<include url="ivysettings-maven.xml"/>
+	<include url="ivysettings-springsource.xml"/>
+	<include url="ivysettings-default-chain.xml"/>
+</ivysettings>

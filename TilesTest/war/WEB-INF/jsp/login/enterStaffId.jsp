@@ -1,0 +1,45 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
+
+<h2>Enter your ID Number</h2>
+
+<c:if test="${not empty flashMessage}">
+	<div class="clean-ok">${flashMessage}</div>
+</c:if>
+
+<c:if test="${not empty flashError}">
+	<div id="clean-error">${flashError}</div>
+</c:if>
+
+<tt:pageDebug debugPage="false" debugRequest="true"/>
+
+<tt:errors name="webSecurityModel"></tt:errors>
+
+<form:form modelAttribute="webSecurityModel" method="post"> 
+	<table>
+		<tr>
+			<td>
+				<form:label path="staffId" cssErrorClass="errors">*Staff ID</form:label>
+			</td>
+			<td>
+				<form:input path="staffId" size="50"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="submit" name="_eventId_continue" value="Continue" />
+				
+			</td>
+			<td>
+				<input type="submit" name="_eventId_cancel" value="Cancel"/>
+			</td>
+		</tr>
+	</table>
+
+</form:form>
+
+<script type="text/javascript">
+$('username').focus();
+</script>

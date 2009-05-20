@@ -1,0 +1,26 @@
+<project name="arag-include-hibernateTools">
+	<dirname property="arag-include-hibernateTools.dir" file="${ant.file.arag-include-hibernateTools}" />
+
+    <!-- Hibernate Properties -->
+	<property name="hibernate-tools.home" value="${arag-include.dir}/hibernate-tools" />
+    <property name="hibernate.outdir" value="${dist.outdir}/hibernate" />
+    
+	<path id="hibernate-tools.path">
+		<fileset dir="${hibernate-tools.home}" includes="**/*.jar" />
+	</path>
+    
+	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="hibernate-tools.path" />
+
+
+	<target name="hibernate-doc" depends="init">
+		<mkdir dir="${hibernate.outdir}" />
+        
+		<hibernatetool destdir="${hibernate.outdir}">
+			<configuration propertyfile="hibernate.properties">
+				<fileset dir="${src.dir}" includes="**/*.hbm.xml" />
+			</configuration>
+			<hbm2doc />
+			<classpath refid="compile.path" />
+		</hibernatetool>
+	</target>    
+</project>

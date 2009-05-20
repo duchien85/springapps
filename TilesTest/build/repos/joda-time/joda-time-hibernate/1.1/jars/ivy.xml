@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+	<info organisation="joda-time"
+	       module="joda.time.hibernate"
+	       revision="1.1"
+	/>
+</ivy-module>
