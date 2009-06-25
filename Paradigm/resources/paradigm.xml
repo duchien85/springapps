@@ -1,7 +1,0 @@
-<Context path="paradigm" reloadable="true" docBase="C:\bill\workspace\ParadigmJava\war" workDir="C:\bill\workspace\ParadigmJava\work" >
-<Resource name="jdbc/paradigm" auth="Container" type="javax.sql.DataSource" 
-  			username="paradigm" password="paradigm"
-  			driverClassName="com.mysql.jdbc.Driver"
-  			url="jdbc:mysql://localhost:3306/paradigm"
-  			maxActive="50" minActive="1"/>
-</Context>
