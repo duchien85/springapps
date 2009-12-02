@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>{$title}</title>
+        <link rel="stylesheet" type="text/css" href="/yui_2.7.0b/build/reset-fonts-grids/reset-fonts-grids.css">
+		<link rel="stylesheet" type="text/css" href="/yui_2.7.0b/build/base/base.css">
+		<link rel="stylesheet" type="text/css" href="/yui_2.7.0b/build/menu/assets/skins/sam/menu.css">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		{$included_css}
+        <script type="text/javascript" src="/yui_2.7.0b/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <script type="text/javascript" src="/yui_2.7.0b/build/container/container-min.js"></script>
+        <script type="text/javascript" src="/yui_2.7.0b/build/menu/menu-min.js"></script>
+		{$included_js}
+		<script type="text/javascript" src="/js/main.js"></script>
+		
+		<style type="text/css">
+		{$extra_style}
+		</style>
+    </head>
+	<body class="yui-skin-sam">
+        <div id="doc2" class="yui-t2">
+            <div id="hd">
+                <div id="hd_logo">
+					<a href="/">Yui doc2 yui-t2</a>
+                </div>
+                <!-- end hd_logo -->
+				{include file="menu_top.htm"}
+            </div>
+            <!--end hd -->
+            <div id="bd">
+                <div id="yui-main">
+                    <div class="yui-b">
+                        {$content}
+                    </div>
+                    <!-- end yui-b (main)-->
+                </div>
+                <!-- end yui-main -->
+                <div class="yui-b">
+                    <div id="sidebar">
+						{include file="menu_left.htm"}
+                    </div>
+                    <!-- end sidebar -->
+                </div>
+                <!-- end yui-b -->
+            </div>
+            <!-- end bd -->
+            <div id="ft">
+                <div id="ft_links">
+                    <ul>
+                        <li>
+                            <a href="/">Home</a>
+                            |
+                        </li>
+                        <li>
+                            <a href="/yui_container">Container</a>
+                            |
+                        </li>
+                        <li>
+                            <a href="/yui_submit">Submit</a>
+                            |
+                        </li>
+                        <li>
+                            <a href="/yui_tabs">Tabs</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end ft_links -->
+                <div id="copyright">
+                    Copyright &copy; Bill Studer 2009
+                </div>
+                <!-- end #copyright -->
+            </div>
+            <!-- end ft -->
+        </div>
+        <!-- end #doc -->
+    </body>
+</html>
