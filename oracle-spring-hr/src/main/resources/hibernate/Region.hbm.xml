@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+    <class name="com.studerb.hr.geo.Region" table="REGIONS"  schema="hr_dev" mutable="false">  
+        <id name="id" type="java.lang.Long">
+            <column name="REGION_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="REGION_NAME" length="45" not-null="true" />
+        </property>
+        <set name="countries" inverse="true">
+            <key>
+                <column name="REGION_ID" not-null="true" />
+            </key>
+            <one-to-many class="com.studerb.hr.geo.Country" />
+        </set>
+    </class>
+</hibernate-mapping>
