@@ -1,0 +1,212 @@
+html{
+	background-color: transparent;
+	/*background-image: url(../images/kubrickbgcolor.jpg);*/
+	background-image: url(../images/bodybg.png);
+	background-repeat: repeat;
+	background-attachment: fixed;
+	background-position: 0 0;
+}
+
+body {
+	
+}
+
+table {
+	border: none;
+	outline: none;
+}
+#doc2 {
+		background-color: white;
+}
+#bd {
+	text-align: left;
+	background-color: #F2F2F2;
+}
+
+#hd,#bd,#ft {
+	border: 1px solid #808080;
+}
+
+#hd {
+	text-align:center;
+	height: 5em;
+	background-image: url(../images/header_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+}
+
+#hd h1 {
+	font-size: 120%;
+}
+
+#yui-main .yui-b .yui-g{
+	border-left: 2px solid #426FD9;
+	min-height: 200px;
+	padding: 1em 3em;
+	margin: .25em;
+}
+
+#pageTitle h2 {
+	margin: 1em;
+}
+
+/*
+#pageTitle h2 {
+	background-image: url(../images/y_blue_fade.gif);
+	background-repeat: no-repeat;
+	background-position: 0pt 0pt;
+	background-color: transparent;
+}
+
+*/
+#left_nav {
+	background-color: #EDF5FF;
+	border: 1px solid #7D98B8;
+	padding: .25em .5em;
+}
+
+
+table.formTable {
+	border: 1px solid #666666;
+	background-color: #EDF5FF;
+}
+
+table.formTable tr.formButtons {
+	text-align: right;
+}
+
+table.formTable td, table.formTable th {
+	/*padding: 1em;*/
+	border-style: solid;
+}
+table.formTable td.form_label {
+	text-align: right;
+	font-weight: bolder;
+}
+
+table.formTable td.form_label_left {
+	text-align: left;
+	font-weight: bolder;
+}
+
+table.formTable td.form_input {
+	text-align: left;
+}
+
+
+table.dataTable {
+	width: 100%;
+	border: 1px solid #666666;
+	text-align: center;
+}
+
+table.dataTable thead tr {
+    background-color: #006599;
+    color: #FFFFFF;
+    text-align: left:
+}
+
+table.dataTable thead th {
+    text-align: left:
+}
+
+table.dataTable thead tr a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+table.dataTable thead tr a.selected {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+table.dataTable thead tr a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+table.dataTable tbody td{
+    text-align: left:
+}
+
+table.dataTable tbody tr.even {
+    background-color: #EDF5FF;
+}
+
+table.dataTable tbody tr.odd{
+    background-color: white;
+}
+
+table.dataTable tfoot tr td {
+    text-align: center;
+}
+
+table.dataTable tfoot tr  {
+	background-color: #006598;
+	text-align: center;
+	color: white;
+}
+
+.navButton img{
+	vertical-align: bottom; 
+}
+#flashMessage {
+	background-color: #F1F4F6;
+	margin: 20px 0 20px 20px;
+	border: 1px solid #006599;
+	padding: 5px 10px;
+	color: #006599;
+	width: 400px;
+	text-align: center;
+	font-weight: bold;
+}
+
+#flashError {
+    background-color: #ffffcc;
+    margin: 20px 0 20px 20px;
+    border: 1px solid #990000; 
+    padding : 5px 10px;
+    color: red;
+	width: 400px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.errors {
+	color: red;
+	font-weight: bold;
+}
+
+*[disabled] { background-color: #ddd; color: gray; }
+
+
+#ft {
+	background-image: url(../images/header_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+}
+
+#ft div#ft_copyright p{
+	padding: 2em;
+	text-align: center;
+	font-size: small;
+}
+
+div#pageDebug {
+	overflow: scroll;
+	max-height: 400px;
+	max-width: 750px;
+}
+div#pageDebug table{
+}
+
+div#pageDebug table td.name{
+	text-align: left;
+}
+div#pageDebug table td.value{
+	text-align: left;
+}
+
+.displayNone {
+	display: none;
+}

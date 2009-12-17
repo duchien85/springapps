@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+        <!--  Actor -->
+    <definition name="actor/list" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Sakila Actors" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/actor/list.jsp"/>
+    </definition>
+    
+    <definition name="actor/edit" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Edit Actor" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/actor/edit.jsp"/>
+    </definition>
+    
+    <definition name="actor/editFilms" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Edit Actor Films" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/actor/editFilms.jsp"/>
+    </definition>
+    
+    <definition name="actor/add" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Add Actor" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/actor/add.jsp"/>
+    </definition>
+    
+    <definition name="actor/addFilms" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Add Actor Films" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/actor/addFilms.jsp"/>
+    </definition>
+    
+    <definition name="actor/confirmation" extends="yui_doc2_t2_1grid">
+        <put-attribute name="title" value="Actor Confirmation" type="string" />
+        <put-attribute name="content" value="/WEB-INF/jsp/actor/confirmation.jsp"/>
+    </definition>
+
+</tiles-definitions>
