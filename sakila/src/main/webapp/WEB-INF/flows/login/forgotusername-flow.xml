@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+
+	<var name="webSecurityModel" class="com.studerb.login.web.WebSecurityModel"/>
+
+	<view-state id="enterStaffId" view="login/enterStaffId" model="webSecurityModel">
+		<binder>
+			<binding property="staffId" required="true" />
+		</binder>
+		<transition on="continue" to="securityQuestion" bind="true">
+			<set name="flashScope.flashMessage"  value="'Staff ID for Active Staff Member'" />
+		</transition>
+	</view-state>
+	
+	<view-state id="securityQuestion" view="login/securityQuestion" model="webSecurityModel">
+		<binder>
+			<binding property="answerText" required="true"/>
+		</binder>
+		<on-entry>
+			<evaluate expression="webSecurityFlowAction.setSecurityData(flowRequestContext)" />
+		</on-entry>
+		<transition on="continue" to="confirmation">
+			
+		</transition>
+	</view-state>
+	
+	<end-state id="confirmation" view="externalRedirect:contextRelative:/login/confirmation.htm?confirm=forgotusername&amp;username=${webSecurityModel.username}" />
+	<end-state id="inactiveStaff" view="externalRedirect:contextRelative:/login/inactiveStaff.htm" />
+	<end-state id="cancel" view="externalRedirect:contextRelative:/" />
+	
+	
+	<global-transitions>
+		<transition on-exception="com.studerb.login.InactiveStaffException" to="inactiveStaff" history="invalidate"/>
+		<transition on="cancel" to="cancel" history="invalidate" bind="false"/>
+	</global-transitions>
+	
+</flow>

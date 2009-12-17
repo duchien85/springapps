@@ -1,0 +1,87 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="TilesTest" default="compile" basedir="." >
+	
+	<property file="build.properties" />
+	<property name="build.dir" value="build"/>
+	<property name="ivy.settings.dir" value="${build.dir}/ivy-settings"/>
+	<property name="ivy.lib.dir" value="${build.dir}/lib"/>
+	<property name="specName" value="TilesTest" />
+	<property name="artifactName" value="tilestest" />
+	<property name="specVersion" value="DefaultSpecVersion" />
+	<property name="buildVersion" value="99.99-SNAPSHOT" />
+
+	<property name="compile.outdir" value="${build.outdir}/classes" />
+	<property name="lib.dir" value="${build.dir}/lib" />
+	<property name="ivy-build.dir" value="${ivy-lib.dir}/build" />
+	<property name="ivy-provided.dir" value="${ivy-lib.dir}/provided" />
+
+	<property name="compile.target" value="1.6" />
+	<property name="compile.source" value="1.6" />
+
+	<property name="build.outdir" value="build/output" />
+	<property name="dist.outdir" value="dist" />
+
+	<property name="build.env" value="prod" />
+	<property name="documents.env" value="${build.env}" />
+
+	<property name="resources.dir" value="resources" />
+	<property name="src.dir" value="src" />
+	<property name="test.dir" value="test" />
+	<property name="web.dir" value="war" />
+
+    <target name="ivy-retrieve" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve />
+    </target>
+    	
+	<target name="clean">
+		<delete dir="${build.outdir}" />
+		<delete dir="${dist.outdir}" />
+	</target>
+
+	<target name="init">
+		<tstamp />
+	</target>
+
+	<path id="compile.path" location="${compile.outdir}" />
+
+	<path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<fileset dir="${ivy-build.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<fileset dir="${ivy-provided.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="compile" depends="ivy-retrieve">
+		<mkdir dir="${compile.outdir}" />
+		<!--<mkdir dir="${lib.dir}" />-->
+		<mkdir dir="${ivy-build.dir}" />
+		<mkdir dir="${ivy-provided.dir}" />
+
+		<javac debug="true" destdir="${compile.outdir}" srcdir="${src.dir}" target="${compile.target}" source="${compile.source}">
+			<classpath refid="build.classpath" />
+		</javac>
+
+		<copy todir="${compile.outdir}">
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.java" />
+				<exclude name="version.properties" />
+			</fileset>
+			<fileset dir="${resources.dir}" />
+		</copy>
+		<echo file="${compile.outdir}/version.properties" message="version=Version ${buildVersion}"/>
+	</target>
+
+
+	<!--<import file="${build.dir}/build-include.xml"/>-->
+
+	<target name="copy-sql">
+		<mkdir dir="${dist.outdir}" />
+		<copy todir="${dist.outdir}">
+			<fileset dir="db" includes="*.sql" />
+		</copy>
+	</target>
+</project>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 3, 2008 12:21:24 PM by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.studerb.store.Inventory" table="inventory" >
+        <id name="id" type="java.lang.Long">
+            <column name="inventory_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="store" class="com.studerb.store.Store" fetch="select">
+            <column name="store_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="film" class="com.studerb.film.Film" fetch="select">
+            <column name="film_id" not-null="true" />
+        </many-to-one>
+        <property name="lastUpdate" type="timestamp" insert="false" update="false">
+            <column name="last_update" length="19" not-null="true" />
+        </property>
+        <set name="rentals" inverse="true">
+            <key>
+                <column name="inventory_id" not-null="true" />
+            </key>
+            <one-to-many class="com.studerb.store.Rental" />
+        </set>
+    </class>
+</hibernate-mapping>
