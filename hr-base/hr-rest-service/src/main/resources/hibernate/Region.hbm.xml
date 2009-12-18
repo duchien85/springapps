@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping >
-    <class name="com.studerb.hr.geo.Region" table="REGIONS"  schema="hr_dev" mutable="false">  
+    <class name="com.studerb.hr.geo.Region" table="REGIONS" mutable="false">  
         <id name="id" type="java.lang.Long">
             <column name="REGION_ID" />
             <generator class="assigned" />
