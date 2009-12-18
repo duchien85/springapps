@@ -1,0 +1,19 @@
+<?xml version='1.0'  encoding='UTF-8' ?>
+<RESULTS>
+	<ROW>
+		<COLUMN NAME="REGION_ID"><![CDATA[1]]></COLUMN>
+		<COLUMN NAME="REGION_NAME"><![CDATA[Europe]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="REGION_ID"><![CDATA[2]]></COLUMN>
+		<COLUMN NAME="REGION_NAME"><![CDATA[Americas]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="REGION_ID"><![CDATA[3]]></COLUMN>
+		<COLUMN NAME="REGION_NAME"><![CDATA[Asia]]></COLUMN>
+	</ROW>
+	<ROW>
+		<COLUMN NAME="REGION_ID"><![CDATA[4]]></COLUMN>
+		<COLUMN NAME="REGION_NAME"><![CDATA[Middle East and Africa]]></COLUMN>
+	</ROW>
+</RESULTS>
