@@ -30,12 +30,6 @@ public class EmployeeDaoTest extends AbstractTransactionalJUnit4SpringContextTes
         this.logger.debug("*************************************************************SETTING UP*****************************************");
     }
 
-    @Test
-    @NotTransactional
-    public void testCreated() {
-        this.logger.debug("****************CREATED***************");
-        assertTrue(true);
-    }
 
     @Test
     public void getAll() {
