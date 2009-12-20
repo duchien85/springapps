@@ -1,6 +1,8 @@
 package com.studerb.hr.employee;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 
@@ -19,20 +21,28 @@ public class Employee {
     private Employee manager;
     private Department department;
 
-    // Set<JobHistory> jobHistory = new HashSet<JobHistory>();
+    Set<JobHistory> jobHistory = new LinkedHashSet<JobHistory>();
 
     public Employee() {};
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public Set<JobHistory> getJobHistory() {
+        return this.jobHistory;
+    }
+
+    public void setJobHistory(Set<JobHistory> jobHistory) {
+        this.jobHistory = jobHistory;
+    }
+
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -40,7 +50,7 @@ public class Employee {
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
@@ -48,7 +58,7 @@ public class Employee {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -56,7 +66,7 @@ public class Employee {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return this.phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -64,7 +74,7 @@ public class Employee {
     }
 
     public DateTime getHireDate() {
-        return hireDate;
+        return this.hireDate;
     }
 
     public void setHireDate(DateTime hireDate) {
@@ -72,7 +82,7 @@ public class Employee {
     }
 
     public Job getJob() {
-        return job;
+        return this.job;
     }
 
     public void setJob(Job job) {
@@ -80,7 +90,7 @@ public class Employee {
     }
 
     public BigDecimal getSalary() {
-        return salary;
+        return this.salary;
     }
 
     public void setSalary(BigDecimal salary) {
@@ -88,7 +98,7 @@ public class Employee {
     }
 
     public BigDecimal getCommission() {
-        return commission;
+        return this.commission;
     }
 
     public void setCommission(BigDecimal commission) {
@@ -96,7 +106,7 @@ public class Employee {
     }
 
     public Employee getManager() {
-        return manager;
+        return this.manager;
     }
 
     public void setManager(Employee manager) {
@@ -104,7 +114,7 @@ public class Employee {
     }
 
     public Department getDepartment() {
-        return department;
+        return this.department;
     }
 
     public void setDepartment(Department department) {
@@ -115,15 +125,15 @@ public class Employee {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Employee [email=");
-        builder.append(email);
+        builder.append(this.email);
         builder.append(", firstName=");
-        builder.append(firstName);
+        builder.append(this.firstName);
         builder.append(", id=");
-        builder.append(id);
+        builder.append(this.id);
         builder.append(", lastName=");
-        builder.append(lastName);
+        builder.append(this.lastName);
         builder.append(", phoneNumber=");
-        builder.append(phoneNumber);
+        builder.append(this.phoneNumber);
         builder.append("]");
         return builder.toString();
     }

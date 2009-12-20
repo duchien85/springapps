@@ -1,9 +1,9 @@
-SET serveroutput ON format wraped;
-DECLARE
+create or replace
+PROCEDURE RESET_HR_DEV AS
   v_str  VARCHAR2(1000);
   v_str2 VARCHAR2(1000);
 BEGIN
-  FOR c1 IN
+FOR c1 IN
   (SELECT owner,table_name FROM dba_tables WHERE owner='HR_DEV'
   )
   LOOP
@@ -21,9 +21,10 @@ BEGIN
       )
       LOOP
         v_str:='alter table '||c2.owner||'.'||c2.table_name|| ' disable constraint ' ||c2.constraint_name;
-        dbms_output.put_line(v_str);
+        --dbms_output.put_line(v_str);
         EXECUTE immediate v_str;
       END LOOP;
+      dbms_output.put_line('truncating table ' || c1.table_name);
       EXECUTE immediate 'truncate table '||c1.owner||'.'||c1.table_name;
     EXCEPTION
     WHEN OTHERS THEN
@@ -31,8 +32,7 @@ BEGIN
     END;
   END LOOP;
   
-  
----------------------------------------------------
+  ---------------------------------------------------
 --   DATA FOR TABLE JOB_HISTORY
 --   FILTER = none used
 ---------------------------------------------------
@@ -46,11 +46,10 @@ Insert into JOB_HISTORY (EMPLOYEE_ID,START_DATE,END_DATE,JOB_ID,DEPARTMENT_ID) v
 Insert into JOB_HISTORY (EMPLOYEE_ID,START_DATE,END_DATE,JOB_ID,DEPARTMENT_ID) values (176,to_timestamp('24-MAR-98 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),to_timestamp('31-DEC-98 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),'SA_REP',80);
 Insert into JOB_HISTORY (EMPLOYEE_ID,START_DATE,END_DATE,JOB_ID,DEPARTMENT_ID) values (176,to_timestamp('01-JAN-99 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),to_timestamp('31-DEC-99 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),'SA_MAN',80);
 Insert into JOB_HISTORY (EMPLOYEE_ID,START_DATE,END_DATE,JOB_ID,DEPARTMENT_ID) values (200,to_timestamp('01-JUL-94 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),to_timestamp('31-DEC-98 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),'AC_ACCOUNT',90);
-
+dbms_output.put_line('Inserted 10 into JOB_HISTORY');
 ---------------------------------------------------
 --   END DATA FOR TABLE JOB_HISTORY
 ---------------------------------------------------
-
 ---------------------------------------------------
 --   DATA FOR TABLE COUNTRIES
 --   FILTER = none used
@@ -80,11 +79,10 @@ Insert into COUNTRIES (COUNTRY_ID,COUNTRY_NAME,REGION_ID) values ('UK','United K
 Insert into COUNTRIES (COUNTRY_ID,COUNTRY_NAME,REGION_ID) values ('US','United States of America',2);
 Insert into COUNTRIES (COUNTRY_ID,COUNTRY_NAME,REGION_ID) values ('ZM','Zambia',4);
 Insert into COUNTRIES (COUNTRY_ID,COUNTRY_NAME,REGION_ID) values ('ZW','Zimbabwe',4);
-
+dbms_output.put_line('Inserted 25 into COUNTRIES');
 ---------------------------------------------------
 --   END DATA FOR TABLE COUNTRIES
 ---------------------------------------------------
-
 ---------------------------------------------------
 --   DATA FOR TABLE LOCATIONS
 --   FILTER = none used
@@ -112,11 +110,10 @@ Insert into LOCATIONS (LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINC
 Insert into LOCATIONS (LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID) values (3000,'Murtenstrasse 921','3095','Bern','BE','CH');
 Insert into LOCATIONS (LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID) values (3100,'Pieter Breughelstraat 837','3029SK','Utrecht','Utrecht','NL');
 Insert into LOCATIONS (LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID) values (3200,'Mariano Escobedo 9991','11932','Mexico City','Distrito Federal,','MX');
-
+dbms_output.put_line('Inserted 23 into LOCATIONS');
 ---------------------------------------------------
 --   END DATA FOR TABLE LOCATIONS
 ---------------------------------------------------
-
 ---------------------------------------------------
 --   DATA FOR TABLE JOBS
 --   FILTER = none used
@@ -140,11 +137,10 @@ Insert into JOBS (JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY) values ('MK_MAN','Mark
 Insert into JOBS (JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY) values ('MK_REP','Marketing Representative',4000,9000);
 Insert into JOBS (JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY) values ('HR_REP','Human Resources Representative',4000,9000);
 Insert into JOBS (JOB_ID,JOB_TITLE,MIN_SALARY,MAX_SALARY) values ('PR_REP','Public Relations Representative',4500,10500);
-
+dbms_output.put_line('Inserted 19 into JOBS');
 ---------------------------------------------------
 --   END DATA FOR TABLE JOBS
 ---------------------------------------------------
-
 ---------------------------------------------------
 --   DATA FOR TABLE DEPARTMENTS
 --   FILTER = none used
@@ -176,11 +172,10 @@ Insert into DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) v
 Insert into DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) values (250,'Retail Sales',null,1700);
 Insert into DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) values (260,'Recruiting',null,1700);
 Insert into DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID) values (270,'Payroll',null,1700);
-
+dbms_output.put_line('Inserted 27 into DEPARTMENTS');
 ---------------------------------------------------
 --   END DATA FOR TABLE DEPARTMENTS
 ---------------------------------------------------
-
 ---------------------------------------------------
 --   DATA FOR TABLE REGIONS
 --   FILTER = none used
@@ -189,11 +184,10 @@ Insert into REGIONS (REGION_ID,REGION_NAME) values (1,'Europe');
 Insert into REGIONS (REGION_ID,REGION_NAME) values (2,'Americas');
 Insert into REGIONS (REGION_ID,REGION_NAME) values (3,'Asia');
 Insert into REGIONS (REGION_ID,REGION_NAME) values (4,'Middle East and Africa');
-
+dbms_output.put_line('Inserted 4 into REGIONS');
 ---------------------------------------------------
 --   END DATA FOR TABLE REGIONS
 ---------------------------------------------------
-
 ---------------------------------------------------
 --   DATA FOR TABLE EMPLOYEES
 --   FILTER = none used
@@ -305,11 +299,10 @@ Insert into EMPLOYEES (EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_
 Insert into EMPLOYEES (EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,JOB_ID,SALARY,COMMISSION_PCT,MANAGER_ID,DEPARTMENT_ID) values (186,'Julia','Dellinger','JDELLING','650.509.3876',to_timestamp('24-JUN-98 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),'SH_CLERK',3400,null,121,50);
 Insert into EMPLOYEES (EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,JOB_ID,SALARY,COMMISSION_PCT,MANAGER_ID,DEPARTMENT_ID) values (187,'Anthony','Cabrio','ACABRIO','650.509.4876',to_timestamp('07-FEB-99 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),'SH_CLERK',3000,null,121,50);
 Insert into EMPLOYEES (EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,JOB_ID,SALARY,COMMISSION_PCT,MANAGER_ID,DEPARTMENT_ID) values (188,'Kelly','Chung','KCHUNG','650.505.1876',to_timestamp('14-JUN-97 12.00.00.000000000 AM','DD-MON-RR HH.MI.SS.FF AM'),'SH_CLERK',3800,null,122,50);
-
+dbms_output.put_line('Inserted 107 into EMPLOYEES');
 ---------------------------------------------------
 --   END DATA FOR TABLE EMPLOYEES
 ---------------------------------------------------
-
   
   FOR c1 IN
   (SELECT owner,table_name FROM dba_tables WHERE owner='HR_DEV'
@@ -329,12 +322,12 @@ Insert into EMPLOYEES (EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_
       )
       LOOP
         v_str2:='alter table '||c2.owner||'.'||c2.table_name|| ' enable constraint ' ||c2.constraint_name;
-        dbms_output.put_line(v_str2);
+        --dbms_output.put_line(v_str2);
         EXECUTE immediate v_str2;
       END LOOP;
     EXCEPTION
     WHEN OTHERS THEN
       dbms_output.put_line(c1.table_name||' '||sqlerrm);
     END;
-  END LOOP;
-END;
+  END LOOP;  
+END RESET_HR_DEV;
