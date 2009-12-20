@@ -15,8 +15,12 @@ public class Department {
 
     public Department() {}
 
+    public Department(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -24,7 +28,7 @@ public class Department {
     }
 
     public String getDepartmentName() {
-        return departmentName;
+        return this.departmentName;
     }
 
     public void setDepartmentName(String departmentName) {
@@ -32,7 +36,7 @@ public class Department {
     }
 
     public Employee getManager() {
-        return manager;
+        return this.manager;
     }
 
     public void setManager(Employee manager) {
@@ -40,7 +44,7 @@ public class Department {
     }
 
     public Location getLocation() {
-        return location;
+        return this.location;
     }
 
     public void setLocation(Location location) {
@@ -48,7 +52,7 @@ public class Department {
     }
 
     public Set<Employee> getEmployees() {
-        return employees;
+        return this.employees;
     }
 
     public void setEmployees(Set<Employee> employees) {
@@ -59,9 +63,9 @@ public class Department {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Department [id=");
-        builder.append(id);
+        builder.append(this.id);
         builder.append(", departmentName=");
-        builder.append(departmentName);
+        builder.append(this.departmentName);
         builder.append("]");
         return builder.toString();
     }

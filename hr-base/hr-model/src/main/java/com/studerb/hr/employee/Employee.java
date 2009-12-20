@@ -23,7 +23,11 @@ public class Employee {
 
     Set<JobHistory> jobHistory = new LinkedHashSet<JobHistory>();
 
-    public Employee() {};
+    public Employee() {}
+
+    public Employee(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return this.id;
@@ -119,6 +123,67 @@ public class Employee {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.commission == null) ? 0 : this.commission.hashCode());
+        result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
+        result = prime * result + ((this.firstName == null) ? 0 : this.firstName.hashCode());
+        result = prime * result + ((this.lastName == null) ? 0 : this.lastName.hashCode());
+        result = prime * result + ((this.phoneNumber == null) ? 0 : this.phoneNumber.hashCode());
+        result = prime * result + ((this.salary == null) ? 0 : this.salary.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Employee other = (Employee) obj;
+        if (this.commission == null) {
+            if (other.commission != null)
+                return false;
+        }
+        else if (!this.commission.equals(other.commission))
+            return false;
+        if (this.email == null) {
+            if (other.email != null)
+                return false;
+        }
+        else if (!this.email.equals(other.email))
+            return false;
+        if (this.firstName == null) {
+            if (other.firstName != null)
+                return false;
+        }
+        else if (!this.firstName.equals(other.firstName))
+            return false;
+        if (this.lastName == null) {
+            if (other.lastName != null)
+                return false;
+        }
+        else if (!this.lastName.equals(other.lastName))
+            return false;
+        if (this.phoneNumber == null) {
+            if (other.phoneNumber != null)
+                return false;
+        }
+        else if (!this.phoneNumber.equals(other.phoneNumber))
+            return false;
+        if (this.salary == null) {
+            if (other.salary != null)
+                return false;
+        }
+        else if (!this.salary.equals(other.salary))
+            return false;
+        return true;
     }
 
     @Override

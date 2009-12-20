@@ -6,8 +6,14 @@ public class Job {
     private Long minSalary;
     private Long maxSalary;
 
+    public Job() {}
+
+    public Job(String id) {
+        this.id = id;
+    }
+
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {
@@ -15,7 +21,7 @@ public class Job {
     }
 
     public String getJobTitle() {
-        return jobTitle;
+        return this.jobTitle;
     }
 
     public void setJobTitle(String jobTitle) {
@@ -23,7 +29,7 @@ public class Job {
     }
 
     public Long getMinSalary() {
-        return minSalary;
+        return this.minSalary;
     }
 
     public void setMinSalary(Long minSalary) {
@@ -31,7 +37,7 @@ public class Job {
     }
 
     public Long getMaxSalary() {
-        return maxSalary;
+        return this.maxSalary;
     }
 
     public void setMaxSalary(Long maxSalary) {
@@ -42,13 +48,13 @@ public class Job {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Job [id=");
-        builder.append(id);
+        builder.append(this.id);
         builder.append(", jobTitle=");
-        builder.append(jobTitle);
+        builder.append(this.jobTitle);
         builder.append(", maxSalary=");
-        builder.append(maxSalary);
+        builder.append(this.maxSalary);
         builder.append(", minSalary=");
-        builder.append(minSalary);
+        builder.append(this.minSalary);
         builder.append("]");
         return builder.toString();
     }
