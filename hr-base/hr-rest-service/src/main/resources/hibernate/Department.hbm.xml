@@ -13,7 +13,7 @@
             <column name="DEPARTMENT_NAME" length="30" not-null="true" />
         </property>
         <many-to-one name="manager" class="com.studerb.hr.employee.Employee" fetch="select">
-            <column name="MANAGER_ID" not-null="true" />
+            <column name="MANAGER_ID" />
         </many-to-one>
         <many-to-one name="location" class="com.studerb.hr.geo.Location" fetch="select">
             <column name="LOCATION_ID" not-null="true"  />

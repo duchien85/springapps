@@ -39,5 +39,9 @@
         <many-to-one name="department" class="com.studerb.hr.employee.Department" fetch="select">
             <column name="DEPARTMENT_ID" not-null="false" />
         </many-to-one>
+        <set name="jobHistory" inverse="true" order-by="START_DATE asc" cascade="delete">
+            <key column="EMPLOYEE_ID" not-null="true"/>
+            <one-to-many not-found="ignore" class="com.studerb.hr.employee.JobHistory"/>
+        </set>
     </class>
 </hibernate-mapping>
