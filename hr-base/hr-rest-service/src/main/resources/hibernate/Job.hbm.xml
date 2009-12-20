@@ -8,7 +8,7 @@
             <generator class="assigned" />
         </id>
         <property name="jobTitle" type="string">
-            <column name="COUNTRY_NAME" length="35" not-null="true" />
+            <column name="JOB_TITLE" length="35" not-null="true" />
         </property>
         <property name="minSalary" type="long">
             <column name="MIN_SALARY" not-null="false" />
