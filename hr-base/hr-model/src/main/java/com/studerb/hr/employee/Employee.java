@@ -4,8 +4,13 @@ import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.joda.time.DateTime;
 
+@XmlRootElement()
 public class Employee {
 
     private static final long serialVersionUID = 8744214730693860142L;
@@ -29,6 +34,7 @@ public class Employee {
         this.id = id;
     }
 
+    @XmlAttribute
     public Long getId() {
         return this.id;
     }
@@ -45,6 +51,7 @@ public class Employee {
         this.jobHistory = jobHistory;
     }
 
+    @XmlElement
     public String getFirstName() {
         return this.firstName;
     }
@@ -53,6 +60,7 @@ public class Employee {
         this.firstName = firstName;
     }
 
+    @XmlElement
     public String getLastName() {
         return this.lastName;
     }
@@ -61,6 +69,7 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    @XmlElement
     public String getEmail() {
         return this.email;
     }
@@ -69,6 +78,7 @@ public class Employee {
         this.email = email;
     }
 
+    @XmlElement
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
@@ -77,6 +87,7 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
+    @XmlElement
     public DateTime getHireDate() {
         return this.hireDate;
     }
@@ -93,6 +104,7 @@ public class Employee {
         this.job = job;
     }
 
+    @XmlElement
     public BigDecimal getSalary() {
         return this.salary;
     }
@@ -101,6 +113,7 @@ public class Employee {
         this.salary = salary;
     }
 
+    @XmlElement
     public BigDecimal getCommission() {
         return this.commission;
     }
