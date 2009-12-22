@@ -1,13 +1,19 @@
 package com.studerb.hr.employee;
 
 import java.io.Serializable;
-
-import org.joda.time.DateTime;
+import java.util.Calendar;
 
 public class JobHistoryPK implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long employeeId;
-    private DateTime startDate;
+    private Calendar startDate;
+
+    public JobHistoryPK() {}
+
+    public JobHistoryPK(Long employeeId, Calendar startDate) {
+        this.employeeId = employeeId;
+        this.startDate = startDate;
+    }
 
     public Long getEmployeeId() {
         return this.employeeId;
@@ -17,11 +23,11 @@ public class JobHistoryPK implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public DateTime getStartDate() {
+    public Calendar getStartDate() {
         return this.startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 
@@ -29,7 +35,7 @@ public class JobHistoryPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (o == null || this.getClass() != o.getClass())
             return false;
         JobHistoryPK that = (JobHistoryPK) o;
         if (this.employeeId != null ? !this.employeeId.equals(that.employeeId) : that.employeeId != null)
@@ -45,4 +51,5 @@ public class JobHistoryPK implements Serializable {
         result = 31 * result + (this.startDate != null ? this.startDate.hashCode() : 0);
         return result;
     }
+
 }

@@ -1,13 +1,16 @@
 package com.studerb.hr.employee;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.SessionFactory;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void countRows() {
-        assertEquals(countRowsInTable(this.employeeDao.getTableName()), TOTAL_COUNT);
+        assertEquals(this.countRowsInTable(this.employeeDao.getTableName()), TOTAL_COUNT);
     }
 
     @Test
@@ -50,7 +53,10 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         assertEquals(employee.getFirstName(), "Jennifer");
         assertEquals(employee.getLastName(), "Dilly");
         assertEquals(employee.getEmail(), "JDILLY");
-        assertEquals(employee.getHireDate(), new DateTime(1997, 8, 13, 0, 0, 0, 0, DateTimeZone.forID("America/New_York")));
+        Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+        c.set(1997, 7, 13);
+        assertTrue(DateUtils.isSameDay(employee.getHireDate(), c));
     }
 
     // @Test(expected = Throwable.class)
@@ -64,7 +70,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         employee.setFirstName("Bob");
         employee.setLastName("Alvabcc");
         employee.setEmail("ALVABCC");
-        employee.setHireDate(new DateTime());
+        employee.setHireDate(Calendar.getInstance());
         employee.setCommission(new BigDecimal("0.50"));
         employee.setPhoneNumber("123.456.7890");
         employee.setManager(new Employee(100L));

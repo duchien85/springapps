@@ -8,11 +8,11 @@
             <key-property name="employeeId" type="long">
                 <column name="EMPLOYEE_ID" />
             </key-property>
-            <key-property name="startDate" type="org.joda.time.contrib.hibernate.PersistentDateTime" >
+            <key-property name="startDate" type="calendar" >
                 <column name="START_DATE" />
             </key-property>
         </composite-id>
-        <property name="endDate" type="org.joda.time.contrib.hibernate.PersistentDateTime">
+        <property name="endDate" type="calendar">
             <column name="END_DATE" />
         </property>
         <many-to-one name="employee" class="com.studerb.hr.employee.Employee">

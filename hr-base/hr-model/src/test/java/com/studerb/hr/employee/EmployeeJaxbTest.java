@@ -1,10 +1,13 @@
 package com.studerb.hr.employee;
 
+import static org.junit.Assert.*;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class EmployeeJaxbTest {
 
@@ -21,4 +24,8 @@ public class EmployeeJaxbTest {
         context.createBinder();
     }
 
+    @Test
+    public void createEmployeeXML(){
+        assertTrue(true);
+    }
 }
