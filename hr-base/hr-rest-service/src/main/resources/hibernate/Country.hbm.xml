@@ -7,11 +7,11 @@
             <column sql-type="char" name="COUNTRY_ID" />
             <generator class="assigned" />
         </id>
+        <property name="name" type="string">
+            <column name="COUNTRY_NAME" length="40" not-null="false" />
+        </property>
         <many-to-one name="region" class="com.studerb.hr.geo.Region" fetch="join">
             <column name="REGION_ID" not-null="true" />
         </many-to-one>
-        <property name="countryName" type="string">
-            <column name="COUNTRY_NAME" length="40" not-null="false" />
-        </property>
     </class>
 </hibernate-mapping>

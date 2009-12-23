@@ -8,7 +8,7 @@ import com.studerb.hr.geo.Location;
 public class Department {
 
     private Long id;
-    private String departmentName;
+    private String name;
     private Employee manager;
     private Location location;
     private Set<Employee> employees = new HashSet<Employee>();
@@ -27,12 +27,12 @@ public class Department {
         this.id = id;
     }
 
-    public String getDepartmentName() {
-        return this.departmentName;
+    public String getName() {
+        return this.name;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Employee getManager() {
@@ -65,7 +65,7 @@ public class Department {
         builder.append("Department [id=");
         builder.append(this.id);
         builder.append(", departmentName=");
-        builder.append(this.departmentName);
+        builder.append(this.name);
         builder.append("]");
         return builder.toString();
     }
