@@ -8,6 +8,7 @@
   <groupId>com.studerb.hr</groupId>
   <artifactId>hr-model</artifactId>
   <name>hr-model</name>
+
   <version>0.0.1-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
   <dependencies>
