@@ -2,7 +2,7 @@ package com.studerb.hr.employee;
 
 public class Job {
     private String id;
-    private String jobTitle;
+    private String title;
     private Long minSalary;
     private Long maxSalary;
 
@@ -20,12 +20,12 @@ public class Job {
         this.id = id;
     }
 
-    public String getJobTitle() {
-        return this.jobTitle;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getMinSalary() {
@@ -50,7 +50,7 @@ public class Job {
         builder.append("Job [id=");
         builder.append(this.id);
         builder.append(", jobTitle=");
-        builder.append(this.jobTitle);
+        builder.append(this.title);
         builder.append(", maxSalary=");
         builder.append(this.maxSalary);
         builder.append(", minSalary=");
