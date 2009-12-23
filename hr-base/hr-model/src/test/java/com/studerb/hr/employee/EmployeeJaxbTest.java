@@ -1,6 +1,6 @@
 package com.studerb.hr.employee;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -16,7 +16,7 @@ public class EmployeeJaxbTest {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        context = JAXBContext.newInstance(Employee.class);
+        context = JAXBContext.newInstance("com.studerb.hr.employee");
     }
 
     @AfterClass
@@ -25,7 +25,7 @@ public class EmployeeJaxbTest {
     }
 
     @Test
-    public void createEmployeeXML(){
+    public void createEmployeeXML() {
         assertTrue(true);
     }
 }
