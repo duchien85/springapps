@@ -1,10 +1,13 @@
 package com.studerb.hr.employee;
 
+import com.studerb.hr.Link;
+
 public class Job {
     private String id;
     private String title;
     private Long minSalary;
     private Long maxSalary;
+    private Link link;
 
     public Job() {}
 
@@ -42,6 +45,14 @@ public class Job {
 
     public void setMaxSalary(Long maxSalary) {
         this.maxSalary = maxSalary;
+    }
+
+    public Link getLink() {
+        return this.link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 
     @Override

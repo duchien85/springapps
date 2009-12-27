@@ -1,4 +1,4 @@
-package com.studerb.hr.employee;
+package com.studerb.hr;
 
 import java.io.Serializable;
 import java.util.Date;

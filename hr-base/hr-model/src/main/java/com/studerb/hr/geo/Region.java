@@ -3,14 +3,17 @@ package com.studerb.hr.geo;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.studerb.hr.Link;
+
 public class Region {
 
     private Long id;
     private String name;
+    private Link link;
     Set<Country> countries = new HashSet<Country>();
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -18,15 +21,23 @@ public class Region {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public Link getLink() {
+        return this.link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
+    }
+
     public Set<Country> getCountries() {
-        return countries;
+        return this.countries;
     }
 
     public void setCountries(Set<Country> countries) {
@@ -37,9 +48,9 @@ public class Region {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Region [id=");
-        builder.append(id);
+        builder.append(this.id);
         builder.append(", name=");
-        builder.append(name);
+        builder.append(this.name);
         builder.append("]");
         return builder.toString();
     }

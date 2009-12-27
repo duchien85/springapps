@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="hr-model"
+  xmlns="hr-model"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified">
+
+  <xs:element name="employee" type="employeeType"/>
+  <xs:element name="employees" type="employeesType" />
+
+  <xs:element name="job" type="jobType"/>
+  <xs:element name="jobs" type="jobsType"/>
+
+  <xs:element name="jobHistory" type="jobHistoryType"/>
+  <xs:element name="jobHistories" type="jobHistoriesType"/>
+
+  <xs:element name="department" type="departmentType"/>
+  <xs:element name="departments" type="departmentsType"/>
+
+  <xs:element name="location" type="locationType"/>
+
+  <xs:element name="country" type="countryType"/>
+  <xs:element name="countries" type="countriesType"/>
+
+  <xs:element name="region" type="regionType"/>
+  <xs:element name="regions" type="regionsType"/>
+  
+
+  <xs:complexType name="employeeType" >
+    <xs:sequence>
+      <xs:element name="first_name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="last_name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="email" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="phone_number" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="hire_date" type="xs:date" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="job" type="jobType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="salary" type="xs:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="commission_pct" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="manager" type="employeeType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="department" type="departmentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="jobHistories" type="jobHistoriesType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" />
+  </xs:complexType>
+
+
+  <xs:complexType name="employeesType">
+    <xs:sequence>
+      <xs:element name="employee" type="employeeType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="jobType" >
+    <xs:sequence>
+      <xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="min_salary" type="xs:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="max_salary" type="xs:positiveInteger" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+  </xs:complexType>
+
+
+  <xs:complexType name="jobsType">
+    <xs:sequence>
+      <xs:element name="job" type="jobType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="jobHistoryType" >
+    <xs:sequence>
+      <xs:element name="employee" type="employeeType" />
+      <xs:element name="start_date" type="xs:date"/>
+      <xs:element name="end_date" type="xs:date" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="job" type="jobType" minOccurs="0" maxOccurs="1"/>      
+      <xs:element name="department" type="departmentType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="jobHistoriesType">
+    <xs:sequence>
+      <xs:element name="jobHistory" type="jobHistoryType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="departmentType" >
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="manager" type="employeeType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="location" type="locationType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="departmentsType">
+    <xs:sequence>
+      <xs:element name="department" type="departmentType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="locationType">
+    <xs:sequence>
+      <xs:element name="street_address" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="postal_code" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="city" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="state_province" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="country" type="countryType" minOccurs="0" maxOccurs="1"/>        
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" />
+  </xs:complexType>
+
+  <xs:complexType name="countryType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="region" type="regionType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="countriesType">
+    <xs:sequence>
+      <xs:element name="country" type="countryType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="regionType" >
+    <xs:sequence>    
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:positiveInteger" />
+  </xs:complexType>
+
+  <xs:complexType name="regionsType">
+    <xs:sequence>
+      <xs:element name="region" type="regionType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
