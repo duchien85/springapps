@@ -17,22 +17,29 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Employee> getAll() {
+    public List<Employee> getAllEmployees() {
         logger.debug("fetching all employees");
         return this.employeeDao.getAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Employee get(Long id) {
+    public Employee getEmployee(Long id) {
         logger.debug("Fetching Employee with id: " + id);
         return this.employeeDao.get(id);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Long save(Employee employee) {
+    public Long saveEmployee(Employee employee) {
         logger.debug("adding new employee: " + employee);
         return this.employeeDao.save(employee);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateEmployee(Employee employee) {
+        logger.debug("updating employee: " + employee);
+        this.employeeDao.update(employee);
     }
 }

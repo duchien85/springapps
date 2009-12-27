@@ -26,11 +26,11 @@ public class EmployeeResource {
     @GET
     @Produces("text/plain")
     @Path("/")
-    public String getWidgetNames() {
+    public String getAllEmployees() {
         logger.debug("got request to /employees/");
         logger.debug("employeeService: " + this.employeeService);
 
-        List<Employee> employees = this.employeeService.getAll();
+        List<Employee> employees = this.employeeService.getAllEmployees();
         StrBuilder bldr = new StrBuilder();
         for (Employee e : employees) {
             bldr.append(e.toString() + SystemUtils.LINE_SEPARATOR);

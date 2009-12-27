@@ -3,9 +3,11 @@ package com.studerb.hr.employee;
 import java.util.List;
 
 public interface EmployeeService {
-    public List<Employee> getAll();
+    List<Employee> getAllEmployees();
 
-    public Employee get(Long id);
+    Employee getEmployee(Long id);
 
-    public Long save(Employee employee);
+    Long saveEmployee(Employee employee);
+
+    void updateEmployee(Employee employee);
 }

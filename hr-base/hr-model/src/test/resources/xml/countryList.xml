@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<countries
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="hr-model" 
+  xsi:schemaLocation="hr-model hr-model.xsd">
+  <country id="AR">
+    <name>Argentina</name>
+    <regionId>2</regionId>
+  </country>
+  <country id="AU">
+    <name>Australia</name>
+    <regionId>3</regionId>
+  </country>
+  <country id="BE">
+    <name>Belgium</name>
+    <regionId>1</regionId>
+  </country>
+</countries>

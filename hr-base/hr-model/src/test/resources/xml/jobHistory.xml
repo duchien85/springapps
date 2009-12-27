@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jobHistory 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="hr-model" 
+  xsi:schemaLocation="hr-model hr-model.xsd">
+  <employeeId>102</employeeId>
+  <start_date>1993-01-13</start_date>
+  <end_date>1998-07-24</end_date>
+  <jobId>AD_PRES</jobId>
+  <departmentId>110</departmentId>
+</jobHistory>
+
+
