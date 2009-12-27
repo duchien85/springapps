@@ -1,5 +1,7 @@
 package com.studerb.hr.geo;
 
+import com.studerb.hr.Link;
+
 public class Location {
 
     private Long id;
@@ -8,9 +10,10 @@ public class Location {
     private String city;
     private String stateProvince;
     private Country country;
+    private Link link;
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -18,7 +21,7 @@ public class Location {
     }
 
     public String getStreetAddress() {
-        return streetAddress;
+        return this.streetAddress;
     }
 
     public void setStreetAddress(String streetAddress) {
@@ -26,7 +29,7 @@ public class Location {
     }
 
     public String getPostalCode() {
-        return postalCode;
+        return this.postalCode;
     }
 
     public void setPostalCode(String postalCode) {
@@ -34,7 +37,7 @@ public class Location {
     }
 
     public String getCity() {
-        return city;
+        return this.city;
     }
 
     public void setCity(String city) {
@@ -42,7 +45,7 @@ public class Location {
     }
 
     public String getStateProvince() {
-        return stateProvince;
+        return this.stateProvince;
     }
 
     public void setStateProvince(String stateProvince) {
@@ -50,26 +53,34 @@ public class Location {
     }
 
     public Country getCountry() {
-        return country;
+        return this.country;
     }
 
     public void setCountry(Country country) {
         this.country = country;
     }
 
+    public Link getLink() {
+        return this.link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Location [city=");
-        builder.append(city);
+        builder.append(this.city);
         builder.append(", id=");
-        builder.append(id);
+        builder.append(this.id);
         builder.append(", postalCode=");
-        builder.append(postalCode);
+        builder.append(this.postalCode);
         builder.append(", stateProvince=");
-        builder.append(stateProvince);
+        builder.append(this.stateProvince);
         builder.append(", streetAddress=");
-        builder.append(streetAddress);
+        builder.append(this.streetAddress);
         builder.append("]");
         return builder.toString();
     }

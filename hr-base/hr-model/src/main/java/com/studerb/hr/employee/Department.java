@@ -3,6 +3,7 @@ package com.studerb.hr.employee;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.studerb.hr.Link;
 import com.studerb.hr.geo.Location;
 
 public class Department {
@@ -11,6 +12,7 @@ public class Department {
     private String name;
     private Employee manager;
     private Location location;
+    private Link link;
     private Set<Employee> employees = new HashSet<Employee>();
 
     public Department() {}
@@ -57,6 +59,14 @@ public class Department {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Link getLink() {
+        return this.link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 
     @Override

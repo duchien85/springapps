@@ -9,197 +9,220 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement() public class Employee {
+import com.studerb.hr.Link;
 
-	private static final long serialVersionUID = 8744214730693860142L;
-	private Long id;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String phoneNumber;
-	private Calendar hireDate;
-	private Job job;
-	private BigDecimal salary;
-	private BigDecimal commission;
-	private Employee manager;
-	private Department department;
+@XmlRootElement()
+public class Employee {
 
-	Set<JobHistory> jobHistory = new LinkedHashSet<JobHistory>();
+    private static final long serialVersionUID = 8744214730693860142L;
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private Calendar hireDate;
+    private Job job;
+    private BigDecimal salary;
+    private BigDecimal commission;
+    private Employee manager;
+    private Department department;
+    private Link link;
 
-	public Employee() {}
+    Set<JobHistory> jobHistory = new LinkedHashSet<JobHistory>();
 
-	public Employee(Long id) {
-		this.id = id;
-	}
+    public Employee() {}
 
-	@XmlAttribute public Long getId() {
-		return this.id;
-	}
+    public Employee(Long id) {
+        this.id = id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @XmlAttribute
+    public Long getId() {
+        return this.id;
+    }
 
-	public Set<JobHistory> getJobHistory() {
-		return this.jobHistory;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setJobHistory(Set<JobHistory> jobHistory) {
-		this.jobHistory = jobHistory;
-	}
+    public Set<JobHistory> getJobHistory() {
+        return this.jobHistory;
+    }
 
-	@XmlElement public String getFirstName() {
-		return this.firstName;
-	}
+    public void setJobHistory(Set<JobHistory> jobHistory) {
+        this.jobHistory = jobHistory;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    @XmlElement
+    public String getFirstName() {
+        return this.firstName;
+    }
 
-	@XmlElement public String getLastName() {
-		return this.lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    @XmlElement
+    public String getLastName() {
+        return this.lastName;
+    }
 
-	@XmlElement public String getEmail() {
-		return this.email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @XmlElement
+    public String getEmail() {
+        return this.email;
+    }
 
-	@XmlElement public String getPhoneNumber() {
-		return this.phoneNumber;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    @XmlElement
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
 
-	@XmlElement public Calendar getHireDate() {
-		return this.hireDate;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public void setHireDate(Calendar hireDate) {
-		this.hireDate = hireDate;
-	}
+    @XmlElement
+    public Calendar getHireDate() {
+        return this.hireDate;
+    }
 
-	public Job getJob() {
-		return this.job;
-	}
+    public void setHireDate(Calendar hireDate) {
+        this.hireDate = hireDate;
+    }
 
-	public void setJob(Job job) {
-		this.job = job;
-	}
+    public Job getJob() {
+        return this.job;
+    }
 
-	@XmlElement public BigDecimal getSalary() {
-		return this.salary;
-	}
+    public void setJob(Job job) {
+        this.job = job;
+    }
 
-	public void setSalary(BigDecimal salary) {
-		this.salary = salary;
-	}
+    @XmlElement
+    public BigDecimal getSalary() {
+        return this.salary;
+    }
 
-	@XmlElement public BigDecimal getCommission() {
-		return this.commission;
-	}
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
+    }
 
-	public void setCommission(BigDecimal commission) {
-		this.commission = commission;
-	}
+    @XmlElement
+    public BigDecimal getCommission() {
+        return this.commission;
+    }
 
-	public Employee getManager() {
-		return this.manager;
-	}
+    public void setCommission(BigDecimal commission) {
+        this.commission = commission;
+    }
 
-	public void setManager(Employee manager) {
-		this.manager = manager;
-	}
+    public Employee getManager() {
+        return this.manager;
+    }
 
-	public Department getDepartment() {
-		return this.department;
-	}
+    public void setManager(Employee manager) {
+        this.manager = manager;
+    }
 
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
+    public Department getDepartment() {
+        return this.department;
+    }
 
-	@Override public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.commission == null) ? 0 : this.commission.hashCode());
-		result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
-		result = prime * result + ((this.firstName == null) ? 0 : this.firstName.hashCode());
-		result = prime * result + ((this.lastName == null) ? 0 : this.lastName.hashCode());
-		result = prime * result + ((this.phoneNumber == null) ? 0 : this.phoneNumber.hashCode());
-		result = prime * result + ((this.salary == null) ? 0 : this.salary.hashCode());
-		return result;
-	}
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 
-	@Override public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (this.getClass() != obj.getClass())
-			return false;
-		Employee other = (Employee) obj;
-		if (this.commission == null) {
-			if (other.commission != null)
-				return false;
-		}
-		else if (!this.commission.equals(other.commission))
-			return false;
-		if (this.email == null) {
-			if (other.email != null)
-				return false;
-		}
-		else if (!this.email.equals(other.email))
-			return false;
-		if (this.firstName == null) {
-			if (other.firstName != null)
-				return false;
-		}
-		else if (!this.firstName.equals(other.firstName))
-			return false;
-		if (this.lastName == null) {
-			if (other.lastName != null)
-				return false;
-		}
-		else if (!this.lastName.equals(other.lastName))
-			return false;
-		if (this.phoneNumber == null) {
-			if (other.phoneNumber != null)
-				return false;
-		}
-		else if (!this.phoneNumber.equals(other.phoneNumber))
-			return false;
-		if (this.salary == null) {
-			if (other.salary != null)
-				return false;
-		}
-		else if (!this.salary.equals(other.salary))
-			return false;
-		return true;
-	}
+    public Link getLink() {
+        return this.link;
+    }
 
-	@Override public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Employee [email=");
-		builder.append(this.email);
-		builder.append(", firstName=");
-		builder.append(this.firstName);
-		builder.append(", id=");
-		builder.append(this.id);
-		builder.append(", lastName=");
-		builder.append(this.lastName);
-		builder.append(", phoneNumber=");
-		builder.append(this.phoneNumber);
-		builder.append("]");
-		return builder.toString();
-	}
+    public void setLink(Link link) {
+        this.link = link;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.commission == null) ? 0 : this.commission.hashCode());
+        result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
+        result = prime * result + ((this.firstName == null) ? 0 : this.firstName.hashCode());
+        result = prime * result + ((this.lastName == null) ? 0 : this.lastName.hashCode());
+        result = prime * result + ((this.phoneNumber == null) ? 0 : this.phoneNumber.hashCode());
+        result = prime * result + ((this.salary == null) ? 0 : this.salary.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (this.getClass() != obj.getClass())
+            return false;
+        Employee other = (Employee) obj;
+        if (this.commission == null) {
+            if (other.commission != null)
+                return false;
+        }
+        else if (!this.commission.equals(other.commission))
+            return false;
+        if (this.email == null) {
+            if (other.email != null)
+                return false;
+        }
+        else if (!this.email.equals(other.email))
+            return false;
+        if (this.firstName == null) {
+            if (other.firstName != null)
+                return false;
+        }
+        else if (!this.firstName.equals(other.firstName))
+            return false;
+        if (this.lastName == null) {
+            if (other.lastName != null)
+                return false;
+        }
+        else if (!this.lastName.equals(other.lastName))
+            return false;
+        if (this.phoneNumber == null) {
+            if (other.phoneNumber != null)
+                return false;
+        }
+        else if (!this.phoneNumber.equals(other.phoneNumber))
+            return false;
+        if (this.salary == null) {
+            if (other.salary != null)
+                return false;
+        }
+        else if (!this.salary.equals(other.salary))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Employee [email=");
+        builder.append(this.email);
+        builder.append(", firstName=");
+        builder.append(this.firstName);
+        builder.append(", id=");
+        builder.append(this.id);
+        builder.append(", lastName=");
+        builder.append(this.lastName);
+        builder.append(", phoneNumber=");
+        builder.append(this.phoneNumber);
+        builder.append("]");
+        return builder.toString();
+    }
 }

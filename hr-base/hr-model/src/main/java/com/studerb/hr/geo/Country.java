@@ -1,10 +1,13 @@
 package com.studerb.hr.geo;
 
+import com.studerb.hr.Link;
+
 public class Country {
 
     private String id;
     private String name;
     private Region region;
+    private Link link;
 
     public String getId() {
         return this.id;
@@ -28,6 +31,14 @@ public class Country {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public Link getLink() {
+        return this.link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 
     @Override
