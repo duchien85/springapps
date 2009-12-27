@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<employee id="100"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="hr-model" 
+  xsi:schemaLocation="hr-model hr-model.xsd">
+  <first_name>Steven</first_name>
+  <last_name>King</last_name>
+  <email>SKING</email>
+  <phone_number>515.123.4567</phone_number>
+  <hire_date>1987-06-17</hire_date>
+  <jobId>AD_PRES</jobId>
+  <salary>24000</salary>
+  <commission_pct xsi:nil="true" />
+  <managerId xsi:nil="true" />
+  <departmentId>90</departmentId>
+</employee>

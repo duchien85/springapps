@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<employees
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="hr-model" 
+  xsi:schemaLocation="hr-model hr-model.xsd">
+  <employee id="100">
+    <first_name>Steven</first_name>
+    <last_name>King</last_name>
+    <email>SKING</email>
+    <phone_number>515.123.4567</phone_number>
+    <hire_date>1987-06-17</hire_date>
+    <jobId>AD_PRES</jobId>
+    <salary>24000</salary>
+    <commission_pct xsi:nil="true" />
+    <managerId xsi:nil="true" />
+    <departmentId>90</departmentId>
+  </employee>
+
+  <employee id="189">
+    <first_name>Jennifer</first_name>
+    <last_name>Dilly</last_name>
+    <email>JDILLY</email>
+    <phone_number>650.505.2786</phone_number>
+    <hire_date>1997-08-13</hire_date>
+    <jobId>SH_CLERK</jobId>
+    <salary>3600</salary>
+    <commission_pct xsi:nil="true" />
+    <managerId>122</managerId>
+    <departmentId>50</departmentId>
+  </employee>
+
+  <employee id="192">
+    <first_name>Sarah</first_name>
+    <last_name>Bell</last_name>
+    <email>SBELL</email>
+    <phone_number>650.501.1876</phone_number>
+    <hire_date>1996-02-04</hire_date>
+    <jobId>SH_CLERK</jobId>
+    <salary>4000</salary>
+    <commission_pct xsi:nil="true" />
+    <managerId>123</managerId>
+    <departmentId>50</departmentId>
+  </employee>
+
+  <employee id="145">
+    <first_name>John</first_name>
+    <last_name>Russel</last_name>
+    <email>JRUSSEL</email>
+    <phone_number>011.44.1344.429268</phone_number>
+    <hire_date>1996-10-01</hire_date>
+    <jobId>SA_MAN</jobId>
+    <salary>14000</salary>
+    <commission_pct>0.4</commission_pct>
+    <managerId>100</managerId>
+    <departmentId>80</departmentId>
+  </employee>
+
+</employees>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<regions
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="hr-model" 
+  xsi:schemaLocation="hr-model hr-model.xsd">
+  <region id="2">
+    <name>Americas</name>
+  </region>
+  <region id="3">
+    <name>Asia</name>
+  </region>
+  <region id="4">
+    <name>Middle East and Africa</name>
+  </region>
+</regions>
