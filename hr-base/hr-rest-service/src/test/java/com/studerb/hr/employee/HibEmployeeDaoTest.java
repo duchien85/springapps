@@ -71,7 +71,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         employee.setLastName("Alvabcc");
         employee.setEmail("ALVABCC");
         employee.setHireDate(Calendar.getInstance());
-        employee.setCommission(new BigDecimal("0.50"));
+        employee.setCommissionPct(new BigDecimal("0.50"));
         employee.setPhoneNumber("123.456.7890");
         employee.setManager(new Employee(100L));
         employee.setDepartment(new Department(30L));
