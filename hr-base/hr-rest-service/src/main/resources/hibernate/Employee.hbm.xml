@@ -27,7 +27,7 @@
         <property name="salary" type="java.math.BigDecimal" precision="8" scale="2">
             <column name="SALARY" not-null="false"></column>
         </property>
-        <property name="commission" type="java.math.BigDecimal" precision="2" scale="2" >
+        <property name="commissionPct" type="java.math.BigDecimal" precision="2" scale="2" >
             <column name="COMMISSION_PCT" not-null="false"/>
         </property>
         <many-to-one name="job" class="com.studerb.hr.employee.Job" fetch="select">
