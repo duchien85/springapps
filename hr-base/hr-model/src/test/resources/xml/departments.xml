@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<departments
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="hr-model" 
-  xsi:schemaLocation="hr-model hr-model.xsd">
+<departments xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <department id="10">
     <name>Administration</name>
     <managerId>200</managerId>
@@ -22,5 +19,9 @@
     <name>Human Resources</name>
     <managerId>203</managerId>
     <locationId>2400</locationId>
+  </department>
+  <department id="120">
+    <name>Treasury</name>
+    <locationId>1700</locationId>
   </department>
 </departments>

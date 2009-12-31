@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<employees
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="hr-model" 
-  xsi:schemaLocation="hr-model hr-model.xsd">
+<employees xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <employee id="100">
     <first_name>Steven</first_name>
     <last_name>King</last_name>

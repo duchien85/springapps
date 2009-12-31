@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   targetNamespace="hr-model"
   xmlns="hr-model"
   elementFormDefault="qualified"
@@ -38,7 +38,7 @@
       <xs:element name="managerId" type="xs:positiveInteger" nillable="true" />
       <xs:element name="departmentId" type="xs:positiveInteger" nillable="true"/>
     </xs:sequence>
-    <xs:attribute name="id" type="xs:positiveInteger" />
+    <xs:attribute name="id" type="xs:positiveInteger"/>
   </xs:complexType>
 
   <xs:complexType name="employeesType">
@@ -49,19 +49,12 @@
 
   <xs:complexType name="jobType" >
     <xs:sequence>
-      <xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="title" type="xs:string"/>
       <xs:element name="min_salary" type="xs:positiveInteger" minOccurs="0" maxOccurs="1"/>
       <xs:element name="max_salary" type="xs:positiveInteger" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
-    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="id" type="xs:string" use="required"/>
   </xs:complexType>
-
-  <xs:simpleType name="employeeIdType">
-    <xs:restriction base="xs:positiveInteger">
-
-    </xs:restriction>
-  </xs:simpleType>
-
 
   <xs:complexType name="jobsType">
     <xs:sequence>
@@ -74,7 +67,7 @@
       <xs:element name="employeeId" type="xs:positiveInteger" />
       <xs:element name="start_date" type="xs:date"/>
       <xs:element name="end_date" type="xs:date" />
-      <xs:element name="jobId" type="xs:string" />
+      <xs:element name="jobId" type="xs:string" />      
       <xs:element name="departmentId" type="xs:positiveInteger" nillable="true"/>
     </xs:sequence>
   </xs:complexType>
@@ -100,14 +93,13 @@
     </xs:sequence>
   </xs:complexType>
 
-
   <xs:complexType name="locationType">
     <xs:sequence>
       <xs:element name="street_address" type="xs:string" nillable="true"/>
       <xs:element name="postal_code" type="xs:string" nillable="true"/>
       <xs:element name="city" type="xs:string" />
       <xs:element name="state_province" type="xs:string" nillable="true"/>
-      <xs:element name="countryId" type="xs:string" nillable="true"/>
+      <xs:element name="countryId" type="xs:string" nillable="true"/>        
     </xs:sequence>
     <xs:attribute name="id" type="xs:positiveInteger" />
   </xs:complexType>
@@ -117,7 +109,7 @@
       <xs:element name="name" type="xs:string" />
       <xs:element name="regionId" type="xs:positiveInteger" />
     </xs:sequence>
-    <xs:attribute name="id" type="xs:string" />
+    <xs:attribute name="id" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="countriesType">
@@ -127,7 +119,7 @@
   </xs:complexType>
 
   <xs:complexType name="regionType" >
-    <xs:sequence>
+    <xs:sequence>    
       <xs:element name="name" type="xs:string" nillable="true"/>
     </xs:sequence>
     <xs:attribute name="id" type="xs:positiveInteger" />

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jobs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <job id="AD_PRES">
+    <title>President</title>
+    <min_salary>20000</min_salary>
+    <max_salary>40000</max_salary>
+  </job>
+  <job id="AD_VP">
+    <title>Administration Vice President</title>
+    <min_salary>15000</min_salary>
+    <max_salary>30000</max_salary>
+  </job>
+  <job id="AD_ASST">
+    <title>Administration Assistant</title>
+    <min_salary>3000</min_salary>
+    <max_salary>6000</max_salary>
+  </job>
+  <job id="FI_MGR">
+    <title>Finance Manager</title>
+    <min_salary>8200</min_salary>
+    <max_salary>16000</max_salary>
+  </job>
+</jobs>
+
