@@ -18,15 +18,13 @@ import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.Node;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.studerb.hr.ModelUtils;
 
-public class EmployeeJaxbTest {
+public class EmployeeJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(EmployeeJaxbTest.class);
     static JAXBContext context;
     static Marshaller marshaller;
@@ -68,8 +66,9 @@ public class EmployeeJaxbTest {
 
     @Test
     public void xmlToEmployee() throws JAXBException {
-        File f = ModelUtils.getClassPathFile("xml/employee.xml");
+        File f = getClassPathFile("xml/employee.xml");
         assertTrue(f.exists());
+        logger.debug("*******************************       " + f.getAbsolutePath() + " *****************");
         Employee unmarhalled = (Employee) unmarshaller.unmarshal(f);
         Employee obj = ModelUtils.createEmployee100();
         logger.debug("from XML\n" + unmarhalled.toString());
@@ -77,29 +76,12 @@ public class EmployeeJaxbTest {
         assertEquals(obj, unmarhalled);
     }
 
-    // @Test
+    @Test
     public void treeWalkTest() throws Exception {
         Employee employee = ModelUtils.createEmployee100();
         StringWriter writer = new StringWriter();
         marshaller.marshal(employee, writer);
         Document document = DocumentHelper.parseText(writer.toString());
-        this.treeWalk(document);
+        treeWalk(document);
     }
-
-    public void treeWalk(Document document) {
-        this.treeWalk(document.getRootElement());
-    }
-
-    public void treeWalk(Element element) {
-        for (int i = 0, size = element.nodeCount(); i < size; i++) {
-            Node node = element.node(i);
-            if (node instanceof Element) {
-                this.treeWalk((Element) node);
-            }
-            else {
-                logger.debug(node.getPath());
-            }
-        }
-    }
-
 }

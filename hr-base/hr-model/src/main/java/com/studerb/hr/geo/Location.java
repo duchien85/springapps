@@ -12,6 +12,12 @@ public class Location {
     private Country country;
     private Link link;
 
+    public Location() {}
+
+    public Location(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return this.id;
     }

@@ -1,5 +1,8 @@
 #package com.studerb.hr.employee
 Employee
-#Department
-#Job
+Employees
+Department
+Departments
+Job
+Jobs
 #JobHistory
