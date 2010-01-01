@@ -8,41 +8,20 @@ import java.io.StringWriter;
 import java.math.BigDecimal;
 
 import javax.xml.bind.DatatypeConverter;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.studerb.hr.AbstractJaxbTest;
 import com.studerb.hr.ModelUtils;
 
 public class EmployeeJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(EmployeeJaxbTest.class);
-    static JAXBContext context;
-    static Marshaller marshaller;
-    static Unmarshaller unmarshaller;
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        context = JAXBContext.newInstance("com.studerb.hr.employee");
-        marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "hr-model.xsd");
-        unmarshaller = context.createUnmarshaller();
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    // context.createBinder();
-    }
 
     @Test
     public void employeeToXml() throws Exception {
@@ -51,6 +30,7 @@ public class EmployeeJaxbTest extends AbstractJaxbTest {
         marshaller.marshal(employee, writer);
         logger.debug("\n-------------\n" + writer.toString());
         Document document = DocumentHelper.parseText(writer.toString());
+
         assertEquals(employee.getId(), Long.valueOf(document.valueOf("/employee/@id")));
         assertEquals(employee.getFirstName(), document.valueOf("/employee/first_name"));
         assertEquals(employee.getLastName(), document.valueOf("/employee/last_name"));
@@ -59,9 +39,9 @@ public class EmployeeJaxbTest extends AbstractJaxbTest {
         assertTrue(DateUtils.isSameDay(employee.getHireDate(), DatatypeConverter.parseDate(document.valueOf("/employee/hire_date"))));
         assertEquals(employee.getSalary(), new BigDecimal(document.valueOf("/employee/salary")));
         assertTrue(StringUtils.isBlank(document.valueOf("/employee/commission_pct")));
-        assertEquals(employee.getJobId(), document.valueOf("/employee/jobId"));
-        assertEquals(employee.getDepartmentId(), Long.valueOf(document.valueOf("/employee/departmentId")));
-        assertTrue(StringUtils.isBlank(document.valueOf("/employee/managerId")));
+        assertEquals(employee.getJobId(), document.valueOf("/employee/job_id"));
+        assertEquals(employee.getDepartmentId(), Long.valueOf(document.valueOf("/employee/department_id")));
+        assertTrue(StringUtils.isBlank(document.valueOf("/employee/manager_id")));
     }
 
     @Test

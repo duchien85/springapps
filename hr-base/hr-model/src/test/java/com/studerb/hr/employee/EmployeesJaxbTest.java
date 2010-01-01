@@ -8,35 +8,20 @@ import java.io.StringWriter;
 import java.math.BigDecimal;
 
 import javax.xml.bind.DatatypeConverter;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.studerb.hr.AbstractJaxbTest;
 import com.studerb.hr.ModelUtils;
 
 public class EmployeesJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(EmployeesJaxbTest.class);
-    static JAXBContext context;
-    static Marshaller marshaller;
-    static Unmarshaller unmarshaller;
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        context = JAXBContext.newInstance("com.studerb.hr.employee");
-        marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "hr-model.xsd");
-        unmarshaller = context.createUnmarshaller();
-    }
 
     @Test
     public void EmployeesToXml() throws Exception {
@@ -55,9 +40,9 @@ public class EmployeesJaxbTest extends AbstractJaxbTest {
         assertTrue(DateUtils.isSameDay(e1.getHireDate(), DatatypeConverter.parseDate(document.valueOf("/employees/employee[1]/hire_date"))));
         assertEquals(e1.getSalary(), new BigDecimal(document.valueOf("/employees/employee[1]/salary")));
         assertTrue(StringUtils.isBlank(document.valueOf("/employees/employee[1]/commission_pct")));
-        assertEquals(e1.getJobId(), document.valueOf("/employees/employee[1]/jobId"));
-        assertTrue(StringUtils.isBlank(document.valueOf("/employees/employee[1]/managerId")));
-        assertEquals(e1.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[1]/departmentId")));
+        assertEquals(e1.getJobId(), document.valueOf("/employees/employee[1]/job_id"));
+        assertTrue(StringUtils.isBlank(document.valueOf("/employees/employee[1]/manager_id")));
+        assertEquals(e1.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[1]/department_id")));
 
         Employee e2 = employees.getEmployees().get(1);
         assertEquals(e2.getId(), Long.valueOf(document.valueOf("/employees/employee[2]/@id")));
@@ -68,9 +53,9 @@ public class EmployeesJaxbTest extends AbstractJaxbTest {
         assertTrue(DateUtils.isSameDay(e2.getHireDate(), DatatypeConverter.parseDate(document.valueOf("/employees/employee[2]/hire_date"))));
         assertEquals(e2.getSalary(), new BigDecimal(document.valueOf("/employees/employee[2]/salary")));
         assertTrue(StringUtils.isBlank(document.valueOf("/employees/employee[2]/commission_pct")));
-        assertEquals(e2.getJobId(), document.valueOf("/employees/employee[2]/jobId"));
-        assertEquals(e2.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[2]/departmentId")));
-        assertEquals(e2.getManagerId(), Long.valueOf(document.valueOf("/employees/employee[2]/managerId")));
+        assertEquals(e2.getJobId(), document.valueOf("/employees/employee[2]/job_id"));
+        assertEquals(e2.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[2]/department_id")));
+        assertEquals(e2.getManagerId(), Long.valueOf(document.valueOf("/employees/employee[2]/manager_id")));
 
         Employee e3 = employees.getEmployees().get(2);
         assertEquals(e3.getId(), Long.valueOf(document.valueOf("/employees/employee[3]/@id")));
@@ -81,9 +66,9 @@ public class EmployeesJaxbTest extends AbstractJaxbTest {
         assertTrue(DateUtils.isSameDay(e3.getHireDate(), DatatypeConverter.parseDate(document.valueOf("/employees/employee[3]/hire_date"))));
         assertEquals(e3.getSalary(), new BigDecimal(document.valueOf("/employees/employee[3]/salary")));
         assertTrue(StringUtils.isBlank(document.valueOf("/employees/employee[3]/commission_pct")));
-        assertEquals(e3.getJobId(), document.valueOf("/employees/employee[3]/jobId"));
-        assertEquals(e3.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[3]/departmentId")));
-        assertEquals(e3.getManagerId(), Long.valueOf(document.valueOf("/employees/employee[3]/managerId")));
+        assertEquals(e3.getJobId(), document.valueOf("/employees/employee[3]/job_id"));
+        assertEquals(e3.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[3]/department_id")));
+        assertEquals(e3.getManagerId(), Long.valueOf(document.valueOf("/employees/employee[3]/manager_id")));
 
         Employee e4 = employees.getEmployees().get(3);
         assertEquals(e4.getId(), Long.valueOf(document.valueOf("/employees/employee[4]/@id")));
@@ -94,9 +79,9 @@ public class EmployeesJaxbTest extends AbstractJaxbTest {
         assertTrue(DateUtils.isSameDay(e4.getHireDate(), DatatypeConverter.parseDate(document.valueOf("/employees/employee[4]/hire_date"))));
         assertEquals(e4.getSalary(), new BigDecimal(document.valueOf("/employees/employee[4]/salary")));
         assertEquals(e4.getCommissionPct(), new BigDecimal(document.valueOf("/employees/employee[4]/commission_pct")));
-        assertEquals(e4.getJobId(), document.valueOf("/employees/employee[4]/jobId"));
-        assertEquals(e4.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[4]/departmentId")));
-        assertEquals(e4.getManagerId(), Long.valueOf(document.valueOf("/employees/employee[4]/managerId")));
+        assertEquals(e4.getJobId(), document.valueOf("/employees/employee[4]/job_id"));
+        assertEquals(e4.getDepartmentId(), Long.valueOf(document.valueOf("/employees/employee[4]/department_id")));
+        assertEquals(e4.getManagerId(), Long.valueOf(document.valueOf("/employees/employee[4]/manager_id")));
 
     }
 

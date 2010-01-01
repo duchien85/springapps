@@ -9,18 +9,18 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>
- * Java class for Departments complex type.
+ * Java class for Job_Histories complex type.
  * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
  * 
  * <pre>
- * &lt;complexType name="Departments">
+ * &lt;complexType name="Job_Histories">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="department" type="{hr-model}Department" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="job_history" type="{hr-model}Job_History" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,25 +29,25 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
-@XmlRootElement(name = "departments")
-@XmlType(name = "Departments", propOrder = { "departments" })
-public class Departments {
+@XmlRootElement(name = "job_histories")
+@XmlType(name = "JobHistories", propOrder = { "jobHistories" })
+public class JobHistories {
 
-    private List<Department> departments;
+    private List<JobHistory> jobHistories;
 
-    @XmlElement(name = "department")
-    public List<Department> getDepartments() {
-        if (this.departments == null) {
-            this.departments = new ArrayList<Department>();
+    @XmlElement(name = "job_history")
+    public List<JobHistory> getJobHistories() {
+        if (this.jobHistories == null) {
+            this.jobHistories = new ArrayList<JobHistory>();
         }
-        return this.departments;
+        return this.jobHistories;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.departments == null) ? 0 : this.departments.hashCode());
+        result = prime * result + ((this.jobHistories == null) ? 0 : this.jobHistories.hashCode());
         return result;
     }
 
@@ -59,12 +59,12 @@ public class Departments {
             return false;
         if (this.getClass() != obj.getClass())
             return false;
-        Departments other = (Departments) obj;
-        if (this.departments == null) {
-            if (other.departments != null)
+        JobHistories other = (JobHistories) obj;
+        if (this.jobHistories == null) {
+            if (other.jobHistories != null)
                 return false;
         }
-        else if (!this.departments.equals(other.departments))
+        else if (!this.jobHistories.equals(other.jobHistories))
             return false;
         return true;
     }
@@ -72,7 +72,7 @@ public class Departments {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Departments [departments=").append(this.departments).append("]");
+        builder.append("Jobs [jobs=").append(this.jobHistories).append("]");
         return builder.toString();
     }
 }

@@ -1,23 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<jobHistories
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="hr-model" 
-  xsi:schemaLocation="hr-model hr-model.xsd">	  
-    <jobHistory>
-      <employeeId>101</employeeId>
-      <start_date>1989-09-21</start_date>
-      <end_date>1993-10-27</end_date>
-      <jobId>AC_ACCOUNT</jobId>
-      <departmentId>110</departmentId>
-    </jobHistory>
-    <jobHistory>
-      <employeeId>101</employeeId>
-      <start_date>1993-10-28</start_date>
-      <end_date>1997-03-15</end_date>
-      <jobId>AC_MGR</jobId>
-      <departmentId>110</departmentId>
-    </jobHistory>
-</jobHistories>
+<?xml version="1.0" encoding="UTF-8"?>
+<job_histories xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
+  <job_history employee_id="101" start_date="1989-09-21">
+    <end_date>1993-10-27</end_date>
+    <job_id>AC_ACCOUNT</job_id>
+    <department_id>110</department_id>
+  </job_history>
+  <job_history employee_id="101" start_date="1993-10-28">
+    <end_date>1997-03-15</end_date>
+    <job_id>AC_MGR</job_id>
+    <department_id>110</department_id>
+  </job_history>
+</job_histories>
 
 
 

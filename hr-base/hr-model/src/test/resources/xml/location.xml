@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<location id="1000"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="hr-model" 
-  xsi:schemaLocation="hr-model hr-model.xsd">
+<location id="1000" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
   <street_address>12-98 Victoria Street</street_address>
   <postal_code>2901</postal_code>
   <city>Sydney</city>
   <state_province>New South Wales</state_province>
-  <countryId>AU</countryId>
+  <country_id>AU</country_id>
 </location>
 
 

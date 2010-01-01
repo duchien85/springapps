@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<country id="AR"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="hr-model" 
-  xsi:schemaLocation="hr-model hr-model.xsd">
+<country id="AR" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
   <name>Argentina</name>
-  <regionId>2</regionId>
+  <region_id>2</region_id>
 </country>
 
 

@@ -12,8 +12,33 @@ import javax.xml.bind.annotation.XmlType;
 import com.studerb.hr.Link;
 import com.studerb.hr.geo.Location;
 
+/**
+ * <p>
+ * Java class for Department complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
+ * <pre>
+ * &lt;complexType name="Department">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="manager_id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *         &lt;element name="location_id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
 @XmlRootElement(name = "department")
-@XmlType(name = "departmentType", propOrder = { "name", "managerId", "locationId" })
+@XmlType(name = "Department", propOrder = { "name", "managerId", "locationId" })
 public class Department {
 
     private Long id;
@@ -88,7 +113,7 @@ public class Department {
         this.link = link;
     }
 
-    @XmlElement(required = true, nillable = true)
+    @XmlElement(name = "manager_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getManagerId() {
         return this.managerId;
@@ -98,7 +123,7 @@ public class Department {
         this.managerId = managerId;
     }
 
-    @XmlElement(required = true, nillable = true)
+    @XmlElement(name = "location_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getLocationId() {
         return this.locationId;

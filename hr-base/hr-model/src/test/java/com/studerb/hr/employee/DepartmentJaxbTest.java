@@ -6,33 +6,18 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.studerb.hr.AbstractJaxbTest;
 import com.studerb.hr.ModelUtils;
 
 public class DepartmentJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(DepartmentJaxbTest.class);
-    static JAXBContext context;
-    static Marshaller marshaller;
-    static Unmarshaller unmarshaller;
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        context = JAXBContext.newInstance("com.studerb.hr.employee");
-        marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "hr-model.xsd");
-        unmarshaller = context.createUnmarshaller();
-    }
 
     @Test
     public void DeparatmentToXml() throws Exception {
@@ -43,8 +28,8 @@ public class DepartmentJaxbTest extends AbstractJaxbTest {
         Document document = DocumentHelper.parseText(writer.toString());
         assertEquals(department.getId(), Long.valueOf(document.valueOf("/department/@id")));
         assertEquals(department.getName(), document.valueOf("/department/name"));
-        assertEquals(department.getLocationId(), Long.valueOf(document.valueOf("/department/locationId")));
-        assertEquals(department.getManagerId(), Long.valueOf(document.valueOf("/department/managerId")));
+        assertEquals(department.getLocationId(), Long.valueOf(document.valueOf("/department/location_id")));
+        assertEquals(department.getManagerId(), Long.valueOf(document.valueOf("/department/manager_id")));
     }
 
     @Test

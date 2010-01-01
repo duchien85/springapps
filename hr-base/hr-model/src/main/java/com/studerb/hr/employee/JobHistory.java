@@ -2,8 +2,42 @@ package com.studerb.hr.employee;
 
 import java.util.Calendar;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+
 import com.studerb.hr.Link;
 
+/**
+ * <p>
+ * Java class for Job_History complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
+ * <pre>
+ * &lt;complexType name="Job_History">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="end_date" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="job_id" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="department_id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="employee_id" use="required" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
+ *       &lt;attribute name="start_date" use="required" type="{http://www.w3.org/2001/XMLSchema}date" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlRootElement(name = "job_history")
+@XmlType(name = "JobHistory", propOrder = { "endDate", "jobId", "departmentId" })
 public class JobHistory {
     private Long employeeId;
     private Calendar endDate;
@@ -13,11 +47,18 @@ public class JobHistory {
     private Job job;
     private Link link;
 
+    private String jobId;
+    private Long departmentId;
+
     public Employee getEmployee() {
         return this.employee;
     }
 
     public void setEmployee(Employee employee) {
+        if (this.employee != null) {
+            this.employeeId = this.employee.getId();
+        }
+
         this.employee = employee;
     }
 
@@ -27,6 +68,9 @@ public class JobHistory {
 
     public void setDepartment(Department department) {
         this.department = department;
+        if (this.department != null) {
+            this.departmentId = this.department.getId();
+        }
     }
 
     public Job getJob() {
@@ -35,8 +79,13 @@ public class JobHistory {
 
     public void setJob(Job job) {
         this.job = job;
+        if (this.job != null) {
+            this.jobId = this.job.getId();
+        }
     }
 
+    @XmlAttribute(name = "employee_id", required = true)
+    @XmlSchemaType(name = "positiveInteger")
     public Long getEmployeeId() {
         return this.employeeId;
     }
@@ -45,6 +94,8 @@ public class JobHistory {
         this.employeeId = employeeId;
     }
 
+    @XmlAttribute(name = "start_date", required = true)
+    @XmlSchemaType(name = "date")
     public Calendar getStartDate() {
         return this.startDate;
     }
@@ -53,6 +104,8 @@ public class JobHistory {
         this.startDate = startDate;
     }
 
+    @XmlElement(name = "end_date", required = true)
+    @XmlSchemaType(name = "date")
     public Calendar getEndDate() {
         return this.endDate;
     }
@@ -69,27 +122,86 @@ public class JobHistory {
         this.link = link;
     }
 
+    @XmlElement(name = "job_id", required = true)
+    public String getJobId() {
+        return this.jobId;
+    }
+
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
+    }
+
+    @XmlElement(name = "department_id", required = true, nillable = true)
+    @XmlSchemaType(name = "positiveInteger")
+    public Long getDepartmentId() {
+        return this.departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.departmentId == null) ? 0 : this.departmentId.hashCode());
+        result = prime * result + ((this.employeeId == null) ? 0 : this.employeeId.hashCode());
+        result = prime * result + ((this.endDate == null) ? 0 : this.endDate.hashCode());
+        result = prime * result + ((this.jobId == null) ? 0 : this.jobId.hashCode());
+        result = prime * result + ((this.startDate == null) ? 0 : this.startDate.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        if (o == null || this.getClass() != o.getClass())
+        if (obj == null)
             return false;
-        JobHistory that = (JobHistory) o;
-        if (this.employeeId != null ? !this.employeeId.equals(that.employeeId) : that.employeeId != null)
+        if (this.getClass() != obj.getClass())
             return false;
-        if (this.endDate != null ? !this.endDate.equals(that.endDate) : that.endDate != null)
+        JobHistory other = (JobHistory) obj;
+        if (this.departmentId == null) {
+            if (other.departmentId != null)
+                return false;
+        }
+        else if (!this.departmentId.equals(other.departmentId))
             return false;
-        if (this.startDate != null ? !this.startDate.equals(that.startDate) : that.startDate != null)
+        if (this.employeeId == null) {
+            if (other.employeeId != null)
+                return false;
+        }
+        else if (!this.employeeId.equals(other.employeeId))
+            return false;
+        if (this.endDate == null) {
+            if (other.endDate != null)
+                return false;
+        }
+        else if (!this.endDate.equals(other.endDate))
+            return false;
+        if (this.jobId == null) {
+            if (other.jobId != null)
+                return false;
+        }
+        else if (!this.jobId.equals(other.jobId))
+            return false;
+        if (this.startDate == null) {
+            if (other.startDate != null)
+                return false;
+        }
+        else if (!this.startDate.equals(other.startDate))
             return false;
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int result = this.employeeId != null ? this.employeeId.hashCode() : 0;
-        result = 31 * result + (this.startDate != null ? this.startDate.hashCode() : 0);
-        result = 31 * result + (this.endDate != null ? this.endDate.hashCode() : 0);
-        return result;
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("JobHistory [departmentId=").append(this.departmentId).append(", employeeId=").append(this.employeeId).append(", endDate=").append(
+                this.endDate.getTime()).append(", job=").append(this.job).append(", jobId=").append(this.jobId).append(", startDate=").append(this.startDate.getTime()).append(
+                "]");
+        return builder.toString();
     }
+
 }

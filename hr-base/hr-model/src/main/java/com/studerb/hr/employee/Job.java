@@ -8,8 +8,33 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.studerb.hr.Link;
 
+/**
+ * <p>
+ * Java class for Job complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
+ * <pre>
+ * &lt;complexType name="Job">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="min_salary" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" minOccurs="0"/>
+ *         &lt;element name="max_salary" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" minOccurs="0"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
 @XmlRootElement(name = "job")
-@XmlType(name = "jobType", propOrder = { "title", "minSalary", "maxSalary" })
+@XmlType(name = "Job", propOrder = { "title", "minSalary", "maxSalary" })
 public class Job {
     private String id;
     private String title;

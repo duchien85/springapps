@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<department id="10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<department id="10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
   <name>Administration</name>
-  <managerId>200</managerId>
-  <locationId>1700</locationId>
+  <manager_id>200</manager_id>
+  <location_id>1700</location_id>
 </department>
 
 

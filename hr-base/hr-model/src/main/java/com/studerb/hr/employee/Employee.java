@@ -13,8 +13,40 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.studerb.hr.Link;
 
+/**
+ * <p>
+ * Java class for Employee complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
+ * <pre>
+ * &lt;complexType name="Employee">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="first_name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="last_name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="phone_number" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="hire_date" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="job_id" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="salary" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *         &lt;element name="commission_pct" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
+ *         &lt;element name="manager_id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *         &lt;element name="department_id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
 @XmlRootElement(name = "employee")
-@XmlType(name = "employeeType", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId", "salary", "commissionPct", "managerId", "departmentId" })
+@XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId", "salary", "commissionPct", "managerId", "departmentId" })
 public class Employee {
 
     private static final long serialVersionUID = 8744214730693860142L;
@@ -165,7 +197,7 @@ public class Employee {
         this.link = link;
     }
 
-    @XmlElement(required = true, nillable = true)
+    @XmlElement(name = "job_id", required = true)
     public String getJobId() {
         return this.jobId;
     }
@@ -174,7 +206,7 @@ public class Employee {
         this.jobId = jobId;
     }
 
-    @XmlElement(required = true, nillable = true)
+    @XmlElement(name = "department_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getDepartmentId() {
         return this.departmentId;
@@ -184,7 +216,7 @@ public class Employee {
         this.departmentId = departmentId;
     }
 
-    @XmlElement(required = true, nillable = true)
+    @XmlElement(name = "manager_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getManagerId() {
         return this.managerId;

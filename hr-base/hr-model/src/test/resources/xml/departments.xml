@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<departments xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<departments xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
   <department id="10">
     <name>Administration</name>
-    <managerId>200</managerId>
-    <locationId>1700</locationId>
+    <manager_id>200</manager_id>
+    <location_id>1700</location_id>
   </department>
   <department id="20">
     <name>Marketing</name>
-    <managerId>201</managerId>
-    <locationId>1800</locationId>
+    <manager_id>201</manager_id>
+    <location_id>1800</location_id>
   </department>
   <department id="30">
     <name>Purchasing</name>
-    <managerId>114</managerId>
-    <locationId>1700</locationId>
+    <manager_id>114</manager_id>
+    <location_id>1700</location_id>
   </department>
   <department id="40">
     <name>Human Resources</name>
-    <managerId>203</managerId>
-    <locationId>2400</locationId>
+    <manager_id>203</manager_id>
+    <location_id>2400</location_id>
   </department>
   <department id="120">
     <name>Treasury</name>
-    <locationId>1700</locationId>
+    <manager_id xsi:nil="true"/>
+    <location_id>1700</location_id>
   </department>
 </departments>

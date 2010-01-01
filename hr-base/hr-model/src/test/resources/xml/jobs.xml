@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jobs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<jobs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
   <job id="AD_PRES">
     <title>President</title>
     <min_salary>20000</min_salary>
