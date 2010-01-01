@@ -4,7 +4,15 @@
 // Any modifications to this file will be lost upon recompilation of the source schema.
 // Generated on: 2009.12.27 at 06:46:38 PM EST
 //
-
-@javax.xml.bind.annotation.XmlSchema(namespace = "hr-model", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@XmlJavaTypeAdapter(value = CalendarAdapter.class, type = Calendar.class)
+@XmlAccessorType(XmlAccessType.NONE)
 package com.studerb.hr.geo;
+
+import java.util.Calendar;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.studerb.hr.employee.CalendarAdapter;
 

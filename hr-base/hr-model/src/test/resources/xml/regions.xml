@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<regions
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="hr-model" 
-  xsi:schemaLocation="hr-model hr-model.xsd">
+<regions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
   <region id="2">
     <name>Americas</name>
   </region>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<employees xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<employees xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
   <employee id="100">
     <first_name>Steven</first_name>
     <last_name>King</last_name>
     <email>SKING</email>
     <phone_number>515.123.4567</phone_number>
     <hire_date>1987-06-17</hire_date>
-    <jobId>AD_PRES</jobId>
+    <job_id>AD_PRES</job_id>
     <salary>24000</salary>
     <commission_pct xsi:nil="true" />
-    <managerId xsi:nil="true" />
-    <departmentId>90</departmentId>
+    <manager_id xsi:nil="true" />
+    <department_id>90</department_id>
   </employee>
 
   <employee id="189">
@@ -19,11 +19,11 @@
     <email>JDILLY</email>
     <phone_number>650.505.2786</phone_number>
     <hire_date>1997-08-13</hire_date>
-    <jobId>SH_CLERK</jobId>
+    <job_id>SH_CLERK</job_id>
     <salary>3600</salary>
     <commission_pct xsi:nil="true" />
-    <managerId>122</managerId>
-    <departmentId>50</departmentId>
+    <manager_id>122</manager_id>
+    <department_id>50</department_id>
   </employee>
 
   <employee id="192">
@@ -32,11 +32,11 @@
     <email>SBELL</email>
     <phone_number>650.501.1876</phone_number>
     <hire_date>1996-02-04</hire_date>
-    <jobId>SH_CLERK</jobId>
+    <job_id>SH_CLERK</job_id>
     <salary>4000</salary>
     <commission_pct xsi:nil="true" />
-    <managerId>123</managerId>
-    <departmentId>50</departmentId>
+    <manager_id>123</manager_id>
+    <department_id>50</department_id>
   </employee>
 
   <employee id="145">
@@ -45,11 +45,11 @@
     <email>JRUSSEL</email>
     <phone_number>011.44.1344.429268</phone_number>
     <hire_date>1996-10-01</hire_date>
-    <jobId>SA_MAN</jobId>
+    <job_id>SA_MAN</job_id>
     <salary>14000</salary>
     <commission_pct>0.4</commission_pct>
-    <managerId>100</managerId>
-    <departmentId>80</departmentId>
+    <manager_id>100</manager_id>
+    <department_id>80</department_id>
   </employee>
 
 </employees>

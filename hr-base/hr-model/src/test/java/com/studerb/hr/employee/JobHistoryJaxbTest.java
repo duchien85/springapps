@@ -16,8 +16,8 @@ import org.junit.Test;
 import com.studerb.hr.AbstractJaxbTest;
 import com.studerb.hr.ModelUtils;
 
-public class JobJaxbTest extends AbstractJaxbTest {
-    static final Logger logger = Logger.getLogger(JobJaxbTest.class);
+public class JobHistoryJaxbTest extends AbstractJaxbTest {
+    static final Logger logger = Logger.getLogger(JobHistoryJaxbTest.class);
 
     @Test
     public void DeparatmentToXml() throws Exception {
