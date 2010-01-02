@@ -6,8 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.StringWriter;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -20,24 +22,27 @@ public class JobHistoryJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(JobHistoryJaxbTest.class);
 
     @Test
-    public void DeparatmentToXml() throws Exception {
-        Job job = ModelUtils.createJobAdPres();
+    public void JobHistoryToXml() throws Exception {
+        JobHistory jobHistory = ModelUtils.createJobHistory102();
+        logger.debug("JOBHISTORY: -------------\n" + jobHistory);
         StringWriter writer = new StringWriter();
-        marshaller.marshal(job, writer);
+        marshaller.marshal(jobHistory, writer);
         logger.debug("\n-------------\n" + writer.toString());
         Document document = DocumentHelper.parseText(writer.toString());
-        assertEquals(job.getId(), document.valueOf("/job/@id"));
-        assertEquals(job.getTitle(), document.valueOf("/job/title"));
-        assertEquals(job.getMinSalary(), Long.valueOf(document.valueOf("/job/min_salary")));
-        assertEquals(job.getMaxSalary(), Long.valueOf(document.valueOf("/job/max_salary")));
+        assertEquals(jobHistory.getEmployeeId(), Long.valueOf(document.valueOf("/job_history/@employee_id")));
+        assertTrue(DateUtils.isSameDay(jobHistory.getStartDate(), DatatypeConverter.parseDate(document.valueOf("/job_history/@start_date"))));
+        assertTrue(DateUtils.isSameDay(jobHistory.getEndDate(), DatatypeConverter.parseDate(document.valueOf("/job_history/end_date"))));
+        assertEquals(jobHistory.getJobId(), document.valueOf("/job_history/job_id"));
+        assertEquals(jobHistory.getDepartmentId(), Long.valueOf(document.valueOf("/job_history/department_id")));
+
     }
 
     @Test
-    public void xmlToJob() throws JAXBException {
-        File f = getClassPathFile("xml/job.xml");
+    public void xmlToJobHistory() throws JAXBException {
+        File f = getClassPathFile("xml/jobHistory.xml");
         assertTrue(f.exists());
-        Job unmarhalled = (Job) unmarshaller.unmarshal(f);
-        Job obj = ModelUtils.createJobAdPres();
+        JobHistory unmarhalled = (JobHistory) unmarshaller.unmarshal(f);
+        JobHistory obj = ModelUtils.createJobHistory102();
         logger.debug("from XML\n" + unmarhalled.toString());
         logger.debug("from obj\n: " + obj.toString());
         assertEquals(obj, unmarhalled);

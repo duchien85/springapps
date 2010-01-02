@@ -20,7 +20,7 @@ public class JobHistoriesJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(JobHistoriesJaxbTest.class);
 
     @Test
-    public void JobsToXml() throws Exception {
+    public void JobHistoriesToXml() throws Exception {
         Jobs jobs = ModelUtils.createFourJobs();
         StringWriter writer = new StringWriter();
         marshaller.marshal(jobs, writer);
@@ -53,7 +53,7 @@ public class JobHistoriesJaxbTest extends AbstractJaxbTest {
     }
 
     @Test
-    public void xmlToJobs() throws JAXBException {
+    public void xmlToJobHistories() throws JAXBException {
         File f = getClassPathFile("xml/jobs.xml");
         assertTrue(f.exists());
         Jobs unmarhalled = (Jobs) unmarshaller.unmarshal(f);

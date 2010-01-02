@@ -22,6 +22,7 @@ public class CalendarAdapter extends XmlAdapter<String, Calendar> {
     @Override
     public Calendar unmarshal(String v) throws Exception {
         Calendar c = DatatypeConverter.parseDate(v);
+        c = DateUtils.truncate(c, Calendar.DAY_OF_MONTH);
         return c;
     }
 
