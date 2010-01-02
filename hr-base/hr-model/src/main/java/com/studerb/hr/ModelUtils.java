@@ -11,6 +11,8 @@ import com.studerb.hr.employee.Departments;
 import com.studerb.hr.employee.Employee;
 import com.studerb.hr.employee.Employees;
 import com.studerb.hr.employee.Job;
+import com.studerb.hr.employee.JobHistories;
+import com.studerb.hr.employee.JobHistory;
 import com.studerb.hr.employee.Jobs;
 import com.studerb.hr.geo.Location;
 
@@ -20,14 +22,12 @@ import com.studerb.hr.geo.Location;
 public class ModelUtils {
     final static Logger log = Logger.getLogger(ModelUtils.class);
 
-    // e.g. 1987-06-17T00:00:00.546-04:00
-
     /**
-     * Create a &apos;shallow&apos; instance of Employee with id #100 from the
-     * default HR schema data. Instance entity references (manager, department,
-     * etc.) are shallow in the sense that they only contain the ids.
-     * 
-     * @return
+     * @return Create a &apos;shallow&apos; instance of Employee with id #100
+     *         from the default HR schema data and also the xml file:
+     *         <em>/src/test/resources/xml/employee.xml.</em> Instance entity
+     *         references (manager, department, etc.) are shallow in the sense
+     *         that they only contain the ids.
      */
     public static Employee createEmployee100() {
         Employee e = new Employee(100L);
@@ -45,6 +45,11 @@ public class ModelUtils {
         return e;
     }
 
+    /**
+     * @return {@link Department Department} instance coorelating to the xml
+     *         file <em>jobHistory.xml</em> in <em>src/test/resources/xml</em>
+     *         and employee {@code #102} in the hr schema
+     */
     public static Department createDepartment10() {
         Department d = new Department(10L);
         d.setName("Administration");
@@ -53,6 +58,11 @@ public class ModelUtils {
         return d;
     }
 
+    /**
+     * @return an instance of {@link Job Job} that refers to job with id of
+     *         <em>AD_PRES</em> in the database and also the file @ code
+     *         src/test/resources/xml/job.xml} .
+     */
     public static Job createJobAdPres() {
         Job job = new Job("AD_PRES");
         job.setTitle("President");
@@ -61,6 +71,12 @@ public class ModelUtils {
         return job;
     }
 
+    /**
+     * @return {@link Departments Departments} instance which is essentially an
+     *         XML wrapper type of a list of {@link Department Departments}.
+     *         This list cooresponds to five departments as listed in the file
+     *         <em>src/test/resources/xml/departments.xml</em>.
+     */
     public static Departments createFiveDepartments() {
         Departments departments = new Departments();
 
@@ -96,6 +112,12 @@ public class ModelUtils {
         return departments;
     }
 
+    /**
+     * @return a {@link Jobs Jobs} instance which is essentially an XML wrapper
+     *         around a list of {@link Job Jobs}. This list cooresponds with
+     *         four jobs listed in the file <em>src/test/resources/jobs.xml</em>
+     *         .
+     */
     public static Jobs createFourJobs() {
         Jobs jobs = new Jobs();
 
@@ -126,6 +148,12 @@ public class ModelUtils {
         return jobs;
     }
 
+    /**
+     * @return a {@link Employees Employees} instance which is just an XML
+     *         wrapper type for a list of {@link Employee Employees}. This list
+     *         cooresponds to the file
+     *         <em>src/test/resources/xml/employees.xml</em>.
+     */
     public static Employees createFourEmployees() {
         Employees employees = new Employees();
 
@@ -188,5 +216,69 @@ public class ModelUtils {
         employees.getEmployees().add(e4);
 
         return employees;
+    }
+
+    /**
+     * @return JobHistory instance coorelating to the xml file
+     *         <em>jobHistory.xml</em> in <em>src/test/resources/xml</em> and
+     *         employee 102 in the hr schema
+     */
+    public static JobHistory createJobHistory102() {
+        JobHistory jh = new JobHistory();
+        jh.setEmployee(new Employee(102L));
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(1993, Calendar.JANUARY, 13);
+        DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
+        jh.setStartDate(startDate);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(1998, Calendar.JULY, 24);
+        DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
+        jh.setEndDate(endDate);
+        jh.setJob(new Job("AD_PRES"));
+        jh.setDepartment(new Department(110L));
+
+        return jh;
+    }
+
+    /**
+     * @return a {@link JobHistories JobHistories} instance which is just an XML
+     *         wrapper type for a list of {@link JobHistory JobHistory}. This
+     *         list cooresponds to the file
+     *         <em>src/test/resources/xml/jobHistories.xml</em> and the job
+     *         histories of employee #101 from the HR schema
+     */
+    public static JobHistories createJobHistories101() {
+        JobHistories jobHistories = new JobHistories();
+
+        JobHistory jh = new JobHistory();
+        jh.setEmployee(new Employee(101L));
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(1989, Calendar.SEPTEMBER, 21);
+        DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
+        jh.setStartDate(startDate);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(1993, Calendar.OCTOBER, 27);
+        DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
+        jh.setEndDate(endDate);
+        jh.setJob(new Job("AC_ACCOUNT"));
+        jh.setDepartment(new Department(110L));
+        jobHistories.getJobHistories().add(jh);
+
+        JobHistory jh2 = new JobHistory();
+        jh2.setEmployee(new Employee(101L));
+        startDate = Calendar.getInstance();
+        startDate.set(1993, Calendar.OCTOBER, 28);
+        startDate = DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
+        jh2.setStartDate(startDate);
+        endDate = Calendar.getInstance();
+        endDate.set(1997, Calendar.MARCH, 15);
+        DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
+        jh2.setEndDate(endDate);
+        jh2.setJob(new Job("AC_MGR"));
+        jh2.setEndDate(endDate);
+        jh2.setDepartment(new Department(110L));
+        jobHistories.getJobHistories().add(jh2);
+
+        return jobHistories;
     }
 }

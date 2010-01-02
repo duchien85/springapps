@@ -20,7 +20,7 @@ public class JobJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(JobJaxbTest.class);
 
     @Test
-    public void DeparatmentToXml() throws Exception {
+    public void JobToXml() throws Exception {
         Job job = ModelUtils.createJobAdPres();
         StringWriter writer = new StringWriter();
         marshaller.marshal(job, writer);

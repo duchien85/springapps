@@ -11,6 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.FastDateFormat;
+
 import com.studerb.hr.Link;
 
 /**
@@ -48,8 +51,8 @@ import com.studerb.hr.Link;
 @XmlRootElement(name = "employee")
 @XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId", "salary", "commissionPct", "managerId", "departmentId" })
 public class Employee {
-
     private static final long serialVersionUID = 8744214730693860142L;
+    private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
     private Long id;
     private String firstName;
     private String lastName;
@@ -312,7 +315,7 @@ public class Employee {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Employee [commissionPct=").append(this.commissionPct).append(", departmentId=").append(this.departmentId).append(", email=").append(this.email).append(
-                ", firstName=").append(this.firstName).append(", hireDate=").append(this.hireDate.getTime()).append(", id=").append(this.id).append(", jobId=").append(
+                ", firstName=").append(this.firstName).append(", hireDate=").append(this.fdf.format(this.hireDate)).append(", id=").append(this.id).append(", jobId=").append(
                 this.jobId).append(", lastName=").append(this.lastName).append(", managerId=").append(this.managerId).append(", phoneNumber=").append(this.phoneNumber).append(
                 ", salary=").append(this.salary).append("]");
         return builder.toString();

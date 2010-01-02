@@ -8,6 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.FastDateFormat;
+
 import com.studerb.hr.Link;
 
 /**
@@ -39,6 +42,7 @@ import com.studerb.hr.Link;
 @XmlRootElement(name = "job_history")
 @XmlType(name = "JobHistory", propOrder = { "endDate", "jobId", "departmentId" })
 public class JobHistory {
+    private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
     private Long employeeId;
     private Calendar endDate;
     private Calendar startDate;
@@ -46,7 +50,6 @@ public class JobHistory {
     private Department department;
     private Job job;
     private Link link;
-
     private String jobId;
     private Long departmentId;
 
@@ -55,11 +58,10 @@ public class JobHistory {
     }
 
     public void setEmployee(Employee employee) {
+        this.employee = employee;
         if (this.employee != null) {
             this.employeeId = this.employee.getId();
         }
-
-        this.employee = employee;
     }
 
     public Department getDepartment() {
@@ -199,8 +201,8 @@ public class JobHistory {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("JobHistory [departmentId=").append(this.departmentId).append(", employeeId=").append(this.employeeId).append(", endDate=").append(
-                this.endDate.getTime()).append(", job=").append(this.job).append(", jobId=").append(this.jobId).append(", startDate=").append(this.startDate.getTime()).append(
-                "]");
+                this.fdf.format(this.endDate)).append(", job=").append(this.job).append(", jobId=").append(this.jobId).append(", startDate=").append(
+                this.fdf.format(this.startDate)).append("]");
         return builder.toString();
     }
 
