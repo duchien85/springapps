@@ -40,7 +40,7 @@ public class EmployeeResource {
     }
 
     @GET
-    @Produces("application/xml")
+    @Produces("application/xml, text/xml")
     @Path("/")
     public Employees getAllEmployeesXml() {
         Employees employees = new Employees();
