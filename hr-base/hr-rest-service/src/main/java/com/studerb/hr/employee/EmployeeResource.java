@@ -26,7 +26,7 @@ public class EmployeeResource {
     @GET
     @Produces("text/plain")
     @Path("/")
-    public String getAllEmployees() {
+    public String getAllEmployeesText() {
         logger.debug("got request to /employees/");
         logger.debug("employeeService: " + this.employeeService);
 
@@ -37,6 +37,16 @@ public class EmployeeResource {
         }
         logger.debug("Returning: " + bldr.toString());
         return bldr.toString();
+    }
+
+    @GET
+    @Produces("application/xml")
+    @Path("/")
+    public Employees getAllEmployeesXml() {
+        Employees employees = new Employees();
+        List<Employee> employeeList = this.employeeService.getAllEmployees();
+        employees.getEmployees().addAll(employeeList);
+        return employees;
     }
     /*
      * @POST

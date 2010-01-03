@@ -5,13 +5,10 @@ import java.util.Calendar;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 
 import com.studerb.hr.Link;
@@ -137,7 +134,7 @@ public class Employee {
     }
 
     public void setHireDate(Calendar hireDate) {
-        this.hireDate = hireDate;
+        this.hireDate = DateUtils.truncate(hireDate, Calendar.DAY_OF_MONTH);
     }
 
     @XmlElement(required = true, nillable = true)
@@ -254,6 +251,12 @@ public class Employee {
         if (this.getClass() != obj.getClass())
             return false;
         Employee other = (Employee) obj;
+        if (this.hireDate == null) {
+            if (other.commissionPct != null)
+                return false;
+        }
+        else if (!DateUtils.isSameDay(this.hireDate, other.hireDate))
+            return false;
         if (this.commissionPct == null) {
             if (other.commissionPct != null)
                 return false;

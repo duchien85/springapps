@@ -6,14 +6,7 @@ import java.util.Calendar;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 
-import com.studerb.hr.employee.Department;
-import com.studerb.hr.employee.Departments;
-import com.studerb.hr.employee.Employee;
-import com.studerb.hr.employee.Employees;
-import com.studerb.hr.employee.Job;
-import com.studerb.hr.employee.JobHistories;
-import com.studerb.hr.employee.JobHistory;
-import com.studerb.hr.employee.Jobs;
+import com.studerb.hr.employee.*;
 import com.studerb.hr.geo.Location;
 
 /**
@@ -37,7 +30,6 @@ public class ModelUtils {
         e.setPhoneNumber("515.123.4567");
         Calendar hireDate = Calendar.getInstance();
         hireDate.set(1987, Calendar.JUNE, 17);
-        hireDate = DateUtils.truncate(hireDate, Calendar.DAY_OF_MONTH);
         e.setHireDate(hireDate);
         e.setJob(new Job("AD_PRES"));
         e.setSalary(new BigDecimal(24000));
@@ -165,7 +157,6 @@ public class ModelUtils {
         e1.setEmail("SKING");
         e1.setPhoneNumber("515.123.4567");
         hireDate.set(1987, Calendar.JUNE, 17);
-        hireDate = DateUtils.truncate(hireDate, Calendar.DAY_OF_MONTH);
         e1.setHireDate(hireDate);
         e1.setJob(new Job("AD_PRES"));
         e1.setSalary(new BigDecimal(24000));
@@ -178,7 +169,6 @@ public class ModelUtils {
         e2.setEmail("JDILLY");
         e2.setPhoneNumber("650.505.2786");
         hireDate.set(1997, Calendar.AUGUST, 13);
-        hireDate = DateUtils.truncate(hireDate, Calendar.DAY_OF_MONTH);
         e2.setHireDate(hireDate);
         e2.setJob(new Job("SH_CLERK"));
         e2.setSalary(new BigDecimal(3600));
@@ -192,7 +182,6 @@ public class ModelUtils {
         e3.setEmail("SBELL");
         e3.setPhoneNumber("650.501.1876");
         hireDate.set(1996, Calendar.FEBRUARY, 04);
-        hireDate = DateUtils.truncate(hireDate, Calendar.DAY_OF_MONTH);
         e3.setHireDate(hireDate);
         e3.setJob(new Job("SH_CLERK"));
         e3.setSalary(new BigDecimal(4000));
@@ -206,7 +195,6 @@ public class ModelUtils {
         e4.setEmail("JRUSSEL");
         e4.setPhoneNumber("011.44.1344.429268");
         hireDate.set(1996, Calendar.OCTOBER, 01);
-        hireDate = DateUtils.truncate(hireDate, Calendar.DAY_OF_MONTH);
         e4.setHireDate(hireDate);
         e4.setJob(new Job("SA_MAN"));
         e4.setSalary(new BigDecimal(14000));
@@ -228,7 +216,7 @@ public class ModelUtils {
         jh.setEmployee(new Employee(102L));
         Calendar startDate = Calendar.getInstance();
         startDate.set(1993, Calendar.JANUARY, 13);
-        DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
+
         jh.setStartDate(startDate);
         Calendar endDate = Calendar.getInstance();
         endDate.set(1998, Calendar.JULY, 24);

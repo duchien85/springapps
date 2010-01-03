@@ -2,13 +2,10 @@ package com.studerb.hr.employee;
 
 import java.util.Calendar;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 
 import com.studerb.hr.Link;
@@ -36,7 +33,6 @@ import com.studerb.hr.Link;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
  * 
  */
 @XmlRootElement(name = "job_history")
@@ -82,7 +78,7 @@ public class JobHistory {
     public void setJob(Job job) {
         this.job = job;
         if (this.job != null) {
-            this.jobId = this.job.getId();
+            this.jobId = job.getId();
         }
     }
 
@@ -103,7 +99,7 @@ public class JobHistory {
     }
 
     public void setStartDate(Calendar startDate) {
-        this.startDate = startDate;
+        this.startDate = DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
     }
 
     @XmlElement(name = "end_date", required = true)
@@ -113,7 +109,7 @@ public class JobHistory {
     }
 
     public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
+        this.endDate = DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
     }
 
     public Link getLink() {
@@ -161,7 +157,7 @@ public class JobHistory {
             return true;
         if (obj == null)
             return false;
-        if (this.getClass() != obj.getClass())
+        if (getClass() != obj.getClass())
             return false;
         JobHistory other = (JobHistory) obj;
         if (this.departmentId == null) {
@@ -176,23 +172,23 @@ public class JobHistory {
         }
         else if (!this.employeeId.equals(other.employeeId))
             return false;
+        if (this.startDate == null) {
+            if (other.startDate != null)
+                return false;
+        }
+        else if (!DateUtils.isSameDay(this.startDate, other.startDate))
+            return false;
         if (this.endDate == null) {
             if (other.endDate != null)
                 return false;
         }
-        else if (!this.endDate.equals(other.endDate))
+        else if (!DateUtils.isSameDay(this.endDate, other.endDate))
             return false;
         if (this.jobId == null) {
             if (other.jobId != null)
                 return false;
         }
         else if (!this.jobId.equals(other.jobId))
-            return false;
-        if (this.startDate == null) {
-            if (other.startDate != null)
-                return false;
-        }
-        else if (!this.startDate.equals(other.startDate))
             return false;
         return true;
     }
@@ -201,8 +197,7 @@ public class JobHistory {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("JobHistory [departmentId=").append(this.departmentId).append(", employeeId=").append(this.employeeId).append(", endDate=").append(
-                this.fdf.format(this.endDate)).append(", job=").append(this.job).append(", jobId=").append(this.jobId).append(", startDate=").append(
-                this.fdf.format(this.startDate)).append("]");
+                this.fdf.format(this.endDate)).append(", jobId=").append(this.jobId).append(", startDate=").append(this.fdf.format(this.startDate)).append("]");
         return builder.toString();
     }
 
