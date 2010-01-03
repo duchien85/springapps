@@ -1,13 +1,14 @@
 package com.studerb.hr.employee;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.StringWriter;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -21,43 +22,33 @@ public class JobHistoriesJaxbTest extends AbstractJaxbTest {
 
     @Test
     public void JobHistoriesToXml() throws Exception {
-        Jobs jobs = ModelUtils.createFourJobs();
+        JobHistories jobHistories = ModelUtils.createJobHistories101();
         StringWriter writer = new StringWriter();
-        marshaller.marshal(jobs, writer);
+        marshaller.marshal(jobHistories, writer);
         logger.debug("\n-------------\n" + writer.toString());
         Document document = DocumentHelper.parseText(writer.toString());
 
-        Job j1 = jobs.getJobs().get(0);
-        assertEquals(j1.getId(), (document.valueOf("/jobs/job[1]/@id")));
-        assertEquals(j1.getTitle(), document.valueOf("/jobs/job[1]/title"));
-        assertEquals(j1.getMinSalary(), Long.valueOf(document.valueOf("/jobs/job[1]/min_salary")));
-        assertEquals(j1.getMaxSalary(), Long.valueOf(document.valueOf("/jobs/job[1]/max_salary")));
+        JobHistory j1 = jobHistories.getJobHistories().get(0);
+        assertEquals(j1.getEmployeeId(), Long.valueOf(document.valueOf("/job_histories/job_history[1]/@employee_id")));
+        assertTrue(DateUtils.isSameDay(j1.getStartDate(), DatatypeConverter.parseDate(document.valueOf("/job_histories/job_history[1]/@start_date"))));
+        assertTrue(DateUtils.isSameDay(j1.getEndDate(), DatatypeConverter.parseDate(document.valueOf("/job_histories/job_history[1]/end_date"))));
+        assertEquals(j1.getJobId(), document.valueOf("/job_histories/job_history[1]/job_id"));
+        assertEquals(j1.getDepartmentId(), Long.valueOf(document.valueOf("/job_histories/job_history[1]/department_id")));
 
-        Job j2 = jobs.getJobs().get(1);
-        assertEquals(j2.getId(), (document.valueOf("/jobs/job[2]/@id")));
-        assertEquals(j2.getTitle(), document.valueOf("/jobs/job[2]/title"));
-        assertEquals(j2.getMinSalary(), Long.valueOf(document.valueOf("/jobs/job[2]/min_salary")));
-        assertEquals(j2.getMaxSalary(), Long.valueOf(document.valueOf("/jobs/job[2]/max_salary")));
-
-        Job j3 = jobs.getJobs().get(2);
-        assertEquals(j3.getId(), (document.valueOf("/jobs/job[3]/@id")));
-        assertEquals(j3.getTitle(), document.valueOf("/jobs/job[3]/title"));
-        assertEquals(j3.getMinSalary(), Long.valueOf(document.valueOf("/jobs/job[3]/min_salary")));
-        assertEquals(j3.getMaxSalary(), Long.valueOf(document.valueOf("/jobs/job[3]/max_salary")));
-
-        Job j4 = jobs.getJobs().get(3);
-        assertEquals(j4.getId(), (document.valueOf("/jobs/job[4]/@id")));
-        assertEquals(j4.getTitle(), document.valueOf("/jobs/job[4]/title"));
-        assertEquals(j4.getMinSalary(), Long.valueOf(document.valueOf("/jobs/job[4]/min_salary")));
-        assertEquals(j4.getMaxSalary(), Long.valueOf(document.valueOf("/jobs/job[4]/max_salary")));
+        JobHistory j2 = jobHistories.getJobHistories().get(1);
+        assertEquals(j2.getEmployeeId(), Long.valueOf(document.valueOf("/job_histories/job_history[2]/@employee_id")));
+        assertTrue(DateUtils.isSameDay(j2.getStartDate(), DatatypeConverter.parseDate(document.valueOf("/job_histories/job_history[2]/@start_date"))));
+        assertTrue(DateUtils.isSameDay(j2.getEndDate(), DatatypeConverter.parseDate(document.valueOf("/job_histories/job_history[2]/end_date"))));
+        assertEquals(j2.getJobId(), document.valueOf("/job_histories/job_history[2]/job_id"));
+        assertEquals(j2.getDepartmentId(), Long.valueOf(document.valueOf("/job_histories/job_history[2]/department_id")));
     }
 
     @Test
     public void xmlToJobHistories() throws JAXBException {
-        File f = getClassPathFile("xml/jobs.xml");
+        File f = getClassPathFile("xml/jobHistories.xml");
         assertTrue(f.exists());
-        Jobs unmarhalled = (Jobs) unmarshaller.unmarshal(f);
-        Jobs obj = ModelUtils.createFourJobs();
+        JobHistories unmarhalled = (JobHistories) unmarshaller.unmarshal(f);
+        JobHistories obj = ModelUtils.createJobHistories101();
         logger.debug("from XML\n" + unmarhalled.toString());
         logger.debug("from obj\n: " + obj.toString());
         assertEquals(obj, unmarhalled);
