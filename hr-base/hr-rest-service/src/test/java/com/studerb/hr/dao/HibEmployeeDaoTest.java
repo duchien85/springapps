@@ -7,16 +7,16 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.time.DateUtils;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.studerb.hr.dao.EmployeeDao;
 import com.studerb.hr.model.Department;
 import com.studerb.hr.model.Employee;
 import com.studerb.hr.model.Job;
@@ -25,10 +25,10 @@ import com.studerb.hr.model.Job;
 @TransactionConfiguration(defaultRollback = false)
 public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-    @Autowired
+    @Resource(name = "hibEmployeeDao")
     EmployeeDao employeeDao;
 
-    @Autowired
+    @Resource
     SessionFactory sessionFactory;
 
     static final int TOTAL_COUNT = 107;

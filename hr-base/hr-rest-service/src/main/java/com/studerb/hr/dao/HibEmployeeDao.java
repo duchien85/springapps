@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.studerb.hr.model.Employee;
 
-@Repository("employeeDao")
+@Repository
 public class HibEmployeeDao extends AbstractHibernateDao<Employee> implements EmployeeDao {
 
     private final String TABLE_NAME = "EMPLOYEES";
