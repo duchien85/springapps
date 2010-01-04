@@ -1,4 +1,4 @@
-package com.studerb.hr.employee;
+package com.studerb.hr.resource;
 
 import java.util.List;
 
@@ -12,6 +12,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.studerb.hr.model.Employee;
+import com.studerb.hr.model.Employees;
+import com.studerb.hr.service.EmployeeService;
 import com.sun.jersey.spi.resource.Singleton;
 
 @Service

@@ -2,27 +2,27 @@
 <!DOCTYPE hibernate-mapping PUBLIC
   "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-    <class name="com.studerb.hr.employee.JobHistory" table="JOB_HISTORY" mutable="false">
-        <composite-id mapped="true" class="com.studerb.hr.employee.JobHistoryPK">
-            <key-property name="employeeId" type="long">
-                <column name="EMPLOYEE_ID" />
-            </key-property>
-            <key-property name="startDate" type="calendar" >
-                <column name="START_DATE" />
-            </key-property>
-        </composite-id>
-        <property name="endDate" type="calendar">
-            <column name="END_DATE" />
-        </property>
-        <many-to-one name="employee" class="com.studerb.hr.employee.Employee">
-            <column name="EMPLOYEE_ID" not-null="true"/>
-        </many-to-one>
-        <many-to-one name="department" class="com.studerb.hr.employee.Department">
-            <column name="DEPARTMENT_ID"/>
-        </many-to-one>
-        <many-to-one name="job" class="com.studerb.hr.employee.Job">
-            <column name="JOB_ID" not-null="true"/>
-        </many-to-one>
-    </class>
+<hibernate-mapping package="com.studerb.hr.model">
+  <class name="JobHistory" table="JOB_HISTORY" mutable="false">
+    <composite-id mapped="true" class="JobHistoryPK">
+      <key-property name="employeeId" type="long">
+        <column name="EMPLOYEE_ID" />
+      </key-property>
+      <key-property name="startDate" type="calendar">
+        <column name="START_DATE" />
+      </key-property>
+    </composite-id>
+    <property name="endDate" type="calendar">
+      <column name="END_DATE" />
+    </property>
+    <many-to-one name="employee" class="Employee">
+      <column name="EMPLOYEE_ID" not-null="true" />
+    </many-to-one>
+    <many-to-one name="department" class="Department">
+      <column name="DEPARTMENT_ID" />
+    </many-to-one>
+    <many-to-one name="job" class="Job">
+      <column name="JOB_ID" not-null="true" />
+    </many-to-one>
+  </class>
 </hibernate-mapping>
