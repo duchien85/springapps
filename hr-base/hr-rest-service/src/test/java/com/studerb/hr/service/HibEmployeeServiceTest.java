@@ -4,21 +4,21 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.model.Employee;
-import com.studerb.hr.service.EmployeeService;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 @TransactionConfiguration(defaultRollback = false)
-public class DefaultEmployeeServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class HibEmployeeServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 
-    @Autowired
+    @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
 
     static final int TOTAL_COUNT = 107;

@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.studerb.hr.dao.EmployeeDao;
 import com.studerb.hr.model.Employee;
 
-@Service("employeeService")
-public class DefaultEmployeeService implements EmployeeService {
-    private static final Logger logger = Logger.getLogger(DefaultEmployeeService.class);
+@Service("hibEmployeeService")
+public class HibEmployeeService implements EmployeeService {
+    private static final Logger logger = Logger.getLogger(HibEmployeeService.class);
 
     @Autowired
     protected EmployeeDao employeeDao;

@@ -2,6 +2,7 @@ package com.studerb.hr.resource;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,7 +10,6 @@ import javax.ws.rs.Produces;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang.text.StrBuilder;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.studerb.hr.model.Employee;
@@ -23,7 +23,7 @@ import com.sun.jersey.spi.resource.Singleton;
 public class EmployeeResource {
     private static final Logger logger = Logger.getLogger(EmployeeResource.class);
 
-    @Autowired
+    @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
 
     @GET
