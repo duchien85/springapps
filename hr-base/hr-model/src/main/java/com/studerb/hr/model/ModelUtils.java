@@ -6,8 +6,6 @@ import java.util.Calendar;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 
-import com.studerb.hr.employee.*;
-
 /**
  * Utilities to create mock model objects used for testing
  */
