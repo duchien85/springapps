@@ -33,7 +33,7 @@ public abstract class AbstractJaxbTest {
     public static void setUpBeforeClass() throws Exception {
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = sf.newSchema(getClassPathFile("xml/hr-model.xsd"));
-        context = JAXBContext.newInstance("com.studerb.hr.employee");
+        context = JAXBContext.newInstance("com.studerb.hr.model");
         marshaller = context.createMarshaller();
         marshaller.setSchema(schema);
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
