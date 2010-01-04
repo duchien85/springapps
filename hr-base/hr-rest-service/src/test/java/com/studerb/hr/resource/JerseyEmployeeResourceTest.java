@@ -30,7 +30,7 @@ public class JerseyEmployeeResourceTest extends JerseyTest {
 
     @Test
     public void doTestApplicationWadl() {
-        WebResource webResource = resource();
+        WebResource webResource = this.resource();
         String wadl = webResource.path("application.wadl").accept(MediaTypes.WADL).get(String.class);
         log.debug("*******************\n" + wadl + " ***********************\n");
         assertTrue("Method: doTestApplicationWadl \nMessage: Something wrong, the returned "
@@ -39,7 +39,7 @@ public class JerseyEmployeeResourceTest extends JerseyTest {
 
     @Test
     public void getEmployeesText() {
-        WebResource webResource = resource();
+        WebResource webResource = this.resource();
         String employeeLines = webResource.path("employees").accept("text/plain").get(String.class);
         List<String> lines = Arrays.asList(employeeLines);
         System.err.println(employeeLines);
@@ -47,7 +47,7 @@ public class JerseyEmployeeResourceTest extends JerseyTest {
 
     @Test
     public void getEmployeesXml() {
-        WebResource webResource = resource();
+        WebResource webResource = this.resource();
         Employees employees = webResource.path("employees").accept("application/xml").get(Employees.class);
         List<Employee> employeeList = employees.getEmployees();
         for (Employee e : employees.getEmployees()) {
