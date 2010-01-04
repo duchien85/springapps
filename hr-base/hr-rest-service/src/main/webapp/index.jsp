@@ -9,7 +9,8 @@
 <body>
     <h1>HR</h1>
     <ul>
-        <li><a href="<c:url value='/rest/employees/'/>">Get All Employees</a>
+        <li><a href="<c:url value='/rest/application.wadl/'/>">WADL</a>
+        <li><a href="<c:url value='/rest/employees/'/>">Get All Employees (text or html)</a>
     </ul>
 </body>
 </html>
