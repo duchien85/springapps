@@ -1,8 +1,8 @@
-package com.studerb.hr.employee;
+package com.studerb.hr.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.studerb.hr.dao.AbstractHibernateDao;
+import com.studerb.hr.model.Employee;
 
 @Repository("employeeDao")
 public class HibEmployeeDao extends AbstractHibernateDao<Employee> implements EmployeeDao {
@@ -11,7 +11,7 @@ public class HibEmployeeDao extends AbstractHibernateDao<Employee> implements Em
 
     @Override
     public String getTableName() {
-        return TABLE_NAME;
+        return this.TABLE_NAME;
     }
 
 }

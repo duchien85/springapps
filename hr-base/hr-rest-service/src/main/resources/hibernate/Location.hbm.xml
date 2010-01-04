@@ -1,17 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-    <class name="com.studerb.hr.geo.Location" table="LOCATIONS" >
+<hibernate-mapping package="com.studerb.hr.model">
+    <class name="Location" table="LOCATIONS" >
         <id name="id" type="java.lang.Long">
             <column name="LOCATION_ID" />
             <generator class="sequence-identity" >
             	<param name="sequence">LOCATIONS_SEQ</param>
             </generator>
         </id>
-        <many-to-one name="country" class="com.studerb.hr.geo.Country" fetch="join">
-            <column name="COUNTRY_ID" not-null="true" />
-        </many-to-one>
         <property name="streetAddress" type="string">
             <column name="STREET_ADDRESS" length="40" not-null="false" />
         </property>
@@ -24,5 +21,8 @@
         <property name="stateProvince" type="string">
         	<column name="STATE_PROVINCE" length="25" not-null="false" />
         </property>
+        <many-to-one name="country" class="Country" fetch="join">
+            <column name="COUNTRY_ID" not-null="true" />
+        </many-to-one>        
     </class>
 </hibernate-mapping>

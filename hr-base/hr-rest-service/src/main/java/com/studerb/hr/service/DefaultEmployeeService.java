@@ -1,4 +1,4 @@
-package com.studerb.hr.employee;
+package com.studerb.hr.service;
 
 import java.util.List;
 
@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.studerb.hr.dao.EmployeeDao;
+import com.studerb.hr.model.Employee;
 
 @Service("employeeService")
 public class DefaultEmployeeService implements EmployeeService {

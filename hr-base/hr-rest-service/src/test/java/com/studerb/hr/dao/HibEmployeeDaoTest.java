@@ -1,8 +1,6 @@
-package com.studerb.hr.employee;
+package com.studerb.hr.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -17,6 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+
+import com.studerb.hr.dao.EmployeeDao;
+import com.studerb.hr.model.Department;
+import com.studerb.hr.model.Employee;
+import com.studerb.hr.model.Job;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 @TransactionConfiguration(defaultRollback = false)

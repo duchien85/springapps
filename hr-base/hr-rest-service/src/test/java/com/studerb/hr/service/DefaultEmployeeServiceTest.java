@@ -1,4 +1,4 @@
-package com.studerb.hr.employee;
+package com.studerb.hr.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+
+import com.studerb.hr.model.Employee;
+import com.studerb.hr.service.EmployeeService;
 
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
 @TransactionConfiguration(defaultRollback = false)
