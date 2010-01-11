@@ -9,12 +9,12 @@
   <servlet>
 		<servlet-name>sakila</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>
-				/WEB-INF/spring/*.xml
-			</param-value>
-		</init-param>
+<!--		<init-param>-->
+<!--			<param-name>contextConfigLocation</param-name>-->
+<!--			<param-value>-->
+<!--				/WEB-INF/spring/*.xml-->
+<!--			</param-value>-->
+<!--		</init-param>-->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
@@ -42,10 +42,10 @@
   <!--		<param-value>/WEB-INF/classes/log4j.properties</param-value> -->
   <!--	</context-param> -->
 
-<!--  <context-param>-->
-<!--    <param-name>contextConfigLocation</param-name>-->
-<!--    <param-value>classpath:applicationContext.xml</param-value>-->
-<!--  </context-param>-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring/applicationContext.xml</param-value>
+  </context-param>
 
   <!--  20 seconds for log4j refreshes -->
   <!--	-->
@@ -61,6 +61,7 @@
 
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    
   </listener>
 
   <filter>
@@ -135,5 +136,4 @@
       <trim-directive-whitespaces>true</trim-directive-whitespaces>
     </jsp-property-group>
   </jsp-config>
-
 </web-app>

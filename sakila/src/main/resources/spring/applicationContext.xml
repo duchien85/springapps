@@ -26,8 +26,8 @@
 		
 	<context:property-placeholder location="classpath:sakila.properties, classpath:hibernate/hibernate.properties" />
 	
-	<import resource="/WEB-INF/spring/db-context.xml" />
-	<import resource="/WEB-INF/spring/webUtilContext.xml" />
+	<import resource="classpath:spring/db-context.xml" />
+	<import resource="classpath:spring/webUtilContext.xml" />
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
     	 <property name="host" value="${mail.host}"/> 
