@@ -2,6 +2,7 @@ package com.studerb.hr.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -9,81 +10,82 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
     protected final Logger logger;
     protected Class<T> persistentClass;
     protected String tableName;
-    @Autowired
-    private SimpleJdbcTemplate simpleJdbcTemplate;
+
     @Autowired
     protected SessionFactory sessionFactory;
 
     @SuppressWarnings("unchecked")
     public AbstractHibernateDao() {
-        this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0];
         this.logger = Logger.getLogger(this.persistentClass);
     }
 
     @Override
     public void clear() {
         this.logger.debug("clearing cache");
-        getCurrentSession().clear();
+        this.getCurrentSession().clear();
     }
 
     @Override
     public Long save(T entity) {
         this.logger.debug("saving: " + entity);
-        return (Long) getCurrentSession().save(entity);
+        return (Long) this.getCurrentSession().save(entity);
     }
 
     @Override
     public void delete(T entity) {
         this.logger.debug("deleting entity: " + entity);
-        getCurrentSession().delete(entity);
+        this.getCurrentSession().delete(entity);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void delete(Serializable id) {
         this.logger.debug("deleting entity: " + id);
-        T entity = (T) getCurrentSession().load(this.persistentClass, id);
-        getCurrentSession().delete(entity);
+        T entity = (T) this.getCurrentSession().load(this.persistentClass, id);
+        this.getCurrentSession().delete(entity);
     }
 
     @Override
     public int deleteAll() {
-        this.logger.debug("Deleting all from table: " + getTableName());
-        int count = this.simpleJdbcTemplate.update("delete from " + getTableName());
-        this.logger.info("Deleted All {" + count + "} from " + getTableName());
+        this.logger.debug("Deleting all from table: " + this.getTableName());
+        SQLQuery query = this.getCurrentSession().createSQLQuery("truncate table: " + this.getTableName());
+        int count = query.executeUpdate();
+        this.logger.info("Deleted All {" + count + "} from " + this.getTableName());
         return count;
     }
 
     @Override
     public void flush() {
         this.logger.debug("flushing cache");
-        getCurrentSession().flush();
+        this.getCurrentSession().flush();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<T> getAll() {
-        this.logger.debug("getting all " + getTableName());
-        Query q = getCurrentSession().createQuery("from " + this.persistentClass.getName());
+        this.logger.debug("getting all " + this.getTableName());
+        Query q = this.getCurrentSession().createQuery("from " + this.persistentClass.getName());
         return q.list();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<T> getAllByOrder(String orderBy, String orderDir) {
-        this.logger.debug("getting all " + getTableName() + " by order: " + orderBy + " / " + orderDir);
-        Criteria c = getCurrentSession().createCriteria(this.persistentClass);
+        this.logger.debug("getting all " + this.getTableName() + " by order: " + orderBy + " / " + orderDir);
+        Criteria c = this.getCurrentSession().createCriteria(this.persistentClass);
         if (orderDir.equalsIgnoreCase("asc")) {
             c.addOrder(Order.asc(orderBy));
         }
@@ -98,28 +100,29 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
     @Override
     public int getCount() {
-        int count = this.simpleJdbcTemplate.queryForInt("Select count(*) from " + getTableName());
-        this.logger.debug("count of " + getTableName() + " = " + count);
-        return count;
+        SQLQuery query = this.getCurrentSession().createSQLQuery("Select count(*) from " + this.getTableName());
+        BigDecimal count = (BigDecimal) query.uniqueResult();
+        this.logger.debug("count of " + this.getTableName() + " = " + count);
+        return count.intValue();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public T get(Serializable id) {
-        this.logger.debug("reading " + getTableName() + " - " + id);
-        return (T) getCurrentSession().get(this.persistentClass, id);
+        this.logger.debug("reading " + this.getTableName() + " - " + id);
+        return (T) this.getCurrentSession().get(this.persistentClass, id);
     }
 
     @Override
     public void saveOrUpdate(T entity) {
         this.logger.debug("Saving/Updating " + entity);
-        getCurrentSession().saveOrUpdate(entity);
+        this.getCurrentSession().saveOrUpdate(entity);
     }
 
     @Override
     public void update(T entity) {
         this.logger.debug("updating " + entity);
-        getCurrentSession().update(entity);
+        this.getCurrentSession().update(entity);
     }
 
     @Override
@@ -127,7 +130,7 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
         this.logger.debug("Saving/Updating all " + entities.size() + " " + this.persistentClass.getSimpleName());
         Iterator<T> iterator = entities.iterator();
         while (iterator.hasNext()) {
-            getCurrentSession().saveOrUpdate(iterator.next());
+            this.getCurrentSession().saveOrUpdate(iterator.next());
         }
     }
 
@@ -135,7 +138,7 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
     @Override
     public T load(Serializable id) {
         this.logger.debug("Loading " + this.persistentClass.getSimpleName() + " with id: " + id);
-        return (T) getCurrentSession().load(this.persistentClass, id);
+        return (T) this.getCurrentSession().load(this.persistentClass, id);
     }
 
     protected Session getCurrentSession() {

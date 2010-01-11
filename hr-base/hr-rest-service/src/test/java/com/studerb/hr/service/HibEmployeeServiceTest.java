@@ -14,7 +14,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.model.Employee;
 
-@ContextConfiguration(locations = { "classpath:test-context.xml" })
+@ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = false)
 public class HibEmployeeServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 
