@@ -5,6 +5,13 @@
 <%@ taglib prefix="str" uri="http://jakarta.apache.org/taglibs/string-1.1" %>
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
 
+<html>
+<head>
+<meta name="decorator" content="yui_doc2_t2_1grid">
+<title>List Actors</title>
+</head>
+<body>
+
 <c:url value="/actor/changePage.htm" var="changePage" scope="page" />
 <c:url value="/actor/sort.htm" var="changeSort" scope="page" />
 

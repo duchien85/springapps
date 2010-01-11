@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
+<html>
+<head>
+<meta name="decorator" content="yui_doc2_t2_1grid">
+<title>Edit Films</title>
+</head>
+<body>
 
 <h2>Edit actor [Films}</h2>
 
@@ -31,3 +37,5 @@
 </form:form>
 
 <tt:pageDebug debugPage="false" debugRequest="true"/>
+</body>
+</html>

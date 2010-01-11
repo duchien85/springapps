@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tt" tagdir="/WEB-INF/tags" %>
+<html>
+<head>
+<meta name="decorator" content="yui_doc2_t2_1grid">
+<title>Enter Security Question</title>
+</head>
+<body>
 
 <h1>Forgot Your Password</h1>
 
@@ -45,3 +51,5 @@
 <script type="text/javascript">
 $('username').focus();
 </script>
+</body>
+</html>
