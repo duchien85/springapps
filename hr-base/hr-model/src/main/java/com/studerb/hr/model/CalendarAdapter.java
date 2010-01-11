@@ -10,20 +10,21 @@ import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 
 public class CalendarAdapter extends XmlAdapter<String, Calendar> {
+    private static final FastDateFormat dateFormat = DateFormatUtils.ISO_DATE_FORMAT;
 
     @Override
     public String marshal(Calendar v) throws Exception {
         Calendar c = DateUtils.truncate(v, Calendar.DAY_OF_MONTH);
-        FastDateFormat f = DateFormatUtils.ISO_DATE_FORMAT;
-        return f.format(c);
+        String formatted = dateFormat.format(c);
+        return formatted;
 
     }
 
     @Override
     public Calendar unmarshal(String v) throws Exception {
         Calendar c = DatatypeConverter.parseDate(v);
-        c = DateUtils.truncate(c, Calendar.DAY_OF_MONTH);
-        return c;
+        Calendar d = DateUtils.truncate(c, Calendar.DAY_OF_MONTH);
+        return d;
     }
 
 }
