@@ -3,9 +3,8 @@ package com.studerb.hr.resource;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang.text.StrBuilder;
@@ -28,29 +27,38 @@ public class EmployeeResource {
 
     @GET
     @Produces("text/plain")
-    @Path("/")
     public String getAllEmployeesText() {
         logger.debug("got request to /employees/");
-        logger.debug("employeeService: " + this.employeeService);
+        logger.debug("employeeService: " + employeeService);
 
-        List<Employee> employees = this.employeeService.getAllEmployees();
+        List<Employee> employees = employeeService.getAllEmployees();
         StrBuilder bldr = new StrBuilder();
         for (Employee e : employees) {
             bldr.append(e.toString() + SystemUtils.LINE_SEPARATOR);
         }
-        logger.debug("Returning: " + bldr.toString());
         return bldr.toString();
     }
 
     @GET
     @Produces("application/xml, text/xml")
-    @Path("/")
     public Employees getAllEmployeesXml() {
         Employees employees = new Employees();
-        List<Employee> employeeList = this.employeeService.getAllEmployees();
+        List<Employee> employeeList = employeeService.getAllEmployees();
         employees.getEmployees().addAll(employeeList);
         return employees;
     }
+
+    @GET
+    @Produces("application/xml, text/xml")
+    @Path("{id}")
+    public Employee getEmployeeById(@PathParam("id") Long id) {
+        Employee employee = employeeService.getEmployee(id);
+        if (employee == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return employee;
+    }
+
     /*
      * @POST
      * 

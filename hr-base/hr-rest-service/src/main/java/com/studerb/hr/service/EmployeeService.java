@@ -7,6 +7,10 @@ import com.studerb.hr.model.Employee;
 public interface EmployeeService {
     List<Employee> getAllEmployees();
 
+    /**
+     * @param id
+     * @return Employee or null if employee with passed id does not exist
+     */
     Employee getEmployee(Long id);
 
     Long saveEmployee(Employee employee);

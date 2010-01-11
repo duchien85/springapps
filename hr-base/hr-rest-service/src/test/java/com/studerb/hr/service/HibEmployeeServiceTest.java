@@ -1,51 +1,75 @@
 package com.studerb.hr.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.time.StopWatch;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.Employee;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
-@TransactionConfiguration(defaultRollback = false)
+@TransactionConfiguration(defaultRollback = true)
 public class HibEmployeeServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
+    final static StopWatch stopWatch = new StopWatch();
+    boolean reset = false;
 
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
 
-    static final int TOTAL_COUNT = 107;
+    @BeforeClass
+    public static void beforeClass() {
+        stopWatch.start();
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        stopWatch.stop();
+        System.err.println("Time of test class: " + stopWatch.toString());
+    }
 
     @Before
     public void setUp() throws Exception {
-        this.simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
+        if (!reset) {
+            simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
+            reset = false;
+        }
     }
 
     @Test
     public void getAll() {
-        List<Employee> employees = this.employeeService.getAllEmployees();
-        assertEquals(employees.size(), TOTAL_COUNT);
+        List<Employee> employees = employeeService.getAllEmployees();
+        assertEquals(employees.size(), TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void getForeignIds() {
-        Employee e = this.employeeService.getEmployee(189L);
-        this.logger.debug("department class: " + e.getDepartment().getClass().getName());
-        this.logger.debug("manager class: " + e.getManager().getClass().getName());
-        this.logger.debug("job class: " + e.getJob().getClass().getName());
+        Employee e = employeeService.getEmployee(189L);
+        logger.debug("department class: " + e.getDepartment().getClass().getName());
+        logger.debug("manager class: " + e.getManager().getClass().getName());
+        logger.debug("job class: " + e.getJob().getClass().getName());
         assertEquals(e.getDepartment().getId(), new Long(50L));
         assertEquals(e.getManager().getId(), new Long(122L));
         assertEquals(e.getJob().getId(), "SH_CLERK");
-        this.logger.debug("====================== GETTING NON-ID Foreign Relationships ===========================");
+        logger.debug("====================== GETTING NON-ID Foreign Relationships ===========================");
         assertEquals(e.getDepartment().getName(), "Shipping");
         assertEquals(e.getJob().getTitle(), "Shipping Clerk");
         assertEquals(e.getManager().getLastName(), "Kaufling");
+    }
+
+    @Test
+    public void getNull() {
+        Employee e = employeeService.getEmployee(TestUtil.BAD_EMPLOYEE_ID);
+        assertNull(e);
     }
 }
