@@ -5,12 +5,15 @@ import java.util.Calendar;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
-
 
 /**
  * <p>
@@ -45,7 +48,8 @@ import org.apache.commons.lang.time.FastDateFormat;
  * 
  */
 @XmlRootElement(name = "employee")
-@XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId", "salary", "commissionPct", "managerId", "departmentId" })
+@XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId",
+        "salary", "commissionPct", "managerId", "departmentId" })
 public class Employee {
     private static final long serialVersionUID = 8744214730693860142L;
     private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
@@ -316,10 +320,12 @@ public class Employee {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Employee [commissionPct=").append(this.commissionPct).append(", departmentId=").append(this.departmentId).append(", email=").append(this.email).append(
-                ", firstName=").append(this.firstName).append(", hireDate=").append(this.fdf.format(this.hireDate)).append(", id=").append(this.id).append(", jobId=").append(
-                this.jobId).append(", lastName=").append(this.lastName).append(", managerId=").append(this.managerId).append(", phoneNumber=").append(this.phoneNumber).append(
-                ", salary=").append(this.salary).append("]");
+        builder.append("Employee [commissionPct=").append(this.commissionPct).append(", departmentId=").append(
+                this.departmentId).append(", email=").append(this.email).append(", firstName=").append(this.firstName)
+                .append(", hireDate=").append(this.fdf.format(this.hireDate)).append(", id=").append(this.id).append(
+                        ", jobId=").append(this.jobId).append(", lastName=").append(this.lastName).append(
+                        ", managerId=").append(this.managerId).append(", phoneNumber=").append(this.phoneNumber)
+                .append(", salary=").append(this.salary).append("]");
         return builder.toString();
     }
 

@@ -3,7 +3,9 @@ package com.studerb.hr.model;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang.time.FastDateFormat;
 import org.apache.log4j.Logger;
 
 /**
@@ -11,6 +13,7 @@ import org.apache.log4j.Logger;
  */
 public class ModelUtils {
     final static Logger log = Logger.getLogger(ModelUtils.class);
+    private final static FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
 
     /**
      * @return Create a &apos;shallow&apos; instance of Employee with id #100
@@ -32,6 +35,24 @@ public class ModelUtils {
         e.setSalary(new BigDecimal(24000));
         e.setDepartment(new Department(90L));
         return e;
+    }
+
+    public static Employee createNewEmployee() {
+        Employee employee = new Employee();
+        employee.setFirstName("Bob");
+        employee.setLastName("Alvabcc");
+        employee.setEmail("ALVABCC");
+        Calendar hireDate = Calendar.getInstance();
+        hireDate.set(2010, Calendar.JANUARY, 5);
+        employee.setHireDate(hireDate);
+        employee.setCommissionPct(new BigDecimal("0.50"));
+        employee.setPhoneNumber("123.456.7890");
+        employee.setManager(new Employee(100L));
+        employee.setDepartment(new Department(30L));
+        employee.setJob(new Job("PU_MAN"));
+        employee.setSalary(new BigDecimal("11000"));
+
+        return employee;
     }
 
     /**
