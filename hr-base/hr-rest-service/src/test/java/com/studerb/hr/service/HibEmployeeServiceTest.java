@@ -1,6 +1,8 @@
 package com.studerb.hr.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.Employee;
+import com.studerb.hr.model.ModelUtils;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)
@@ -42,7 +45,7 @@ public class HibEmployeeServiceTest extends AbstractTransactionalJUnit4SpringCon
     public void setUp() throws Exception {
         if (!reset) {
             simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
-            reset = false;
+            reset = true;
         }
     }
 
@@ -72,4 +75,14 @@ public class HibEmployeeServiceTest extends AbstractTransactionalJUnit4SpringCon
         Employee e = employeeService.getEmployee(TestUtil.BAD_EMPLOYEE_ID);
         assertNull(e);
     }
+
+    @Test
+    public void saveEmployee() {
+        Employee employee = ModelUtils.createNewEmployee();
+        Long id = employeeService.saveEmployee(employee);
+        assertNotNull(employee.getId());
+        int count = employeeService.getEmployeeCount();
+        assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+    }
+
 }

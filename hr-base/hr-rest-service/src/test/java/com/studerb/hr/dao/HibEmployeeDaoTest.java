@@ -1,8 +1,10 @@
 package com.studerb.hr.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -22,9 +24,8 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.TestUtil;
-import com.studerb.hr.model.Department;
 import com.studerb.hr.model.Employee;
-import com.studerb.hr.model.Job;
+import com.studerb.hr.model.ModelUtils;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)
@@ -52,26 +53,26 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Before
     public void setUp() throws Exception {
-        if (!reset) {
-            simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
-            reset = true;
+        if (!this.reset) {
+            this.simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
+            this.reset = true;
         }
     }
 
     @Test
     public void countRows() {
-        assertEquals(countRowsInTable(employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
+        assertEquals(this.countRowsInTable(this.employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void getAll() {
-        List<Employee> employees = employeeDao.getAll();
+        List<Employee> employees = this.employeeDao.getAll();
         assertEquals(employees.size(), TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void getOne() {
-        Employee employee = employeeDao.get(189L);
+        Employee employee = this.employeeDao.get(189L);
         assertNotNull(employee);
         assertEquals(employee.getFirstName(), "Jennifer");
         assertEquals(employee.getLastName(), "Dilly");
@@ -84,36 +85,26 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void getNull() {
-        Employee e = employeeDao.get(TestUtil.BAD_EMPLOYEE_ID);
+        Employee e = this.employeeDao.get(TestUtil.BAD_EMPLOYEE_ID);
         assertNull(e);
     }
 
     // @Test(expected = Throwable.class)
     public void deleteOne() {
-        employeeDao.delete(101L);
+        this.employeeDao.delete(101L);
     }
 
     @Test
     public void addEmployee() {
-        Employee employee = new Employee();
-        employee.setFirstName("Bob");
-        employee.setLastName("Alvabcc");
-        employee.setEmail("ALVABCC");
-        employee.setHireDate(Calendar.getInstance());
-        employee.setCommissionPct(new BigDecimal("0.50"));
-        employee.setPhoneNumber("123.456.7890");
-        employee.setManager(new Employee(100L));
-        employee.setDepartment(new Department(30L));
-        employee.setJob(new Job("PU_MAN"));
-        employee.setSalary(new BigDecimal("11000"));
-        Long id = employeeDao.save(employee);
-        employeeDao.flush();
+        Employee employee = ModelUtils.createNewEmployee();
+        Long id = this.employeeDao.save(employee);
         assertNotNull(employee.getId());
 
-        Employee em2 = employeeDao.get(id);
+        this.employeeDao.flush();
+        Employee em2 = this.employeeDao.get(id);
         assertNotNull(em2);
         assertEquals(em2, employee);
-        int count = employeeDao.getCount();
+        int count = this.employeeDao.getCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
     }
 }

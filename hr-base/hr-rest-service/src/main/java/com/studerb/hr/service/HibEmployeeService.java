@@ -45,4 +45,10 @@ public class HibEmployeeService implements EmployeeService {
         logger.debug("updating employee: " + employee);
         this.employeeDao.update(employee);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getEmployeeCount() {
+        return this.employeeDao.getCount();
+    }
 }

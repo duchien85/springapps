@@ -3,7 +3,14 @@ package com.studerb.hr.resource;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang.SystemUtils;
@@ -18,18 +25,18 @@ import com.sun.jersey.spi.resource.Singleton;
 
 @Service
 @Singleton
-@Path("/employees")
+@Path("/employees/")
 public class EmployeeResource {
-    private static final Logger logger = Logger.getLogger(EmployeeResource.class);
+    private static final Logger log = Logger.getLogger(EmployeeResource.class);
 
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
 
     @GET
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     public String getAllEmployeesText() {
-        logger.debug("got request to /employees/");
-        logger.debug("employeeService: " + employeeService);
+        log.debug("got request to /employees/");
+        log.debug("employeeService: " + employeeService);
 
         List<Employee> employees = employeeService.getAllEmployees();
         StrBuilder bldr = new StrBuilder();
@@ -40,7 +47,7 @@ public class EmployeeResource {
     }
 
     @GET
-    @Produces("application/xml, text/xml")
+    @Produces(MediaType.APPLICATION_XML)
     public Employees getAllEmployeesXml() {
         Employees employees = new Employees();
         List<Employee> employeeList = employeeService.getAllEmployees();
@@ -49,9 +56,10 @@ public class EmployeeResource {
     }
 
     @GET
-    @Produces("application/xml, text/xml")
-    @Path("{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("{id}/")
     public Employee getEmployeeById(@PathParam("id") Long id) {
+        log.debug("Getting employee by id: " + id);
         Employee employee = employeeService.getEmployee(id);
         if (employee == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -59,11 +67,11 @@ public class EmployeeResource {
         return employee;
     }
 
-    /*
-     * @POST
-     * 
-     * @Produces("text/plain") public String doPost(@FormParam("fileName")
-     * String fileName, String fileList) { logger.debug("FileName: " +
-     * fileName); logger.debug("body: " + fileList); return "0"; }
-     */
+    @POST
+    @Consumes(MediaType.APPLICATION_XML)
+    public void createEmployee(Employee employee) {
+        Long newId = employeeService.saveEmployee(employee);
+        log.info("Created new employee - Id =  " + newId);
+    }
+
 }
