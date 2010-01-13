@@ -56,6 +56,10 @@
   <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"
     p:sessionFactory-ref="sessionFactory" />
 
+  <bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+    <constructor-arg ref="dataSource" />
+  </bean>
+
   <!--
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" > <property name="host"
     value="${mail.host}"/> <property name="port" value="${mail.port}" /> <property name="username"

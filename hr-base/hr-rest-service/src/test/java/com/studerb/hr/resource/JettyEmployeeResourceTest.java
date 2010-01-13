@@ -14,7 +14,10 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.Employee;
@@ -26,11 +29,11 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
-// @TransactionConfiguration(defaultRollback = true)
-public class JettyEmployeeResourceTest {// extends
-    private final Logger log = Logger.getLogger(JettyEmployeeResourceTest.class);// AbstractTransactionalJUnit4SpringContextTests
-    // {
+public class JettyEmployeeResourceTest {
+    private final Logger log = Logger.getLogger(JettyEmployeeResourceTest.class);
+
     Client client;
     ClientResponse clientResponse;
     ClientResponse.Status responseStatus;
@@ -38,6 +41,9 @@ public class JettyEmployeeResourceTest {// extends
 
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
+
+    @Resource(name = "simpleJdbcTemplate")
+    SimpleJdbcTemplate simpleJdbcTemplate;
 
     public JettyEmployeeResourceTest() {
         super();
@@ -47,6 +53,7 @@ public class JettyEmployeeResourceTest {// extends
 
     @Before
     public void setup() {
+        simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
         webResource = client.resource(TestUtil.JETTY_URI);
         clientResponse = null;
         responseStatus = null;
@@ -112,6 +119,6 @@ public class JettyEmployeeResourceTest {// extends
         clientResponse = webResource.path("employees/").type(MediaType.APPLICATION_XML).post(ClientResponse.class, employee);
         int count = employeeService.getEmployeeCount();
         log.debug("Count after adding: " + count);
-        assertTrue(count > TestUtil.EMPLOYEE_COUNT);
+        assertTrue(count == (TestUtil.EMPLOYEE_COUNT + 1));
     }
 }
