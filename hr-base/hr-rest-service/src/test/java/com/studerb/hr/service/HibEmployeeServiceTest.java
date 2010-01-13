@@ -4,50 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.net.URL;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.time.StopWatch;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.Employee;
-import com.studerb.hr.model.ModelUtils;
 
-@ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
-@TransactionConfiguration(defaultRollback = true)
-public class HibEmployeeServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
-    final static StopWatch stopWatch = new StopWatch();
-    boolean reset = false;
+public class HibEmployeeServiceTest extends AbstractServiceTest {
 
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
-
-    @BeforeClass
-    public static void beforeClass() {
-        stopWatch.start();
-    }
-
-    @AfterClass
-    public static void afterClass() {
-        stopWatch.stop();
-        System.err.println("Time of test class: " + stopWatch.toString());
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        if (!reset) {
-            simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
-            reset = true;
-        }
-    }
 
     @Test
     public void getAll() {
@@ -77,12 +47,13 @@ public class HibEmployeeServiceTest extends AbstractTransactionalJUnit4SpringCon
     }
 
     @Test
-    public void saveEmployee() {
-        Employee employee = ModelUtils.createNewEmployee();
-        Long id = employeeService.saveEmployee(employee);
-        assertNotNull(employee.getId());
+    public void saveEmployeeFromXml() throws Exception {
+        URL url = getClassPathUrl("xml/new_employee.xml");
+        Employee unmarhalled = (Employee) unmarshaller.unmarshal(url);
+        logger.debug("from XML\n" + unmarhalled.toString());
+        Long id = employeeService.saveEmployee(unmarhalled);
+        assertNotNull(id);
         int count = employeeService.getEmployeeCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
     }
-
 }

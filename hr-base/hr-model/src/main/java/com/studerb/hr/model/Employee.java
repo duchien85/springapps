@@ -48,8 +48,8 @@ import org.apache.commons.lang.time.FastDateFormat;
  * 
  */
 @XmlRootElement(name = "employee")
-@XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId",
-        "salary", "commissionPct", "managerId", "departmentId" })
+@XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId", "salary", "commissionPct", "managerId",
+        "departmentId" })
 public class Employee {
     private static final long serialVersionUID = 8744214730693860142L;
     private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
@@ -79,7 +79,7 @@ public class Employee {
     @XmlAttribute
     @XmlSchemaType(name = "positiveInteger")
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -87,7 +87,7 @@ public class Employee {
     }
 
     public Set<JobHistory> getJobHistory() {
-        return this.jobHistory;
+        return jobHistory;
     }
 
     public void setJobHistory(Set<JobHistory> jobHistory) {
@@ -96,7 +96,7 @@ public class Employee {
 
     @XmlElement(name = "first_name", required = true, nillable = true)
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -105,7 +105,7 @@ public class Employee {
 
     @XmlElement(name = "last_name", required = true)
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
@@ -114,7 +114,7 @@ public class Employee {
 
     @XmlElement
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -123,7 +123,7 @@ public class Employee {
 
     @XmlElement(name = "phone_number", required = true, nillable = true)
     public String getPhoneNumber() {
-        return this.phoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -133,7 +133,7 @@ public class Employee {
     @XmlElement(name = "hire_date", required = true)
     @XmlSchemaType(name = "date")
     public Calendar getHireDate() {
-        return this.hireDate;
+        return hireDate;
     }
 
     public void setHireDate(Calendar hireDate) {
@@ -143,7 +143,7 @@ public class Employee {
     @XmlElement(required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public BigDecimal getSalary() {
-        return this.salary;
+        return salary;
     }
 
     public void setSalary(BigDecimal salary) {
@@ -152,7 +152,7 @@ public class Employee {
 
     @XmlElement(name = "commission_pct", required = true, nillable = true)
     public BigDecimal getCommissionPct() {
-        return this.commissionPct;
+        return commissionPct;
     }
 
     public void setCommissionPct(BigDecimal commissionPct) {
@@ -160,40 +160,40 @@ public class Employee {
     }
 
     public Job getJob() {
-        return this.job;
+        return job;
     }
 
     public void setJob(Job job) {
         this.job = job;
         if (this.job != null) {
-            this.jobId = this.job.getId();
+            jobId = this.job.getId();
         }
     }
 
     public Employee getManager() {
-        return this.manager;
+        return manager;
     }
 
     public void setManager(Employee manager) {
         this.manager = manager;
         if (manager != null) {
-            this.managerId = this.manager.getId();
+            managerId = this.manager.getId();
         }
     }
 
     public Department getDepartment() {
-        return this.department;
+        return department;
     }
 
     public void setDepartment(Department department) {
         this.department = department;
         if (this.department != null) {
-            this.departmentId = department.getId();
+            departmentId = department.getId();
         }
     }
 
     public Link getLink() {
-        return this.link;
+        return link;
     }
 
     public void setLink(Link link) {
@@ -202,46 +202,55 @@ public class Employee {
 
     @XmlElement(name = "job_id", required = true)
     public String getJobId() {
-        return this.jobId;
+        return jobId;
     }
 
     public void setJobId(String jobId) {
         this.jobId = jobId;
+        if (job == null) {
+            job = new Job(jobId);
+        }
     }
 
     @XmlElement(name = "department_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getDepartmentId() {
-        return this.departmentId;
+        return departmentId;
     }
 
     public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
+        if (department == null) {
+            department = new Department(departmentId);
+        }
     }
 
     @XmlElement(name = "manager_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getManagerId() {
-        return this.managerId;
+        return managerId;
     }
 
     public void setManagerId(Long managerId) {
         this.managerId = managerId;
+        if (manager == null) {
+            manager = new Employee(managerId);
+        }
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.commissionPct == null) ? 0 : this.commissionPct.hashCode());
-        result = prime * result + ((this.departmentId == null) ? 0 : this.departmentId.hashCode());
-        result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
-        result = prime * result + ((this.firstName == null) ? 0 : this.firstName.hashCode());
-        result = prime * result + ((this.jobId == null) ? 0 : this.jobId.hashCode());
-        result = prime * result + ((this.lastName == null) ? 0 : this.lastName.hashCode());
-        result = prime * result + ((this.managerId == null) ? 0 : this.managerId.hashCode());
-        result = prime * result + ((this.phoneNumber == null) ? 0 : this.phoneNumber.hashCode());
-        result = prime * result + ((this.salary == null) ? 0 : this.salary.hashCode());
+        result = prime * result + ((commissionPct == null) ? 0 : commissionPct.hashCode());
+        result = prime * result + ((departmentId == null) ? 0 : departmentId.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((jobId == null) ? 0 : jobId.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + ((managerId == null) ? 0 : managerId.hashCode());
+        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+        result = prime * result + ((salary == null) ? 0 : salary.hashCode());
         return result;
     }
 
@@ -254,65 +263,65 @@ public class Employee {
         if (this.getClass() != obj.getClass())
             return false;
         Employee other = (Employee) obj;
-        if (this.hireDate == null) {
+        if (hireDate == null) {
             if (other.commissionPct != null)
                 return false;
         }
-        else if (!DateUtils.isSameDay(this.hireDate, other.hireDate))
+        else if (!DateUtils.isSameDay(hireDate, other.hireDate))
             return false;
-        if (this.commissionPct == null) {
+        if (commissionPct == null) {
             if (other.commissionPct != null)
                 return false;
         }
-        else if (!this.commissionPct.equals(other.commissionPct))
+        else if (!commissionPct.equals(other.commissionPct))
             return false;
-        if (this.departmentId == null) {
+        if (departmentId == null) {
             if (other.departmentId != null)
                 return false;
         }
-        else if (!this.departmentId.equals(other.departmentId))
+        else if (!departmentId.equals(other.departmentId))
             return false;
-        if (this.email == null) {
+        if (email == null) {
             if (other.email != null)
                 return false;
         }
-        else if (!this.email.equals(other.email))
+        else if (!email.equals(other.email))
             return false;
-        if (this.firstName == null) {
+        if (firstName == null) {
             if (other.firstName != null)
                 return false;
         }
-        else if (!this.firstName.equals(other.firstName))
+        else if (!firstName.equals(other.firstName))
             return false;
-        if (this.jobId == null) {
+        if (jobId == null) {
             if (other.jobId != null)
                 return false;
         }
-        else if (!this.jobId.equals(other.jobId))
+        else if (!jobId.equals(other.jobId))
             return false;
-        if (this.lastName == null) {
+        if (lastName == null) {
             if (other.lastName != null)
                 return false;
         }
-        else if (!this.lastName.equals(other.lastName))
+        else if (!lastName.equals(other.lastName))
             return false;
-        if (this.managerId == null) {
+        if (managerId == null) {
             if (other.managerId != null)
                 return false;
         }
-        else if (!this.managerId.equals(other.managerId))
+        else if (!managerId.equals(other.managerId))
             return false;
-        if (this.phoneNumber == null) {
+        if (phoneNumber == null) {
             if (other.phoneNumber != null)
                 return false;
         }
-        else if (!this.phoneNumber.equals(other.phoneNumber))
+        else if (!phoneNumber.equals(other.phoneNumber))
             return false;
-        if (this.salary == null) {
+        if (salary == null) {
             if (other.salary != null)
                 return false;
         }
-        else if (!this.salary.equals(other.salary))
+        else if (!salary.equals(other.salary))
             return false;
         return true;
     }
@@ -320,12 +329,10 @@ public class Employee {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Employee [commissionPct=").append(this.commissionPct).append(", departmentId=").append(
-                this.departmentId).append(", email=").append(this.email).append(", firstName=").append(this.firstName)
-                .append(", hireDate=").append(this.fdf.format(this.hireDate)).append(", id=").append(this.id).append(
-                        ", jobId=").append(this.jobId).append(", lastName=").append(this.lastName).append(
-                        ", managerId=").append(this.managerId).append(", phoneNumber=").append(this.phoneNumber)
-                .append(", salary=").append(this.salary).append("]");
+        builder.append("Employee [commissionPct=").append(commissionPct).append(", departmentId=").append(departmentId).append(", email=").append(email)
+                .append(", firstName=").append(firstName).append(", hireDate=").append(fdf.format(hireDate)).append(", id=").append(id).append(", jobId=")
+                .append(jobId).append(", lastName=").append(lastName).append(", managerId=").append(managerId).append(", phoneNumber=").append(phoneNumber)
+                .append(", salary=").append(salary).append("]");
         return builder.toString();
     }
 

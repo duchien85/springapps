@@ -31,7 +31,7 @@
       <column name="COMMISSION_PCT" not-null="false" />
     </property>
     <many-to-one name="job" class="Job" fetch="select">
-      <column name="JOB_ID" not-null="true" />
+      <column name="JOB_ID" not-null="false" />
     </many-to-one>
     <many-to-one name="manager" class="Employee" fetch="select">
       <column name="MANAGER_ID" not-null="false" />
