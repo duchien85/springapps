@@ -2,6 +2,7 @@ package com.studerb.hr.model;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -282,5 +283,59 @@ public class ModelUtils {
         jobHistories.getJobHistories().add(jh2);
 
         return jobHistories;
+    }
+
+    public static Region createRegion2() {
+        Region region = new Region(2L);
+        region.setName("Americas");
+        return region;
+    }
+
+    public static Regions createThreeRegions() {
+        Regions regions = new Regions();
+        List<Region> regionList = regions.getRegions();
+        regionList.add(new Region(2L, "Americas"));
+        regionList.add(new Region(3L, "Asia"));
+        regionList.add(new Region(4L, "Middle East and Africa"));
+        return regions;
+    }
+
+    public static Country createCountryAR() {
+        Country country = new Country("AR");
+        country.setName("Argentina");
+        country.setRegion(new Region(2L));
+        return country;
+    }
+
+    public static Countries createThreeCountries() {
+        Countries countries = new Countries();
+        List<Country> countryList = countries.getCountries();
+
+        Country c1 = new Country("AR");
+        c1.setName("Argentina");
+        c1.setRegion(new Region(2L));
+        countryList.add(c1);
+
+        Country c2 = new Country("AU");
+        c2.setName("Australia");
+        c2.setRegion(new Region(3L));
+        countryList.add(c2);
+
+        Country c3 = new Country("BE");
+        c3.setName("Belgium");
+        c3.setRegion(new Region(1L));
+        countryList.add(c3);
+
+        return countries;
+    }
+
+    public static Location createLocation1000() {
+        Location location = new Location(1000L);
+        location.setStreetAddress("12-98 Victoria Street");
+        location.setPostalCode("2901");
+        location.setCity("Sydney");
+        location.setStateProvince("New South Wales");
+        location.setCountry(new Country("AU"));
+        return location;
     }
 }

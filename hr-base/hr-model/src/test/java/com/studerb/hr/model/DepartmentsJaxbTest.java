@@ -14,15 +14,11 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.junit.Test;
 
-import com.studerb.hr.model.Department;
-import com.studerb.hr.model.Departments;
-import com.studerb.hr.model.ModelUtils;
-
 public class DepartmentsJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(DepartmentsJaxbTest.class);
 
     @Test
-    public void DeparatmentsToXml() throws Exception {
+    public void DepartmentsToXml() throws Exception {
         Departments departments = ModelUtils.createFiveDepartments();
         StringWriter writer = new StringWriter();
         marshaller.marshal(departments, writer);
