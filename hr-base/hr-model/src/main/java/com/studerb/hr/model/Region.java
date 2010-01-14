@@ -3,13 +3,18 @@ package com.studerb.hr.model;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class Region {
 
     private Long id;
     private String name;
     private Link link;
     Set<Country> countries = new HashSet<Country>();
+
+    public Region() {}
+
+    public Region(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return this.id;

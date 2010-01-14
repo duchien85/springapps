@@ -1,0 +1,3 @@
+change the hr-model model objects:
+    instead of both scalar id objects and full Objects for each many-to-one relationship, simply annotate some extra getter methods.
+        - for example, instead of a JAXB field of departmentId, just annoate a method  getDepartmentId, while also creating a method setId

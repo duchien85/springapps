@@ -33,8 +33,7 @@ public class EmployeeJaxbTest extends AbstractJaxbTest {
         assertEquals(employee.getLastName(), document.valueOf("/employee/last_name"));
         assertEquals(employee.getEmail(), document.valueOf("/employee/email"));
         assertEquals(employee.getPhoneNumber(), document.valueOf("/employee/phone_number"));
-        assertTrue(DateUtils.isSameDay(employee.getHireDate(), DatatypeConverter.parseDate(document
-                .valueOf("/employee/hire_date"))));
+        assertTrue(DateUtils.isSameDay(employee.getHireDate(), DatatypeConverter.parseDate(document.valueOf("/employee/hire_date"))));
         assertEquals(employee.getSalary(), new BigDecimal(document.valueOf("/employee/salary")));
         assertTrue(StringUtils.isBlank(document.valueOf("/employee/commission_pct")));
         assertEquals(employee.getJobId(), document.valueOf("/employee/job_id"));
@@ -65,8 +64,7 @@ public class EmployeeJaxbTest extends AbstractJaxbTest {
         assertEquals(employee.getLastName(), document.valueOf("/employee/last_name"));
         assertEquals(employee.getEmail(), document.valueOf("/employee/email"));
         assertEquals(employee.getPhoneNumber(), document.valueOf("/employee/phone_number"));
-        assertTrue(DateUtils.isSameDay(employee.getHireDate(), DatatypeConverter.parseDate(document
-                .valueOf("/employee/hire_date"))));
+        assertTrue(DateUtils.isSameDay(employee.getHireDate(), DatatypeConverter.parseDate(document.valueOf("/employee/hire_date"))));
         assertEquals(employee.getSalary(), new BigDecimal(document.valueOf("/employee/salary")));
         assertEquals(employee.getCommissionPct(), new BigDecimal(document.valueOf("/employee/commission_pct")));
         assertEquals(employee.getJobId(), document.valueOf("/employee/job_id"));

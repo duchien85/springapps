@@ -47,78 +47,89 @@ public class JettyEmployeeResourceTest {
 
     public JettyEmployeeResourceTest() {
         super();
-        client = Client.create();
-        client.addFilter(new LoggingFilter(System.err));
+        this.client = Client.create();
+        this.client.addFilter(new LoggingFilter(System.err));
     }
 
     @Before
     public void setup() {
-        simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
-        webResource = client.resource(TestUtil.JETTY_URI);
-        clientResponse = null;
-        responseStatus = null;
+        this.simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
+        this.webResource = this.client.resource(TestUtil.JETTY_URI);
+        this.clientResponse = null;
+        this.responseStatus = null;
     }
 
     @After
     public void tearDown() {
-        webResource = null;
+        this.webResource = null;
     }
 
     @Test
     public void getAllText() throws Exception {
-        clientResponse = webResource.path("employees/").accept(MediaType.TEXT_PLAIN).get(ClientResponse.class);
-        String employeeLines = clientResponse.getEntity(String.class);
+        this.clientResponse = this.webResource.path("employees/").accept(MediaType.TEXT_PLAIN).get(ClientResponse.class);
+        String employeeLines = this.clientResponse.getEntity(String.class);
         List<String> lines = Arrays.asList(employeeLines.split("\n"));
         assertTrue(lines.size() == TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void getAllXml() throws Exception {
-        clientResponse = webResource.path("employees/").accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
-        assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
-        Employees employeesType = clientResponse.getEntity(Employees.class);
+        this.clientResponse = this.webResource.path("employees/").accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
+        assertEquals("should have got 200 OK", this.clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
+        Employees employeesType = this.clientResponse.getEntity(Employees.class);
         List<Employee> fromRest = employeesType.getEmployees();
         assertTrue(fromRest.size() == TestUtil.EMPLOYEE_COUNT);
 
-        List<Employee> fromHib = employeeService.getAllEmployees();
+        List<Employee> fromHib = this.employeeService.getAllEmployees();
+        assertTrue(fromHib.size() == TestUtil.EMPLOYEE_COUNT);
+        for (int i = 0; i < fromHib.size(); ++i) {
+            Employee e1 = fromHib.get(i);
+            Employee e2 = fromRest.get(i);
+            if (!e1.equals(e2)) {
+                this.log.warn("e1 != e2 at index: " + i);
+                this.log.warn("e1: " + e1);
+                this.log.warn("e2: " + e2);
+            }
+        }
         assertEquals(fromRest, fromHib);
     }
 
     @Test
     public void getEmployeeHtml() throws Exception {
-        clientResponse = webResource.path("employees/").accept(MediaType.TEXT_HTML).get(ClientResponse.class);
-        responseStatus = clientResponse.getClientResponseStatus();
-        assertEquals("expected 406 NOT Acceptable", clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_ACCEPTABLE);
+        this.clientResponse = this.webResource.path("employees/").accept(MediaType.TEXT_HTML).get(ClientResponse.class);
+        this.responseStatus = this.clientResponse.getClientResponseStatus();
+        assertEquals("expected 406 NOT Acceptable", this.clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_ACCEPTABLE);
     }
 
     @Test
     public void getEmployeeXml() throws Exception {
         Long employeeId = 100L;
-        clientResponse = webResource.path("employees/").path(String.valueOf(employeeId)).path("/").accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
-        Employee fromXml = clientResponse.getEntity(Employee.class);
+        this.clientResponse = this.webResource.path("employees/").path(String.valueOf(employeeId)).path("/").accept(MediaType.APPLICATION_XML).get(
+                ClientResponse.class);
+        Employee fromXml = this.clientResponse.getEntity(Employee.class);
         assertNotNull(fromXml);
-        Employee fromHib = employeeService.getEmployee(employeeId);
+        Employee fromHib = this.employeeService.getEmployee(employeeId);
         assertEquals(fromHib, fromXml);
     }
 
     @Test
     public void getNullEmployeeXml() {
-        clientResponse = webResource.path("employees/").path(String.valueOf(TestUtil.BAD_EMPLOYEE_ID)).get(ClientResponse.class);
-        assertEquals(clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_FOUND);
+        this.clientResponse = this.webResource.path("employees/").path(String.valueOf(TestUtil.BAD_EMPLOYEE_ID)).get(ClientResponse.class);
+        assertEquals(this.clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_FOUND);
     }
 
     @Test
     public void getBadIdEmployeeXml() {
-        clientResponse = webResource.path("employees/").path("abc").get(ClientResponse.class);
-        assertEquals(clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_FOUND);
+        this.clientResponse = this.webResource.path("employees/").path("abc").get(ClientResponse.class);
+        assertEquals(this.clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_FOUND);
     }
 
     @Test
     public void addEmployee() {
         Employee employee = ModelUtils.createNewEmployee();
-        clientResponse = webResource.path("employees/").type(MediaType.APPLICATION_XML).post(ClientResponse.class, employee);
-        int count = employeeService.getEmployeeCount();
-        log.debug("Count after adding: " + count);
+        this.clientResponse = this.webResource.path("employees/").type(MediaType.APPLICATION_XML).post(ClientResponse.class, employee);
+        int count = this.employeeService.getEmployeeCount();
+        this.log.debug("Count after adding: " + count);
         assertTrue(count == (TestUtil.EMPLOYEE_COUNT + 1));
     }
 }
