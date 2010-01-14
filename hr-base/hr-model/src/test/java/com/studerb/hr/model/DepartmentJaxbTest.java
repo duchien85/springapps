@@ -13,14 +13,11 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.junit.Test;
 
-import com.studerb.hr.model.Department;
-import com.studerb.hr.model.ModelUtils;
-
 public class DepartmentJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(DepartmentJaxbTest.class);
 
     @Test
-    public void DeparatmentToXml() throws Exception {
+    public void DepartmentToXml() throws Exception {
         Department department = ModelUtils.createDepartment10();
         StringWriter writer = new StringWriter();
         marshaller.marshal(department, writer);
