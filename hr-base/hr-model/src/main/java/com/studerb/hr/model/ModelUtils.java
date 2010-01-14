@@ -234,11 +234,9 @@ public class ModelUtils {
         jh.setEmployee(new Employee(102L));
         Calendar startDate = Calendar.getInstance();
         startDate.set(1993, Calendar.JANUARY, 13);
-
         jh.setStartDate(startDate);
         Calendar endDate = Calendar.getInstance();
         endDate.set(1998, Calendar.JULY, 24);
-        DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
         jh.setEndDate(endDate);
         jh.setJob(new Job("AD_PRES"));
         jh.setDepartment(new Department(110L));
@@ -260,7 +258,6 @@ public class ModelUtils {
         jh.setEmployee(new Employee(101L));
         Calendar startDate = Calendar.getInstance();
         startDate.set(1989, Calendar.SEPTEMBER, 21);
-        DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
         jh.setStartDate(startDate);
         Calendar endDate = Calendar.getInstance();
         endDate.set(1993, Calendar.OCTOBER, 27);
@@ -278,7 +275,6 @@ public class ModelUtils {
         jh2.setStartDate(startDate);
         endDate = Calendar.getInstance();
         endDate.set(1997, Calendar.MARCH, 15);
-        DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
         jh2.setEndDate(endDate);
         jh2.setJob(new Job("AC_MGR"));
         jh2.setEndDate(endDate);

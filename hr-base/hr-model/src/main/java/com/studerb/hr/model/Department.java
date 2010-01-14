@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
  * <p>
  * Java class for Department complex type.
@@ -44,8 +43,6 @@ public class Department {
     private Employee manager;
     private Location location;
     private Link link;
-    public Long managerId;
-    public Long locationId;
 
     private Set<Employee> employees = new HashSet<Employee>();
 
@@ -57,7 +54,7 @@ public class Department {
 
     @XmlAttribute
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -66,7 +63,7 @@ public class Department {
 
     @XmlElement(required = true)
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -74,29 +71,23 @@ public class Department {
     }
 
     public Employee getManager() {
-        return this.manager;
+        return manager;
     }
 
     public void setManager(Employee manager) {
         this.manager = manager;
-        if (manager != null) {
-            this.managerId = this.manager.getId();
-        }
     }
 
     public Location getLocation() {
-        return this.location;
+        return location;
     }
 
     public void setLocation(Location location) {
         this.location = location;
-        if (this.location != null) {
-            this.locationId = this.location.getId();
-        }
     }
 
     public Set<Employee> getEmployees() {
-        return this.employees;
+        return employees;
     }
 
     public void setEmployees(Set<Employee> employees) {
@@ -104,7 +95,7 @@ public class Department {
     }
 
     public Link getLink() {
-        return this.link;
+        return link;
     }
 
     public void setLink(Link link) {
@@ -114,30 +105,34 @@ public class Department {
     @XmlElement(name = "manager_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getManagerId() {
-        return this.managerId;
+        return (manager == null ? null : manager.getId());
     }
 
     public void setManagerId(Long managerId) {
-        this.managerId = managerId;
+        if (managerId != null) {
+            manager = new Employee(managerId);
+        }
     }
 
     @XmlElement(name = "location_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getLocationId() {
-        return this.locationId;
+        return (location == null ? null : location.getId());
     }
 
     public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+        if (locationId != null) {
+            location = new Location(locationId);
+        }
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.locationId == null) ? 0 : this.locationId.hashCode());
-        result = prime * result + ((this.managerId == null) ? 0 : this.managerId.hashCode());
-        result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+        result = prime * result + ((getLocationId() == null) ? 0 : getLocationId().hashCode());
+        result = prime * result + ((getManagerId() == null) ? 0 : getManagerId().hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
@@ -150,23 +145,23 @@ public class Department {
         if (this.getClass() != obj.getClass())
             return false;
         Department other = (Department) obj;
-        if (this.locationId == null) {
-            if (other.locationId != null)
+        if (getLocationId() == null) {
+            if (other.getLocationId() != null)
                 return false;
         }
-        else if (!this.locationId.equals(other.locationId))
+        else if (!getLocationId().equals(other.getLocationId()))
             return false;
-        if (this.managerId == null) {
-            if (other.managerId != null)
+        if (getManagerId() == null) {
+            if (other.getManagerId() != null)
                 return false;
         }
-        else if (!this.managerId.equals(other.managerId))
+        else if (!getManagerId().equals(other.getManagerId()))
             return false;
-        if (this.name == null) {
+        if (name == null) {
             if (other.name != null)
                 return false;
         }
-        else if (!this.name.equals(other.name))
+        else if (!name.equals(other.name))
             return false;
         return true;
     }
@@ -174,8 +169,8 @@ public class Department {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Department [id=").append(this.id).append(", locationId=").append(this.locationId).append(", managerId=").append(this.managerId).append(", name=")
-                .append(this.name).append("]");
+        builder.append("Department [id=").append(id).append(", locationId=").append(getLocationId()).append(", managerId=").append(getManagerId()).append(
+                ", name=").append(name).append("]");
         return builder.toString();
     }
 }

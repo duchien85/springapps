@@ -2,12 +2,15 @@ package com.studerb.hr.model;
 
 import java.util.Calendar;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
-
 
 /**
  * <p>
@@ -38,15 +41,12 @@ import org.apache.commons.lang.time.FastDateFormat;
 @XmlType(name = "JobHistory", propOrder = { "endDate", "jobId", "departmentId" })
 public class JobHistory {
     private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
-    private Long employeeId;
     private Calendar endDate;
     private Calendar startDate;
     private Employee employee;
     private Department department;
     private Job job;
     private Link link;
-    private String jobId;
-    private Long departmentId;
 
     public Employee getEmployee() {
         return this.employee;
@@ -54,9 +54,6 @@ public class JobHistory {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
-        if (this.employee != null) {
-            this.employeeId = this.employee.getId();
-        }
     }
 
     public Department getDepartment() {
@@ -65,9 +62,6 @@ public class JobHistory {
 
     public void setDepartment(Department department) {
         this.department = department;
-        if (this.department != null) {
-            this.departmentId = this.department.getId();
-        }
     }
 
     public Job getJob() {
@@ -76,19 +70,18 @@ public class JobHistory {
 
     public void setJob(Job job) {
         this.job = job;
-        if (this.job != null) {
-            this.jobId = job.getId();
-        }
     }
 
     @XmlAttribute(name = "employee_id", required = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getEmployeeId() {
-        return this.employeeId;
+        return (this.employee == null ? null : this.employee.getId());
     }
 
     public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+        if (employeeId != null) {
+            this.employee = new Employee(employeeId);
+        }
     }
 
     @XmlAttribute(name = "start_date", required = true)
@@ -121,31 +114,35 @@ public class JobHistory {
 
     @XmlElement(name = "job_id", required = true)
     public String getJobId() {
-        return this.jobId;
+        return (this.job == null ? null : this.job.getId());
     }
 
     public void setJobId(String jobId) {
-        this.jobId = jobId;
+        if (jobId != null) {
+            this.job = new Job(jobId);
+        }
     }
 
     @XmlElement(name = "department_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getDepartmentId() {
-        return this.departmentId;
+        return (this.department == null ? null : this.department.getId());
     }
 
     public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
+        if (departmentId != null) {
+            this.department = new Department(departmentId);
+        }
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.departmentId == null) ? 0 : this.departmentId.hashCode());
-        result = prime * result + ((this.employeeId == null) ? 0 : this.employeeId.hashCode());
+        result = prime * result + ((getDepartmentId() == null) ? 0 : getDepartmentId().hashCode());
+        result = prime * result + ((getEmployeeId() == null) ? 0 : getEmployeeId().hashCode());
         result = prime * result + ((this.endDate == null) ? 0 : this.endDate.hashCode());
-        result = prime * result + ((this.jobId == null) ? 0 : this.jobId.hashCode());
+        result = prime * result + ((getJobId() == null) ? 0 : getJobId().hashCode());
         result = prime * result + ((this.startDate == null) ? 0 : this.startDate.hashCode());
         return result;
     }
@@ -159,17 +156,17 @@ public class JobHistory {
         if (getClass() != obj.getClass())
             return false;
         JobHistory other = (JobHistory) obj;
-        if (this.departmentId == null) {
-            if (other.departmentId != null)
+        if (getDepartmentId() == null) {
+            if (other.getDepartmentId() != null)
                 return false;
         }
-        else if (!this.departmentId.equals(other.departmentId))
+        else if (!getDepartmentId().equals(other.getDepartmentId()))
             return false;
-        if (this.employeeId == null) {
-            if (other.employeeId != null)
+        if (getEmployeeId() == null) {
+            if (other.getEmployeeId() != null)
                 return false;
         }
-        else if (!this.employeeId.equals(other.employeeId))
+        else if (!getEmployeeId().equals(other.getEmployeeId()))
             return false;
         if (this.startDate == null) {
             if (other.startDate != null)
@@ -183,11 +180,11 @@ public class JobHistory {
         }
         else if (!DateUtils.isSameDay(this.endDate, other.endDate))
             return false;
-        if (this.jobId == null) {
-            if (other.jobId != null)
+        if (getJobId() == null) {
+            if (other.getJobId() != null)
                 return false;
         }
-        else if (!this.jobId.equals(other.jobId))
+        else if (!getJobId().equals(other.getJobId()))
             return false;
         return true;
     }
@@ -195,9 +192,9 @@ public class JobHistory {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("JobHistory [departmentId=").append(this.departmentId).append(", employeeId=").append(this.employeeId).append(", endDate=").append(
-                this.fdf.format(this.endDate)).append(", jobId=").append(this.jobId).append(", startDate=").append(this.fdf.format(this.startDate)).append("]");
+        builder.append("JobHistory [departmentId()=").append(getDepartmentId()).append(", employeeId=").append(getEmployeeId()).append(", endDate=").append(
+                (this.endDate == null ? "null" : this.fdf.format(this.endDate))).append(", jobId=").append(getJobId()).append(", startDate=").append(
+                this.startDate == null ? "null" : this.fdf.format(this.startDate)).append("]");
         return builder.toString();
     }
-
 }

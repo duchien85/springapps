@@ -31,8 +31,6 @@ import com.studerb.hr.model.ModelUtils;
 @TransactionConfiguration(defaultRollback = true)
 public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
     final static Logger log = Logger.getLogger(HibEmployeeDaoTest.class);
-    final static StopWatch stopWatch = new StopWatch();
-    boolean reset = false;
 
     @Resource(name = "hibEmployeeDao")
     EmployeeDao employeeDao;
@@ -40,23 +38,10 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     @Resource
     SessionFactory sessionFactory;
 
-    @BeforeClass
-    public static void beforeClass() {
-        stopWatch.start();
-    }
-
-    @AfterClass
-    public static void afterClass() {
-        stopWatch.stop();
-        log.debug("Time of test class: " + stopWatch.toString());
-    }
 
     @Before
     public void setUp() throws Exception {
-        if (!this.reset) {
             this.simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
-            this.reset = true;
-        }
     }
 
     @Test
@@ -106,5 +91,10 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         assertEquals(em2, employee);
         int count = this.employeeDao.getCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+    }
+
+    @Test
+    public void deleteEmployee(){
+
     }
 }
