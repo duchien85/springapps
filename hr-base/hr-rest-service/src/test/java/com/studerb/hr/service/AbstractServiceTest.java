@@ -6,9 +6,7 @@ import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -19,7 +17,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
-@TransactionConfiguration(defaultRollback = true)
+@TransactionConfiguration(defaultRollback = false)
 public class AbstractServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     protected JAXBContext context;
     protected Marshaller marshaller;

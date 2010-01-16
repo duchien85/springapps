@@ -15,7 +15,7 @@
     <property name="endDate" type="calendar">
       <column name="END_DATE" />
     </property>
-    <many-to-one name="employee" class="Employee">
+    <many-to-one name="employee" class="Employee" not-null="true">
       <column name="EMPLOYEE_ID" not-null="true" />
     </many-to-one>
     <many-to-one name="department" class="Department">

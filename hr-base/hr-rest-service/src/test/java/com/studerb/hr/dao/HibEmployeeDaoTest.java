@@ -1,31 +1,22 @@
 package com.studerb.hr.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.StopWatch;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.TestUtil;
-import com.studerb.hr.model.Employee;
-import com.studerb.hr.model.ModelUtils;
+import com.studerb.hr.model.*;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)
@@ -38,26 +29,25 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     @Resource
     SessionFactory sessionFactory;
 
-
     @Before
     public void setUp() throws Exception {
-            this.simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
+        simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
     }
 
     @Test
     public void countRows() {
-        assertEquals(this.countRowsInTable(this.employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
+        assertEquals(countRowsInTable(employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void getAll() {
-        List<Employee> employees = this.employeeDao.getAll();
+        List<Employee> employees = employeeDao.getAll();
         assertEquals(employees.size(), TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void getOne() {
-        Employee employee = this.employeeDao.get(189L);
+        Employee employee = employeeDao.get(189L);
         assertNotNull(employee);
         assertEquals(employee.getFirstName(), "Jennifer");
         assertEquals(employee.getLastName(), "Dilly");
@@ -69,32 +59,101 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     }
 
     @Test
-    public void getNull() {
-        Employee e = this.employeeDao.get(TestUtil.BAD_EMPLOYEE_ID);
-        assertNull(e);
+    public void getAssociations() {
+        Employee employee = employeeDao.get(101L);
+        Employee manager = employee.getManager();
+
+        assertEquals(manager.getId(), new Long(100L));
+        assertEquals(manager.getFirstName(), "Steven");
+        assertEquals(manager.getLastName(), "King");
+
+        Set<Employee> employees = employee.getEmployees();
+        assertTrue(employees.size() == 5);
+
+        List<Long> ids = Arrays.asList(200L, 203L, 204L, 205L, 108L);
+        for (Employee e : employees) {
+            assertTrue(ids.contains(e.getId()));
+        }
+
+        Set<JobHistory> jobHistories = employee.getJobHistory();
+        assertTrue(jobHistories.size() == 2);
+        List<String> jobIds = Arrays.asList("AC_ACCOUNT", "AC_MGR");
+        for (JobHistory jh : jobHistories) {
+            assertTrue(jobIds.contains(jh.getJobId()));
+        }
     }
 
-    // @Test(expected = Throwable.class)
-    public void deleteOne() {
-        this.employeeDao.delete(101L);
+    @Test
+    public void getNull() {
+        Employee e = employeeDao.get(TestUtil.BAD_EMPLOYEE_ID);
+        assertNull(e);
     }
 
     @Test
     public void addEmployee() {
         Employee employee = ModelUtils.createNewEmployee();
-        Long id = this.employeeDao.save(employee);
+        Long id = employeeDao.save(employee);
         assertNotNull(employee.getId());
 
-        this.employeeDao.flush();
-        Employee em2 = this.employeeDao.get(id);
+        employeeDao.flush();
+        Employee em2 = employeeDao.get(id);
         assertNotNull(em2);
         assertEquals(em2, employee);
-        int count = this.employeeDao.getCount();
+        int count = employeeDao.getCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
     }
 
     @Test
-    public void deleteEmployee(){
+    public void deleteEmployee() {
+        Long employeeId = 101L;
+        List<Long> employeeIds = Arrays.asList(200L, 203L, 204L, 205L, 108L);
+        Long managerId = 100L;
+        employeeDao.delete(employeeId);
+        employeeDao.flush();
+        employeeDao.clear();
 
+        // check we've deleted employee itself
+        Employee e = employeeDao.get(employeeId);
+        assertNull(e);
+
+        // check job histories have been deleted
+        int count = simpleJdbcTemplate
+                .queryForInt("select count(*) from job_history where employee_id = ?", employeeId);
+        assertTrue(count == 0);
+
+        // make sure all the former employees have had their managers changed
+        for (Long tempId : employeeIds) {
+            Employee temp = employeeDao.get(tempId);
+            assertEquals(temp.getManager().getId(), managerId);
+        }
+    }
+
+    @Test
+    public void deleteDepartmentHead() {
+        Long employeeId = 100L;
+        int count = simpleJdbcTemplate.queryForInt("select count(*) from departments where manager_id = ?", employeeId);
+        assertTrue(count == 1);
+
+        List<Long> employeeIds = Arrays.asList(101L, 102L, 114L, 120L, 121L, 122L, 123L);
+        employeeDao.delete(employeeId);
+        employeeDao.flush();
+        employeeDao.clear();
+
+        // check we've deleted employee itself
+        Employee e = employeeDao.get(employeeId);
+        assertNull(e);
+
+        // check job histories have been deleted
+        count = simpleJdbcTemplate.queryForInt("select count(*) from job_history where employee_id = ?", employeeId);
+        assertTrue(count == 0);
+
+        count = simpleJdbcTemplate.queryForInt("select count(*) from departments where manager_id = ?", employeeId);
+        assertTrue(count == 0);
+
+        // make sure all the former employees have had their managers changed
+        for (Long tempId : employeeIds) {
+            Employee temp = employeeDao.get(tempId);
+            assertNull(temp.getManager());
+        }
     }
 }

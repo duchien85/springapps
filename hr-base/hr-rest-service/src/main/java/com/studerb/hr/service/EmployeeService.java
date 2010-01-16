@@ -30,4 +30,6 @@ public interface EmployeeService {
      * @return count of current employees in persistence
      */
     int getEmployeeCount();
+
+    void deleteEmployee(Long id);
 }
