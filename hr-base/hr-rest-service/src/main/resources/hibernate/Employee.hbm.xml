@@ -43,5 +43,9 @@
       <key column="EMPLOYEE_ID" not-null="true" />
       <one-to-many not-found="ignore" class="JobHistory" />
     </set>
+    <set name="employees" inverse="true" order-by="EMPLOYEE_ID ASC" cascade="none" >
+      <key column="MANAGER_ID" not-null="false"  />
+      <one-to-many not-found="ignore" class="Employee" />
+    </set>
   </class>
 </hibernate-mapping>

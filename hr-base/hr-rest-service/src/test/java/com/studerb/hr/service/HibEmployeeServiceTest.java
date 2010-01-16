@@ -1,8 +1,6 @@
 package com.studerb.hr.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.net.URL;
 import java.util.List;
@@ -55,5 +53,14 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         assertNotNull(id);
         int count = employeeService.getEmployeeCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+    }
+
+    @Test
+    public void deleteEmployeeFromXml() throws Exception {
+        URL url = getClassPathUrl("xml/employee.xml");
+        Employee unmarshalled = (Employee) unmarshaller.unmarshal(url);
+        logger.debug("from XML: " + unmarshalled.toString());
+        Long id = unmarshalled.getId();
+        employeeService.deleteEmployee(id);
     }
 }

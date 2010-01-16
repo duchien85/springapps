@@ -1,20 +1,12 @@
 package com.studerb.hr.model;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.FastDateFormat;
+import org.apache.commons.lang.time.*;
 
 /**
  * <p>
@@ -49,8 +41,8 @@ import org.apache.commons.lang.time.FastDateFormat;
  * 
  */
 @XmlRootElement(name = "employee")
-@XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId", "salary", "commissionPct", "managerId",
-        "departmentId" })
+@XmlType(name = "Employee", propOrder = { "firstName", "lastName", "email", "phoneNumber", "hireDate", "jobId",
+        "salary", "commissionPct", "managerId", "departmentId" })
 public class Employee {
     private static final long serialVersionUID = 8744214730693860142L;
     private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
@@ -66,7 +58,9 @@ public class Employee {
     private Employee manager;
     private Department department;
     private Link link;
+
     Set<JobHistory> jobHistory = new LinkedHashSet<JobHistory>();
+    Set<Employee> employees = new LinkedHashSet<Employee>();
 
     public Employee() {}
 
@@ -77,7 +71,7 @@ public class Employee {
     @XmlAttribute
     @XmlSchemaType(name = "positiveInteger")
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -85,16 +79,24 @@ public class Employee {
     }
 
     public Set<JobHistory> getJobHistory() {
-        return this.jobHistory;
+        return jobHistory;
     }
 
     public void setJobHistory(Set<JobHistory> jobHistory) {
         this.jobHistory = jobHistory;
     }
 
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
+
     @XmlElement(name = "first_name", required = true, nillable = true)
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -103,7 +105,7 @@ public class Employee {
 
     @XmlElement(name = "last_name", required = true)
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
@@ -112,7 +114,7 @@ public class Employee {
 
     @XmlElement
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -121,7 +123,7 @@ public class Employee {
 
     @XmlElement(name = "phone_number", required = true, nillable = true)
     public String getPhoneNumber() {
-        return this.phoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -131,7 +133,7 @@ public class Employee {
     @XmlElement(name = "hire_date", required = true)
     @XmlSchemaType(name = "date")
     public Calendar getHireDate() {
-        return this.hireDate;
+        return hireDate;
     }
 
     public void setHireDate(Calendar hireDate) {
@@ -141,7 +143,7 @@ public class Employee {
     @XmlElement(required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public BigDecimal getSalary() {
-        return this.salary;
+        return salary;
     }
 
     public void setSalary(BigDecimal salary) {
@@ -150,7 +152,7 @@ public class Employee {
 
     @XmlElement(name = "commission_pct", required = true, nillable = true)
     public BigDecimal getCommissionPct() {
-        return this.commissionPct;
+        return commissionPct;
     }
 
     public void setCommissionPct(BigDecimal commissionPct) {
@@ -158,7 +160,7 @@ public class Employee {
     }
 
     public Job getJob() {
-        return this.job;
+        return job;
     }
 
     public void setJob(Job job) {
@@ -166,7 +168,7 @@ public class Employee {
     }
 
     public Employee getManager() {
-        return this.manager;
+        return manager;
     }
 
     public void setManager(Employee manager) {
@@ -174,7 +176,7 @@ public class Employee {
     }
 
     public Department getDepartment() {
-        return this.department;
+        return department;
     }
 
     public void setDepartment(Department department) {
@@ -182,7 +184,7 @@ public class Employee {
     }
 
     public Link getLink() {
-        return this.link;
+        return link;
     }
 
     public void setLink(Link link) {
@@ -191,12 +193,12 @@ public class Employee {
 
     @XmlElement(name = "job_id", required = true)
     public String getJobId() {
-        return (this.job == null ? null : this.job.getId());
+        return (job == null ? null : job.getId());
     }
 
     public void setJobId(String jobId) {
         if (!StringUtils.isBlank(jobId)) {
-            this.job = new Job(jobId);
+            job = new Job(jobId);
         }
 
     }
@@ -204,24 +206,24 @@ public class Employee {
     @XmlElement(name = "department_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getDepartmentId() {
-        return (this.department == null ? null : getDepartment().getId());
+        return (department == null ? null : getDepartment().getId());
     }
 
     public void setDepartmentId(Long departmentId) {
         if (departmentId != null) {
-            this.department = new Department(departmentId);
+            department = new Department(departmentId);
         }
     }
 
     @XmlElement(name = "manager_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getManagerId() {
-        return (this.manager == null ? null : getManager().getId());
+        return (manager == null ? null : getManager().getId());
     }
 
     public void setManagerId(Long managerId) {
         if (managerId != null) {
-            this.manager = new Employee(managerId);
+            manager = new Employee(managerId);
         }
     }
 
@@ -229,16 +231,16 @@ public class Employee {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.commissionPct == null) ? 0 : this.commissionPct.hashCode());
+        result = prime * result + ((commissionPct == null) ? 0 : commissionPct.hashCode());
         result = prime * result + ((getDepartmentId() == null) ? 0 : getDepartmentId().hashCode());
-        result = prime * result + ((this.email == null) ? 0 : this.email.hashCode());
-        result = prime * result + ((this.firstName == null) ? 0 : this.firstName.hashCode());
-        result = prime * result + ((this.hireDate == null) ? 0 : this.hireDate.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((hireDate == null) ? 0 : hireDate.hashCode());
         result = prime * result + ((getJobId() == null) ? 0 : getJobId().hashCode());
-        result = prime * result + ((this.lastName == null) ? 0 : this.lastName.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((getManagerId() == null) ? 0 : getManagerId().hashCode());
-        result = prime * result + ((this.phoneNumber == null) ? 0 : this.phoneNumber.hashCode());
-        result = prime * result + ((this.salary == null) ? 0 : this.salary.hashCode());
+        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+        result = prime * result + ((salary == null) ? 0 : salary.hashCode());
         return result;
     }
 
@@ -251,11 +253,11 @@ public class Employee {
         if (getClass() != obj.getClass())
             return false;
         Employee other = (Employee) obj;
-        if (this.commissionPct == null) {
+        if (commissionPct == null) {
             if (other.commissionPct != null)
                 return false;
         }
-        else if (!this.commissionPct.equals(other.commissionPct))
+        else if (!commissionPct.equals(other.commissionPct))
             return false;
         if (getDepartmentId() == null) {
             if (other.getDepartmentId() != null)
@@ -263,23 +265,23 @@ public class Employee {
         }
         else if (!getDepartmentId().equals(other.getDepartmentId()))
             return false;
-        if (this.email == null) {
+        if (email == null) {
             if (other.email != null)
                 return false;
         }
-        else if (!this.email.equals(other.email))
+        else if (!email.equals(other.email))
             return false;
-        if (this.firstName == null) {
+        if (firstName == null) {
             if (other.firstName != null)
                 return false;
         }
-        else if (!this.firstName.equals(other.firstName))
+        else if (!firstName.equals(other.firstName))
             return false;
-        if (this.hireDate == null) {
+        if (hireDate == null) {
             if (other.hireDate != null)
                 return false;
         }
-        else if (!DateUtils.isSameDay(this.hireDate, other.hireDate))
+        else if (!DateUtils.isSameDay(hireDate, other.hireDate))
             return false;
         if (getJobId() == null) {
             if (other.getJobId() != null)
@@ -287,29 +289,29 @@ public class Employee {
         }
         else if (!getJobId().equals(other.getJobId()))
             return false;
-        if (this.lastName == null) {
+        if (lastName == null) {
             if (other.lastName != null)
                 return false;
         }
-        else if (!this.lastName.equals(other.lastName))
+        else if (!lastName.equals(other.lastName))
             return false;
-        if (this.manager == null) {
+        if (manager == null) {
             if (other.manager != null)
                 return false;
         }
         else if (!getManagerId().equals(other.getManagerId()))
             return false;
-        if (this.phoneNumber == null) {
+        if (phoneNumber == null) {
             if (other.phoneNumber != null)
                 return false;
         }
-        else if (!this.phoneNumber.equals(other.phoneNumber))
+        else if (!phoneNumber.equals(other.phoneNumber))
             return false;
-        if (this.salary == null) {
+        if (salary == null) {
             if (other.salary != null)
                 return false;
         }
-        else if (!this.salary.equals(other.salary))
+        else if (!salary.equals(other.salary))
             return false;
         return true;
     }
@@ -317,10 +319,11 @@ public class Employee {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Employee [commissionPct=").append(this.commissionPct).append(", department=").append(getDepartmentId()).append(", email=").append(
-                this.email).append(", firstName=").append(this.firstName).append(", hireDate=").append(this.fdf.format(this.hireDate)).append(", id=").append(
-                this.id).append(", job=").append(getJobId()).append(", lastName=").append(this.lastName).append(", manager=").append(getManagerId()).append(
-                ", phoneNumber=").append(this.phoneNumber).append(", salary=").append(this.salary).append("]");
+        builder.append("Employee [commissionPct=").append(commissionPct).append(", department=").append(
+                getDepartmentId()).append(", email=").append(email).append(", firstName=").append(firstName).append(
+                ", hireDate=").append(fdf.format(hireDate)).append(", id=").append(id).append(", job=").append(
+                getJobId()).append(", lastName=").append(lastName).append(", manager=").append(getManagerId()).append(
+                ", phoneNumber=").append(phoneNumber).append(", salary=").append(salary).append("]");
         return builder.toString();
     }
 

@@ -22,33 +22,38 @@ public class HibEmployeeService implements EmployeeService {
     @Transactional(readOnly = true)
     public List<Employee> getAllEmployees() {
         logger.debug("fetching all employees");
-        return this.employeeDao.getAll();
+        return employeeDao.getAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Employee getEmployee(Long id) {
         logger.debug("Fetching Employee with id: " + id);
-        return this.employeeDao.get(id);
+        return employeeDao.get(id);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Long saveEmployee(Employee employee) {
         logger.debug("adding new employee: " + employee);
-        return this.employeeDao.save(employee);
+        return employeeDao.save(employee);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateEmployee(Employee employee) {
         logger.debug("updating employee: " + employee);
-        this.employeeDao.update(employee);
+        employeeDao.update(employee);
     }
 
     @Override
     @Transactional(readOnly = true)
     public int getEmployeeCount() {
-        return this.employeeDao.getCount();
+        return employeeDao.getCount();
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        employeeDao.delete(id);
     }
 }
