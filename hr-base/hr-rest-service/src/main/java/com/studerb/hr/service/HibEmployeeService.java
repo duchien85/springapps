@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.studerb.hr.dao.EmployeeDao;
 import com.studerb.hr.model.Employee;
+import com.sun.jersey.api.NotFoundException;
 
 @Service("hibEmployeeService")
 public class HibEmployeeService implements EmployeeService {
@@ -41,8 +42,11 @@ public class HibEmployeeService implements EmployeeService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateEmployee(Employee employee) {
-        logger.debug("updating employee: " + employee);
+    public void updateEmployee(Employee employee) throws NotFoundException {
+        Long id = employee.getId();
+        if (id == null || !employeeDao.exists(id)) {
+            throw new NotFoundException("Employee with id: " + id + " does  not exist");
+        }
         employeeDao.update(employee);
     }
 
@@ -53,7 +57,16 @@ public class HibEmployeeService implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(Long id) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteEmployee(Long id) throws NotFoundException {
+        if (!employeeDao.exists(id)) {
+            throw new NotFoundException("Employee with id: " + id + " does  not exist");
+        }
         employeeDao.delete(id);
+    }
+
+    @Override
+    public void flushAndClear() {
+        employeeDao.flushAndClear();
     }
 }

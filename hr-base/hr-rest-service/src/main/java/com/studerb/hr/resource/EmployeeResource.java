@@ -1,17 +1,12 @@
 package com.studerb.hr.resource;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang.text.StrBuilder;
@@ -55,6 +50,15 @@ public class EmployeeResource {
         return employees;
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response createEmployee(@Context UriInfo uriInfo, Employee employee) {
+        Long newId = employeeService.saveEmployee(employee);
+        log.info("Created new employee - Id =  " + newId);
+        URI location = uriInfo.getAbsolutePathBuilder().path(newId.toString()).build();
+        return Response.created(location).build();
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("{id}/")
@@ -67,11 +71,23 @@ public class EmployeeResource {
         return employee;
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_XML)
-    public void createEmployee(Employee employee) {
-        Long newId = employeeService.saveEmployee(employee);
-        log.info("Created new employee - Id =  " + newId);
+    @DELETE
+    @Path("{id}/")
+    public Response deleteEmployeeById(@PathParam("id") Long id) {
+        log.debug("Getting employee by id: " + id);
+        // throws a NotFoundException if employee with 'id' doensn't exist
+        employeeService.deleteEmployee(id);
+        return Response.noContent().build();
     }
 
+    @PUT
+    @Path("{id}/")
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response updateEmployee(@PathParam("id") Long id, Employee employee) {
+        if (!id.equals(employee.getId())) {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+        employeeService.updateEmployee(employee);
+        return Response.noContent().build();
+    }
 }

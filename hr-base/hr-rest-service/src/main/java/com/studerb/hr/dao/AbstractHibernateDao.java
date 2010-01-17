@@ -3,16 +3,10 @@ package com.studerb.hr.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -63,7 +57,7 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
         this.logger.debug("Deleting all from table: " + this.getTableName());
         SQLQuery query = this.getCurrentSession().createSQLQuery("truncate table: " + this.getTableName());
         int count = query.executeUpdate();
-        this.logger.info("Deleted All {" + count + "} from " + this.getTableName());
+        this.logger.info("Truncated table " + this.getTableName());
         return count;
     }
 
@@ -145,5 +139,21 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
         return this.sessionFactory.getCurrentSession();
     }
 
+    @Override
+    public void flushAndClear() {
+        this.flush();
+        this.clear();
+    }
+
+    @Override
+    public boolean exists(Serializable id) {
+        Query q = getCurrentSession().createQuery(
+                "select count(x) from " + this.persistentClass.getSimpleName() + " x where x.id = :id");
+        q.setParameter("id", id, Hibernate.LONG);
+        Long count = (Long) q.uniqueResult();
+        return count.equals(1L);
+    }
+
+    @Override
     public abstract String getTableName();
 }

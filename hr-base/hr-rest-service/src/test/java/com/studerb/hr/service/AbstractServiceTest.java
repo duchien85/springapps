@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
-@TransactionConfiguration(defaultRollback = false)
+@TransactionConfiguration(defaultRollback = true)
 public class AbstractServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     protected JAXBContext context;
     protected Marshaller marshaller;
