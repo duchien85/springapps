@@ -1,0 +1,12 @@
+- figure out what exception services should throw
+- map exceptions (including database) to response codes in the servlet container
+    see @provider type: javax.ws.rs.ext.ExceptionMapper<E extends Throwable> via jsr311
+
+Jax-RS Exceptions:
+    javax.ws.rs.WebApplicationException
+
+Jersey Exceptions
+    404 Not Found - com.sun.jersey.api.NotFoundException extends WebApplicationException
+    409 Conflict - com.sun.jersey.api.ConflictException extends WebApplicationException
+
+

@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -37,6 +39,18 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     @Test
     public void countRows() {
         assertEquals(countRowsInTable(employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
+    }
+
+    @Test
+    public void exists() {
+        boolean exists = employeeDao.exists(100L);
+        assertTrue(exists);
+    }
+
+    @Test
+    public void notExists() {
+        boolean exists = employeeDao.exists(TestUtil.BAD_EMPLOYEE_ID);
+        assertFalse(exists);
     }
 
     @Test
@@ -90,7 +104,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     }
 
     @Test
-    public void addEmployee() {
+    public void saveNew() {
         Employee employee = ModelUtils.createNewEmployee();
         Long id = employeeDao.save(employee);
         assertNotNull(employee.getId());
@@ -103,15 +117,19 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
     }
 
+    @Test(expected = DataIntegrityViolationException.class)
+    public void saveDuplicate() {
+        Employee e = ModelUtils.createEmployee100();
+        employeeDao.save(e);
+    }
+
     @Test
-    public void deleteEmployee() {
+    public void delete() {
         Long employeeId = 101L;
         List<Long> employeeIds = Arrays.asList(200L, 203L, 204L, 205L, 108L);
         Long managerId = 100L;
         employeeDao.delete(employeeId);
-        employeeDao.flush();
-        employeeDao.clear();
-
+        employeeDao.flushAndClear();
         // check we've deleted employee itself
         Employee e = employeeDao.get(employeeId);
         assertNull(e);
@@ -136,8 +154,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
         List<Long> employeeIds = Arrays.asList(101L, 102L, 114L, 120L, 121L, 122L, 123L);
         employeeDao.delete(employeeId);
-        employeeDao.flush();
-        employeeDao.clear();
+        employeeDao.flushAndClear();
 
         // check we've deleted employee itself
         Employee e = employeeDao.get(employeeId);
@@ -155,5 +172,46 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
             Employee temp = employeeDao.get(tempId);
             assertNull(temp.getManager());
         }
+    }
+
+    @Test
+    public void update() {
+        Employee employee = ModelUtils.createEmployee100();
+        String firstName = "John";
+        String lastName = "Grisham";
+        employee.setFirstName(firstName);
+        employee.setLastName(lastName);
+        employeeDao.update(employee);
+        employeeDao.flushAndClear();
+
+        Employee john = employeeDao.get(employee.getId());
+        assertEquals(john.getFirstName(), firstName);
+        assertEquals(john.getLastName(), lastName);
+    }
+
+    @Test
+    public void updateManager() {
+        Long newManagerId = 101L;
+        Employee employee = ModelUtils.createEmployee100();
+        employee.setManagerId(new Long(newManagerId));
+        employeeDao.update(employee);
+        employeeDao.flushAndClear();
+
+        Employee updated = employeeDao.get(employee.getId());
+        assertEquals(updated.getManagerId(), newManagerId);
+    }
+
+    @Test(expected = NonTransientDataAccessException.class)
+    public void updateNonId() {
+        Employee e = ModelUtils.createNewEmployee();
+        e.setFirstName("Yoshimoto");
+        employeeDao.update(e);
+    }
+
+    @Test
+    public void updateBadId() {
+        Employee e = ModelUtils.createEmployee100();
+        e.setId(TestUtil.BAD_EMPLOYEE_ID);
+        employeeDao.update(e);
     }
 }

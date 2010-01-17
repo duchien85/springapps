@@ -39,6 +39,9 @@ public class HibEmployeeDao extends AbstractHibernateDao<Employee> implements Em
     @Override
     public void delete(Long id) {
         Employee e = get(id);
+        if (e == null) {
+            return;
+        }
         delete(e);
     }
 }

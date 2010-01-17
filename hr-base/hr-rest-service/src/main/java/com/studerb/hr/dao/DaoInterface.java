@@ -1,6 +1,5 @@
 package com.studerb.hr.dao;
 
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -11,39 +10,43 @@ import java.util.List;
  */
 public interface DaoInterface<T> {
 
-	void saveOrUpdateAll(Collection<T> entities);
+    void saveOrUpdateAll(Collection<T> entities);
 
-	// cache control operations
-	void clear();
+    // cache control operations
+    void clear();
 
-	// crud operations
-	Long save(T entity);
+    // crud operations
+    Long save(T entity);
 
-	void delete(T entity);
+    void delete(T entity);
 
-	void delete(Serializable id);
+    void delete(Serializable id);
 
-	int deleteAll();
+    int deleteAll();
 
-	void flush();
+    void flush();
 
-	List<T> getAll();
+    void flushAndClear();
 
-	//DataPage<T> getPage(DataPageInfo info);
+    List<T> getAll();
 
-	//List<T> getJmesa(TableFacade tableFacade);
+    // DataPage<T> getPage(DataPageInfo info);
 
-	List<T> getAllByOrder(String orderBy, String orderDir);
+    // List<T> getJmesa(TableFacade tableFacade);
 
-	int getCount();
+    List<T> getAllByOrder(String orderBy, String orderDir);
 
-	T get(Serializable id);
+    int getCount();
 
-	void saveOrUpdate(T entity);
+    T get(Serializable id);
 
-	void update(T entity);
+    void saveOrUpdate(T entity);
 
-	String getTableName();
+    void update(T entity);
 
-	T load(Serializable id);
+    String getTableName();
+
+    T load(Serializable id);
+
+    boolean exists(Serializable id);
 }
