@@ -9,15 +9,10 @@
     	<link rel="stylesheet" type="text/css" href="<c:url value='/css/reset-fonts-grids.css'/>">  
   	    <link rel="stylesheet" type="text/css" href="<c:url value='/css/base-min.css'/>">  
 		<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>">
-        <script type="text/javascript" src="<c:url value='/js/ext-all-debug.js'/>"></script>            
         <script type="text/javascript" src="<c:url value='/js/main.js'/>"></script>
         <script type="text/javascript">
           Ext.BLANK_IMAGE_URL = '<c:url value="/images/s.gif" />';
-          
-          Ext.onReady(function() {
-        	   
-        	  });
-  </script>
+       </script>
         
         <decorator:head/>
     </head>

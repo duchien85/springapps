@@ -127,6 +127,7 @@
         <artifactId>maven-jetty-plugin</artifactId>
         <version>${jetty.version}</version>
         <configuration>
+          <webDefaultXml>${project.basedir}/src/test/resources/webdefault.xml</webDefaultXml>
           <scanIntervalSeconds>10</scanIntervalSeconds>
           <contextPath>/client</contextPath>
           <connectors>
@@ -135,7 +136,6 @@
               <maxIdleTime>60000</maxIdleTime>
             </connector>
           </connectors>
-
           <stopPort>9966</stopPort>
           <stopKey>foo</stopKey>
           <systemProperties>
