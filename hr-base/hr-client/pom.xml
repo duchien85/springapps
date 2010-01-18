@@ -8,6 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>hr-client</artifactId>
+  <packaging>war</packaging>
   <name>hr-client</name>
 
   <url>http://maven.apache.org</url>
@@ -19,11 +20,21 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.studerb.hr</groupId>
-      <artifactId>hr-rest-service</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2</version>
+    </dependency>
+
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-client</artifactId>
@@ -40,33 +51,75 @@
       <version>1.0.1</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+      <groupId>opensymphony</groupId>
+      <artifactId>sitemesh</artifactId>
+      <version>2.4.2</version>
+      <type>jar</type>
+    </dependency>
+    <!-- Container-provided dependencies-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>hr-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>hr-model</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <!-- TEST -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.5.6</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>jsr311-api</artifactId>
+      <version>1.1.1</version>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
+      <!--
+        <plugin> <artifactId>maven-dependency-plugin</artifactId> <executions> <execution>
+        <id>copy-hr-rest-service-war</id> <phase>generate-sources</phase> <goals> <goal>copy</goal> </goals>
+        <configuration> <artifactItems> <artifactItem> <groupId>${project.groupId}</groupId>
+        <artifactId>hr-rest-service</artifactId> <version>${project.version}</version> <type>war</type>
+        <outputDirectory>${project.build.directory}</outputDirectory> <destFileName>hr-rest-service.war</destFileName>
+        </artifactItem> </artifactItems> </configuration> </execution> </executions> </plugin>
+      -->
       <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-hr-rest-service-war</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>${project.groupId}</groupId>
-                  <artifactId>hr-rest-service</artifactId>
-                  <version>${project.version}</version>
-                  <type>war</type>
-                  <outputDirectory>${project.build.directory}</outputDirectory>
-                  <destFileName>hr-rest-service.war</destFileName>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.0.2</version>
       </plugin>
 
       <plugin>
@@ -74,11 +127,17 @@
         <artifactId>maven-jetty-plugin</artifactId>
         <version>${jetty.version}</version>
         <configuration>
-          <webApp>${project.build.directory}/hr-rest-service.war</webApp>
-          <contextPath>/hr-rest-service</contextPath>
-           <stopPort>9966</stopPort>
-          <stopKey>foo</stopKey>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <contextPath>/client</contextPath>
+          <connectors>
+            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+              <port>8081</port>
+              <maxIdleTime>60000</maxIdleTime>
+            </connector>
+          </connectors>
 
+          <stopPort>9966</stopPort>
+          <stopKey>foo</stopKey>
           <systemProperties>
             <systemProperty>
               <name>log4j.configuration</name>
@@ -86,28 +145,6 @@
             </systemProperty>
           </systemProperties>
         </configuration>
-        <executions>
-          <execution>
-            <id>start-jetty</id>
-            <!--            <phase>pre-integration-test</phase>-->
-            <phase>test-compile</phase>
-            <goals>
-              <goal>deploy-war</goal>
-            </goals>
-            <configuration>
-              <daemon>true</daemon>
-              <reload>manual</reload>
-            </configuration>
-          </execution>
-          <execution>
-            <id>stop-jetty</id>
-            <!--            <phase>post-integration-test</phase>-->
-            <phase>test</phase>
-            <goals>
-              <goal>stop</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
