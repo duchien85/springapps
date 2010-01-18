@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.Employee;
@@ -57,6 +58,14 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         employeeService.flushAndClear();
         int count = employeeService.getEmployeeCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void createDuplicate() throws Exception {
+        URL url = getClassPathUrl("xml/employee.xml");
+        Employee unmarshalled = (Employee) unmarshaller.unmarshal(url);
+        logger.debug("from XML: " + unmarshalled.toString());
+        employeeService.saveEmployee(unmarshalled);
     }
 
     @Test
