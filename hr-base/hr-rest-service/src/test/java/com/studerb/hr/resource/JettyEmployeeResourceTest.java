@@ -58,7 +58,7 @@ public class JettyEmployeeResourceTest {
         webResource = null;
     }
 
-    /********************************* CREATE *****************************************/
+    /********************************* GET *****************************************/
 
     @Test
     public void getAllText() throws Exception {
@@ -78,15 +78,6 @@ public class JettyEmployeeResourceTest {
 
         List<Employee> fromHib = employeeService.getAllEmployees();
         assertTrue(fromHib.size() == TestUtil.EMPLOYEE_COUNT);
-        for (int i = 0; i < fromHib.size(); ++i) {
-            Employee e1 = fromHib.get(i);
-            Employee e2 = fromRest.get(i);
-            if (!e1.equals(e2)) {
-                log.warn("e1 != e2 at index: " + i);
-                log.warn("e1: " + e1);
-                log.warn("e2: " + e2);
-            }
-        }
         assertEquals(fromRest, fromHib);
     }
 
