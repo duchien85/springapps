@@ -109,13 +109,6 @@ Ext.onReady(function(){
     });
     
     // render the grid to the specified div in the page
-    grid.render('static_grid');
-    
-    var panel1 = new Ext.grid.Panel({
-    	applyTo: 'another_panel',
-    	title: 'Another Panel',
-    	width: 600,
-    	height: 350
-    });
+    grid.render('employees_grid');
     
 });
