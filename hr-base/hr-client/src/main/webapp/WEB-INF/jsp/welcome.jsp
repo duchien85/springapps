@@ -2,9 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<meta name="decorator" content="ext_base">
+<meta name="decorator" content="yui_doc2_t2_1grid">
 <title>Welcome</title>
-<script type="text/javascript" src="<c:url value='/js/welcome.js'/>"></script>
 </head>
 <body>
     <div class="content" class="container">
@@ -15,3 +14,5 @@
     </div>
 </body>
 </html>
+
+

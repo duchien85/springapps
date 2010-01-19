@@ -10,18 +10,13 @@
   	    <link rel="stylesheet" type="text/css" href="<c:url value='/css/base-min.css'/>">  
 		<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>">
         <script type="text/javascript" src="<c:url value='/js/main.js'/>"></script>
-        <script type="text/javascript">
-          Ext.BLANK_IMAGE_URL = '<c:url value="/images/s.gif" />';
-       </script>
-        
         <decorator:head/>
     </head>
 	<body class="yui-skin-sam">
-  
-        <div id="doc2" class="yui-t2">
+          <div id="doc2" class="yui-t2">
             <div id="hd">
                 <div id="hd_logo">
-					<a href='<c:url value="/"/>'>Yui doc2 yui-t2</a>
+					<a href='<c:url value="/"/>'>Human Resources</a>
                 </div>
                 <!-- end hd_logo -->
             </div>

@@ -9,6 +9,11 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:spring/applicationContext.xml</param-value>
   </context-param>
+  
+  <context-param>
+    <param-name>hrRestServiceUrl</param-name>
+    <param-value>http://localhost:8080/rest/</param-value>
+  </context-param>
 
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
