@@ -16,7 +16,7 @@
         <p>${employees}</p>
 <!--        <c:forEach var="sites" items="${model.site_names}" varStatus="status">-->
 <!--        <a href="${model.site_urls[status.index]}" title="sites"><c:out value="${status.count}"/>. <c:out value="${model.site_names[status.index]}"/>-->
-</c:forEach> 
+<!--</c:forEach> -->
     </div>
 </body>
 </html>
