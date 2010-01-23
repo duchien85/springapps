@@ -8,6 +8,9 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
 
@@ -52,5 +55,23 @@ public class JerseyEmployeeRestService implements EmployeeRestService, ServletCo
     @Override
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
+    }
+
+    @Override
+    public Document getAllEmployeesXml() {
+        WebResource webResource = client.resource(HR_REST_URI);
+        ClientResponse clientResponse = webResource.path("employees").accept(MediaType.APPLICATION_XML).get(
+                ClientResponse.class);
+        if (!clientResponse.getClientResponseStatus().equals(ClientResponse.Status.OK)) {
+            throw new RuntimeException("Unable to get all employees XML");
+        }
+        try {
+            SAXReader saxReader = new SAXReader();
+            Document document = saxReader.read(clientResponse.getEntityInputStream());
+            return document;
+        }
+        catch (DocumentException e) {
+            throw new RuntimeException("Error getting Employees XML", e);
+        }
     }
 }
