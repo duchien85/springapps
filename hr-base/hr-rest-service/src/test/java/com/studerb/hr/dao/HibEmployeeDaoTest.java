@@ -17,8 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.*;
+import com.studerb.hr.util.TestUtil;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)

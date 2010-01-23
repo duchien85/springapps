@@ -9,16 +9,19 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.dom4j.Document;
+import org.dom4j.io.SAXReader;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.*;
 import com.studerb.hr.service.EmployeeService;
+import com.studerb.hr.util.TestUtil;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
@@ -71,6 +74,30 @@ public class JettyEmployeeResourceTest {
     @Test
     public void getAllXml() throws Exception {
         clientResponse = webResource.path(BASE).accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
+        assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
+        Employees employeesType = clientResponse.getEntity(Employees.class);
+        List<Employee> fromRest = employeesType.getEmployees();
+        assertTrue(fromRest.size() == TestUtil.EMPLOYEE_COUNT);
+
+        List<Employee> fromHib = employeeService.getAllEmployees();
+        assertTrue(fromHib.size() == TestUtil.EMPLOYEE_COUNT);
+        assertEquals(fromRest, fromHib);
+    }
+
+    @Test
+    public void getAllRawXml() throws Exception {
+        clientResponse = webResource.path(BASE).accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
+        assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
+        SAXReader saxReader = new SAXReader();
+        Document document = saxReader.read(clientResponse.getEntityInputStream());
+        String xmlString = document.asXML();
+        log.debug(xmlString);
+        assertFalse(StringUtils.isBlank(xmlString));
+    }
+
+    @Test
+    public void getAllJson() throws Exception {
+        clientResponse = webResource.path(BASE).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
         Employees employeesType = clientResponse.getEntity(Employees.class);
         List<Employee> fromRest = employeesType.getEmployees();
