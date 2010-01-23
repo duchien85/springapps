@@ -50,6 +50,15 @@ public class EmployeeResource {
         return employees;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Employees getAllEmployeesJson() {
+        Employees employees = new Employees();
+        List<Employee> employeeList = employeeService.getAllEmployees();
+        employees.getEmployees().addAll(employeeList);
+        return employees;
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     public Response createEmployee(@Context UriInfo uriInfo, Employee employee) {
