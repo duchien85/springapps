@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/WEB-INF/decorators">
+    <!-- Any urls that are excluded will never be decorated by Sitemesh -->
+    <excludes>
+        <pattern>/exclude/*</pattern>
+        <pattern>/jsp/sitemesh_exclude/*</pattern>
+    </excludes>
+
+    <decorator name="yui_doc2_t2_1grid" page="yui_doc2_t2_1grid.jsp">
+        <!-- <pattern>/*</pattern> -->
+    </decorator>
+
+    <decorator name="ext_base" page="ext_base.jsp"/>
+
+
+
+    <decorator name="panel" page="panel.jsp"/>
+    <decorator name="printable" page="printable.jsp"/>
+    <decorator name="black" page="black.jsp"/>
+    <decorator name="nopanelsource" page="nopanelsource.jsp"/>
+    <decorator name="badpanelsource" page="badpanelsource.jsp"/>
+
+</decorators>

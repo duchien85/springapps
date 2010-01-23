@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.studerb.hr.TestUtil;
 import com.studerb.hr.model.Employee;
 import com.studerb.hr.model.ModelUtils;
+import com.studerb.hr.util.TestUtil;
 import com.sun.jersey.api.NotFoundException;
 
 public class HibEmployeeServiceTest extends AbstractServiceTest {
