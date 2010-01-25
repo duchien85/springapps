@@ -3,17 +3,6 @@
  * http://www.extjs.com/license
  */
 Ext.onReady(function(){
-	Ext.Ajax.on('beforerequest', this.showSpinner, this);
-	Ext.Ajax.on('requestcomplete', this.hideSpinner, this);
-	Ext.Ajax.on('requestexception', this.hideSpinner, this);
-    // NOTE: This is an example showing simple state management. During
-	// development,
-    // it is generally best to disable state management as dynamically-generated
-	// ids
-    // can change across page loads, leading to unpredictable results. The
-	// developer
-    // should ensure that stable state ids are set for stateful components in
-	// real apps.
     // Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
     var store = new Ext.data.XmlStore({
     // store configs
@@ -24,11 +13,16 @@ Ext.onReady(function(){
     record: 'employee', // records will have an "Item" tag
     idPath: '@id',
     fields: [
-        // set up the fields mapping into the xml doc
-        // The first needs mapping, the others are very basic
-
-        {name: 'Author', mapping: 'ItemAttributes > Author'},
-        'Title', 'Manufacturer', 'ProductGroup'
+        {name: 'firstName', mapping: 'first_name', allowBlank: true},
+        {name: 'lastName', mapping: 'last_name', allowBlank: false},
+        {name: 'email', mapping: 'email', allowBlank: false},                        
+        {name: 'phoneNumber', mapping: 'phone_number', allowBlank: true},
+        {name: 'hireDate', mapping: 'hire_date', type: 'date', allowBlank: false},
+        {name: 'jobId', mapping: 'job_id', allowBlank: false},
+        {name: 'salary', mapping: 'salary', type: 'int', allowBlank: true},                
+        {name: 'commissionPct', mapping: 'commission_pct', type: 'float', allowBlank: true},                        
+        {name: 'managerId', mapping: 'manager_id', type: 'int', allowBlank: true},                                
+        {name: 'departmentId', mapping: 'department_id', type: 'int', allowBlank: true}                                        
     ]
 });
         
@@ -62,26 +56,20 @@ Ext.onReady(function(){
         return val;
     }
 
-    // create the data store
-    var store = new Ext.data.ArrayStore({
-        fields: [
-           {name: 'company'},
-           {name: 'price', type: 'float'},
-           {name: 'change', type: 'float'},
-           {name: 'pctChange', type: 'float'},
-           {name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia'}
-        ]
-    });
-
     // manually load local data
-    store.loadData(myData);
-
+    store.loadData();
+    
     // create the Grid
     var grid = new Ext.grid.GridPanel({
         store: store,
         columns: [
-            {id:'company',header: 'Company', width: 160, sortable: true, dataIndex: 'company'},
-            {header: 'Price', width: 75, sortable: true, renderer: 'usMoney', dataIndex: 'price'},
+            {id:'id',header: 'Company', width: 160, sortable: true, dataIndex: 'company'},
+            {header: 'First', width: 75, sortable: true,  dataIndex: 'firstName'},
+            {header: 'Last', width: 75, sortable: true,  dataIndex: 'lastName'},            
+            {header: 'Email', width: 75, sortable: true,  dataIndex: 'email'},
+            {header: 'Hire Date', width: 75, sortable: true,  dataIndex: 'hireDate'},
+            {header: 'Hire Date', width: 75, sortable: true,  dataIndex: 'hireDate'},                        
+            {header: 'phoneNumber', width: 75, sortable: true,  dataIndex: 'phoneNumber'},            
             {header: 'Change', width: 75, sortable: true, renderer: change, dataIndex: 'change'},
             {header: '% Change', width: 75, sortable: true, renderer: pctChange, dataIndex: 'pctChange'},
             {header: 'Last Updated', width: 85, sortable: true, renderer: Ext.util.Format.dateRenderer('m/d/Y'), dataIndex: 'lastChange'}

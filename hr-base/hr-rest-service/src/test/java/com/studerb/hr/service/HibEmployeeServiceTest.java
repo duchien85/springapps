@@ -114,5 +114,4 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         employee.setId(TestUtil.BAD_EMPLOYEE_ID);
         employeeService.updateEmployee(employee);
     }
-
 }
