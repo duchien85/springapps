@@ -214,4 +214,48 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         e.setId(TestUtil.BAD_EMPLOYEE_ID);
         employeeDao.update(e);
     }
+
+    @Test
+    public void updateJobCheckTrigger() {
+        Employee e101 = employeeDao.get(101L);
+        Set<JobHistory> jobHistories = e101.getJobHistory();
+        Job currentJob = e101.getJob();
+        log.debug("JOBHISTORYS BEFORE UPDATE: ************" + jobHistories);
+        int count = jobHistories.size();
+        assertTrue(count == 2);
+        assertFalse(jobHistories.contains(currentJob));
+        e101.setJob(new Job("AD_PRES"));
+        employeeDao.flushAndClear();
+
+        Employee temp = employeeDao.get(101L);
+        Set<JobHistory> tempJH = temp.getJobHistory();
+        int tempCount = tempJH.size();
+        assertTrue((count + 1) == tempCount);
+        log.debug("JOBHISTORYS AFTER UPDATE: ************" + tempJH);
+        assertTrue(tempJH.contains(currentJob));
+    }
+
+    @Test
+    public void iter() {
+        List<Employee> employees = employeeDao.getAll();
+        List<Employee> empty = new ArrayList<Employee>();
+        List<Employee> notEmpty = new ArrayList<Employee>();
+
+        for (Employee e : employees) {
+            Calendar hireDate = e.getHireDate();
+            Set<JobHistory> jh = e.getJobHistory();
+            if (jh.isEmpty()) {
+                empty.add(e);
+            }
+            else {
+                notEmpty.add(e);
+            }
+        }
+        for (Employee e : notEmpty) {
+            Calendar hireDate = e.getHireDate();
+            List<JobHistory> jh = new ArrayList<JobHistory>(e.getJobHistory());
+            Calendar firstStartDate = jh.get(0).getStartDate();
+            assertTrue(DateUtils.isSameDay(hireDate, firstStartDate));
+        }
+    }
 }
