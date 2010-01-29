@@ -9,4 +9,5 @@ Jersey Exceptions
     404 Not Found - com.sun.jersey.api.NotFoundException extends WebApplicationException
     409 Conflict - com.sun.jersey.api.ConflictException extends WebApplicationException
 
+Add JobHistories to the XML schema and include them by default with employeees
 

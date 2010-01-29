@@ -6,11 +6,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TimeZone;
 
 import javax.annotation.Resource;
@@ -27,7 +27,6 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.model.Employee;
-import com.studerb.hr.model.Job;
 import com.studerb.hr.model.JobHistory;
 import com.studerb.hr.model.ModelUtils;
 import com.studerb.hr.util.TestUtil;
@@ -226,47 +225,17 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         this.employeeDao.update(e);
     }
 
-    // @Test
-    public void updateJobCheckTrigger() {
-        Employee e101 = this.employeeDao.get(101L);
-        Set<JobHistory> jobHistories = e101.getJobHistory();
-        Job currentJob = e101.getJob();
-        log.debug("JOBHISTORYS BEFORE UPDATE: ************" + jobHistories);
-        int count = jobHistories.size();
-        assertTrue(count == 2);
-        assertFalse(jobHistories.contains(currentJob));
-        e101.setJob(new Job("AD_PRES"));
-        this.employeeDao.flushAndClear();
-
-        Employee temp = this.employeeDao.get(101L);
-        Set<JobHistory> tempJH = temp.getJobHistory();
-        int tempCount = tempJH.size();
-        assertTrue((count + 1) == tempCount);
-        log.debug("JOBHISTORYS AFTER UPDATE: ************" + tempJH);
-        assertTrue(tempJH.contains(currentJob));
-    }
-
-    // @Test
-    public void iter() {
+    @Test
+    public void compareSortedJobHistory() {
         List<Employee> employees = this.employeeDao.getAll();
-        List<Employee> empty = new ArrayList<Employee>();
-        List<Employee> notEmpty = new ArrayList<Employee>();
-
         for (Employee e : employees) {
-            Calendar hireDate = e.getHireDate();
-            Set<JobHistory> jh = e.getJobHistory();
-            if (jh.isEmpty()) {
-                empty.add(e);
+            SortedSet<JobHistory> jobHistory = e.getJobHistory();
+            assertNotNull(jobHistory);
+            if (jobHistory.size() > 1) {
+                Calendar first = jobHistory.first().getStartDate();
+                Calendar second = jobHistory.last().getStartDate();
+                assertTrue(first.compareTo(second) < 0);
             }
-            else {
-                notEmpty.add(e);
-            }
-        }
-        for (Employee e : notEmpty) {
-            Calendar hireDate = e.getHireDate();
-            List<JobHistory> jh = new ArrayList<JobHistory>(e.getJobHistory());
-            Calendar firstStartDate = jh.get(0).getStartDate();
-            assertTrue(DateUtils.isSameDay(hireDate, firstStartDate));
         }
     }
 }

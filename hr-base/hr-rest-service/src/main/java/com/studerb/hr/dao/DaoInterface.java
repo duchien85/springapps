@@ -49,4 +49,6 @@ public interface DaoInterface<T> {
     T load(Serializable id);
 
     boolean exists(Serializable id);
+
+    T merge(T entity);
 }
