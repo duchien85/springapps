@@ -30,7 +30,7 @@ public interface EmployeeService {
      * @throws NotFoundException
      *             when employee with given id does not exist
      */
-    void updateEmployee(Employee employee) throws NotFoundException;
+    Employee updateEmployee(Employee employee) throws NotFoundException;
 
     /**
      * @return count of current employees in persistence

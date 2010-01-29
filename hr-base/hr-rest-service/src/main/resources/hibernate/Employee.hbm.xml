@@ -39,12 +39,19 @@
     <many-to-one name="department" class="Department" fetch="select">
       <column name="DEPARTMENT_ID" not-null="false" />
     </many-to-one>
-    <set name="jobHistory" inverse="true" order-by="START_DATE asc" cascade="delete">
+
+    <set name="jobHistory" table="JOB_HISTORY" sort="natural" lazy="false">
       <key column="EMPLOYEE_ID" not-null="true" />
-      <one-to-many not-found="ignore" class="JobHistory" />
+      <composite-element class="JobHistory">
+        <property name="startDate" type="calendar" column="START_DATE" />
+        <property name="endDate" type="calendar" column="END_DATE" />
+        <many-to-one name="department" class="Department" column="DEPARTMENT_ID" not-null="true" />
+        <many-to-one name="job" class="Job" column="JOB_ID" not-null="true" />
+      </composite-element>
     </set>
-    <set name="employees" inverse="true" order-by="EMPLOYEE_ID ASC" cascade="none" >
-      <key column="MANAGER_ID" not-null="false"  />
+
+    <set name="employees" inverse="true" order-by="EMPLOYEE_ID ASC" cascade="none">
+      <key column="MANAGER_ID" not-null="false" />
       <one-to-many not-found="ignore" class="Employee" />
     </set>
   </class>

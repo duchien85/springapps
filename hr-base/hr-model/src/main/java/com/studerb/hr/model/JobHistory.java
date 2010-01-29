@@ -39,7 +39,7 @@ import org.apache.commons.lang.time.FastDateFormat;
  */
 @XmlRootElement(name = "job_history")
 @XmlType(name = "JobHistory", propOrder = { "endDate", "jobId", "departmentId" })
-public class JobHistory {
+public class JobHistory implements Comparable<JobHistory> {
     private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
     private Calendar endDate;
     private Calendar startDate;
@@ -196,5 +196,10 @@ public class JobHistory {
                 (this.endDate == null ? "null" : this.fdf.format(this.endDate))).append(", jobId=").append(getJobId()).append(", startDate=").append(
                 this.startDate == null ? "null" : this.fdf.format(this.startDate)).append("]");
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(JobHistory o) {
+        return this.startDate.compareTo(o.getStartDate());
     }
 }
