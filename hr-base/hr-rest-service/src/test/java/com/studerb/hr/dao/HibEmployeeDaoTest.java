@@ -1,17 +1,8 @@
 package com.studerb.hr.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TimeZone;
+import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -26,9 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.studerb.hr.model.Employee;
-import com.studerb.hr.model.JobHistory;
-import com.studerb.hr.model.ModelUtils;
+import com.studerb.hr.model.*;
 import com.studerb.hr.util.TestUtil;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
@@ -44,35 +33,35 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Before
     public void setUp() throws Exception {
-        this.simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
+        simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
     }
 
     @Test
     public void countRows() {
-        assertEquals(countRowsInTable(this.employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
+        assertEquals(countRowsInTable(employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void exists() {
-        boolean exists = this.employeeDao.exists(100L);
+        boolean exists = employeeDao.exists(100L);
         assertTrue(exists);
     }
 
     @Test
     public void notExists() {
-        boolean exists = this.employeeDao.exists(TestUtil.BAD_EMPLOYEE_ID);
+        boolean exists = employeeDao.exists(TestUtil.BAD_EMPLOYEE_ID);
         assertFalse(exists);
     }
 
     @Test
     public void getAll() {
-        List<Employee> employees = this.employeeDao.getAll();
+        List<Employee> employees = employeeDao.getAll();
         assertEquals(employees.size(), TestUtil.EMPLOYEE_COUNT);
     }
 
     @Test
     public void getOne() {
-        Employee employee = this.employeeDao.get(189L);
+        Employee employee = employeeDao.get(189L);
         assertNotNull(employee);
         assertEquals(employee.getFirstName(), "Jennifer");
         assertEquals(employee.getLastName(), "Dilly");
@@ -85,7 +74,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void getAssociations() {
-        Employee employee = this.employeeDao.get(101L);
+        Employee employee = employeeDao.get(101L);
         Employee manager = employee.getManager();
 
         assertEquals(manager.getId(), new Long(100L));
@@ -100,38 +89,36 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
             assertTrue(ids.contains(e.getId()));
         }
 
-        Set<JobHistory> jobHistories = employee.getJobHistory();
+        SortedSet<JobHistory> jobHistories = employee.getJobHistory();
         assertTrue(jobHistories.size() == 2);
-        List<String> jobIds = Arrays.asList("AC_ACCOUNT", "AC_MGR");
-        for (JobHistory jh : jobHistories) {
-            assertTrue(jobIds.contains(jh.getJobId()));
-        }
+        assertEquals(jobHistories.first().getJobId(), "AC_ACCOUNT");
+        assertEquals(jobHistories.last().getJobId(), "AC_MGR");
     }
 
     @Test
     public void getNull() {
-        Employee e = this.employeeDao.get(TestUtil.BAD_EMPLOYEE_ID);
+        Employee e = employeeDao.get(TestUtil.BAD_EMPLOYEE_ID);
         assertNull(e);
     }
 
     @Test
     public void saveNew() {
         Employee employee = ModelUtils.createNewEmployee();
-        Long id = this.employeeDao.save(employee);
+        Long id = employeeDao.save(employee);
         assertNotNull(employee.getId());
+        employeeDao.flushAndClear();
 
-        this.employeeDao.flush();
-        Employee em2 = this.employeeDao.get(id);
+        Employee em2 = employeeDao.get(id);
         assertNotNull(em2);
         assertEquals(em2, employee);
-        int count = this.employeeDao.getCount();
+        int count = employeeDao.getCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
     }
 
     @Test(expected = DataIntegrityViolationException.class)
     public void saveDuplicate() {
         Employee e = ModelUtils.createEmployee100();
-        this.employeeDao.save(e);
+        employeeDao.save(e);
     }
 
     @Test
@@ -139,19 +126,20 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         Long employeeId = 101L;
         List<Long> employeeIds = Arrays.asList(200L, 203L, 204L, 205L, 108L);
         Long managerId = 100L;
-        this.employeeDao.delete(employeeId);
-        this.employeeDao.flushAndClear();
+        employeeDao.delete(employeeId);
+        employeeDao.flushAndClear();
         // check we've deleted employee itself
-        Employee e = this.employeeDao.get(employeeId);
+        Employee e = employeeDao.get(employeeId);
         assertNull(e);
 
         // check job histories have been deleted
-        int count = this.simpleJdbcTemplate.queryForInt("select count(*) from job_history where employee_id = ?", employeeId);
+        int count = simpleJdbcTemplate
+                .queryForInt("select count(*) from job_history where employee_id = ?", employeeId);
         assertTrue(count == 0);
 
         // make sure all the former employees have had their managers changed
         for (Long tempId : employeeIds) {
-            Employee temp = this.employeeDao.get(tempId);
+            Employee temp = employeeDao.get(tempId);
             assertEquals(temp.getManager().getId(), managerId);
         }
     }
@@ -159,27 +147,27 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     @Test
     public void deleteDepartmentHead() {
         Long employeeId = 100L;
-        int count = this.simpleJdbcTemplate.queryForInt("select count(*) from departments where manager_id = ?", employeeId);
+        int count = simpleJdbcTemplate.queryForInt("select count(*) from departments where manager_id = ?", employeeId);
         assertTrue(count == 1);
 
         List<Long> employeeIds = Arrays.asList(101L, 102L, 114L, 120L, 121L, 122L, 123L);
-        this.employeeDao.delete(employeeId);
-        this.employeeDao.flushAndClear();
+        employeeDao.delete(employeeId);
+        employeeDao.flushAndClear();
 
         // check we've deleted employee itself
-        Employee e = this.employeeDao.get(employeeId);
+        Employee e = employeeDao.get(employeeId);
         assertNull(e);
 
         // check job histories have been deleted
-        count = this.simpleJdbcTemplate.queryForInt("select count(*) from job_history where employee_id = ?", employeeId);
+        count = simpleJdbcTemplate.queryForInt("select count(*) from job_history where employee_id = ?", employeeId);
         assertTrue(count == 0);
 
-        count = this.simpleJdbcTemplate.queryForInt("select count(*) from departments where manager_id = ?", employeeId);
+        count = simpleJdbcTemplate.queryForInt("select count(*) from departments where manager_id = ?", employeeId);
         assertTrue(count == 0);
 
         // make sure all the former employees have had their managers changed
         for (Long tempId : employeeIds) {
-            Employee temp = this.employeeDao.get(tempId);
+            Employee temp = employeeDao.get(tempId);
             assertNull(temp.getManager());
         }
     }
@@ -191,10 +179,10 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         String lastName = "Grisham";
         employee.setFirstName(firstName);
         employee.setLastName(lastName);
-        this.employeeDao.update(employee);
-        this.employeeDao.flushAndClear();
+        employeeDao.update(employee);
+        employeeDao.flushAndClear();
 
-        Employee john = this.employeeDao.get(employee.getId());
+        Employee john = employeeDao.get(employee.getId());
         assertEquals(john.getFirstName(), firstName);
         assertEquals(john.getLastName(), lastName);
     }
@@ -204,10 +192,10 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         Long newManagerId = 101L;
         Employee employee = ModelUtils.createEmployee100();
         employee.setManagerId(new Long(newManagerId));
-        this.employeeDao.update(employee);
-        this.employeeDao.flushAndClear();
+        employeeDao.update(employee);
+        employeeDao.flushAndClear();
 
-        Employee updated = this.employeeDao.get(employee.getId());
+        Employee updated = employeeDao.get(employee.getId());
         assertEquals(updated.getManagerId(), newManagerId);
     }
 
@@ -215,19 +203,19 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     public void updateNonId() {
         Employee e = ModelUtils.createNewEmployee();
         e.setFirstName("Yoshimoto");
-        this.employeeDao.update(e);
+        employeeDao.update(e);
     }
 
     @Test
     public void updateBadId() {
         Employee e = ModelUtils.createEmployee100();
         e.setId(TestUtil.BAD_EMPLOYEE_ID);
-        this.employeeDao.update(e);
+        employeeDao.update(e);
     }
 
     @Test
     public void compareSortedJobHistory() {
-        List<Employee> employees = this.employeeDao.getAll();
+        List<Employee> employees = employeeDao.getAll();
         for (Employee e : employees) {
             SortedSet<JobHistory> jobHistory = e.getJobHistory();
             assertNotNull(jobHistory);

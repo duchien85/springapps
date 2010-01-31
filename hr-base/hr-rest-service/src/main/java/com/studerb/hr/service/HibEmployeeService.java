@@ -1,8 +1,6 @@
 package com.studerb.hr.service;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.SortedSet;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,32 +26,33 @@ public class HibEmployeeService implements EmployeeService {
     @Transactional(readOnly = true)
     public List<Employee> getAllEmployees() {
         logger.debug("fetching all employees");
-        return this.employeeDao.getAll();
+        return employeeDao.getAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Employee getEmployee(Long id) {
         logger.debug("Fetching Employee with id: " + id);
-        return this.employeeDao.get(id);
+        return employeeDao.get(id);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Long saveEmployee(Employee employee) {
         logger.debug("adding new employee: " + employee);
-        return this.employeeDao.save(employee);
+        return employeeDao.save(employee);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Employee updateEmployee(Employee employee) throws NotFoundException {
         Long id = employee.getId();
-        if (id == null || !this.employeeDao.exists(id)) {
+        if (id == null || !employeeDao.exists(id)) {
             throw new NotFoundException("Employee with id: " + id + " does  not exist");
         }
-        Employee temp = this.employeeDao.get(employee.getId());
-        if ((!temp.getJobId().equals(employee.getJobId())) || (!temp.getDepartmentId().equals(employee.getDepartmentId()))) {
+        Employee temp = employeeDao.get(id);
+        if ((!temp.getJobId().equals(employee.getJobId()))
+                || (!temp.getDepartmentId().equals(employee.getDepartmentId()))) {
             JobHistory jobHistory = new JobHistory();
             jobHistory.setJobId(employee.getJobId());
             jobHistory.setDepartmentId(employee.getDepartmentId());
@@ -71,29 +70,28 @@ public class HibEmployeeService implements EmployeeService {
             }
             temp.getJobHistory().add(jobHistory);
         }
-
         employee.setJobHistory(temp.getJobHistory());
-        Employee merged = this.employeeDao.merge(employee);
+        Employee merged = employeeDao.merge(employee);
         return merged;
     }
 
     @Override
     @Transactional(readOnly = true)
     public int getEmployeeCount() {
-        return this.employeeDao.getCount();
+        return employeeDao.getCount();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteEmployee(Long id) throws NotFoundException {
-        if (!this.employeeDao.exists(id)) {
+        if (!employeeDao.exists(id)) {
             throw new NotFoundException("Employee with id: " + id + " does  not exist");
         }
-        this.employeeDao.delete(id);
+        employeeDao.delete(id);
     }
 
     @Override
     public void flushAndClear() {
-        this.employeeDao.flushAndClear();
+        employeeDao.flushAndClear();
     }
 }
