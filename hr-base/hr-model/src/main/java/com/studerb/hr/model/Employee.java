@@ -140,7 +140,7 @@ public class Employee {
     }
 
     public void setCommissionPct(BigDecimal commissionPct) {
-        this.commissionPct = commissionPct;
+        this.commissionPct = (commissionPct == null ? null : commissionPct.setScale(2));
     }
 
     public Job getJob() {

@@ -94,20 +94,7 @@ public class ModelUtils {
     }
 
     public static Employee createNewEmployeeJobHistory() {
-        Employee employee = new Employee();
-        employee.setFirstName("Bob");
-        employee.setLastName("Alvabcc");
-        employee.setEmail("ALVABCC");
-        Calendar hireDate = Calendar.getInstance();
-        hireDate.set(2010, Calendar.JANUARY, 5);
-        employee.setHireDate(hireDate);
-        employee.setCommissionPct(new BigDecimal("0.50"));
-        employee.setPhoneNumber("123.456.7890");
-        employee.setManager(new Employee(100L));
-        employee.setDepartment(new Department(30L));
-        employee.setJob(new Job("PU_MAN"));
-        employee.setSalary(new BigDecimal("11000"));
-
+        Employee employee = createNewEmployee();
         JobHistory jh = new JobHistory();
         jh.setEmployee(new Employee(101L));
         Calendar startDate2 = Calendar.getInstance();

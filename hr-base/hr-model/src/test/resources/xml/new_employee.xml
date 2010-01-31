@@ -7,7 +7,7 @@
   <hire_date>2010-01-05</hire_date>
   <job_id>PU_MAN</job_id>
   <salary>11000</salary>
-  <commission_pct>0.50</commission_pct>
+  <commission_pct>0.5</commission_pct>
   <manager_id>100</manager_id>
   <department_id>30</department_id>
   <job_histories />
