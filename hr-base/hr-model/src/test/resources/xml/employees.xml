@@ -11,6 +11,7 @@
     <commission_pct xsi:nil="true" />
     <manager_id xsi:nil="true" />
     <department_id>90</department_id>
+    <job_histories></job_histories>
   </employee>
 
   <employee id="189">
@@ -24,6 +25,7 @@
     <commission_pct xsi:nil="true" />
     <manager_id>122</manager_id>
     <department_id>50</department_id>
+    <job_histories/>
   </employee>
 
   <employee id="192">
@@ -37,6 +39,7 @@
     <commission_pct xsi:nil="true" />
     <manager_id>123</manager_id>
     <department_id>50</department_id>
+    <job_histories/>
   </employee>
 
   <employee id="145">
@@ -50,6 +53,7 @@
     <commission_pct>0.4</commission_pct>
     <manager_id>100</manager_id>
     <department_id>80</department_id>
+    <job_histories/>
   </employee>
 
 </employees>

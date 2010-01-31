@@ -10,4 +10,5 @@
   <commission_pct xsi:nil="true" />
   <manager_id xsi:nil="true" />
   <department_id>90</department_id>
+  <job_histories></job_histories>
 </employee>

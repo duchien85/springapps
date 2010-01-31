@@ -6,17 +6,14 @@ import java.net.URL;
 import java.util.HashMap;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.dom4j.Document;
+import org.dom4j.*;
 import org.dom4j.Element;
-import org.dom4j.Node;
 import org.jaxen.dom4j.Dom4jXPath;
 import org.junit.BeforeClass;
 
@@ -40,7 +37,6 @@ public abstract class AbstractJaxbTest {
         marshaller.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, "hr-model.xsd");
         unmarshaller = context.createUnmarshaller();
         unmarshaller.setSchema(schema);
-
     }
 
     public static File getClassPathFile(String filePath) {

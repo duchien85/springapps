@@ -3,9 +3,7 @@ package com.studerb.hr.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * <p>
@@ -33,21 +31,21 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "JobHistories", propOrder = { "jobHistories" })
 public class JobHistories {
 
-    private List<JobHistory> jobHistories;
+    protected List<JobHistory> jobHistories;
 
     @XmlElement(name = "job_history")
     public List<JobHistory> getJobHistories() {
-        if (this.jobHistories == null) {
-            this.jobHistories = new ArrayList<JobHistory>();
+        if (jobHistories == null) {
+            jobHistories = new ArrayList<JobHistory>();
         }
-        return this.jobHistories;
+        return jobHistories;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.jobHistories == null) ? 0 : this.jobHistories.hashCode());
+        result = prime * result + ((jobHistories == null) ? 0 : jobHistories.hashCode());
         return result;
     }
 
@@ -60,11 +58,11 @@ public class JobHistories {
         if (this.getClass() != obj.getClass())
             return false;
         JobHistories other = (JobHistories) obj;
-        if (this.jobHistories == null) {
+        if (jobHistories == null) {
             if (other.jobHistories != null)
                 return false;
         }
-        else if (!this.jobHistories.equals(other.jobHistories))
+        else if (!jobHistories.equals(other.jobHistories))
             return false;
         return true;
     }
@@ -72,7 +70,7 @@ public class JobHistories {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Jobs [jobs=").append(this.jobHistories).append("]");
+        builder.append("Jobs [jobs=").append(jobHistories).append("]");
         return builder.toString();
     }
 }
