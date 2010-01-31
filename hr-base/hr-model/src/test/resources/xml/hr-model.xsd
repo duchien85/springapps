@@ -32,6 +32,7 @@
       <xs:element name="commission_pct" type="xs:decimal" nillable="true" />
       <xs:element name="manager_id" type="xs:positiveInteger" nillable="true" />
       <xs:element name="department_id" type="xs:positiveInteger" nillable="true" />
+      <xs:element name="job_histories" type="JobHistoriesType" />
     </xs:sequence>
     <xs:attribute name="id" type="xs:positiveInteger" />
   </xs:complexType>

@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.FastDateFormat;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,7 +12,6 @@ import org.apache.log4j.Logger;
  */
 public class ModelUtils {
     final static Logger log = Logger.getLogger(ModelUtils.class);
-    private final static FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
 
     /**
      * @return Create a &apos;shallow&apos; instance of Employee with id #100
@@ -38,6 +35,47 @@ public class ModelUtils {
         return e;
     }
 
+    public static Employee createEmployee101() {
+        Employee e = new Employee(101L);
+        e.setFirstName("Neena");
+        e.setLastName("Kochhar");
+        e.setEmail("NKOCHHAR");
+        e.setPhoneNumber("515.123.4568");
+        Calendar hireDate = Calendar.getInstance();
+        hireDate.set(1989, Calendar.SEPTEMBER, 21);
+        e.setHireDate(hireDate);
+        e.setJob(new Job("AD_VP"));
+        e.setSalary(new BigDecimal(17000));
+        e.setDepartment(new Department(90L));
+        e.setManager(new Employee(100L));
+
+        JobHistory jh1 = new JobHistory();
+        jh1.setEmployee(new Employee(101L));
+        Calendar startDate1 = Calendar.getInstance();
+        startDate1.set(1989, Calendar.SEPTEMBER, 21);
+        jh1.setStartDate(startDate1);
+        Calendar endDate1 = Calendar.getInstance();
+        endDate1.set(1993, Calendar.OCTOBER, 27);
+        jh1.setEndDate(endDate1);
+        jh1.setJob(new Job("AC_ACCOUNT"));
+        jh1.setDepartment(new Department(110L));
+        e.getJobHistory().add(jh1);
+
+        JobHistory jh2 = new JobHistory();
+        jh2.setEmployee(new Employee(101L));
+        Calendar startDate2 = Calendar.getInstance();
+        startDate2.set(1993, Calendar.OCTOBER, 28);
+        jh2.setStartDate(startDate2);
+        Calendar endDate2 = Calendar.getInstance();
+        endDate2.set(1997, Calendar.MARCH, 15);
+        jh2.setEndDate(endDate2);
+        jh2.setJob(new Job("AC_MGR"));
+        jh2.setDepartment(new Department(110L));
+        e.getJobHistory().add(jh2);
+
+        return e;
+    }
+
     public static Employee createNewEmployee() {
         Employee employee = new Employee();
         employee.setFirstName("Bob");
@@ -52,7 +90,35 @@ public class ModelUtils {
         employee.setDepartment(new Department(30L));
         employee.setJob(new Job("PU_MAN"));
         employee.setSalary(new BigDecimal("11000"));
+        return employee;
+    }
 
+    public static Employee createNewEmployeeJobHistory() {
+        Employee employee = new Employee();
+        employee.setFirstName("Bob");
+        employee.setLastName("Alvabcc");
+        employee.setEmail("ALVABCC");
+        Calendar hireDate = Calendar.getInstance();
+        hireDate.set(2010, Calendar.JANUARY, 5);
+        employee.setHireDate(hireDate);
+        employee.setCommissionPct(new BigDecimal("0.50"));
+        employee.setPhoneNumber("123.456.7890");
+        employee.setManager(new Employee(100L));
+        employee.setDepartment(new Department(30L));
+        employee.setJob(new Job("PU_MAN"));
+        employee.setSalary(new BigDecimal("11000"));
+
+        JobHistory jh = new JobHistory();
+        jh.setEmployee(new Employee(101L));
+        Calendar startDate2 = Calendar.getInstance();
+        startDate2.set(1993, Calendar.OCTOBER, 28);
+        jh.setStartDate(startDate2);
+        Calendar endDate2 = Calendar.getInstance();
+        endDate2.set(1997, Calendar.MARCH, 15);
+        jh.setEndDate(endDate2);
+        jh.setJob(new Job("AC_MGR"));
+        jh.setDepartment(new Department(110L));
+        employee.getJobHistory().add(jh);
         return employee;
     }
 

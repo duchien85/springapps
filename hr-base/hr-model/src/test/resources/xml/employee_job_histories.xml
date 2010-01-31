@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="101" xsi:noNamespaceSchemaLocation="hr-model.xsd">
+    <first_name>Neena</first_name>
+    <last_name>Kochhar</last_name>
+    <email>NKOCHHAR</email>
+    <phone_number>515.123.4568</phone_number>
+    <hire_date>1989-09-21</hire_date>
+    <job_id>AD_VP</job_id>
+    <salary>17000</salary>
+    <commission_pct xsi:nil="true"/>
+    <manager_id>100</manager_id>
+    <department_id>90</department_id>
+    <job_histories>
+        <job_history employee_id="101" start_date="1989-09-21">
+            <end_date>1993-10-27</end_date>
+            <job_id>AC_ACCOUNT</job_id>
+            <department_id>110</department_id>
+        </job_history>
+        <job_history employee_id="101" start_date="1993-10-28">
+            <end_date>1997-03-15</end_date>
+            <job_id>AC_MGR</job_id>
+            <department_id>110</department_id>
+        </job_history>
+    </job_histories>
+</employee>

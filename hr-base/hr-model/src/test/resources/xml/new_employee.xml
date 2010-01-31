@@ -10,4 +10,5 @@
   <commission_pct>0.50</commission_pct>
   <manager_id>100</manager_id>
   <department_id>30</department_id>
+  <job_histories />
 </employee>
