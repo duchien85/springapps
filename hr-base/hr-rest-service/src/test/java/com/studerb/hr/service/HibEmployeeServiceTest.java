@@ -60,6 +60,29 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
     }
 
+    @Test
+    public void createWithJobHistoryFromXml() throws Exception {
+        URL url = getClassPathUrl("xml/new_employee_job_history.xml");
+        Employee unmarhalled = (Employee) unmarshaller.unmarshal(url);
+        logger.debug("from XML\n" + unmarhalled.toString());
+        Long id = employeeService.saveEmployee(unmarhalled);
+        assertNotNull(id);
+        employeeService.flushAndClear();
+        int count = employeeService.getEmployeeCount();
+        assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+
+        Employee e = employeeService.getEmployee(id);
+        assertNotNull(e);
+        assertTrue(e.getJobHistory().size() == 1);
+        Employee created = ModelUtils.createNewEmployeeJobHistory();
+        JobHistory fromHib = e.getJobHistory().first();
+        JobHistory fromModel = created.getJobHistory().first();
+        assertEquals(fromHib.getDepartmentId(), fromModel.getDepartmentId());
+        assertTrue(DateUtils.isSameDay(fromHib.getStartDate(), fromModel.getStartDate()));
+        assertTrue(DateUtils.isSameDay(fromHib.getEndDate(), fromModel.getEndDate()));
+        assertEquals(fromHib.getJobId(), fromModel.getJobId());
+    }
+
     @Test(expected = DataIntegrityViolationException.class)
     public void createDuplicate() throws Exception {
         URL url = getClassPathUrl("xml/employee.xml");
@@ -130,4 +153,22 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         assertTrue(DateUtils.isSameDay(jobHistory.first().getStartDate(), e100.getHireDate()));
         assertTrue(DateUtils.isSameDay(jobHistory.first().getEndDate(), Calendar.getInstance()));
     }
+
+    @Test
+    public void updateJob() {
+        Employee e = ModelUtils.createEmployee101();
+        int jhCount = e.getJobHistory().size();
+        e.setJob(new Job("SA_MAN"));
+        employeeService.updateEmployee(e);
+        employeeService.flushAndClear();
+
+        Employee updated = employeeService.getEmployee(e.getId());
+        assertEquals(jhCount + 1, updated.getJobHistory().size());
+    }
+
+    @Test
+    public void updateDepartment() {
+        fail("not implemented");
+    }
+
 }

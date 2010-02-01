@@ -2,14 +2,9 @@ package com.studerb.hr.model;
 
 import java.util.Calendar;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 
 /**
@@ -49,7 +44,7 @@ public class JobHistory implements Comparable<JobHistory> {
     private Link link;
 
     public Employee getEmployee() {
-        return this.employee;
+        return employee;
     }
 
     public void setEmployee(Employee employee) {
@@ -57,7 +52,7 @@ public class JobHistory implements Comparable<JobHistory> {
     }
 
     public Department getDepartment() {
-        return this.department;
+        return department;
     }
 
     public void setDepartment(Department department) {
@@ -65,7 +60,7 @@ public class JobHistory implements Comparable<JobHistory> {
     }
 
     public Job getJob() {
-        return this.job;
+        return job;
     }
 
     public void setJob(Job job) {
@@ -75,37 +70,37 @@ public class JobHistory implements Comparable<JobHistory> {
     @XmlAttribute(name = "employee_id", required = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getEmployeeId() {
-        return (this.employee == null ? null : this.employee.getId());
+        return (employee == null ? null : employee.getId());
     }
 
     public void setEmployeeId(Long employeeId) {
         if (employeeId != null) {
-            this.employee = new Employee(employeeId);
+            employee = new Employee(employeeId);
         }
     }
 
     @XmlAttribute(name = "start_date", required = true)
     @XmlSchemaType(name = "date")
     public Calendar getStartDate() {
-        return this.startDate;
+        return startDate;
     }
 
     public void setStartDate(Calendar startDate) {
-        this.startDate = DateUtils.truncate(startDate, Calendar.DAY_OF_MONTH);
+        this.startDate = ModelUtils.standardizeCalendar(startDate);
     }
 
     @XmlElement(name = "end_date", required = true)
     @XmlSchemaType(name = "date")
     public Calendar getEndDate() {
-        return this.endDate;
+        return endDate;
     }
 
     public void setEndDate(Calendar endDate) {
-        this.endDate = DateUtils.truncate(endDate, Calendar.DAY_OF_MONTH);
+        this.endDate = ModelUtils.standardizeCalendar(startDate);
     }
 
     public Link getLink() {
-        return this.link;
+        return link;
     }
 
     public void setLink(Link link) {
@@ -114,24 +109,24 @@ public class JobHistory implements Comparable<JobHistory> {
 
     @XmlElement(name = "job_id", required = true)
     public String getJobId() {
-        return (this.job == null ? null : this.job.getId());
+        return (job == null ? null : job.getId());
     }
 
     public void setJobId(String jobId) {
         if (jobId != null) {
-            this.job = new Job(jobId);
+            job = new Job(jobId);
         }
     }
 
     @XmlElement(name = "department_id", required = true, nillable = true)
     @XmlSchemaType(name = "positiveInteger")
     public Long getDepartmentId() {
-        return (this.department == null ? null : this.department.getId());
+        return (department == null ? null : department.getId());
     }
 
     public void setDepartmentId(Long departmentId) {
         if (departmentId != null) {
-            this.department = new Department(departmentId);
+            department = new Department(departmentId);
         }
     }
 
@@ -139,11 +134,13 @@ public class JobHistory implements Comparable<JobHistory> {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getDepartmentId() == null) ? 0 : getDepartmentId().hashCode());
-        result = prime * result + ((getEmployeeId() == null) ? 0 : getEmployeeId().hashCode());
-        result = prime * result + ((this.endDate == null) ? 0 : this.endDate.hashCode());
-        result = prime * result + ((getJobId() == null) ? 0 : getJobId().hashCode());
-        result = prime * result + ((this.startDate == null) ? 0 : this.startDate.hashCode());
+        result = prime * result
+                + ((department == null) ? 0 : (department.getId() == null ? 0 : department.getId().hashCode()));
+        result = prime * result
+                + ((employee == null) ? 0 : (employee.getId() == null ? 0 : employee.getId().hashCode()));
+        result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+        result = prime * result + ((job == null) ? 0 : (job.getId() == null ? 0 : job.getId().hashCode()));
+        result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
         return result;
     }
 
@@ -156,35 +153,35 @@ public class JobHistory implements Comparable<JobHistory> {
         if (getClass() != obj.getClass())
             return false;
         JobHistory other = (JobHistory) obj;
-        if (getDepartmentId() == null) {
-            if (other.getDepartmentId() != null)
+        if (department == null) {
+            if (other.department != null)
                 return false;
         }
-        else if (!getDepartmentId().equals(other.getDepartmentId()))
+        else if (!department.getId().equals(other.department.getId()))
             return false;
-        if (getEmployeeId() == null) {
-            if (other.getEmployeeId() != null)
+        if (employee == null) {
+            if (other.employee != null)
                 return false;
         }
-        else if (!getEmployeeId().equals(other.getEmployeeId()))
+        else if (!employee.getId().equals(other.employee.getId()))
             return false;
-        if (this.startDate == null) {
-            if (other.startDate != null)
-                return false;
-        }
-        else if (!DateUtils.isSameDay(this.startDate, other.startDate))
-            return false;
-        if (this.endDate == null) {
+        if (endDate == null) {
             if (other.endDate != null)
                 return false;
         }
-        else if (!DateUtils.isSameDay(this.endDate, other.endDate))
+        else if (!endDate.equals(other.endDate))
             return false;
-        if (getJobId() == null) {
-            if (other.getJobId() != null)
+        if (job == null) {
+            if (other.job != null)
                 return false;
         }
-        else if (!getJobId().equals(other.getJobId()))
+        else if (!job.getId().equals(other.job.getId()))
+            return false;
+        if (startDate == null) {
+            if (other.startDate != null)
+                return false;
+        }
+        else if (!startDate.equals(other.startDate))
             return false;
         return true;
     }
@@ -192,14 +189,15 @@ public class JobHistory implements Comparable<JobHistory> {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("JobHistory [departmentId()=").append(getDepartmentId()).append(", employeeId=").append(getEmployeeId()).append(", endDate=").append(
-                (this.endDate == null ? "null" : this.fdf.format(this.endDate))).append(", jobId=").append(getJobId()).append(", startDate=").append(
-                this.startDate == null ? "null" : this.fdf.format(this.startDate)).append("]");
+        builder.append("JobHistory [departmentId()=").append(getDepartmentId()).append(", employeeId=").append(
+                getEmployeeId()).append(", endDate=").append((endDate == null ? "null" : fdf.format(endDate))).append(
+                ", jobId=").append(getJobId()).append(", startDate=").append(
+                startDate == null ? "null" : fdf.format(startDate)).append("]");
         return builder.toString();
     }
 
     @Override
     public int compareTo(JobHistory o) {
-        return this.startDate.compareTo(o.getStartDate());
+        return startDate.compareTo(o.getStartDate());
     }
 }

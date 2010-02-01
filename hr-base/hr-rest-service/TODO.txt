@@ -9,3 +9,5 @@ Jersey Exceptions
     404 Not Found - com.sun.jersey.api.NotFoundException extends WebApplicationException
     409 Conflict - com.sun.jersey.api.ConflictException extends WebApplicationException
 
+
+make the employee jobHistories jaxb getter/setter private
