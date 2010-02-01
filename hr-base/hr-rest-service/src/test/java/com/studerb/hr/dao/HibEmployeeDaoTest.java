@@ -102,7 +102,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     }
 
     @Test
-    public void saveNew() {
+    public void createNew() {
         Employee employee = ModelUtils.createNewEmployee();
         Long id = employeeDao.save(employee);
         assertNotNull(employee.getId());
@@ -111,6 +111,21 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         Employee em2 = employeeDao.get(id);
         assertNotNull(em2);
         assertEquals(em2, employee);
+        int count = employeeDao.getCount();
+        assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+    }
+
+    @Test
+    public void createNewWithJobHistory() {
+        Employee employee = ModelUtils.createNewEmployeeJobHistory();
+        Long id = employeeDao.save(employee);
+        assertNotNull(employee.getId());
+        employeeDao.flushAndClear();
+
+        Employee em2 = employeeDao.get(id);
+        assertNotNull(em2);
+        assertEquals(em2, employee);
+        assertTrue(em2.getJobHistory().size() == 1);
         int count = employeeDao.getCount();
         assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
     }

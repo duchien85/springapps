@@ -30,22 +30,22 @@
     <property name="commissionPct" type="java.math.BigDecimal" precision="3" scale="2">
       <column name="COMMISSION_PCT" not-null="false" />
     </property>
-    <many-to-one name="job" class="Job" fetch="select">
+    <many-to-one name="job" class="Job" >
       <column name="JOB_ID" not-null="false" />
     </many-to-one>
-    <many-to-one name="manager" class="Employee" fetch="select">
+    <many-to-one name="manager" class="Employee" >
       <column name="MANAGER_ID" not-null="false" />
     </many-to-one>
-    <many-to-one name="department" class="Department" fetch="select">
+    <many-to-one name="department" class="Department" >
       <column name="DEPARTMENT_ID" not-null="false" />
     </many-to-one>
 
-    <set name="jobHistory" table="JOB_HISTORY" sort="natural" lazy="false">
-      <key column="EMPLOYEE_ID" not-null="true" />
+    <set name="jobHistory" table="JOB_HISTORY" sort="natural" lazy="false" fetch="join">
+      <key column="EMPLOYEE_ID" not-null="true"/>
       <composite-element class="JobHistory">
         <property name="startDate" type="calendar" column="START_DATE" />
         <property name="endDate" type="calendar" column="END_DATE" />
-        <many-to-one name="department" class="Department" column="DEPARTMENT_ID" not-null="true" />
+        <many-to-one name="department" class="Department" column="DEPARTMENT_ID" not-null="true"/>
         <many-to-one name="job" class="Job" column="JOB_ID" not-null="true" />
       </composite-element>
     </set>

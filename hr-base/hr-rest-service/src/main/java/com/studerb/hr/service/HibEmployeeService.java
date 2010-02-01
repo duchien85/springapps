@@ -2,6 +2,8 @@ package com.studerb.hr.service;
 
 import java.util.*;
 
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.FastDateFormat;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,7 +19,8 @@ import com.sun.jersey.api.NotFoundException;
 @Service("hibEmployeeService")
 @Repository
 public class HibEmployeeService implements EmployeeService {
-    private static final Logger logger = Logger.getLogger(HibEmployeeService.class);
+    private static final Logger log = Logger.getLogger(HibEmployeeService.class);
+    private static final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
 
     @Autowired
     protected EmployeeDao employeeDao;
@@ -25,27 +28,28 @@ public class HibEmployeeService implements EmployeeService {
     @Override
     @Transactional(readOnly = true)
     public List<Employee> getAllEmployees() {
-        logger.debug("fetching all employees");
+        log.debug("fetching all employees");
         return employeeDao.getAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Employee getEmployee(Long id) {
-        logger.debug("Fetching Employee with id: " + id);
+        log.debug("Fetching Employee with id: " + id);
         return employeeDao.get(id);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Long saveEmployee(Employee employee) {
-        logger.debug("adding new employee: " + employee);
+        log.debug("adding new employee: " + employee);
         return employeeDao.save(employee);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Employee updateEmployee(Employee employee) throws NotFoundException {
+        log.debug("updating employee: " + employee);
         Long id = employee.getId();
         if (id == null || !employeeDao.exists(id)) {
             throw new NotFoundException("Employee with id: " + id + " does  not exist");
@@ -59,19 +63,23 @@ public class HibEmployeeService implements EmployeeService {
             jobHistory.setEndDate(Calendar.getInstance());
             jobHistory.setEmployee(employee);
 
-            SortedSet<JobHistory> jh = temp.getJobHistory();
+            SortedSet<JobHistory> jh = employee.getJobHistory();
             if (jh.size() > 0) {
                 Calendar start = jh.last().getEndDate();
                 start.add(Calendar.DAY_OF_YEAR, 1);
+                log.debug("Setting new job history start date: " + fdf.format(start));
                 jobHistory.setStartDate(start);
             }
             else {
-                jobHistory.setStartDate(employee.getHireDate());
+                Calendar endDate = employee.getHireDate();
+                log.debug("Setting new job history start date: " + fdf.format(endDate));
+                jobHistory.setStartDate(endDate);
             }
-            temp.getJobHistory().add(jobHistory);
+            log.debug("Adding new Job History: " + jobHistory);
+            jh.add(jobHistory);
         }
-        employee.setJobHistory(temp.getJobHistory());
         Employee merged = employeeDao.merge(employee);
+        log.debug("Merged Employee: " + merged);
         return merged;
     }
 

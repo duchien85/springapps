@@ -6,7 +6,8 @@ import java.util.*;
 import javax.xml.bind.annotation.*;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.*;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.FastDateFormat;
 
 /**
  * <p>
@@ -45,7 +46,7 @@ import org.apache.commons.lang.time.*;
         "salary", "commissionPct", "managerId", "departmentId", "jobHistories" })
 public class Employee {
     private static final long serialVersionUID = 8744214730693860142L;
-    private final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
+    private static FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
     private Long id;
     private String firstName;
     private String lastName;
@@ -121,7 +122,7 @@ public class Employee {
     }
 
     public void setHireDate(Calendar hireDate) {
-        this.hireDate = DateUtils.truncate(hireDate, Calendar.DAY_OF_MONTH);
+        this.hireDate = ModelUtils.standardizeCalendar(hireDate);
     }
 
     @XmlElement(required = true, nillable = true)
@@ -293,7 +294,7 @@ public class Employee {
             if (other.hireDate != null)
                 return false;
         }
-        else if (!DateUtils.isSameDay(hireDate, other.hireDate))
+        else if (hireDate.equals(other.hireDate))
             return false;
         if (getJobId() == null) {
             if (other.getJobId() != null)
@@ -351,8 +352,9 @@ public class Employee {
                 getDepartmentId()).append(", email=").append(email).append(", firstName=").append(firstName).append(
                 ", hireDate=").append(fdf.format(hireDate)).append(", id=").append(id).append(", job=").append(
                 getJobId()).append(", lastName=").append(lastName).append(", manager=").append(getManagerId()).append(
-                ", phoneNumber=").append(phoneNumber).append(", salary=").append(salary).append("]");
+                ", phoneNumber=").append(phoneNumber).append(", salary=").append(salary);
         builder.append("JOB_HISTORY: " + getJobHistory());
+        builder.append("]");
         return builder.toString();
     }
 

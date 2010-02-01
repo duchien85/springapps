@@ -1,10 +1,9 @@
 package com.studerb.hr.model;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang.time.*;
 import org.apache.log4j.Logger;
 
 /**
@@ -12,6 +11,9 @@ import org.apache.log4j.Logger;
  */
 public class ModelUtils {
     final static Logger log = Logger.getLogger(ModelUtils.class);
+    final static TimeZone tz = TimeZone.getDefault();
+
+    public final static FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;
 
     /**
      * @return Create a &apos;shallow&apos; instance of Employee with id #100
@@ -20,6 +22,20 @@ public class ModelUtils {
      *         references (manager, department, etc.) are shallow in the sense
      *         that they only contain the ids.
      */
+
+    /**
+     * Standardize Calendar objects coming and going from persistance, JAXB,
+     * etc.
+     * 
+     * @param calendar
+     */
+    public static Calendar standardizeCalendar(final Calendar calendar) {
+        GregorianCalendar newCal = (GregorianCalendar)DateUtils.truncate(calendar, Calendar.DAY_OF_MONTH);
+        newCal.setTimeZone(tz);
+        newCal.setGregorianChange(date)
+        return newCal;
+    }
+
     public static Employee createEmployee100() {
         Employee e = new Employee(100L);
         e.setFirstName("Steven");
@@ -27,7 +43,6 @@ public class ModelUtils {
         e.setEmail("SKING");
         e.setPhoneNumber("515.123.4567");
         Calendar hireDate = Calendar.getInstance();
-        hireDate.set(1987, Calendar.JUNE, 17);
         e.setHireDate(hireDate);
         e.setJob(new Job("AD_PRES"));
         e.setSalary(new BigDecimal(24000));
