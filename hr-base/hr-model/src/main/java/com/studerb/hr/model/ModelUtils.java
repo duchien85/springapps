@@ -1,9 +1,15 @@
 package com.studerb.hr.model;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.TimeZone;
 
-import org.apache.commons.lang.time.*;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang.time.FastDateFormat;
 import org.apache.log4j.Logger;
 
 /**
@@ -30,9 +36,11 @@ public class ModelUtils {
      * @param calendar
      */
     public static Calendar standardizeCalendar(final Calendar calendar) {
-        GregorianCalendar newCal = (GregorianCalendar)DateUtils.truncate(calendar, Calendar.DAY_OF_MONTH);
+        GregorianCalendar newCal = (GregorianCalendar) DateUtils.truncate(calendar, Calendar.DAY_OF_MONTH);
         newCal.setTimeZone(tz);
-        newCal.setGregorianChange(date)
+        // compute the time field
+        newCal.getTimeInMillis();
+        newCal.setGregorianChange(new Date(Long.MIN_VALUE));
         return newCal;
     }
 
