@@ -9,6 +9,10 @@
   <name>hr-base Multi Project</name>
   <url>http://maven.apache.org</url>
 
+    <scm>
+        <developerConnection>scm:svn:https://springapps.googlecode.com/svn/</developerConnection>
+    </scm>
+
   <repositories>
     <repository>
       <id>repository.jboss.org</id>

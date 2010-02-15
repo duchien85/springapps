@@ -15,9 +15,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.junit.Test;
 
-import com.studerb.hr.model.JobHistory;
-import com.studerb.hr.model.ModelUtils;
-
 public class JobHistoryJaxbTest extends AbstractJaxbTest {
     static final Logger logger = Logger.getLogger(JobHistoryJaxbTest.class);
 
@@ -43,6 +40,8 @@ public class JobHistoryJaxbTest extends AbstractJaxbTest {
         assertTrue(f.exists());
         JobHistory unmarhalled = (JobHistory) unmarshaller.unmarshal(f);
         JobHistory obj = ModelUtils.createJobHistory102();
+        System.err.println(unmarhalled.getEndDate());
+        System.err.println(obj.getEndDate());
         logger.debug("from XML\n" + unmarhalled.toString());
         logger.debug("from obj\n: " + obj.toString());
         assertEquals(obj, unmarhalled);
