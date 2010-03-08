@@ -43,6 +43,7 @@
     <set name="jobHistory" table="JOB_HISTORY" sort="natural" lazy="false" fetch="join">
       <key column="EMPLOYEE_ID" not-null="true"/>
       <composite-element class="JobHistory">
+        <parent name="employee"/>
         <property name="startDate" type="calendar" column="START_DATE" />
         <property name="endDate" type="calendar" column="END_DATE" />
         <many-to-one name="department" class="Department" column="DEPARTMENT_ID" not-null="true"/>

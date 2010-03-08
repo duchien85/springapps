@@ -10,4 +10,6 @@ Jersey Exceptions
     409 Conflict - com.sun.jersey.api.ConflictException extends WebApplicationException
 
 
-make the employee jobHistories jaxb getter/setter private
+??make the employee jobHistories jaxb getter/setter private??WTF
+
+updateEmployee broken cause of Constraint on Jobhistory.PK = startDate and EmployeeId

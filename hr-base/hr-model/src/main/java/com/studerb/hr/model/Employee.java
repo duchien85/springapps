@@ -294,7 +294,7 @@ public class Employee {
             if (other.hireDate != null)
                 return false;
         }
-        else if (hireDate.equals(other.hireDate))
+        else if (!hireDate.equals(other.hireDate))
             return false;
         if (getJobId() == null) {
             if (other.getJobId() != null)
