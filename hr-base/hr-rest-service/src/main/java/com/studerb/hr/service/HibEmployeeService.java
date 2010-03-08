@@ -66,6 +66,7 @@ public class HibEmployeeService implements EmployeeService {
             SortedSet<JobHistory> jh = employee.getJobHistory();
             if (jh.size() > 0) {
                 Calendar start = jh.last().getEndDate();
+                log.debug("End date of last jobHistory: " + fdf.format(start));
                 start.add(Calendar.DAY_OF_YEAR, 1);
                 log.debug("Setting new job history start date: " + fdf.format(start));
                 jobHistory.setStartDate(start);

@@ -161,7 +161,6 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         e.setJob(new Job("SA_MAN"));
         employeeService.updateEmployee(e);
         employeeService.flushAndClear();
-
         Employee updated = employeeService.getEmployee(e.getId());
         assertEquals(jhCount + 1, updated.getJobHistory().size());
     }
@@ -170,5 +169,4 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
     public void updateDepartment() {
         fail("not implemented");
     }
-
 }

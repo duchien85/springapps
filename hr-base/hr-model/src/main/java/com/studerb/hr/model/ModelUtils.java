@@ -1,15 +1,9 @@
 package com.studerb.hr.model;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.lang.time.FastDateFormat;
+import org.apache.commons.lang.time.*;
 import org.apache.log4j.Logger;
 
 /**
@@ -51,6 +45,7 @@ public class ModelUtils {
         e.setEmail("SKING");
         e.setPhoneNumber("515.123.4567");
         Calendar hireDate = Calendar.getInstance();
+        hireDate.set(1987, Calendar.JUNE, 17);
         e.setHireDate(hireDate);
         e.setJob(new Job("AD_PRES"));
         e.setSalary(new BigDecimal(24000));
