@@ -40,6 +40,7 @@
 
   <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 
+
   <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/jsp/" />
     <property name="suffix" value=".jsp" />
