@@ -12,13 +12,13 @@
     </decorator>
 
     <decorator name="ext_base" page="ext_base.jsp"/>
+    <decorator name="ext_yui" page="ext_yui.jsp"/>
 
-
-
+<!--
     <decorator name="panel" page="panel.jsp"/>
     <decorator name="printable" page="printable.jsp"/>
     <decorator name="black" page="black.jsp"/>
     <decorator name="nopanelsource" page="nopanelsource.jsp"/>
     <decorator name="badpanelsource" page="badpanelsource.jsp"/>
-
+ -->
 </decorators>

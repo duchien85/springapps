@@ -23,7 +23,6 @@ import com.sun.jersey.spi.resource.Singleton;
 @Path("/employees/")
 public class EmployeeResource {
     private static final Logger log = Logger.getLogger(EmployeeResource.class);
-
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
 
@@ -42,7 +41,7 @@ public class EmployeeResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces( { MediaType.APPLICATION_XML, MediaType.TEXT_XML })
     public Employees getAllEmployeesXml() {
         Employees employees = new Employees();
         List<Employee> employeeList = employeeService.getAllEmployees();

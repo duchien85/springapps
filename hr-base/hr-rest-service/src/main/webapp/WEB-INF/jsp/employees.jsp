@@ -3,13 +3,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
-<meta name="decorator" content="ext_base">
+<meta name="decorator" content="ext_yui">
 <title>HR Employees</title>
 <script type="text/javascript" src="<c:url value='/js/employees.js'/>"></script>
 
 </head>
 <body>
-    <div class="content" class="container">
+    <div class="content container">
         <div id="employees_grid"></div>
     </div>
     <div>
