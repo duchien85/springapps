@@ -9,6 +9,11 @@
   <name>hr-base Multi Project</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <spring.version>2.5.6.SEC01</spring.version>
+    <jetty.version>6.1.22</jetty.version>
+  </properties>
+
     <scm>
         <developerConnection>scm:svn:https://springapps.googlecode.com/svn/</developerConnection>
     </scm>
@@ -29,6 +34,7 @@
   <modules>
     <module>hr-client</module>
     <module>hr-rest-service</module>
+    <module>hr-soap-service</module>
     <module>hr-model</module>
   </modules>
 
