@@ -13,9 +13,11 @@ import org.apache.commons.lang.text.StrBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.studerb.hr.exception.EntityNotExistException;
 import com.studerb.hr.model.Employee;
 import com.studerb.hr.model.Employees;
 import com.studerb.hr.service.EmployeeService;
+import com.sun.jersey.api.NotFoundException;
 import com.sun.jersey.spi.resource.Singleton;
 
 @Service
@@ -23,6 +25,7 @@ import com.sun.jersey.spi.resource.Singleton;
 @Path("/employees/")
 public class EmployeeResource {
     private static final Logger log = Logger.getLogger(EmployeeResource.class);
+
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
 
@@ -82,10 +85,14 @@ public class EmployeeResource {
     @DELETE
     @Path("{id}/")
     public Response deleteEmployeeById(@PathParam("id") Long id) {
-        log.debug("Getting employee by id: " + id);
-        // throws a NotFoundException if employee with 'id' doensn't exist
-        employeeService.deleteEmployee(id);
-        return Response.noContent().build();
+        log.debug("Deleting employee by id: " + id);
+        try {
+            employeeService.deleteEmployee(id);
+            return Response.noContent().build();
+        }
+        catch (EntityNotExistException e) {
+            throw new NotFoundException(e.getMessage());
+        }
     }
 
     @PUT
@@ -95,7 +102,12 @@ public class EmployeeResource {
         if (!id.equals(employee.getId())) {
             return Response.status(Status.BAD_REQUEST).build();
         }
-        employeeService.updateEmployee(employee);
-        return Response.noContent().build();
+        try {
+            employeeService.updateEmployee(employee);
+            return Response.noContent().build();
+        }
+        catch (EntityNotExistException e) {
+            throw new NotFoundException(e.getMessage());
+        }
     }
 }

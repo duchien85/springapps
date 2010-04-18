@@ -13,10 +13,10 @@ import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import com.studerb.hr.model.*;
-import com.studerb.hr.util.TestUtil;
-import com.sun.jersey.api.NotFoundException;
 
 public class HibEmployeeServiceTest extends AbstractServiceTest {
+    final static int EMPLOYEE_COUNT = 107;
+    final static long BAD_EMPLOYEE_ID = 300L;
 
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
@@ -24,7 +24,7 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
     @Test
     public void getAll() {
         List<Employee> employees = employeeService.getAllEmployees();
-        assertEquals(employees.size(), TestUtil.EMPLOYEE_COUNT);
+        assertEquals(employees.size(), EMPLOYEE_COUNT);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
 
     @Test
     public void getNull() {
-        Employee e = employeeService.getEmployee(TestUtil.BAD_EMPLOYEE_ID);
+        Employee e = employeeService.getEmployee(BAD_EMPLOYEE_ID);
         assertNull(e);
     }
 
@@ -58,7 +58,7 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
 
         employeeService.flushAndClear();
         int count = employeeService.getEmployeeCount();
-        assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+        assertEquals(count, EMPLOYEE_COUNT + 1);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         assertNotNull(id);
         employeeService.flushAndClear();
         int count = employeeService.getEmployeeCount();
-        assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+        assertEquals(count, EMPLOYEE_COUNT + 1);
 
         Employee e = employeeService.getEmployee(id);
         assertNotNull(e);
@@ -102,13 +102,13 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
 
         employeeService.flushAndClear();
         int count = employeeService.getEmployeeCount();
-        assertEquals(count, TestUtil.EMPLOYEE_COUNT - 1);
+        assertEquals(count, EMPLOYEE_COUNT - 1);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void deleteNoExist() throws Exception {
         Employee employee = ModelUtils.createEmployee100();
-        employee.setId(TestUtil.BAD_EMPLOYEE_ID);
+        employee.setId(BAD_EMPLOYEE_ID);
         employeeService.updateEmployee(employee);
     }
 
@@ -129,13 +129,13 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         assertEquals(john.getFirstName(), firstName);
         assertEquals(john.getLastName(), lastName);
         int count = employeeService.getEmployeeCount();
-        assertEquals(count, TestUtil.EMPLOYEE_COUNT);
+        assertEquals(count, EMPLOYEE_COUNT);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = RuntimeException.class)
     public void updateNoExist() throws Exception {
         Employee employee = ModelUtils.createEmployee100();
-        employee.setId(TestUtil.BAD_EMPLOYEE_ID);
+        employee.setId(BAD_EMPLOYEE_ID);
         employeeService.updateEmployee(employee);
     }
 

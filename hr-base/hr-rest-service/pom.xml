@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
   <parent>
     <artifactId>hr-base</artifactId>
     <groupId>com.studerb.hr</groupId>
@@ -31,15 +30,16 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
+      <artifactId>hr-data-service</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
       <artifactId>hr-model</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <version>${spring.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -68,18 +68,8 @@
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
       <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib</artifactId>
-      <version>2.2</version>
     </dependency>
     <dependency>
       <groupId>com.oracle</groupId>
@@ -104,15 +94,6 @@
     <!--      <artifactId>jboss-el</artifactId>-->
     <!--      <version>2.0.1.GA</version>-->
     <!--    </dependency>-->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>3.3.2.GA</version>
-      <!--
-        <exclusions> <exclusion> <groupId>javax.transaction</groupId> <artifactId>jta</artifactId> </exclusion>
-        </exclusions>
-      -->
-    </dependency>
     <!--    <dependency>-->
     <!--      <groupId>commons-dbcp</groupId>-->
     <!--      <artifactId>commons-dbcp</artifactId>-->
@@ -137,11 +118,6 @@
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>javassist</groupId>
-      <artifactId>javassist</artifactId>
-      <version>3.8.0.GA</version>
     </dependency>
     <dependency>
       <groupId>opensymphony</groupId>
@@ -176,16 +152,6 @@
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.5.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.dbunit</groupId>
-      <artifactId>dbunit</artifactId>
-      <version>2.4.7</version>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>

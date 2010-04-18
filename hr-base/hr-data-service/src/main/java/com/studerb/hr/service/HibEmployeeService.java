@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.studerb.hr.dao.EmployeeDao;
+import com.studerb.hr.exception.EntityNotExistException;
 import com.studerb.hr.model.Employee;
 import com.studerb.hr.model.JobHistory;
-import com.sun.jersey.api.NotFoundException;
 
 @Service("hibEmployeeService")
 @Repository
@@ -48,11 +48,11 @@ public class HibEmployeeService implements EmployeeService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Employee updateEmployee(Employee employee) throws NotFoundException {
+    public Employee updateEmployee(Employee employee) throws EntityNotExistException {
         log.debug("updating employee: " + employee);
         Long id = employee.getId();
         if (id == null || !employeeDao.exists(id)) {
-            throw new NotFoundException("Employee with id: " + id + " does  not exist");
+            throw new EntityNotExistException("Employee with id: " + id + " does  not exist");
         }
         Employee temp = employeeDao.get(id);
         if ((!temp.getJobId().equals(employee.getJobId()))
@@ -92,9 +92,9 @@ public class HibEmployeeService implements EmployeeService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteEmployee(Long id) throws NotFoundException {
+    public void deleteEmployee(Long id) throws EntityNotExistException {
         if (!employeeDao.exists(id)) {
-            throw new NotFoundException("Employee with id: " + id + " does  not exist");
+            throw new EntityNotExistException("Employee with id: " + id + " does  not exist");
         }
         employeeDao.delete(id);
     }
