@@ -2,12 +2,12 @@ package com.studerb.hr.service;
 
 import java.util.List;
 
+import com.studerb.hr.exception.EntityNotExistException;
 import com.studerb.hr.model.Employee;
-import com.sun.jersey.api.NotFoundException;
 
 /**
- * @author studerw
- * 
+ * Interface for the Employee class. All of these methods are guaranteed to be
+ * called in a single transaction
  */
 public interface EmployeeService {
     List<Employee> getAllEmployees();
@@ -27,10 +27,10 @@ public interface EmployeeService {
 
     /**
      * @param employee
-     * @throws NotFoundException
+     * @throws EntityNotExistException
      *             when employee with given id does not exist
      */
-    Employee updateEmployee(Employee employee) throws NotFoundException;
+    Employee updateEmployee(Employee employee) throws EntityNotExistException;
 
     /**
      * @return count of current employees in persistence
@@ -40,10 +40,10 @@ public interface EmployeeService {
     /**
      * @param id
      *            employee to delete
-     * @throws NotFoundException
+     * @throws EntityNotExistException
      *             if employee with id does not exist
      */
-    void deleteEmployee(Long id) throws NotFoundException;
+    void deleteEmployee(Long id) throws EntityNotExistException;
 
     /**
      * Flush and clear the underlying context. If there is no 'ORM' type context

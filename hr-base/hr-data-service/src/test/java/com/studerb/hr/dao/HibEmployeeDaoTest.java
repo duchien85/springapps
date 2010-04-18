@@ -18,12 +18,13 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.model.*;
-import com.studerb.hr.util.TestUtil;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)
 public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
     final static Logger log = Logger.getLogger(HibEmployeeDaoTest.class);
+    final static int EMPLOYEE_COUNT = 107;
+    final static long BAD_EMPLOYEE_ID = 300L;
 
     @Resource(name = "hibEmployeeDao")
     EmployeeDao employeeDao;
@@ -38,7 +39,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void countRows() {
-        assertEquals(countRowsInTable(employeeDao.getTableName()), TestUtil.EMPLOYEE_COUNT);
+        assertEquals(countRowsInTable(employeeDao.getTableName()), EMPLOYEE_COUNT);
     }
 
     @Test
@@ -49,14 +50,14 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void notExists() {
-        boolean exists = employeeDao.exists(TestUtil.BAD_EMPLOYEE_ID);
+        boolean exists = employeeDao.exists(BAD_EMPLOYEE_ID);
         assertFalse(exists);
     }
 
     @Test
     public void getAll() {
         List<Employee> employees = employeeDao.getAll();
-        assertEquals(employees.size(), TestUtil.EMPLOYEE_COUNT);
+        assertEquals(employees.size(), EMPLOYEE_COUNT);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Test
     public void getNull() {
-        Employee e = employeeDao.get(TestUtil.BAD_EMPLOYEE_ID);
+        Employee e = employeeDao.get(BAD_EMPLOYEE_ID);
         assertNull(e);
     }
 
@@ -112,7 +113,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         assertNotNull(em2);
         assertEquals(em2, employee);
         int count = employeeDao.getCount();
-        assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+        assertEquals(count, EMPLOYEE_COUNT + 1);
     }
 
     @Test
@@ -127,7 +128,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         assertEquals(em2, employee);
         assertTrue(em2.getJobHistory().size() == 1);
         int count = employeeDao.getCount();
-        assertEquals(count, TestUtil.EMPLOYEE_COUNT + 1);
+        assertEquals(count, EMPLOYEE_COUNT + 1);
     }
 
     @Test(expected = DataIntegrityViolationException.class)
@@ -224,7 +225,7 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     @Test
     public void updateBadId() {
         Employee e = ModelUtils.createEmployee100();
-        e.setId(TestUtil.BAD_EMPLOYEE_ID);
+        e.setId(BAD_EMPLOYEE_ID);
         employeeDao.update(e);
     }
 
