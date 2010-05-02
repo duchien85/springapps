@@ -11,6 +11,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.jaxen.dom4j.Dom4jXPath;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -18,13 +19,19 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 @ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)
-public class AbstractServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class BaseServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     protected JAXBContext context;
     protected Marshaller marshaller;
     protected Unmarshaller unmarshaller;
     protected HashMap<String, String> namespaces;
     protected Dom4jXPath xpath;
     protected Schema schema;
+
+    @Value("${employee_count}")
+    Integer EMPLOYEE_COUNT;
+
+    @Value("${bad_employee_id}")
+    Long BAD_EMPLOYEE_ID;
 
     @PostConstruct
     @Rollback(false)
@@ -42,7 +49,7 @@ public class AbstractServiceTest extends AbstractTransactionalJUnit4SpringContex
     }
 
     protected URL getClassPathUrl(String path) throws URISyntaxException {
-        URL url = AbstractServiceTest.class.getClassLoader().getResource(path);
+        URL url = BaseServiceTest.class.getClassLoader().getResource(path);
         return url;
     }
 }

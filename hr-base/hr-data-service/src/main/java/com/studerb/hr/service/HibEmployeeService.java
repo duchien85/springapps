@@ -46,9 +46,8 @@ public class HibEmployeeService implements EmployeeService {
         return employeeDao.save(employee);
     }
 
-    @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Employee updateEmployee(Employee employee) throws EntityNotExistException {
+    private Employee _updateEmployee(Employee employee) throws EntityNotExistException {
         log.debug("updating employee: " + employee);
         Long id = employee.getId();
         if (id == null || !employeeDao.exists(id)) {
@@ -97,6 +96,15 @@ public class HibEmployeeService implements EmployeeService {
             throw new EntityNotExistException("Employee with id: " + id + " does  not exist");
         }
         employeeDao.delete(id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateEmployee(Employee employee) throws EntityNotExistException {
+        if (!employeeDao.exists(employee.getId())) {
+            throw new EntityNotExistException("Employee with id: " + employee.getId() + " does  not exist");
+        }
+        employeeDao.update(employee);
     }
 
     @Override

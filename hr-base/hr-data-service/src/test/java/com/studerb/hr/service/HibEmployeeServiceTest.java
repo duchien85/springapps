@@ -3,7 +3,7 @@ package com.studerb.hr.service;
 import static org.junit.Assert.*;
 
 import java.net.URL;
-import java.util.*;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -12,9 +12,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.studerb.hr.exception.EntityNotExistException;
 import com.studerb.hr.model.*;
 
-public class HibEmployeeServiceTest extends AbstractServiceTest {
+public class HibEmployeeServiceTest extends BaseServiceTest {
     final static int EMPLOYEE_COUNT = 107;
     final static long BAD_EMPLOYEE_ID = 300L;
 
@@ -105,11 +106,9 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         assertEquals(count, EMPLOYEE_COUNT - 1);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = EntityNotExistException.class)
     public void deleteNoExist() throws Exception {
-        Employee employee = ModelUtils.createEmployee100();
-        employee.setId(BAD_EMPLOYEE_ID);
-        employeeService.updateEmployee(employee);
+        employeeService.deleteEmployee(BAD_EMPLOYEE_ID);
     }
 
     @Test
@@ -132,30 +131,31 @@ public class HibEmployeeServiceTest extends AbstractServiceTest {
         assertEquals(count, EMPLOYEE_COUNT);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = EntityNotExistException.class)
     public void updateNoExist() throws Exception {
         Employee employee = ModelUtils.createEmployee100();
         employee.setId(BAD_EMPLOYEE_ID);
         employeeService.updateEmployee(employee);
     }
 
-    @Test
-    public void createFirstJobHistory() {
-        Employee e100 = ModelUtils.createEmployee100();
-        e100.setJobId("ST_MAN");
-        employeeService.updateEmployee(e100);
-        employeeService.flushAndClear();
+    // @Test
+    // public void createFirstJobHistory() {
+    // Employee e100 = ModelUtils.createEmployee100();
+    // e100.setJobId("ST_MAN");
+    // employeeService.updateEmployee(e100);
+    // employeeService.flushAndClear();
+    //
+    // Employee temp = employeeService.getEmployee(100L);
+    // logger.debug("JOB HISTORY: " + temp.getJobHistory());
+    // SortedSet<JobHistory> jobHistory = temp.getJobHistory();
+    // assertTrue(jobHistory.size() == 1);
+    // assertEquals(jobHistory.first().getJobId(), e100.getJobId());
+    // assertTrue(DateUtils.isSameDay(jobHistory.first().getStartDate(),
+    // e100.getHireDate()));
+    // assertTrue(DateUtils.isSameDay(jobHistory.first().getEndDate(),
+    // Calendar.getInstance()));
+    // }
 
-        Employee temp = employeeService.getEmployee(100L);
-        logger.debug("JOB HISTORY: " + temp.getJobHistory());
-        SortedSet<JobHistory> jobHistory = temp.getJobHistory();
-        assertTrue(jobHistory.size() == 1);
-        assertEquals(jobHistory.first().getJobId(), e100.getJobId());
-        assertTrue(DateUtils.isSameDay(jobHistory.first().getStartDate(), e100.getHireDate()));
-        assertTrue(DateUtils.isSameDay(jobHistory.first().getEndDate(), Calendar.getInstance()));
-    }
-
-    @Ignore("faile due to constraint violation")
     @Test
     public void updateJob() {
         Employee e = ModelUtils.createEmployee101();

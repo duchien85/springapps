@@ -13,6 +13,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>hr-data-service</name>
   <url>http://maven.apache.org</url>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -91,7 +92,7 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
-      <scope>provided</scope>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
@@ -103,7 +104,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>**/AbstractServiceTest.java</exclude>
+            <exclude>**/BaseServiceTest.java</exclude>
           </excludes>
         </configuration>
       </plugin>
