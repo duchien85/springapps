@@ -30,7 +30,7 @@ public interface EmployeeService {
      * @throws EntityNotExistException
      *             when employee with given id does not exist
      */
-    Employee updateEmployee(Employee employee) throws EntityNotExistException;
+    void updateEmployee(Employee employee) throws EntityNotExistException;
 
     /**
      * @return count of current employees in persistence
