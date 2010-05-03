@@ -15,13 +15,13 @@ import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.studerb.hr.model.*;
 import com.studerb.hr.service.EmployeeService;
-import com.studerb.hr.util.TestUtil;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
@@ -42,6 +42,15 @@ public class JettyEmployeeResourceTest {
     @Resource(name = "simpleJdbcTemplate")
     SimpleJdbcTemplate simpleJdbcTemplate;
 
+    @Value("${employee_count}")
+    Integer EMPLOYEE_COUNT;
+
+    @Value("${jetty_uri}")
+    String JETTY_URI;
+
+    @Value("${bad_employee_id}")
+    Long BAD_EMPLOYEE_ID;
+
     @PostConstruct
     void init() {
         client = Client.create();
@@ -51,7 +60,7 @@ public class JettyEmployeeResourceTest {
     @Before
     public void setup() {
         simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
-        webResource = client.resource(TestUtil.JETTY_URI);
+        webResource = client.resource(JETTY_URI);
         clientResponse = null;
         responseStatus = null;
     }
@@ -68,7 +77,7 @@ public class JettyEmployeeResourceTest {
         clientResponse = webResource.path(BASE).accept(MediaType.TEXT_PLAIN).get(ClientResponse.class);
         String employeeLines = clientResponse.getEntity(String.class);
         List<String> lines = Arrays.asList(employeeLines.split("\n"));
-        assertTrue(lines.size() == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(lines.size() == EMPLOYEE_COUNT);
     }
 
     @Test
@@ -77,10 +86,10 @@ public class JettyEmployeeResourceTest {
         assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
         Employees employeesType = clientResponse.getEntity(Employees.class);
         List<Employee> fromRest = employeesType.getEmployees();
-        assertTrue(fromRest.size() == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(fromRest.size() == EMPLOYEE_COUNT);
 
         List<Employee> fromHib = employeeService.getAllEmployees();
-        assertTrue(fromHib.size() == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(fromHib.size() == EMPLOYEE_COUNT);
         assertEquals(fromRest, fromHib);
     }
 
@@ -101,10 +110,10 @@ public class JettyEmployeeResourceTest {
         assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
         Employees employeesType = clientResponse.getEntity(Employees.class);
         List<Employee> fromRest = employeesType.getEmployees();
-        assertTrue(fromRest.size() == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(fromRest.size() == EMPLOYEE_COUNT);
 
         List<Employee> fromHib = employeeService.getAllEmployees();
-        assertTrue(fromHib.size() == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(fromHib.size() == EMPLOYEE_COUNT);
         assertEquals(fromRest, fromHib);
     }
 
@@ -131,8 +140,7 @@ public class JettyEmployeeResourceTest {
 
     @Test
     public void getNullXml() {
-        clientResponse = webResource.path(BASE).path(String.valueOf(TestUtil.BAD_EMPLOYEE_ID))
-                .get(ClientResponse.class);
+        clientResponse = webResource.path(BASE).path(String.valueOf(BAD_EMPLOYEE_ID)).get(ClientResponse.class);
         assertEquals(clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_FOUND);
     }
 
@@ -150,7 +158,7 @@ public class JettyEmployeeResourceTest {
         assertEquals(clientResponse.getClientResponseStatus(), ClientResponse.Status.CREATED);
         int count = employeeService.getEmployeeCount();
         log.debug("Count after adding: " + count);
-        assertTrue(count == (TestUtil.EMPLOYEE_COUNT + 1));
+        assertTrue(count == (EMPLOYEE_COUNT + 1));
     }
 
     @Test
@@ -160,7 +168,7 @@ public class JettyEmployeeResourceTest {
         assertEquals(clientResponse.getClientResponseStatus(), ClientResponse.Status.CONFLICT);
         int count = employeeService.getEmployeeCount();
         log.debug("Count after adding: " + count);
-        assertTrue(count == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(count == EMPLOYEE_COUNT);
     }
 
     /********************************* DELETE *****************************************/
@@ -173,16 +181,16 @@ public class JettyEmployeeResourceTest {
         Employee e = employeeService.getEmployee(eId);
         assertNull("employee Should be null", e);
         int count = employeeService.getEmployeeCount();
-        assertTrue(count == (TestUtil.EMPLOYEE_COUNT - 1));
+        assertTrue(count == (EMPLOYEE_COUNT - 1));
     }
 
     @Test
     public void deleteNoExist() {
-        Long eId = TestUtil.BAD_EMPLOYEE_ID;
+        Long eId = BAD_EMPLOYEE_ID;
         clientResponse = webResource.path(BASE).path(eId.toString()).delete(ClientResponse.class);
         assertEquals(clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_FOUND);
         int count = employeeService.getEmployeeCount();
-        assertTrue(count == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(count == EMPLOYEE_COUNT);
     }
 
     /********************************* UPDATE *****************************************/
@@ -201,7 +209,7 @@ public class JettyEmployeeResourceTest {
         // count should be same
         int count = employeeService.getEmployeeCount();
         log.debug("Count after adding: " + count);
-        assertTrue(count == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(count == EMPLOYEE_COUNT);
         // employee should be changed
         Employee updated = employeeService.getEmployee(employee.getId());
         assertEquals(updated.getFirstName(), firstName);
@@ -211,16 +219,16 @@ public class JettyEmployeeResourceTest {
     @Test
     public void updateBadId() {
         Employee employee = ModelUtils.createNewEmployee();
-        employee.setId(TestUtil.BAD_EMPLOYEE_ID);
+        employee.setId(BAD_EMPLOYEE_ID);
         clientResponse = webResource.path(BASE).path(employee.getId().toString()).type(MediaType.APPLICATION_XML).put(
                 ClientResponse.class, employee);
         assertEquals(clientResponse.getClientResponseStatus(), ClientResponse.Status.NOT_FOUND);
         // count should be same
         int count = employeeService.getEmployeeCount();
         log.debug("Count after adding: " + count);
-        assertTrue(count == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(count == EMPLOYEE_COUNT);
         // employee should not be found
-        Employee notExists = employeeService.getEmployee(TestUtil.BAD_EMPLOYEE_ID);
+        Employee notExists = employeeService.getEmployee(BAD_EMPLOYEE_ID);
         assertNull(notExists);
     }
 
@@ -235,7 +243,7 @@ public class JettyEmployeeResourceTest {
         // count should be same
         int count = employeeService.getEmployeeCount();
         log.debug("Count after adding: " + count);
-        assertTrue(count == TestUtil.EMPLOYEE_COUNT);
+        assertTrue(count == EMPLOYEE_COUNT);
         // employee should not be modified
         Employee noChange = employeeService.getEmployee(employee.getId());
         assertEquals(noChange.getEmail(), initialEmail);
