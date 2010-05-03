@@ -11,6 +11,7 @@
 
   <properties>
     <spring.version>3.0.2.RELEASE</spring.version>
+    <spring.security.version>3.0.2.RELEASE</spring.security.version>
     <jetty.version>6.1.22</jetty.version>
   </properties>
 
@@ -32,7 +33,7 @@
   </repositories>
 
   <modules>
-    <module>hr-client</module>
+<!--    <module>hr-client</module>-->
     <module>hr-rest-service</module>
     <module>hr-soap-service</module>
     <module>hr-data-service</module>
@@ -61,27 +62,42 @@
       <artifactId>commons-io</artifactId>
       <version>1.4</version>
     </dependency>
-    <dependency>
+       <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+      <exclusions>
+         <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+         </exclusion>
+      </exclusions>
+   </dependency>
+   <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.5.8</version>
+   </dependency>
+   <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.5.8</version>
+   </dependency>
+   <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.5.8</version>
+   </dependency>
+   <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.14</version>
-    </dependency>
+   </dependency>
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
       <version>1.4</version>
     </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.5.6</version>
-    </dependency>
-
     <!--  TEST -->
     <dependency>
       <groupId>junit</groupId>
