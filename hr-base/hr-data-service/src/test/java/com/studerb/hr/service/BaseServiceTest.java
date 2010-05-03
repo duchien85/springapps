@@ -11,13 +11,15 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.jaxen.dom4j.Dom4jXPath;
+import org.junit.Assert;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-@ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
+@ContextConfiguration( { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)
 public class BaseServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     protected JAXBContext context;
@@ -51,5 +53,11 @@ public class BaseServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     protected URL getClassPathUrl(String path) throws URISyntaxException {
         URL url = BaseServiceTest.class.getClassLoader().getResource(path);
         return url;
+    }
+
+    @Test
+    public void checkProps() {
+        Assert.assertNotNull(EMPLOYEE_COUNT);
+        Assert.assertNotNull(BAD_EMPLOYEE_ID);
     }
 }

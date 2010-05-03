@@ -6,7 +6,6 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,6 @@ import com.studerb.hr.model.Employee;
 import com.studerb.hr.model.JobHistory;
 
 @Service("hibEmployeeService")
-@Repository
 public class HibEmployeeService implements EmployeeService {
     private static final Logger log = Logger.getLogger(HibEmployeeService.class);
     private static final FastDateFormat fdf = DateFormatUtils.ISO_DATE_FORMAT;

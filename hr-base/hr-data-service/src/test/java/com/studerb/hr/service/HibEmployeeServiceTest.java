@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -138,27 +137,9 @@ public class HibEmployeeServiceTest extends BaseServiceTest {
         employeeService.updateEmployee(employee);
     }
 
-    // @Test
-    // public void createFirstJobHistory() {
-    // Employee e100 = ModelUtils.createEmployee100();
-    // e100.setJobId("ST_MAN");
-    // employeeService.updateEmployee(e100);
-    // employeeService.flushAndClear();
-    //
-    // Employee temp = employeeService.getEmployee(100L);
-    // logger.debug("JOB HISTORY: " + temp.getJobHistory());
-    // SortedSet<JobHistory> jobHistory = temp.getJobHistory();
-    // assertTrue(jobHistory.size() == 1);
-    // assertEquals(jobHistory.first().getJobId(), e100.getJobId());
-    // assertTrue(DateUtils.isSameDay(jobHistory.first().getStartDate(),
-    // e100.getHireDate()));
-    // assertTrue(DateUtils.isSameDay(jobHistory.first().getEndDate(),
-    // Calendar.getInstance()));
-    // }
-
     @Test
     public void updateJob() {
-        Employee e = ModelUtils.createEmployee101();
+        Employee e = employeeService.getEmployee(101L);
         int jhCount = e.getJobHistory().size();
         e.setJob(new Job("SA_MAN"));
         employeeService.updateEmployee(e);
@@ -167,9 +148,15 @@ public class HibEmployeeServiceTest extends BaseServiceTest {
         assertEquals(jhCount + 1, updated.getJobHistory().size());
     }
 
-    @Ignore("not implemented yet")
     @Test
     public void updateDepartment() {
-        fail("not implemented");
+        Employee e = employeeService.getEmployee(101L);
+        int jhCount = e.getJobHistory().size();
+        e.setDepartment(new Department(new Long(10L)));
+        employeeService.updateEmployee(e);
+        employeeService.flushAndClear();
+        Employee updated = employeeService.getEmployee(e.getId());
+        assertEquals(jhCount + 1, updated.getJobHistory().size());
+
     }
 }
