@@ -22,11 +22,6 @@
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
       <version>${spring.version}</version>
     </dependency>
@@ -37,7 +32,7 @@
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
+      <artifactId>spring-orm</artifactId>
       <version>${spring.version}</version>
     </dependency>
     <dependency>
@@ -48,6 +43,11 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-expression</artifactId>
       <version>${spring.version}</version>
     </dependency>
     <dependency>
@@ -75,19 +75,19 @@
       <artifactId>ojdbc14</artifactId>
       <version>10.2.0.4.0</version>
     </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>hr-model</artifactId>
-      <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.dbunit</groupId>
-      <artifactId>dbunit</artifactId>
-      <version>2.4.7</version>
-      <scope>test</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>${project.groupId}</groupId>-->
+<!--      <artifactId>hr-model</artifactId>-->
+<!--      <version>${project.version}</version>-->
+<!--      <type>test-jar</type>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>org.dbunit</groupId>-->
+    <!--      <artifactId>dbunit</artifactId>-->
+    <!--      <version>2.4.7</version>-->
+    <!--      <scope>test</scope>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
