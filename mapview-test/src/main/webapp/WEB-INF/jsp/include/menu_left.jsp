@@ -6,5 +6,6 @@
         <li><a href="${request.contextPath}/openLayersTest.htm">Open Layers Test</a></li>
         <li><a href="${request.contextPath}/openLayersBlankTest.htm">Open Layers Blank Test</a></li>
         <li><a href='<c:url value="/geoExtTest.htm" />'>GeoExt Test</a></li>
+        <li><a href='<c:url value="/geoSearchMap.htm" />'>GeoSearchMap (OO)</a></li>
     </ul>
 </div>
