@@ -30,7 +30,7 @@ public interface DaoInterface<T> {
 
     List<T> getAll();
 
-    // DataPage<T> getPage(DataPageInfo info);
+    List<T> getPage(PageInfo pi);
 
     // List<T> getJmesa(TableFacade tableFacade);
 

@@ -15,8 +15,6 @@ import com.studerb.hr.exception.EntityNotExistException;
 import com.studerb.hr.model.*;
 
 public class HibEmployeeServiceTest extends BaseServiceTest {
-    final static int EMPLOYEE_COUNT = 107;
-    final static long BAD_EMPLOYEE_ID = 300L;
 
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
@@ -24,7 +22,7 @@ public class HibEmployeeServiceTest extends BaseServiceTest {
     @Test
     public void getAll() {
         List<Employee> employees = employeeService.getAllEmployees();
-        assertEquals(employees.size(), EMPLOYEE_COUNT);
+        assertEquals(employees.size(), EMPLOYEE_COUNT.intValue());
     }
 
     @Test
@@ -127,7 +125,7 @@ public class HibEmployeeServiceTest extends BaseServiceTest {
         assertEquals(john.getFirstName(), firstName);
         assertEquals(john.getLastName(), lastName);
         int count = employeeService.getEmployeeCount();
-        assertEquals(count, EMPLOYEE_COUNT);
+        assertEquals(count, EMPLOYEE_COUNT.intValue());
     }
 
     @Test(expected = EntityNotExistException.class)
@@ -157,6 +155,5 @@ public class HibEmployeeServiceTest extends BaseServiceTest {
         employeeService.flushAndClear();
         Employee updated = employeeService.getEmployee(e.getId());
         assertEquals(jhCount + 1, updated.getJobHistory().size());
-
     }
 }

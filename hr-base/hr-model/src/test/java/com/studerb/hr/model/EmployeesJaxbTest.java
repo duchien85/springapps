@@ -28,6 +28,7 @@ public class EmployeesJaxbTest extends AbstractJaxbTest {
         Document document = DocumentHelper.parseText(writer.toString());
 
         Employee e1 = employees.getEmployees().get(0);
+        assertTrue(Integer.valueOf(document.valueOf("/employees/@count")) > 0);
         assertEquals(e1.getId(), Long.valueOf(document.valueOf("/employees/employee[1]/@id")));
         assertEquals(e1.getFirstName(), document.valueOf("/employees/employee[1]/first_name"));
         assertEquals(e1.getLastName(), document.valueOf("/employees/employee[1]/last_name"));

@@ -7,10 +7,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><decorator:title default="Hr Client" /></title>
         <link rel="stylesheet" type="text/css" href="<c:url value='/css/reset-fonts-grids.css'/>">
-          <link rel="stylesheet" type="text/css" href="<c:url value='/css/base-min.css'/>">
-        <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value='/css/base-min.css'/>">
         <script type="text/javascript" src="<c:url value='/js/main.js'/>"></script>
-        <sitemesh:apply-decorator ></sitemesh:apply-decorator>
+        <link rel="stylesheet" type="text/css" href="<c:url value='/ext/resources/css/ext-all.css'/>">
+        <script type="text/javascript" src="<c:url value='/ext/adapter/ext/ext-base.js' />"></script>
+        <script type="text/javascript" src="<c:url value='/ext/ext-all-debug.js'/>"></script>
+        <link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css'/>">
+        <script type="text/javascript">
+         Ext.onReady(function(){
+              Ext.BLANK_IMAGE_URL = "<c:url value='/images/s.gif'/>";
+              Ext.Ajax.url = '${initParam["hrRestServiceUrl"]}';
+         });
+         </script>
+        <decorator:head/>
     </head>
     <body class="yui-skin-sam">
           <div id="doc2" class="yui-t2">

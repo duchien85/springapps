@@ -85,6 +85,7 @@ public class JettyEmployeeResourceTest {
         clientResponse = webResource.path(BASE).accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
         assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
         Employees employeesType = clientResponse.getEntity(Employees.class);
+        assertTrue("Attribute 'count' should be set", employeesType.getCount() == EMPLOYEE_COUNT);
         List<Employee> fromRest = employeesType.getEmployees();
         assertTrue(fromRest.size() == EMPLOYEE_COUNT);
 
@@ -109,6 +110,7 @@ public class JettyEmployeeResourceTest {
         clientResponse = webResource.path(BASE).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
         Employees employeesType = clientResponse.getEntity(Employees.class);
+        assertTrue("Attribute 'count' should be set", employeesType.getCount() == EMPLOYEE_COUNT);
         List<Employee> fromRest = employeesType.getEmployees();
         assertTrue(fromRest.size() == EMPLOYEE_COUNT);
 
@@ -131,7 +133,6 @@ public class JettyEmployeeResourceTest {
         clientResponse = webResource.path(BASE).path(String.valueOf(employeeId)).path("/").accept(
                 MediaType.APPLICATION_XML).get(ClientResponse.class);
         assertEquals("should have got 200 OK", clientResponse.getClientResponseStatus(), ClientResponse.Status.OK);
-
         Employee fromXml = clientResponse.getEntity(Employee.class);
         assertNotNull(fromXml);
         Employee fromHib = employeeService.getEmployee(employeeId);

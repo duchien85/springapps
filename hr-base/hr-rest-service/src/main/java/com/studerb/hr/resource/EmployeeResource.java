@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang.text.StrBuilder;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.studerb.hr.exception.EntityNotExistException;
@@ -29,12 +30,12 @@ public class EmployeeResource {
     @Resource(name = "hibEmployeeService")
     EmployeeService employeeService;
 
+    @Value("${employees.page_size:20}")
+    Integer EMPLOYEE_COUNT;
+
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getAllEmployeesText() {
-        log.debug("got request to /employees/");
-        log.debug("employeeService: " + employeeService);
-
         List<Employee> employees = employeeService.getAllEmployees();
         StrBuilder bldr = new StrBuilder();
         for (Employee e : employees) {

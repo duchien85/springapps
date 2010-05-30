@@ -1,7 +1,10 @@
 package com.studerb.hr.dao;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.*;
+import org.hibernate.criterion.*;
 import org.springframework.stereotype.Repository;
 
 import com.studerb.hr.model.Employee;
@@ -34,6 +37,32 @@ public class HibEmployeeDao extends AbstractHibernateDao<Employee> implements Em
         logger.debug("modified " + modified2
                 + " departments - set manager to null - that were formerly managed by employee: " + employeeId);
         super.delete(entity);
+    }
+
+    @Override
+    public List<Employee> getPage(PageInfo pi) {
+        Criteria searchCriteria = getCurrentSession().createCriteria(Employee.class);
+        searchCriteria.setProjection(Projections.distinct(Projections.id()));
+        searchCriteria.setMaxResults(pi.getSize()).setFirstResult(pi.getSkip());
+        // DetachedCriteria selectCriteria =
+        // DetachedCriteria.forClass(Employee.class);
+        List<Long> idList = searchCriteria.list();
+        logger.debug(idList);
+        if (idList.isEmpty()) {
+            return new ArrayList<Employee>();
+        }
+
+        Criteria newCriteria = getCurrentSession().createCriteria(Employee.class);
+        if (pi.getOrderDir().equalsIgnoreCase("desc")) {
+            newCriteria.addOrder(Property.forName(pi.getOrderBy()).desc());
+        }
+        else {
+            newCriteria.addOrder(Property.forName(pi.getOrderBy()).asc());
+        }
+        newCriteria.add(Restrictions.in("id", idList));
+        newCriteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+        List<Employee> data = newCriteria.list();
+        return data;
     }
 
     @Override

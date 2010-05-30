@@ -353,7 +353,7 @@ public class Employee {
                 ", hireDate=").append(fdf.format(hireDate)).append(", id=").append(id).append(", job=").append(
                 getJobId()).append(", lastName=").append(lastName).append(", manager=").append(getManagerId()).append(
                 ", phoneNumber=").append(phoneNumber).append(", salary=").append(salary);
-        builder.append("JOB_HISTORY: " + getJobHistory());
+        builder.append("   JOB_HISTORY: " + getJobHistory());
         builder.append("]");
         return builder.toString();
     }
