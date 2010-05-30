@@ -3,18 +3,12 @@ package com.studerb.hr.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
@@ -28,7 +22,8 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
     @SuppressWarnings("unchecked")
     public AbstractHibernateDao() {
-        this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0];
         this.logger = Logger.getLogger(this.persistentClass);
     }
 
@@ -99,6 +94,21 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
     }
 
     @Override
+    public List<T> getPage(PageInfo pi) {
+        Criteria criteria = getCurrentSession().createCriteria(persistentClass);
+        criteria.setMaxResults(pi.getSize());
+        criteria.setFirstResult(pi.getSkip());
+        if (pi.getOrderDir().equalsIgnoreCase("desc")) {
+            criteria.addOrder(Property.forName(pi.getOrderBy()).desc());
+        }
+        else {
+            criteria.addOrder(Property.forName(pi.getOrderBy()).asc());
+        }
+        List<T> data = criteria.list();
+        return data;
+    }
+
+    @Override
     public int getCount() {
         SQLQuery query = this.getCurrentSession().createSQLQuery("Select count(*) from " + this.getTableName());
         BigDecimal count = (BigDecimal) query.uniqueResult();
@@ -153,7 +163,8 @@ public abstract class AbstractHibernateDao<T> implements DaoInterface<T> {
 
     @Override
     public boolean exists(Serializable id) {
-        Query q = getCurrentSession().createQuery("select count(x) from " + this.persistentClass.getSimpleName() + " x where x.id = :id");
+        Query q = getCurrentSession().createQuery(
+                "select count(x) from " + this.persistentClass.getSimpleName() + " x where x.id = :id");
         q.setParameter("id", id, Hibernate.LONG);
         Long count = (Long) q.uniqueResult();
         return count.equals(1L);

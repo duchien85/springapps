@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,12 +20,19 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.studerb.hr.model.*;
 
-@ContextConfiguration(locations = { "classpath:spring/test-context.xml" })
+@ContextConfiguration( { "classpath:spring/test-context.xml" })
 @TransactionConfiguration(defaultRollback = true)
 public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
     final static Logger log = Logger.getLogger(HibEmployeeDaoTest.class);
-    final static int EMPLOYEE_COUNT = 107;
-    final static long BAD_EMPLOYEE_ID = 300L;
+
+    @Value("${db.employee_count}")
+    Integer EMPLOYEE_COUNT;
+    @Value("${db.bad_employee_id}")
+    Long BAD_EMPLOYEE_ID;
+    @Value("${db.min_id}")
+    Long MIN_ID;
+    @Value("${db.max_id}")
+    Long MAX_ID;
 
     @Resource(name = "hibEmployeeDao")
     EmployeeDao employeeDao;
@@ -34,12 +42,13 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
 
     @Before
     public void setUp() throws Exception {
+        log.debug("calling reset_hr_dev() function to reset the db");
         simpleJdbcTemplate.update("call reset_hr_dev()", new Object[] {});
     }
 
     @Test
     public void countRows() {
-        assertEquals(countRowsInTable(employeeDao.getTableName()), EMPLOYEE_COUNT);
+        assertEquals(countRowsInTable(employeeDao.getTableName()), EMPLOYEE_COUNT.intValue());
     }
 
     @Test
@@ -57,7 +66,10 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
     @Test
     public void getAll() {
         List<Employee> employees = employeeDao.getAll();
-        assertEquals(employees.size(), EMPLOYEE_COUNT);
+        for (Employee e : employees) {
+            log.debug(e.getId());
+        }
+        assertEquals(employees.size(), EMPLOYEE_COUNT.intValue());
     }
 
     @Test
@@ -94,6 +106,18 @@ public class HibEmployeeDaoTest extends AbstractTransactionalJUnit4SpringContext
         assertTrue(jobHistories.size() == 2);
         assertEquals(jobHistories.first().getJobId(), "AC_ACCOUNT");
         assertEquals(jobHistories.last().getJobId(), "AC_MGR");
+    }
+
+    @Test
+    public void getDefaultPage() {
+        PageInfo pi = new PageInfo();
+        List<Employee> employeePage = employeeDao.getPage(pi);
+        for (int i = 0; i < employeePage.size(); i++) {
+            log.debug(i + ": " + employeePage.get(i).getId());
+        }
+        assertEquals("Size should be default size", employeePage.size(), PageInfo.SIZE);
+        assertEquals(employeePage.get(0).getId(), MIN_ID);
+        assertEquals(employeePage.get(19).getId(), new Long(119L));
     }
 
     @Test

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<employees xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd">
-  <employee id="100">
+<employees xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="hr-model.xsd" count="102">
+  <employee id="100" >
     <first_name>Steven</first_name>
     <last_name>King</last_name>
     <email>SKING</email>

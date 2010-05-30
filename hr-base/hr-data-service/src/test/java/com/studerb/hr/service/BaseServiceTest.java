@@ -29,10 +29,10 @@ public class BaseServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     protected Dom4jXPath xpath;
     protected Schema schema;
 
-    @Value("${employee_count}")
+    @Value("${db.employee_count}")
     Integer EMPLOYEE_COUNT;
 
-    @Value("${bad_employee_id}")
+    @Value("${db.bad_employee_id}")
     Long BAD_EMPLOYEE_ID;
 
     @PostConstruct

@@ -3,9 +3,7 @@ package com.studerb.hr.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * <p>
@@ -22,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="employee" type="{hr-model}Employee" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
+ *       &lt;attribute name="count" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -30,24 +29,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlRootElement(name = "employees")
-@XmlType(name = "Employees", propOrder = { "employees" })
+@XmlType(name = "EmployeesType", propOrder = { "employees" })
 public class Employees {
 
     private List<Employee> employees;
+    private Integer count;
 
     @XmlElement(name = "employee")
     public List<Employee> getEmployees() {
-        if (this.employees == null) {
-            this.employees = new ArrayList<Employee>();
+        if (employees == null) {
+            employees = new ArrayList<Employee>();
         }
-        return this.employees;
+        return employees;
+    }
+
+    @XmlAttribute
+    @XmlSchemaType(name = "nonNegativeInteger")
+    public Integer getCount() {
+        if (count == null) {
+            count = employees.size();
+        }
+        return count;
+    }
+
+    public void setCount(Integer c) {
+        count = c;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.employees == null) ? 0 : this.employees.hashCode());
+        result = prime * result + ((employees == null) ? 0 : employees.hashCode());
         return result;
     }
 
@@ -60,11 +73,11 @@ public class Employees {
         if (this.getClass() != obj.getClass())
             return false;
         Employees other = (Employees) obj;
-        if (this.employees == null) {
+        if (employees == null) {
             if (other.employees != null)
                 return false;
         }
-        else if (!this.employees.equals(other.employees))
+        else if (!employees.equals(other.employees))
             return false;
         return true;
     }
@@ -72,7 +85,7 @@ public class Employees {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Employees [employees=").append(this.employees).append("]");
+        builder.append("Employees [employees=").append(employees).append("]");
         return builder.toString();
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" >
   <xs:element name="employee" type="EmployeeType" />
-  <xs:element name="employees" type="Employees" />
+  <xs:element name="employees" type="EmployeesType" />
 
   <xs:element name="job" type="JobType" />
   <xs:element name="jobs" type="JobsType" />
@@ -37,10 +37,11 @@
     <xs:attribute name="id" type="xs:positiveInteger" />
   </xs:complexType>
 
-  <xs:complexType name="Employees">
+  <xs:complexType name="EmployeesType">
     <xs:sequence>
       <xs:element name="employee" type="EmployeeType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="count" type="xs:nonNegativeInteger" use="required" />
   </xs:complexType>
 
   <xs:complexType name="JobType">
