@@ -40,7 +40,7 @@ function GeoSearchMap(title, width, height) {
         this.height = 300;
     }
     this.map = new OpenLayers.Map();
-    this.baseLayer = new OpenLayers.Layer.WMS("rf-vm-img", "http://localhost:33080/geoserver/wms", {
+    this.baseLayer = new OpenLayers.Layer.WMS("rf-vm-img", "http://localhost:33080/geoserver/ows", {
         layers: 'bluemarble-large'
     });
     this.drawLayer = new OpenLayers.Layer.Vector("vector");
