@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BatPersons count="3">
+    <BatPerson>
+        <guid>A3S2-SD19S-2FDF-2342</guid>
+    </BatPerson>
+    <BatPerson>
+        <guid>B3S2-SD19S-2FDF-2342</guid>
+    </BatPerson>
+    <BatPerson>
+        <guid>C3S2-SD19S-2FDF-2342</guid>
+    </BatPerson>
+</BatPersons>

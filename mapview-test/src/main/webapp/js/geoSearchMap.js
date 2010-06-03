@@ -12,10 +12,11 @@
  *  Create a toolbar with GeoExt Actions.
  */
 
+var jsonStore;
+var grid;
 var geoSearchMap = null;
 
 Ext.onReady(function () {
-
     Ext.get('show_map').on("click", function () {
         if (!geoSearchMap) {
             console.log("Creating new GeoSearchMap Object");
@@ -25,7 +26,47 @@ Ext.onReady(function () {
         geoSearchMap.win.show();
 
     });
+
+    jsonStore = new Ext.data.JsonStore({
+        // load using HTTP
+        autoDestroy: true,
+        proxy : new Ext.data.HttpProxy({
+            method: 'GET',
+            url: '/app/geosearch/wkt',
+            headers: { 'Accept' : 'application/json' }
+        }),
+        storeId: 'guidStore',
+        root: 'rows',
+        idProperty: 'guid',
+        totalProperty: 'results',
+        messageProperty: 'msg',
+        successProperty: 'success',
+        fields: ['guid']
+    });
+
+
+    grid = new Ext.grid.GridPanel({
+        store: jsonStore,
+        columns: [
+                  {header: "Id", width: 300, dataIndex: 'guid', sortable: true}
+                 ],
+        renderTo:'gridpanel',
+        width:300,
+        height:300
+    });
+
+
 });
+
+
+function sendSearch(geometry){
+    Ext.Msg.alert('Status', geometry.toString());
+    jsonStore.load({
+        params: {shape: geometry.toString()}
+    });
+}
+
+
 
 function GeoSearchMap(title, width, height) {
     Ext.QuickTips.init();
@@ -169,7 +210,8 @@ function GeoSearchMap(title, width, height) {
                     polygons[index] = item.geometry;
                 });
                 that.currentGeometry = new OpenLayers.Geometry.MultiPolygon(polygons);
-                alert(that.currentGeometry.toString());
+                sendSearch(that.currentGeometry);
+                that.win.hide();
             }
         },
         {
