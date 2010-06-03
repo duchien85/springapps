@@ -1,56 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p" xmlns:oxm="http://www.springframework.org/schema/oxm"
     xsi:schemaLocation="
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd">
 
-    <context:component-scan base-package="com.saic.bat.controller" use-default-filters="false">
+    <context:component-scan base-package="com.saic.controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
-    <!--
-        <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> <property
-        name="exceptionMappings"> <props> <prop
-        key="org.springframework.dao.DataAccessException">dataAccessFailure</prop> </props> </property> </bean>
-    -->
 
-    <!--  MAPPERS -->
-    <bean id="annotationMappings" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="order" value="1" />
-    </bean>
+    <mvc:annotation-driven />
 
-    <!-- Maps all other request URLs to views -->
-    <bean id="viewMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="order" value="2" />
-        <property name="alwaysUseFullPath" value="true" />
-        <property name="defaultHandler">
-            <bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
-        </property>
-        <property name="urlMap">
-            <map>
-            </map>
-        </property>
-
-    </bean>
-
-    <!--  HANDLERS -->
-
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <!--    <property name="webBindingInitializer">-->
-        <!--      <bean class="com.studerb.hr.web.util.BindingInitializer" />-->
-        <!--    </property>-->
-    </bean>
-
-    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+    <mvc:view-controller path="/mapserver.htm" view-name="mapserver"/>
+    <mvc:view-controller path="/mapserverblank.htm" view-name="mapserverblank"/>
+    <mvc:view-controller path="/openlayerstest.htm" view-name="openLayersTest"/>
+    <mvc:view-controller path="/openlayersblanktest.htm" view-name="openLayersBlankTest"/>
+    <mvc:view-controller path="/geoexttest.htm" view-name="geoExtTest"/>
 
 
-    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-        <property name="order" value="1" />
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="2" p:viewClass="org.springframework.web.servlet.view.JstlView">
         <!-- <property name="exposeContextBeansAsAttributes" value="true" />-->
     </bean>
 
