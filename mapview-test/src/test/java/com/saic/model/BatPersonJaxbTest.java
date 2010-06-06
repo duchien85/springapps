@@ -21,7 +21,7 @@ public class BatPersonJaxbTest extends AbstractJaxbTest {
         marshaller.marshal(batPerson, writer);
         log.debug("\n-------------\n" + writer.toString());
         Document document = DocumentHelper.parseText(writer.toString());
-        assertEquals(document.valueOf("/BatPerson/guid"), batPerson.getGuid());
+        assertEquals(document.valueOf("/BatPerson/batGuid"), batPerson.getBatGuid());
     }
 
     @Test

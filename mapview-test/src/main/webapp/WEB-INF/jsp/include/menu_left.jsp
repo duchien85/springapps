@@ -5,6 +5,6 @@
         <li><a href='<c:url value="/app/mapserverblank.htm" />'>Map Server Blank Test</a></li>
         <li><a href="${request.contextPath}/app/openlayersblanktest.htm">Open Layers Blank Test</a></li>
         <li><a href='<c:url value="/app/geoexttest.htm" />'>GeoExt Test</a></li>
-        <li><a href='<c:url value="/app/geoSearchMap.htm" />'>GeoSearchMap (OO)</a></li>
+        <li><a href='<c:url value="/app/geosearchmap.htm" />'>GeoSearchMap (OO)</a></li>
     </ul>
 </div>

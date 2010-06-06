@@ -18,6 +18,7 @@
     <mvc:view-controller path="/openlayerstest.htm" view-name="openLayersTest"/>
     <mvc:view-controller path="/openlayersblanktest.htm" view-name="openLayersBlankTest"/>
     <mvc:view-controller path="/geoexttest.htm" view-name="geoExtTest"/>
+    <mvc:view-controller path="/geosearchmap.htm" view-name="geoSearchMap"/>
 
 
     <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="2" p:viewClass="org.springframework.web.servlet.view.JstlView">

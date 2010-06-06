@@ -32,23 +32,23 @@ Ext.onReady(function () {
         autoDestroy: true,
         proxy : new Ext.data.HttpProxy({
             method: 'GET',
-            url: '/app/geosearch/wkt',
+            url: '/app/geosearch/wkt.json',
             headers: { 'Accept' : 'application/json' }
         }),
         storeId: 'guidStore',
         root: 'rows',
-        idProperty: 'guid',
+        idProperty: 'batGuid',
         totalProperty: 'results',
         messageProperty: 'msg',
         successProperty: 'success',
-        fields: ['guid']
+        fields: ['batGuid']
     });
 
 
     grid = new Ext.grid.GridPanel({
         store: jsonStore,
         columns: [
-                  {header: "Id", width: 300, dataIndex: 'guid', sortable: true}
+                  {header: "Id", width: 300, dataIndex: 'batGuid', sortable: true}
                  ],
         renderTo:'gridpanel',
         width:300,
@@ -81,7 +81,7 @@ function GeoSearchMap(title, width, height) {
         this.height = 300;
     }
     this.map = new OpenLayers.Map();
-    this.baseLayer = new OpenLayers.Layer.WMS("rf-vm-img", "http://localhost:33080/geoserver/ows", {
+    this.baseLayer = new OpenLayers.Layer.WMS("rf-vm-img", "http://192.168.23.195:8080/geoserver/ows", {
         layers: 'bluemarble-large'
     });
     this.drawLayer = new OpenLayers.Layer.Vector("vector");
