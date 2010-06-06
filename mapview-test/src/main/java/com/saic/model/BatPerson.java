@@ -1,32 +1,46 @@
 package com.saic.model;
 
+import java.math.BigDecimal;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import oracle.spatial.geometry.JGeometry;
+
 @XmlRootElement(name = "BatPerson")
-@XmlType(name = "BatPersonType", propOrder = { "guid", "firstName", "lastName" })
+@XmlType(name = "BatPersonType", propOrder = { "batGuid", "messageId" })
 public class BatPerson implements Comparable<BatPerson> {
-    String guid;
+    BigDecimal messageId;
+    String batGuid;
     String firstName;
     String lastName;
+    JGeometry geom;
 
     public BatPerson() {}
 
-    public BatPerson(String guid) {
-        this.guid = guid;
+    public BatPerson(String batGuid) {
+        this.batGuid = batGuid;
     }
 
-    @XmlElement(required = true)
-    public String getGuid() {
-        return this.guid;
-    }
-
-    public void setGuid(String guid) {
-        this.guid = guid;
+    public BigDecimal getMessageId() {
+        return this.messageId;
     }
 
     @XmlElement(required = false)
+    public void setMessageId(BigDecimal messageId) {
+        this.messageId = messageId;
+    }
+
+    @XmlElement(required = true)
+    public String getBatGuid() {
+        return this.batGuid;
+    }
+
+    public void setBatGuid(String batGuid) {
+        this.batGuid = batGuid;
+    }
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -35,7 +49,6 @@ public class BatPerson implements Comparable<BatPerson> {
         this.firstName = firstName;
     }
 
-    @XmlElement(required = false)
     public String getLastName() {
         return this.lastName;
     }
@@ -44,21 +57,24 @@ public class BatPerson implements Comparable<BatPerson> {
         this.lastName = lastName;
     }
 
+    public JGeometry getGeom() {
+        return this.geom;
+    }
+
+    public void setGeom(JGeometry geom) {
+        this.geom = geom;
+    }
+
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("BatPerson [firstName=").append(this.firstName).append(", guid=").append(this.guid).append(", lastName=").append(this.lastName).append(
-                "]");
-        return builder.toString();
+    public int compareTo(BatPerson o) {
+        return this.batGuid.compareToIgnoreCase(o.getBatGuid());
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.firstName == null) ? 0 : this.firstName.hashCode());
-        result = prime * result + ((this.guid == null) ? 0 : this.guid.hashCode());
-        result = prime * result + ((this.lastName == null) ? 0 : this.lastName.hashCode());
+        result = prime * result + ((this.batGuid == null) ? 0 : this.batGuid.hashCode());
         return result;
     }
 
@@ -71,29 +87,21 @@ public class BatPerson implements Comparable<BatPerson> {
         if (getClass() != obj.getClass())
             return false;
         BatPerson other = (BatPerson) obj;
-        if (this.firstName == null) {
-            if (other.firstName != null)
+        if (this.batGuid == null) {
+            if (other.batGuid != null)
                 return false;
         }
-        else if (!this.firstName.equals(other.firstName))
-            return false;
-        if (this.guid == null) {
-            if (other.guid != null)
-                return false;
-        }
-        else if (!this.guid.equals(other.guid))
-            return false;
-        if (this.lastName == null) {
-            if (other.lastName != null)
-                return false;
-        }
-        else if (!this.lastName.equals(other.lastName))
+        else if (!this.batGuid.equals(other.batGuid))
             return false;
         return true;
     }
 
     @Override
-    public int compareTo(BatPerson o) {
-        return this.guid.compareToIgnoreCase(o.getGuid());
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("BatPerson [batGuid=").append(this.batGuid).append(", firstName=").append(this.firstName).append(", geom=").append(this.geom).append(
+                ", lastName=").append(this.lastName).append(", messageId=").append(this.messageId).append("]");
+        return builder.toString();
     }
+
 }

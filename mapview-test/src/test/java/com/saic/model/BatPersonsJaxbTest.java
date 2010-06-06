@@ -22,9 +22,9 @@ public class BatPersonsJaxbTest extends AbstractJaxbTest {
         log.debug("\n-------------\n" + writer.toString());
         Document document = DocumentHelper.parseText(writer.toString());
         assertEquals(Integer.valueOf(document.valueOf("/BatPersons/@count")), new Integer(3));
-        assertEquals("A3S2-SD19S-2FDF-2342", document.valueOf("/BatPersons/BatPerson[1]/guid"));
-        assertEquals("B3S2-SD19S-2FDF-2342", document.valueOf("/BatPersons/BatPerson[2]/guid"));
-        assertEquals("C3S2-SD19S-2FDF-2342", document.valueOf("/BatPersons/BatPerson[3]/guid"));
+        assertEquals("A3S2-SD19S-2FDF-2342", document.valueOf("/BatPersons/BatPerson[1]/batGuid"));
+        assertEquals("B3S2-SD19S-2FDF-2342", document.valueOf("/BatPersons/BatPerson[2]/batGuid"));
+        assertEquals("C3S2-SD19S-2FDF-2342", document.valueOf("/BatPersons/BatPerson[3]/batGuid"));
     }
 
     @Test
