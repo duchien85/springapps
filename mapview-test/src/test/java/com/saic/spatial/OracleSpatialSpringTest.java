@@ -62,7 +62,28 @@ public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringCo
         }
     }
 
-    private static final class BatPersonMapper implements RowMapper<BatPerson> {
+    @Test
+    public void searchByBadWKT() {
+        String multiPoly = "MULTIPOLYGON(((-4.130859375 54.73388671875,0.439453125 54.82177734375,1.142578125 50.38330078125,-4.3505859375 50.51513671875,-4.4384765625 50.64697265625,-4.130859375 54.73388671875)))";
+        String sql = "SELECT mt.id, mt.source_tx, mg.shape from message_geo mg, message_text mt " + "WHERE mg.id = mt.id "
+                + "AND SDO_ANYINTERACT(mg.shape, SDO_GEOMETRY(?)) = 'TRUE' order by mt.source_tx asc";
+        List<BatPerson> batPersons = this.simpleJdbcTemplate.query(sql, new BatPersonMapper(), multiPoly);
+        assertTrue("Should not have returned any results", batPersons.isEmpty());
+    }
+
+    @Test
+    public void searchByGoodWkt() {
+        String multiPoly = "MULTIPOLYGON(((-117.421875 44.82421875,-104.765625 44.82421875,-104.765625 27.59765625,-117.0703125 28.65234375,-117.421875 44.82421875)))";
+        String sql = "SELECT mg.id, mt.source_tx, mg.shape from message_geo mg, message_text mt " + "WHERE mg.id = mt.id "
+                + "AND SDO_ANYINTERACT(mg.shape, SDO_GEOMETRY(?)) = 'TRUE' order by mt.source_tx asc";
+        List<BatPerson> batPersons = this.simpleJdbcTemplate.query(sql, new BatPersonMapper(), multiPoly);
+        for (BatPerson bp : batPersons) {
+            this.logger.debug(bp);
+        }
+        assertTrue(batPersons.size() > 100);
+    }
+
+    protected static final class BatPersonMapper implements RowMapper<BatPerson> {
         public BatPerson mapRow(ResultSet rs, int rowNum) throws SQLException {
             BatPerson batPerson = new BatPerson();
             batPerson.setMessageId(rs.getBigDecimal(1));
@@ -73,69 +94,5 @@ public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringCo
             return batPerson;
         }
     }
-    // @Test
-    // public void getGeometryRow() throws SQLException {
-    // this.statement = this.conn.createStatement();
-    // this.resultSet =
-    // this.statement.executeQuery("SELECT * FROM geometry_examples");
-    // while (this.resultSet.next()) {
-    // String name = this.resultSet.getString(1);
-    // String desc = this.resultSet.getString(2);
-    // assertTrue(!name.isEmpty());
-    // assertTrue(!desc.isEmpty());
-    // log.debug("name: " + name);
-    // log.debug("description: " + desc);
-    // }
-    // }
 
-    // @Test
-    // public void readGeometries() throws SQLException {
-    // this.statement = this.conn.createStatement();
-    // this.resultSet =
-    // this.statement.executeQuery("SELECT shape FROM geometry_examples");
-    // while (this.resultSet.next()) {
-    // STRUCT dbObj = (STRUCT) this.resultSet.getObject(1);
-    // assertNotNull(dbObj);
-    // JGeometry sdoGeom = JGeometry.load(dbObj);
-    // log.debug(sdoGeom.toStringFull());
-    // assertTrue(sdoGeom.getDimensions() == 2);
-    // }
-    // }
-    //
-    // @Test
-    // public void createFromWKT() throws GeometryExceptionWithContext {
-    // String poly =
-    // "MULTIPOLYGON(((-4.130859375 54.73388671875,0.439453125 54.82177734375,1.142578125 50.38330078125,-4.3505859375 50.51513671875,-4.4384765625 50.64697265625,-4.130859375 54.73388671875)))";
-    // WKT wkt = new WKT();
-    // JGeometry jGeom = wkt.toJGeometry(poly.getBytes());
-    // jGeom.setSRID(8307);
-    // log.debug(jGeom.toStringFull());
-    // assertTrue(jGeom.getDimensions() == 2);
-    // }
-    //
-    // @Test
-    // public void getLondon() throws SQLException, GeometryExceptionWithContext
-    // {
-    // String britainPoly =
-    // "MULTIPOLYGON(((-4.130859375 54.73388671875,0.439453125 54.82177734375,1.142578125 50.38330078125,-4.3505859375 50.51513671875,-4.4384765625 50.64697265625,-4.130859375 54.73388671875)))";
-    // WKT wkt = new WKT();
-    // JGeometry jGeom = wkt.toJGeometry(britainPoly.getBytes());
-    // jGeom.setSRID(8307);
-    // PreparedStatement ps =
-    // this.conn.prepareStatement("SELECT * FROM geometry_examples ge WHERE SDO_ANYINTERACT(ge.shape, SDO_GEOMETRY(?, 8307)) = 'TRUE'");
-    // ps.setString(1, britainPoly);
-    // this.resultSet = ps.executeQuery();
-    // assertTrue(this.resultSet.next());
-    // String name = this.resultSet.getString(1);
-    // assertEquals("Name should be london: " + name, "london", name);
-    // log.debug("Name: " + name);
-    //
-    // STRUCT dbObj = (STRUCT) this.resultSet.getObject(3);
-    // JGeometry shape = JGeometry.load(dbObj);
-    // String pointString = new String(wkt.fromJGeometry(shape));
-    // log.debug(pointString);
-    // assertTrue("wkt should contain 'POINT'", pointString.contains("POINT"));
-    //
-    // ps.close();
-    // }
 }
