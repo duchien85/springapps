@@ -81,8 +81,10 @@ function GeoSearchMap(title, width, height) {
         this.height = 300;
     }
     this.map = new OpenLayers.Map();
-    this.baseLayer = new OpenLayers.Layer.WMS("rf-vm-img", "http://192.168.23.195:8080/geoserver/ows", {
-        layers: 'bluemarble-large'
+    //this.baseLayer = new OpenLayers.Layer.WMS("rf-vm-img", "http://192.168.23.195:8080/geoserver/ows", {
+        //layers: 'bluemarble-large'
+    this.baseLayer = new OpenLayers.Layer.WMS("rf-vm-img", "http://labs.metacarta.com/wms/vmap0", {
+        layers: 'basic'
     });
     this.drawLayer = new OpenLayers.Layer.Vector("vector");
     this.map.addLayers([this.baseLayer, this.drawLayer]);
