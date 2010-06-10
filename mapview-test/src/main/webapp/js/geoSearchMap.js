@@ -57,7 +57,7 @@ Ext.onReady(function () {
 
 
 });
-
+   
 
 function sendSearch(geometry){
     Ext.Msg.alert('Status', geometry.toString());
