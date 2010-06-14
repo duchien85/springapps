@@ -7,6 +7,21 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>mapview-test Maven Webapp</name>
     <url>http://maven.apache.org</url>
+
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>repository.jboss.org</id>-->
+<!--            <url>http://repository.jboss.org/maven2</url>-->
+<!--        </repository>-->
+<!--        <repository>-->
+<!--            <id>maven2-repository.dev.java.net</id>-->
+<!--            <name>Java.net Repository for Maven</name>-->
+<!--            <url>http://download.java.net/maven/2/</url>-->
+<!--            <layout>default</layout>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+
+
     <properties>
         <jetty.version>6.1.22</jetty.version>
         <spring.version>3.0.2.RELEASE</spring.version>
@@ -111,7 +126,16 @@
             <artifactId>cglib</artifactId>
             <version>2.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>jboss.jbossts</groupId>
+            <artifactId>jbossjts</artifactId>
+            <version>4.8.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
