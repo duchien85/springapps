@@ -29,15 +29,16 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.saic.model.RandomPoint;
+import com.saic.model.RandomContPoint;
 
 @ContextConfiguration( { "classpath:spring/applicationContext.xml" })
 @TransactionConfiguration(defaultRollback = true)
-public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class OracleSpatialRndmContinentSpringTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     String insertSql;
     String searchSql;
@@ -118,7 +119,7 @@ public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringCo
     @Test
     public void createRandomPoints() {
         StopWatch stopWatch = new StopWatch();
-        int count = 10;
+        int count = 100;
         Set<String> points = new HashSet<String>(count);
         List<String> misses = new ArrayList<String>();
         stopWatch.start();
@@ -139,10 +140,11 @@ public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringCo
         this.logger.debug(stopWatch.toString());
     }
 
+    @Rollback(value = true)
     @Test
     public void insertRandomPoints() {
         StopWatch stopWatch = new StopWatch();
-        int count = 10;
+        int count = 100;
         int total = 0;
         List<String> misses = new ArrayList<String>();
         stopWatch.start();
@@ -150,8 +152,8 @@ public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringCo
             String point = createRandomPointWKT();
             int objectId = this.simpleJdbcTemplate.queryForInt(this.searchSql, point, point);
             if (objectId != 0) {
-                this.logger.debug("inserting: " + point);
                 int inserted = this.simpleJdbcTemplate.update(this.insertSql, objectId, point);
+                this.logger.debug("Inserted: " + point);
                 assertTrue(inserted == 1);
                 total++;
             }
@@ -162,11 +164,9 @@ public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringCo
         this.logger.debug("*********** Misses: " + misses.size() + "***************");
         stopWatch.stop();
 
-        List<RandomPoint> points = this.simpleJdbcTemplate.query("SELECT id, continent_id, geom FROM random_points", new RandomPointMapper());
+        List<RandomContPoint> points = this.simpleJdbcTemplate.query("SELECT id, continent_id, geom FROM random_points", new RandomPointMapper());
         assertTrue("points not size, instead: " + points.size(), points.size() == count);
-        for (RandomPoint p : points) {
-            this.logger.debug(p);
-        }
+        this.logger.debug("Inserted: " + points.size() + " points!");
         this.logger.debug(stopWatch.toString());
     }
 
@@ -210,9 +210,9 @@ public class OracleSpatialSpringTest extends AbstractTransactionalJUnit4SpringCo
         return point;
     }
 
-    protected static class RandomPointMapper implements RowMapper<RandomPoint> {
-        public RandomPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
-            RandomPoint randomPoint = new RandomPoint();
+    protected static class RandomPointMapper implements RowMapper<RandomContPoint> {
+        public RandomContPoint mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RandomContPoint randomPoint = new RandomContPoint();
             randomPoint.setId(rs.getInt("ID"));
             randomPoint.setContinentId(rs.getInt("CONTINENT_ID"));
             STRUCT dbObj = (STRUCT) rs.getObject("GEOM");

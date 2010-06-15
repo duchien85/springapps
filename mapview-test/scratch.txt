@@ -1,0 +1,27 @@
+
+        Document doc = DocumentHelper.parseText(locationXml);
+        assertNotNull(doc);
+        List nodes = doc.selectNodes("/xml/rs:data/rs:insert/z:row");
+        Element row = (Element) nodes.get(0);
+        Attribute latitude = row.attribute("Latitude");
+        latitude.setValue("0");
+        Attribute longitude = row.attribute("Longitude");
+        longitude.setValue("0");
+        log.debug(doc.asXML());
+        this.simpleJdbcTemplate
+        this.resultSet.updateString(1, doc.asXML());
+        this.resultSet.updateRow();
+        this.statement.close();
+        this.resultSet.close();
+
+        this.statement = this.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        this.resultSet = this.statement.executeQuery(sql);
+        assertTrue(this.resultSet.next());
+        locationXml = this.resultSet.getString(1);
+        log.debug(locationXml);
+        doc = DocumentHelper.parseText(locationXml);
+        assertNotNull(doc);
+        nodes = doc.selectNodes("/xml/rs:data/rs:insert/z:row");
+        row = (Element) nodes.get(0);
+        assertEquals(row.attribute("Latitude").getValue(), "0");
+        assertEquals(row.attribute("Longitude").getValue(), "0");
