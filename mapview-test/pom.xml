@@ -127,16 +127,6 @@
             <version>2.2</version>
         </dependency>
         <dependency>
-            <groupId>jboss.jbossts</groupId>
-            <artifactId>jbossjts</artifactId>
-            <version>4.8.0.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
@@ -174,22 +164,29 @@
             <version>3.1.0</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.2.2</version>
-        </dependency>
+
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>11.1.0.7.0</version>
         </dependency>
+
+        <!--  SQL Server -->
         <dependency>
             <groupId>net.sourceforge.jtds</groupId>
             <artifactId>jtds</artifactId>
             <version>1.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.microsoft</groupId>
+            <artifactId>sqljdbc</artifactId>
+            <version>4.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
+        </dependency>
+
+        <!--  Oracle Spatial  -->
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>sdoutl</artifactId>
@@ -211,12 +208,34 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/xmlparserv2.jar</systemPath>
         </dependency>
+
+    <!--  Transactions -->
         <dependency>
-            <groupId>com.microsoft</groupId>
-            <artifactId>sqljdbc</artifactId>
-            <version>4.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+    <!-- JBOSS TS -->
+            <dependency>
+            <groupId>jboss.jbossts</groupId>
+            <artifactId>jbossjts</artifactId>
+            <version>4.8.0.GA</version>
+        </dependency>
+
+        <!--  Atomikos -->
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-jdbc</artifactId>
+            <version>3.6.5</version>
+        </dependency>
+
+
+    <!--  Commons DBCP  -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
         </dependency>
 
         <dependency>

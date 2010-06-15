@@ -2,7 +2,7 @@ package com.saic.model;
 
 import oracle.spatial.geometry.JGeometry;
 
-public class RandomPoint {
+public class RandomContPoint {
 
     private Integer id;
     private Integer continentId;
@@ -49,7 +49,7 @@ public class RandomPoint {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        RandomPoint other = (RandomPoint) obj;
+        RandomContPoint other = (RandomContPoint) obj;
         if (this.continentId == null) {
             if (other.continentId != null)
                 return false;
