@@ -4,10 +4,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +25,8 @@ import javax.sql.DataSource;
 import oracle.spatial.geometry.JGeometry;
 import oracle.sql.STRUCT;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -106,22 +114,20 @@ public class BiometricsMicrosoftSpringTest extends AbstractTransactionalJUnit4Sp
         List nodes = doc.selectNodes("/xml/rs:data/rs:insert/z:row");
         Element row = (Element) nodes.get(0);
         List<Attribute> attributes = row.attributes();
+        Double longitude = null;
+        Double latitude = null;
         for (Attribute a : attributes) {
-            Double longitude = null;
-            Double latitude = null;
             if (a.getName().equalsIgnoreCase("longitude")) {
                 longitude = Double.valueOf(a.getValue());
                 assertNotNull(longitude);
 
             }
-            else if (a.getName().equalsIgnoreCase("latitude")) {
+            if (a.getName().equalsIgnoreCase("latitude")) {
                 latitude = Double.valueOf(a.getValue());
                 assertNotNull(latitude);
-                log.debug("Lat: " + latitude.toString());
-
             }
-            log.debug(longitude.toString() + "    " + latitude.toString());
         }
+        log.debug(longitude.toString() + "    " + latitude.toString());
     }
 
     @Test
@@ -144,7 +150,10 @@ public class BiometricsMicrosoftSpringTest extends AbstractTransactionalJUnit4Sp
     public void updateAllLatLong() throws Exception {
         String sql = "SELECT report_guid, locationxml FROM dbo.geolocations WHERE locationxml IS NOT NULL ORDER BY GUID";
         List<Map<String, Object>> rows = this.simpleJdbcTemplate.queryForList(sql);
+        log.debug("Got " + rows.size() + " bat rows");
         List<RPoint> randomPoints = getRandomPoints();
+        log.debug("Got " + randomPoints.size() + " random points");
+        int cnt = 0;
         Iterator<RPoint> i = randomPoints.iterator();
         for (Map<String, Object> m : rows) {
             RPoint rp = i.next();
@@ -163,6 +172,10 @@ public class BiometricsMicrosoftSpringTest extends AbstractTransactionalJUnit4Sp
             int updated = this.simpleJdbcTemplate.update("UPDATE dbo.geolocations set locationxml = ?, Country = ? WHERE report_guid = ?", doc.asXML(),
                     rp.cntryName, report_guid);
             assertTrue(updated == 1);
+            cnt++;
+            if (cnt % 100 == 0) {
+                log.debug("Updated: " + cnt);
+            }
         }
 
         log.debug("--------------------------------------------------------");
@@ -185,6 +198,23 @@ public class BiometricsMicrosoftSpringTest extends AbstractTransactionalJUnit4Sp
     public void getRPoints() {
         List<RPoint> points = getRandomPoints();
         assertTrue(points.size() == 3000);
+    }
+
+    @Test
+    public void printRPoints() throws IOException {
+        File f = new File("random_country_points.csv");
+        FileWriter writer = new FileWriter(f);
+        List<RPoint> points = getRandomPoints();
+        assertTrue(points.size() == 3000);
+        for (RPoint rp : points) {
+            if (rp.cntryName.contains("\t")) {
+                throw new RuntimeException("NO COMMAS ALLOWED IN: " + rp.cntryName);
+            }
+            String s = rp.cntryName + "\t" + String.valueOf(rp.longitude) + "\t" + String.valueOf(rp.latitude) + SystemUtils.LINE_SEPARATOR;
+            writer.write(s);
+        }
+
+        IOUtils.closeQuietly(writer);
     }
 
     protected List<RPoint> getRandomPoints() {
@@ -215,4 +245,23 @@ public class BiometricsMicrosoftSpringTest extends AbstractTransactionalJUnit4Sp
         public Double latitude;
     }
 
+    @Test
+    public void getPointsFromFile() throws IOException {
+        List<RPoint> points = new ArrayList<RPoint>();
+        File f = this.applicationContext.getResource("classpath:/random_country_points.txt").getFile();
+        BufferedReader reader = new BufferedReader(new FileReader(f));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] three = line.split("\t");
+            assertTrue(three.length == 3);
+            RPoint r = new RPoint();
+            r.cntryName = three[0];
+            r.longitude = Double.parseDouble(three[1]);
+            r.latitude = Double.parseDouble(three[2]);
+            points.add(r);
+            log.debug(r.cntryName + "\t" + String.valueOf(r.longitude) + "\t" + String.valueOf(r.latitude));
+        }
+
+        assertTrue(points.size() == 3000);
+    }
 }
