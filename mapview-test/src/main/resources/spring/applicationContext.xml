@@ -57,9 +57,11 @@
         class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
     -->
     <!--
-        <import resource="classpath:spring/tx-atomikos.xml"/> <import
-        resource="classpath:spring/tx-tx-dbcp-spring.xml"/> <import
-        resource="classpath:spring/tx-jbossts.xml"/>
+        <import resource="classpath:spring/tx-atomikos.xml"/>
+        -->
+        <import resource="classpath:spring/tx-dbcp-spring.xml"/>
+<!--
+        <import resource="classpath:spring/tx-jbossts.xml"/>
     -->
     <!--    <import resource="classpath:spring/applicationContext-security.xml"/>-->
 
