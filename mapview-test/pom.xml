@@ -168,7 +168,7 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
-            <version>11.1.0.7.0</version>
+            <version>11.2.0.1.0</version>
         </dependency>
 
         <!--  SQL Server -->
@@ -217,19 +217,20 @@
         </dependency>
 
     <!-- JBOSS TS -->
+    <!--
             <dependency>
             <groupId>jboss.jbossts</groupId>
             <artifactId>jbossjts</artifactId>
             <version>4.8.0.GA</version>
         </dependency>
-
-        <!--  Atomikos -->
+        -->
+ <!--
         <dependency>
             <groupId>com.atomikos</groupId>
             <artifactId>transactions-jdbc</artifactId>
             <version>3.6.5</version>
         </dependency>
-
+-->
 
     <!--  Commons DBCP  -->
         <dependency>
