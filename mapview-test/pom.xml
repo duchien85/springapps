@@ -208,7 +208,15 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/xmlparserv2.jar</systemPath>
         </dependency>
-
+        <!--
+        <dependency>
+            <groupId>com.jcoord</groupId>
+            <artifactId>jcoord</artifactId>
+            <version>1.1-b</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/jcoord-1.1-b.jar</systemPath>
+        </dependency>
+         -->
     <!--  Transactions -->
         <dependency>
             <groupId>javax.transaction</groupId>
@@ -251,6 +259,11 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.bbn.openmap</groupId>
+            <artifactId>openmap</artifactId>
+            <version>4.6.3</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>mapview-test</finalName>
