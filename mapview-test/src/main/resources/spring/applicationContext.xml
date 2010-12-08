@@ -40,6 +40,10 @@
         destroy-method="close" p:driverClassName="${jdbc.ms.bat.driverClassName}" p:url="${jdbc.ms.bat.url}"
         />
 
+    <bean id="dimsfMSDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close" p:driverClassName="${jdbc.ms.dimsf.driverClassName}" p:url="${jdbc.ms.dimsf.url}"
+        />
+
 
 <!--    <bean id="batMSDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource"-->
 <!--        p:driverClass="${jdbc.ms.bat.driverClassName}" p:url="${jdbc.ms.bat.url}"-->
@@ -47,6 +51,9 @@
 
     <bean id="batMSTxMgr" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
         p:dataSource-ref="batMSDataSource" />
+
+    <bean id="dimsfMSTxMgr" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+        p:dataSource-ref="dimsfMSDataSource" />
 
     <bean id="orclSpatialTxMgr" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
         p:dataSource-ref="spatialDataSource" />
@@ -59,7 +66,7 @@
     <!--
         <import resource="classpath:spring/tx-atomikos.xml"/>
         -->
-        <import resource="classpath:spring/tx-dbcp-spring.xml"/>
+<!--        <import resource="classpath:spring/tx-dbcp-spring.xml"/> -->
 <!--
         <import resource="classpath:spring/tx-jbossts.xml"/>
     -->
